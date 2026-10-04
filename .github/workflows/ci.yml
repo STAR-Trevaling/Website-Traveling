@@ -1,0 +1,65 @@
+name: ci
+on:
+  pull_request:
+  push:
+    branches: [main]
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgis/postgis:17-3.5
+        env:
+          POSTGRES_DB: travel
+          POSTGRES_USER: travel
+          POSTGRES_PASSWORD: travel
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U travel -d travel"
+          --health-interval 5s --health-timeout 5s --health-retries 20
+      redis:
+        image: redis:7-alpine
+        ports: ["6379:6379"]
+        options: >-
+          --health-cmd "redis-cli ping" --health-interval 5s --health-timeout 3s --health-retries 20
+    env:
+      DJANGO_SECRET_KEY: ci-secret
+      DJANGO_DEBUG: "0"
+      DJANGO_ALLOWED_HOSTS: localhost
+      POSTGRES_DB: travel
+      POSTGRES_USER: travel
+      POSTGRES_PASSWORD: travel
+      POSTGRES_HOST: localhost
+      POSTGRES_PORT: "5432"
+      REDIS_URL: redis://localhost:6379/0
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.13", cache: pip, cache-dependency-path: apps/backend/requirements.txt}
+      - run: pip install -r apps/backend/requirements.txt
+      - run: python scripts/validate_context.py
+      - run: python scripts/static_sanity.py
+      - working-directory: apps/backend
+        run: |
+          python manage.py makemigrations --check --dry-run
+          python manage.py migrate
+          ruff check .
+          ruff format --check .
+          mypy .
+          pytest
+          python manage.py check --deploy
+  frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: "22", cache: npm, cache-dependency-path: apps/frontend/package.json}
+      - working-directory: apps/frontend
+        run: npm install
+      - working-directory: apps/frontend
+        run: npm run typecheck
+      - working-directory: apps/frontend
+        env:
+          BACKEND_URL: http://localhost:8000/api/v1
+          NEXT_PUBLIC_SITE_URL: http://localhost:3000
+        run: npm run build
