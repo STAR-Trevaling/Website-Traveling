@@ -135,7 +135,7 @@ export function TourBookingCard({ tour }: TourBookingCardProps) {
         <button
           type="button"
           onClick={() => setShowModal(true)}
-          className="mt-6 w-full rounded-[2px] bg-[#0098a2] py-3 text-xs md:text-sm font-bold uppercase tracking-wider text-white shadow-sm transition hover:bg-[#087c86]"
+          className="mt-6 w-full rounded-[2px] bg-[#0098a2] py-3.5 text-xs md:text-sm font-bold uppercase tracking-wider text-white shadow-sm transition-all duration-200 hover:bg-[#008f99] hover:shadow-[0px_8px_25px_rgba(0,152,162,0.35)] hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
         >
           ĐẶT TOUR NGAY
         </button>
@@ -238,13 +238,13 @@ export function TourBookingCard({ tour }: TourBookingCardProps) {
                     <button
                       type="button"
                       onClick={() => setShowModal(false)}
-                      className="flex-1 rounded-[2px] border border-slate-200 py-2.5 text-xs font-semibold text-slate-600 hover:bg-slate-50"
+                      className="flex-1 rounded-[2px] border border-slate-200 bg-white py-2.5 text-xs font-semibold text-slate-600 transition-all duration-200 hover:border-slate-300 hover:bg-white hover:shadow-[0px_4px_14px_rgba(0,0,0,0.06)] active:translate-y-0 cursor-pointer"
                     >
                       HỦY BỎ
                     </button>
                     <button
                       type="submit"
-                      className="flex-1 rounded-[2px] bg-[#0098a2] py-2.5 text-xs font-bold uppercase tracking-wider text-white hover:bg-[#087c86]"
+                      className="flex-1 rounded-[2px] bg-[#0098a2] py-2.5 text-xs font-bold uppercase tracking-wider text-white shadow-sm transition-all duration-200 hover:bg-[#008f99] hover:shadow-[0px_8px_25px_rgba(0,152,162,0.35)] hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
                     >
                       XÁC NHẬN GIỮ CHỖ
                     </button>

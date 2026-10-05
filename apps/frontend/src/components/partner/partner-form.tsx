@@ -44,7 +44,7 @@ export function PartnerForm() {
             setSuccess(false);
             setMsg("");
           }}
-          className="mt-6 bg-[#0098a2] hover:bg-[#087c86] text-white px-6 py-2.5 text-xs font-semibold tracking-widest uppercase transition rounded-[2px]"
+          className="mt-6 bg-[#0098a2] text-white px-6 py-2.5 text-xs font-semibold tracking-widest uppercase rounded-[2px] shadow-sm transition-all duration-200 hover:bg-[#008f99] hover:shadow-[0px_8px_25px_rgba(0,152,162,0.35)] hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
         >
           Gửi Thêm Hồ Sơ Khác
         </button>
@@ -123,7 +123,7 @@ export function PartnerForm() {
       <button
         type="submit"
         disabled={pending}
-        className="w-full bg-[#0098a2] hover:bg-[#087c86] disabled:opacity-70 text-white py-3.5 text-xs md:text-sm font-semibold tracking-widest uppercase transition rounded-[2px] shadow-sm flex items-center justify-center gap-2 cursor-pointer"
+        className="w-full bg-[#0098a2] text-white py-3.5 text-xs md:text-sm font-semibold tracking-widest uppercase rounded-[2px] shadow-sm transition-all duration-200 hover:bg-[#008f99] hover:shadow-[0px_8px_25px_rgba(0,152,162,0.35)] hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-70 flex items-center justify-center gap-2 cursor-pointer"
       >
         <Building2 className="size-4" />
         <span>{pending ? "ĐANG GỬI HỒ SƠ THẨM ĐỊNH…" : "NỘP HỒ SƠ ĐỐI TÁC CHÍNH THỨC"}</span>

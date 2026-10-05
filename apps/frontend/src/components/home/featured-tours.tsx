@@ -66,7 +66,7 @@ export function FeaturedTours() {
         <div className="mt-10 text-center">
           <Link
             href="/tours"
-            className="inline-block bg-[#0098a2] hover:bg-[#087c86] text-white px-8 py-2.5 text-xs md:text-sm font-semibold tracking-widest uppercase transition rounded-[2px] shadow-sm"
+            className="inline-block bg-[#0098a2] hover:bg-[#008f99] text-white px-8 py-3 text-xs md:text-sm font-semibold tracking-widest uppercase transition-all duration-200 rounded-[2px] shadow-sm hover:shadow-[0px_8px_25px_rgba(0,152,162,0.35)] hover:-translate-y-0.5 active:translate-y-0"
           >
             XEM TẤT CẢ TOUR
           </Link>

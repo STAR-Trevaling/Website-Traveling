@@ -1,2 +1,66 @@
-"use client"; import {useState} from "react"; import {useRouter} from "next/navigation";
-export function LoginForm(){const router=useRouter();const[username,setUsername]=useState('traveler_demo');const[password,setPassword]=useState('TravelerDemo123!');const[msg,setMsg]=useState('');const[loading,setLoading]=useState(false);return <form className="space-y-5" onSubmit={async e=>{e.preventDefault();setLoading(true);const r=await fetch('/api/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({username,password})});setLoading(false);if(r.ok){router.push('/account');router.refresh()}else setMsg('Invalid username or password.')}}><label className="block text-sm">Username<input className="mt-2 h-11 w-full border bg-white px-3" value={username} onChange={e=>setUsername(e.target.value)}/></label><label className="block text-sm">Password<input type="password" className="mt-2 h-11 w-full border bg-white px-3" value={password} onChange={e=>setPassword(e.target.value)}/></label><button disabled={loading} className="w-full bg-[#0098a2] px-5 py-3 text-white">{loading?'SIGNING IN…':'SIGN IN'}</button>{msg&&<p className="text-sm text-red-700">{msg}</p>}</form>}
+"use client";
+
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { LogIn } from "lucide-react";
+
+export function LoginForm() {
+  const router = useRouter();
+  const [username, setUsername] = useState("traveler_demo");
+  const [password, setPassword] = useState("TravelerDemo123!");
+  const [msg, setMsg] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  return (
+    <form
+      className="space-y-5"
+      onSubmit={async (e) => {
+        e.preventDefault();
+        setLoading(true);
+        const r = await fetch("/api/auth/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username, password }),
+        });
+        setLoading(false);
+        if (r.ok) {
+          router.push("/account");
+          router.refresh();
+        } else {
+          setMsg("Tài khoản hoặc mật khẩu không chính xác.");
+        }
+      }}
+    >
+      <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700">
+        Tài khoản / Username
+        <input
+          required
+          className="mt-1.5 h-11 w-full rounded-[2px] border border-slate-200 bg-white px-3 text-sm text-slate-800 outline-none transition focus:border-[#0098a2]"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+      </label>
+
+      <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700">
+        Mật khẩu / Password
+        <input
+          type="password"
+          required
+          className="mt-1.5 h-11 w-full rounded-[2px] border border-slate-200 bg-white px-3 text-sm text-slate-800 outline-none transition focus:border-[#0098a2]"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+      </label>
+
+      <button
+        disabled={loading}
+        className="w-full bg-[#0098a2] text-white py-3.5 text-xs md:text-sm font-bold uppercase tracking-wider rounded-[2px] shadow-sm transition-all duration-200 hover:bg-[#008f99] hover:shadow-[0px_8px_25px_rgba(0,152,162,0.35)] hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer"
+      >
+        <LogIn className="size-4" />
+        <span>{loading ? "ĐANG ĐĂNG NHẬP…" : "ĐĂNG NHẬP"}</span>
+      </button>
+
+      {msg && <p className="text-xs text-red-600 font-medium text-center">{msg}</p>}
+    </form>
+  );
+}

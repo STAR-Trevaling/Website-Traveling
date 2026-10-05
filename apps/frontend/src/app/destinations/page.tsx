@@ -92,7 +92,7 @@ export default async function DestinationsPage({ searchParams }: DestinationsPag
                 <div className="mt-6">
                   <Link
                     href="/destinations"
-                    className="inline-block bg-[#0098a2] hover:bg-[#087c86] text-white px-6 py-2.5 text-xs font-semibold uppercase tracking-wider rounded-[2px]"
+                    className="inline-block bg-[#0098a2] text-white px-6 py-2.5 text-xs font-semibold uppercase tracking-wider rounded-[2px] shadow-sm transition-all duration-200 hover:bg-[#008f99] hover:shadow-[0px_8px_25px_rgba(0,152,162,0.35)] hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
                   >
                     Xem Tất Cả Điểm Đến
                   </Link>
@@ -113,13 +113,13 @@ export default async function DestinationsPage({ searchParams }: DestinationsPag
               <div className="mt-6 flex flex-wrap items-center justify-center gap-4">
                 <Link
                   href="/experiences"
-                  className="bg-[#0098a2] hover:bg-[#087c86] text-white px-8 py-3 text-xs md:text-sm font-semibold tracking-widest uppercase transition rounded-[2px] shadow-sm"
+                  className="bg-[#0098a2] text-white px-8 py-3 text-xs md:text-sm font-semibold tracking-widest uppercase rounded-[2px] shadow-sm transition-all duration-200 hover:bg-[#008f99] hover:shadow-[0px_8px_25px_rgba(0,152,162,0.35)] hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
                 >
                   Xem Gói Trải Nghiệm
                 </Link>
                 <Link
                   href="/tours"
-                  className="bg-white hover:bg-slate-50 text-[#1e293b] border border-slate-300 px-8 py-3 text-xs md:text-sm font-semibold tracking-widest uppercase transition rounded-[2px] shadow-sm"
+                  className="bg-white text-[#1e293b] border border-slate-300 px-8 py-3 text-xs md:text-sm font-semibold tracking-widest uppercase rounded-[2px] shadow-sm transition-all duration-200 hover:bg-white hover:border-slate-400 hover:shadow-[0px_6px_20px_rgba(0,0,0,0.10)] hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
                 >
                   Xem Tour Trọn Gói
                 </Link>

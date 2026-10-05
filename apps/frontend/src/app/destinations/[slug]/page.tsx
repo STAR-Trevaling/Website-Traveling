@@ -188,13 +188,13 @@ export default async function DestinationDetail({ params }: DestinationDetailPro
               <div className="mt-6 flex flex-wrap items-center justify-center gap-4">
                 <Link
                   href="/contact"
-                  className="bg-[#0098a2] hover:bg-[#087c86] text-white px-8 py-3 text-xs md:text-sm font-semibold tracking-widest uppercase transition rounded-[2px] shadow-sm"
+                  className="bg-[#0098a2] text-white px-8 py-3 text-xs md:text-sm font-semibold tracking-widest uppercase rounded-[2px] shadow-sm transition-all duration-200 hover:bg-[#008f99] hover:shadow-[0px_8px_25px_rgba(0,152,162,0.35)] hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
                 >
                   Tư Vấn Tour {destination.name}
                 </Link>
                 <Link
                   href="/destinations"
-                  className="bg-white hover:bg-slate-50 text-[#1e293b] border border-slate-300 px-8 py-3 text-xs md:text-sm font-semibold tracking-widest uppercase transition rounded-[2px] shadow-sm"
+                  className="bg-white text-[#1e293b] border border-slate-300 px-8 py-3 text-xs md:text-sm font-semibold tracking-widest uppercase rounded-[2px] shadow-sm transition-all duration-200 hover:bg-white hover:border-slate-400 hover:shadow-[0px_6px_20px_rgba(0,0,0,0.10)] hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
                 >
                   Xem Các Điểm Đến Khác
                 </Link>

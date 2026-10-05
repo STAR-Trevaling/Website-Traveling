@@ -56,7 +56,7 @@ export function HeroSlider() {
         type="button"
         onClick={prevSlide}
         aria-label="Slide trước"
-        className="absolute left-4 md:left-8 top-1/2 z-20 -translate-y-1/2 flex size-12 items-center justify-center rounded-full bg-black/30 text-white backdrop-blur-md transition hover:bg-[#0098a2] hover:scale-110"
+        className="absolute left-4 md:left-8 top-1/2 z-20 -translate-y-1/2 flex size-12 items-center justify-center rounded-full bg-black/30 text-white backdrop-blur-md transition-all duration-200 hover:bg-white hover:text-slate-900 hover:shadow-[0px_8px_25px_rgba(0,0,0,0.35)] hover:scale-105 active:scale-95 cursor-pointer"
       >
         <ChevronLeft className="size-7" />
       </button>
@@ -65,7 +65,7 @@ export function HeroSlider() {
         type="button"
         onClick={nextSlide}
         aria-label="Slide tiếp theo"
-        className="absolute right-4 md:right-8 top-1/2 z-20 -translate-y-1/2 flex size-12 items-center justify-center rounded-full bg-black/30 text-white backdrop-blur-md transition hover:bg-[#0098a2] hover:scale-110"
+        className="absolute right-4 md:right-8 top-1/2 z-20 -translate-y-1/2 flex size-12 items-center justify-center rounded-full bg-black/30 text-white backdrop-blur-md transition-all duration-200 hover:bg-white hover:text-slate-900 hover:shadow-[0px_8px_25px_rgba(0,0,0,0.35)] hover:scale-105 active:scale-95 cursor-pointer"
       >
         <ChevronRight className="size-7" />
       </button>

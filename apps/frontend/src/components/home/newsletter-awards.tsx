@@ -98,7 +98,7 @@ export function NewsletterAwards() {
                 <div className="pt-8 text-center">
                   <button
                     type="submit"
-                    className="text-xs md:text-sm font-bold tracking-[0.25em] text-[#334155] transition hover:text-black hover:underline uppercase cursor-pointer"
+                    className="inline-block px-8 py-3.5 bg-slate-900 text-white text-xs md:text-sm font-bold tracking-[0.25em] transition-all duration-200 hover:bg-slate-800 hover:shadow-[0px_8px_25px_rgba(15,23,42,0.30)] hover:-translate-y-0.5 active:translate-y-0 uppercase cursor-pointer"
                   >
                     ĐĂNG KÝ NGAY
                   </button>

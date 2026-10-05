@@ -72,10 +72,10 @@ export function ToursCatalog() {
                   key={r.key}
                   type="button"
                   onClick={() => setSelectedRegion(r.key)}
-                  className={`rounded-[2px] px-4 py-3 text-xs md:text-sm font-semibold transition uppercase tracking-wider ${
+                  className={`rounded-[2px] px-4 py-3 text-xs md:text-sm font-semibold transition-all duration-200 uppercase tracking-wider cursor-pointer ${
                     selectedRegion === r.key
-                      ? "bg-[#0098a2] text-white shadow-sm"
-                      : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                      ? "bg-[#0098a2] text-white shadow-[0px_4px_14px_rgba(0,152,162,0.35)]"
+                      : "bg-slate-100 text-slate-600 hover:bg-white hover:shadow-[0px_4px_16px_rgba(0,0,0,0.08)] hover:-translate-y-0.5"
                   }`}
                 >
                   {r.label}
@@ -198,7 +198,7 @@ export function ToursCatalog() {
               <div className="flex gap-2">
                 <Link
                   href={`/tours/${tour.slug}`}
-                  className="rounded-[2px] bg-[#0098a2] px-4 py-2 text-xs font-bold uppercase tracking-wider text-white shadow-sm transition hover:bg-[#087c86] flex items-center gap-1"
+                  className="rounded-[2px] bg-[#0098a2] px-4 py-2 text-xs font-bold uppercase tracking-wider text-white shadow-sm transition-all duration-200 hover:bg-[#008f99] hover:shadow-[0px_6px_20px_rgba(0,152,162,0.35)] hover:-translate-y-0.5 active:translate-y-0 flex items-center gap-1"
                 >
                   <span>Chi tiết</span>
                   <ArrowRight className="size-3" />

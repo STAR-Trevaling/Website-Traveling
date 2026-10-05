@@ -303,7 +303,7 @@ export function DiscoverySearch() {
           type="button"
           onClick={handleSearch}
           aria-label="Tìm kiếm"
-          className="flex h-14 md:h-auto items-center justify-center bg-[#0098a2] px-6 text-white transition hover:bg-[#007f88] active:scale-95 shrink-0"
+          className="flex h-14 md:h-auto items-center justify-center bg-[#0098a2] px-6 text-white transition-all duration-200 hover:shadow-[0px_8px_25px_rgba(0,152,162,0.40)] hover:scale-105 active:scale-95 shrink-0 cursor-pointer"
         >
           <Search className="size-5" />
         </button>

@@ -20,14 +20,14 @@ export default function NotFound() {
         <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
           <Link
             href="/"
-            className="inline-flex items-center justify-center gap-2 bg-[#0098a2] hover:bg-[#087c86] text-white px-6 py-3 text-xs font-semibold uppercase tracking-wider rounded-[2px] shadow-sm transition"
+            className="inline-flex items-center justify-center gap-2 bg-[#0098a2] text-white px-6 py-3 text-xs font-semibold uppercase tracking-wider rounded-[2px] shadow-sm transition-all duration-200 hover:bg-[#008f99] hover:shadow-[0px_8px_25px_rgba(0,152,162,0.35)] hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
           >
             <ArrowLeft className="size-4" />
             <span>Về Trang Chủ</span>
           </Link>
           <Link
             href="/tours"
-            className="inline-flex items-center justify-center bg-slate-100 hover:bg-slate-200 text-slate-700 px-6 py-3 text-xs font-semibold uppercase tracking-wider rounded-[2px] transition"
+            className="inline-flex items-center justify-center bg-white text-slate-800 border border-slate-300 px-6 py-3 text-xs font-semibold uppercase tracking-wider rounded-[2px] shadow-sm transition-all duration-200 hover:bg-white hover:border-slate-400 hover:shadow-[0px_6px_20px_rgba(0,0,0,0.10)] hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
           >
             Khám Phá Tour
           </Link>

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Mail, Phone, Instagram, Facebook, Twitter, UserRound } from "lucide-react";
 import { getCurrentUser } from "@/lib/auth";
+import { MobileNav } from "./mobile-nav";
 
 interface SiteHeaderProps {
   overlay?: boolean;
@@ -58,40 +59,61 @@ export async function SiteHeader({ overlay = false }: SiteHeaderProps) {
             </a>
           </div>
 
-          {/* Center: Navigation Links matching template image(20261004-085822).png */}
+          {/* Center: Navigation Links matching template */}
           <nav className="hidden md:flex items-center gap-8 lg:gap-12 text-sm lg:text-base font-normal">
             {NAV_ITEMS.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
-                className="transition hover:text-white/80 hover:underline"
+                className={
+                  overlay
+                    ? "transition hover:text-white/80 hover:underline"
+                    : "text-slate-700 transition hover:text-[#0098a2] hover:underline"
+                }
               >
                 {item.label}
               </Link>
             ))}
           </nav>
 
-          {/* Right: Phone, Email & Login matching template image(20261004-085822).png */}
+          {/* Right: Phone, Email & Login */}
           <div className="flex items-center gap-5 text-xs lg:text-sm">
-            <span className="hidden sm:flex items-center gap-1.5 text-white/90">
-              <Phone className="size-3.5 text-white/90" />
+            <span
+              className={
+                overlay
+                  ? "hidden sm:flex items-center gap-1.5 text-white/90"
+                  : "hidden sm:flex items-center gap-1.5 text-slate-600"
+              }
+            >
+              <Phone className="size-3.5 opacity-80" />
               +1 334 445 623
             </span>
             <a
               href="mailto:contact@startravels.com"
-              className="hidden lg:flex items-center gap-1.5 text-white/90 hover:opacity-80 transition"
+              className={
+                overlay
+                  ? "hidden lg:flex items-center gap-1.5 text-white/90 hover:opacity-80 transition"
+                  : "hidden lg:flex items-center gap-1.5 text-slate-600 hover:text-[#0098a2] transition"
+              }
             >
-              <Mail className="size-3.5 text-white/90" />
+              <Mail className="size-3.5 opacity-80" />
               contact@startravels.com
             </a>
             <Link
               href={user ? "/account" : "/login"}
               aria-label="Tài khoản"
-              className="flex items-center gap-1.5 font-medium hover:opacity-80 transition"
+              className={
+                overlay
+                  ? "hidden sm:flex items-center gap-1.5 font-medium hover:opacity-80 transition text-white"
+                  : "hidden sm:flex items-center gap-1.5 font-medium hover:text-[#0098a2] transition text-slate-800"
+              }
             >
-              <UserRound className="size-4 text-white/90" />
+              <UserRound className="size-4 opacity-80" />
               <span>{user ? user.username : "Đăng nhập"}</span>
             </Link>
+
+            {/* Mobile Navigation Drawer Toggle */}
+            <MobileNav user={user} overlay={overlay} />
           </div>
         </div>
       </div>

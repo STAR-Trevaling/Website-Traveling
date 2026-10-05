@@ -52,7 +52,7 @@ export function ContactForm() {
               message: "",
             });
           }}
-          className="mt-8 bg-[#0098a2] hover:bg-[#087c86] text-white px-8 py-3 text-xs md:text-sm font-semibold tracking-widest uppercase transition rounded-[2px]"
+          className="mt-8 bg-[#0098a2] text-white px-8 py-3 text-xs md:text-sm font-semibold tracking-widest uppercase rounded-[2px] shadow-sm transition-all duration-200 hover:bg-[#008f99] hover:shadow-[0px_8px_25px_rgba(0,152,162,0.35)] hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
         >
           Gửi Yêu Cầu Khác
         </button>
@@ -170,7 +170,7 @@ export function ContactForm() {
       <button
         type="submit"
         disabled={loading}
-        className="w-full bg-[#0098a2] hover:bg-[#087c86] disabled:opacity-70 text-white py-4 text-xs md:text-sm font-semibold tracking-widest uppercase transition rounded-[2px] shadow-sm flex items-center justify-center gap-2 cursor-pointer"
+        className="w-full bg-[#0098a2] text-white py-4 text-xs md:text-sm font-semibold tracking-widest uppercase rounded-[2px] shadow-sm transition-all duration-200 hover:bg-[#008f99] hover:shadow-[0px_8px_25px_rgba(0,152,162,0.35)] hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-70 flex items-center justify-center gap-2 cursor-pointer"
       >
         <Send className="size-4" />
         <span>{loading ? "Đang gửi yêu cầu..." : "Gửi Yêu Cầu Tư Vấn Ngay"}</span>

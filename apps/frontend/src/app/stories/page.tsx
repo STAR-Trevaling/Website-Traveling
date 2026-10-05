@@ -164,7 +164,7 @@ export default async function StoriesPage() {
                 />
                 <button
                   type="button"
-                  className="rounded-[2px] bg-[#0098a2] hover:bg-[#00c2cb] px-6 py-3 text-xs md:text-sm font-bold uppercase tracking-wider text-white transition shadow-sm"
+                  className="rounded-[2px] bg-[#0098a2] text-white px-6 py-3 text-xs md:text-sm font-bold uppercase tracking-wider shadow-sm transition-all duration-200 hover:bg-[#008f99] hover:shadow-[0px_8px_25px_rgba(0,152,162,0.35)] hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
                 >
                   ĐĂNG KÝ
                 </button>
