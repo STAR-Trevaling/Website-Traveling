@@ -58,6 +58,7 @@ jobs:
           ruff check .
           ruff format --check .
           mypy .
+          bandit -r . -x ./tests,./core/management/commands/seed_demo.py -ll
           pytest
           python manage.py check --deploy
   frontend:
@@ -75,3 +76,24 @@ jobs:
           BACKEND_URL: http://localhost:8000/api/v1
           NEXT_PUBLIC_SITE_URL: http://localhost:3000
         run: npm run build
+  security:
+    name: Security & Secret Scanning
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Scan repository for leaked secrets (TruffleHog)
+        uses: trufflesecurity/trufflehog@main
+        with:
+          extra_args: --only-verified
+        continue-on-error: true
+      - name: Setup Node.js for Dependency Audit
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Audit Frontend Dependencies
+        working-directory: apps/frontend
+        run: |
+          npm audit --audit-level=critical || true
