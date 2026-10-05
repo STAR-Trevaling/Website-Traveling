@@ -23,7 +23,7 @@ export function FeaturedTours() {
             return (
               <Link
                 key={tour.id}
-                href="/tours"
+                href={`/tours/${tour.slug}`}
                 className="group flex flex-col overflow-hidden rounded-[2px] bg-white shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
               >
                 <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-100">
@@ -41,7 +41,7 @@ export function FeaturedTours() {
 
                 <div className="p-4 flex items-start justify-between gap-3 bg-white">
                   <div className="flex-1 min-w-0 pr-1">
-                    <h3 className="script-title text-2xl font-bold text-[#1e293b] leading-tight truncate group-hover:text-[#0098a2] transition-colors">
+                    <h3 className="script-title text-2xl font-bold text-[#1e293b] leading-tight truncate group-hover:text-amber-700 transition-colors">
                       {shortDest}
                     </h3>
                     <p className="mt-1 text-[11px] font-light text-[#64748b] leading-snug line-clamp-2">

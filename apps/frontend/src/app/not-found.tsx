@@ -1,1 +1,38 @@
-import Link from "next/link"; export default function NotFound(){return <main className="template-page-bg flex min-h-screen items-center justify-center px-5 text-center"><div><h1 className="display-title text-6xl">Not Found</h1><p className="mt-4 text-slate-600">The travel page you requested is not available.</p><Link href="/" className="mt-7 inline-block bg-[#0098a2] px-6 py-3 text-white">BACK HOME</Link></div></main>}
+import Link from "next/link";
+import { ArrowLeft, Compass } from "lucide-react";
+
+export default function NotFound() {
+  return (
+    <main className="template-page-bg flex min-h-screen items-center justify-center px-6 text-center text-[#282828]">
+      <div className="mx-auto max-w-md bg-white/90 p-10 md:p-14 rounded-[2px] shadow-sm border border-slate-100 backdrop-blur-md">
+        <div className="mx-auto flex size-16 items-center justify-center rounded-full bg-slate-100 text-slate-800">
+          <Compass className="size-8" />
+        </div>
+        <p className="mt-4 text-xs font-bold uppercase tracking-[0.25em] text-slate-900">
+          Mã Lỗi 404
+        </p>
+        <h1 className="script-title mt-2 text-5xl md:text-6xl text-[#1e293b]">
+          Lạc Bước Hành Trình
+        </h1>
+        <p className="mt-3 text-sm font-light text-slate-600 leading-relaxed">
+          Trang hoặc điểm đến bạn đang tìm kiếm không tồn tại hoặc đã được chuyển sang hành trình mới.
+        </p>
+        <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
+          <Link
+            href="/"
+            className="inline-flex items-center justify-center gap-2 bg-[#0098a2] hover:bg-[#087c86] text-white px-6 py-3 text-xs font-semibold uppercase tracking-wider rounded-[2px] shadow-sm transition"
+          >
+            <ArrowLeft className="size-4" />
+            <span>Về Trang Chủ</span>
+          </Link>
+          <Link
+            href="/tours"
+            className="inline-flex items-center justify-center bg-slate-100 hover:bg-slate-200 text-slate-700 px-6 py-3 text-xs font-semibold uppercase tracking-wider rounded-[2px] transition"
+          >
+            Khám Phá Tour
+          </Link>
+        </div>
+      </div>
+    </main>
+  );
+}

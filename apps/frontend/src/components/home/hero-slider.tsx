@@ -27,7 +27,7 @@ export function HeroSlider() {
   };
 
   return (
-    <div className="relative h-[820px] md:h-[760px] lg:h-[820px] w-full overflow-hidden">
+    <div className="relative h-[860px] sm:h-[800px] md:h-[720px] lg:h-[740px] w-full overflow-hidden">
       {/* Background Images with smooth fade */}
       {slides.map((slide, index) => (
         <div
@@ -71,8 +71,8 @@ export function HeroSlider() {
       </button>
 
       {/* Hero Content */}
-      <div className="relative z-10 flex h-full flex-col items-center justify-between pb-14 pt-24 text-white">
-        <div className="mt-20 text-center px-4 max-w-5xl">
+      <div className="relative z-10 flex h-full flex-col items-center justify-between pb-16 sm:pb-20 md:pb-24 lg:pb-28 pt-20 sm:pt-24 text-white">
+        <div className="mt-8 sm:mt-12 md:mt-14 text-center px-4 max-w-5xl">
           <h1 className="display-title template-shadow-text text-5xl leading-tight sm:text-6xl md:text-7xl lg:text-[76px] transition-all duration-700">
             {slides[currentSlide].title || "Your Dream Vacation Awaits"}
           </h1>
@@ -82,8 +82,8 @@ export function HeroSlider() {
           </p>
         </div>
 
-        {/* Search Bar at the bottom of hero matching template */}
-        <div className="w-full px-4 mb-2">
+        {/* Search Bar shifted up with safe clearance from bottom edge & PC taskbar */}
+        <div className="w-full px-4 mb-4 sm:mb-6 md:mb-8">
           <div className="mx-auto max-w-[1060px]">
             <DiscoverySearch />
           </div>

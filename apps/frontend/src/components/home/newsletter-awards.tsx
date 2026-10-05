@@ -70,7 +70,7 @@ export function NewsletterAwards() {
             </p>
 
             {subscribed ? (
-              <div className="mt-12 rounded bg-white/90 p-6 text-center text-sm font-medium text-[#0098a2]">
+              <div className="mt-12 rounded bg-white/90 p-6 text-center text-sm font-bold text-emerald-800">
                 Cảm ơn bạn đã đăng ký nhận bản tin từ Star Travels!
               </div>
             ) : (
@@ -81,7 +81,7 @@ export function NewsletterAwards() {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder="Họ và tên của bạn..."
-                    className="h-13 w-full bg-white px-5 text-sm md:text-base text-slate-800 placeholder:text-slate-400 outline-none shadow-sm transition focus:ring-2 focus:ring-[#0098a2]/30"
+                    className="h-13 w-full bg-white px-5 text-sm md:text-base text-slate-800 placeholder:text-slate-400 outline-none shadow-sm transition focus:ring-2 focus:ring-slate-400"
                   />
                 </div>
                 <div>
@@ -91,14 +91,14 @@ export function NewsletterAwards() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Địa chỉ email..."
-                    className="h-13 w-full bg-white px-5 text-sm md:text-base text-slate-800 placeholder:text-slate-400 outline-none shadow-sm transition focus:ring-2 focus:ring-[#0098a2]/30"
+                    className="h-13 w-full bg-white px-5 text-sm md:text-base text-slate-800 placeholder:text-slate-400 outline-none shadow-sm transition focus:ring-2 focus:ring-slate-400"
                   />
                 </div>
 
                 <div className="pt-8 text-center">
                   <button
                     type="submit"
-                    className="text-xs md:text-sm font-bold tracking-[0.25em] text-[#334155] transition hover:text-[#0098a2] uppercase cursor-pointer"
+                    className="text-xs md:text-sm font-bold tracking-[0.25em] text-[#334155] transition hover:text-black hover:underline uppercase cursor-pointer"
                   >
                     SUBSCRIBE
                   </button>
@@ -136,7 +136,7 @@ export function NewsletterAwards() {
 
                   {/* Text details */}
                   <div>
-                    <h3 className="text-sm md:text-base font-bold text-[#1e293b] group-hover:text-[#0098a2] transition-colors">
+                    <h3 className="text-sm md:text-base font-bold text-[#1e293b] group-hover:text-amber-700 transition-colors">
                       {item.title}
                     </h3>
                     <p className="mt-0.5 text-xs text-[#64748b] font-light">

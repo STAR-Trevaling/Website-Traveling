@@ -19,7 +19,7 @@ export default function RegisterPage() {
       />
 
       <main className="template-page-bg min-h-screen px-6 py-20 md:px-12">
-        <div className="mx-auto max-w-md rounded-xl bg-white p-8 md:p-10 shadow-md border border-slate-100">
+        <div className="mx-auto max-w-md rounded-[2px] bg-white p-8 md:p-10 shadow-md border border-slate-100">
           <div className="mb-6 text-center">
             <h2 className="display-title text-2xl text-slate-900">Tạo Tài Khoản</h2>
             <p className="mt-1 text-xs text-slate-500">
@@ -32,7 +32,7 @@ export default function RegisterPage() {
           <p className="mt-6 text-center text-sm text-slate-600">
             Bạn đã có tài khoản?{" "}
             <Link
-              className="font-medium text-[#0098a2] hover:underline"
+              className="font-bold text-slate-900 underline hover:text-black"
               href="/login"
             >
               Đăng nhập tại đây

@@ -13,51 +13,55 @@ export function SiteFooter() {
   return (
     <footer className="template-page-bg py-12 md:py-16 relative z-10">
       <div className="mx-auto max-w-7xl px-6">
-        <div className="mx-auto max-w-4xl">
+        <div className="mx-auto max-w-4xl flex flex-col items-center text-center">
 
-          {/* Brand row — star LEFT, text right */}
-          <div className="flex items-center gap-3 mb-8">
-            {/* Small teal star — left-aligned */}
+          {/* Brand row — centered and enlarged */}
+          <Link
+            href="/"
+            className="group flex items-center justify-center gap-3 sm:gap-4 mb-6 sm:mb-8 transition-transform hover:scale-[1.02]"
+            aria-label="Star Travels Trang chủ"
+          >
+            {/* Enlarged teal star */}
             <svg
-              width="36"
-              height="36"
+              width="52"
+              height="52"
               viewBox="0 0 100 100"
               fill="#0098a2"
               aria-hidden="true"
-              className="shrink-0"
+              className="size-11 sm:size-13 md:size-14 shrink-0 transition-transform group-hover:rotate-12 duration-300"
             >
               <polygon points="50,5 64,36 98,38 72,60 80,94 50,75 20,94 28,60 2,38 36,36" />
             </svg>
 
-            {/* Brand name */}
-            <span className="logo-title text-3xl md:text-4xl leading-none text-black select-none">
+            {/* Brand name — prominently enlarged */}
+            <span className="logo-title text-5xl sm:text-6xl md:text-7xl leading-none text-slate-900 select-none tracking-normal font-normal">
               Star Travels
             </span>
-          </div>
+          </Link>
 
-          {/* Divider */}
-          <hr className="border-black/10 mb-8" />
+          {/* Centered Divider */}
+          <hr className="w-full border-black/15 mb-6 sm:mb-8" />
 
-          {/* Nav links */}
+          {/* Centered Nav links */}
           <nav
             aria-label="Footer navigation"
-            className="flex flex-wrap gap-x-8 gap-y-3 text-sm font-normal text-black/80 md:text-base mb-10"
+            className="flex flex-wrap items-center justify-center gap-x-8 sm:gap-x-10 gap-y-3 text-sm sm:text-base font-medium text-slate-800 mb-8 sm:mb-10 text-center"
           >
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="transition hover:text-[#0098a2]"
+                className="transition-colors hover:text-black hover:underline"
               >
                 {link.label}
               </Link>
             ))}
           </nav>
 
-          {/* Copyright */}
-          <p className="text-xs font-normal text-black/50 md:text-sm">
+          {/* Centered Copyright */}
+          <p className="text-center text-xs sm:text-sm font-normal text-slate-600">
             © 2026 StarTravels Vietnam · Khám phá Việt Nam theo cách của bạn ·{" "}
-            <Link href="/privacy" className="hover:text-[#0098a2] transition">
+            <Link href="/privacy" className="hover:text-black hover:underline transition">
               Chính sách bảo mật
             </Link>
           </p>
