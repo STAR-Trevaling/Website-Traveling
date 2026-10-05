@@ -13,11 +13,11 @@ export const VIETNAM_IMAGES = {
   // Top Hero Slide Banners
   heroSlides: [
     {
-      id: "vacation-awaits",
-      title: "Your Dream Vacation Awaits",
-      subtitle: "Explore the World with us.",
-      image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1920&q=85",
-      tag: "Top Travel Destination",
+      id: "vietnam-heritage",
+      title: "Việt Nam — Non Sông Gấm Vóc",
+      subtitle: "Khám phá kỳ quan thiên nhiên và danh thắng di sản cùng Star Travels.",
+      image: "https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=1920&q=85",
+      tag: "Di sản thiên nhiên thế giới UNESCO",
     },
     {
       id: "da-lat",

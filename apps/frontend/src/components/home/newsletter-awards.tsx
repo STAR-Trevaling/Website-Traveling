@@ -11,34 +11,34 @@ interface AwardItem {
 
 const AWARD_ITEMS: AwardItem[] = [
   {
-    title: "Attractions",
-    subtitle: "Top 10 Attractions",
-    image: "https://images.unsplash.com/photo-1502680390469-be75c86b636f?auto=format&fit=crop&w=400&q=80",
-  },
-  {
-    title: "Hotels",
-    subtitle: "Top 10 Hotels",
-    image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=400&q=80",
-  },
-  {
-    title: "Resorts",
-    subtitle: "Top 5 Resorts",
-    image: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=400&q=80",
-  },
-  {
-    title: "Landmarks",
-    subtitle: "Top 10 Landmarks",
+    title: "Vịnh Hạ Long & Tràng An",
+    subtitle: "Top 10 Thắng Cảnh Di Sản UNESCO",
     image: "https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=400&q=80",
   },
   {
-    title: "Beaches",
-    subtitle: "Top 10 Beaches",
-    image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80",
+    title: "Phố Cổ Hội An & Cố Đô Huế",
+    subtitle: "Top 10 Di Tích Lịch Sử & Văn Hóa",
+    image: "https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?auto=format&fit=crop&w=400&q=80",
   },
   {
-    title: "Islands",
-    subtitle: "Top 10 Islands",
-    image: "https://images.unsplash.com/photo-1512100356356-de1b84283e18?auto=format&fit=crop&w=400&q=80",
+    title: "Đảo Ngọc Phú Quốc & Côn Đảo",
+    subtitle: "Top 10 Bãi Biển Nhiệt Đới Đẹp Nhất",
+    image: "https://upload.wikimedia.org/wikipedia/commons/3/33/Kem_Beach_aerial_view_Phu_Quoc_Island_Vietnam.jpg",
+  },
+  {
+    title: "Sa Pa & Mã Pí Lèng Hà Giang",
+    subtitle: "Top 5 Tuyệt Tác Kỳ Vĩ Vùng Cao",
+    image: "https://upload.wikimedia.org/wikipedia/commons/f/fd/Terraced_fields_Sa_Pa_Vietnam.JPG",
+  },
+  {
+    title: "Đà Lạt — Xứ Sở Ngàn Hoa",
+    subtitle: "Top 5 Điểm Đến Nghỉ Dưỡng Lãng Mạn",
+    image: "https://upload.wikimedia.org/wikipedia/commons/e/e2/Da_Lat_-_Viet_Nam.jpg",
+  },
+  {
+    title: "Miền Tây & Chợ Nổi Cần Thơ",
+    subtitle: "Top 5 Khám Phá Văn Hóa Miệt Vườn",
+    image: "/assets/adventures/canal-cruise.jpg",
   },
 ];
 
@@ -66,7 +66,7 @@ export function NewsletterAwards() {
               NEWSLETTER
             </h2>
             <p className="mx-auto mt-4 max-w-[340px] text-center text-sm md:text-base font-light leading-relaxed text-[#4b5563]">
-              Lorem ipsum dolor sit amet, consec adipiscing elit. Nunc vulputate
+              Đăng ký nhận cẩm nang du lịch độc quyền và ưu đãi sớm nhất từ Star Travels
             </p>
 
             {subscribed ? (
@@ -100,7 +100,7 @@ export function NewsletterAwards() {
                     type="submit"
                     className="text-xs md:text-sm font-bold tracking-[0.25em] text-[#334155] transition hover:text-black hover:underline uppercase cursor-pointer"
                   >
-                    SUBSCRIBE
+                    ĐĂNG KÝ NGAY
                   </button>
                 </div>
               </form>
@@ -113,7 +113,7 @@ export function NewsletterAwards() {
               Award Winning
             </h2>
             <p className="mt-3 max-w-lg text-sm md:text-base font-light leading-relaxed text-[#4b5563]">
-              Lorem ipsum dolor sit amet, consec adipiscing elit. Nunc vulputate
+              Tự hào tôn vinh những danh lam thắng cảnh rực rỡ và di sản văn hóa trường tồn của Việt Nam
             </p>
 
             {/* 2 Columns x 3 Rows Layout */}
