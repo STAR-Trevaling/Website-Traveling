@@ -34,9 +34,13 @@ export interface Destination {
   id: string;
   slug: string;
   name: string;
+  name_en?: string;
   country: string;
+  country_en?: string;
   summary: string;
+  summary_en?: string;
   description: string;
+  description_en?: string;
   image_url: string;
   hero_image_url: string;
   starting_price: string | null;

@@ -5,25 +5,28 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X, Phone, Mail, Instagram, Facebook, Twitter, UserRound, ArrowRight } from "lucide-react";
 import type { CurrentUser } from "@/lib/types";
+import { useLanguage } from "@/lib/i18n/context";
+import { LanguageSwitcher } from "./language-switcher";
 
 interface MobileNavProps {
   user: CurrentUser | null;
   overlay?: boolean;
 }
 
-const NAV_ITEMS = [
-  { label: "Home", href: "/" },
-  { label: "Packages", href: "/experiences" },
-  { label: "Tours", href: "/tours" },
-  { label: "Destinations", href: "/destinations" },
-  { label: "Stories", href: "/stories" },
-  { label: "About Us", href: "/about" },
-  { label: "Contact", href: "/contact" },
-];
-
 export function MobileNav({ user, overlay = false }: MobileNavProps) {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
+  const { t, isVietnamese } = useLanguage();
+
+  const navItems = [
+    { label: t.nav.home, href: "/" },
+    { label: t.nav.packages, href: "/experiences" },
+    { label: t.nav.tours, href: "/tours" },
+    { label: isVietnamese ? "Điểm Đến" : "Destinations", href: "/destinations" },
+    { label: isVietnamese ? "Góc Nhìn Du Lịch" : "Stories", href: "/stories" },
+    { label: t.nav.aboutUs, href: "/about" },
+    { label: t.nav.contact, href: "/contact" },
+  ];
 
   // Close drawer when route changes
   useEffect(() => {
@@ -48,7 +51,7 @@ export function MobileNav({ user, overlay = false }: MobileNavProps) {
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        aria-label={isOpen ? "Đóng menu" : "Mở menu"}
+        aria-label={isOpen ? "Close menu" : "Open menu"}
         className={`flex size-9 items-center justify-center rounded-[2px] transition-all duration-200 cursor-pointer ${
           overlay
             ? "text-white hover:bg-white/20 active:scale-95"
@@ -61,19 +64,19 @@ export function MobileNav({ user, overlay = false }: MobileNavProps) {
       {/* Backdrop */}
       {isOpen && (
         <div
-          className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm transition-opacity"
+          className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm transition-opacity"
           onClick={() => setIsOpen(false)}
         />
       )}
 
       {/* Slide-out Drawer */}
       <div
-        className={`fixed top-0 right-0 bottom-0 z-50 w-[82vw] max-w-sm bg-white shadow-2xl transition-transform duration-300 ease-in-out flex flex-col justify-between p-6 ${
+        className={`fixed top-0 right-0 bottom-0 z-50 w-[300px] max-w-[85vw] bg-white text-slate-800 p-6 shadow-2xl transition-transform duration-300 ease-in-out flex flex-col justify-between overflow-y-auto ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
         <div>
-          {/* Header row in drawer */}
+          {/* Header row: Brand + Close button */}
           <div className="flex items-center justify-between pb-4 border-b border-slate-100">
             <Link
               href="/"
@@ -98,15 +101,20 @@ export function MobileNav({ user, overlay = false }: MobileNavProps) {
             <button
               type="button"
               onClick={() => setIsOpen(false)}
-              className="p-1.5 text-slate-500 hover:text-slate-900 rounded hover:bg-slate-100"
+              className="p-1.5 text-slate-500 hover:text-slate-900 rounded hover:bg-slate-100 cursor-pointer"
             >
               <X className="size-5" />
             </button>
           </div>
 
+          {/* Language Switcher inside mobile drawer */}
+          <div className="pt-4 pb-2">
+            <LanguageSwitcher className="w-full justify-center py-1" />
+          </div>
+
           {/* Navigation Links */}
-          <nav className="mt-6 space-y-1">
-            {NAV_ITEMS.map((item) => {
+          <nav className="mt-4 space-y-1">
+            {navItems.map((item) => {
               const active = pathname === item.href;
               return (
                 <Link
@@ -133,17 +141,17 @@ export function MobileNav({ user, overlay = false }: MobileNavProps) {
             className="flex items-center justify-center gap-2 w-full bg-[#0098a2] text-white py-2.5 text-xs font-bold uppercase tracking-wider rounded-[2px] shadow-sm transition-all duration-200 hover:bg-[#008f99] hover:shadow-[0px_8px_25px_rgba(0,152,162,0.35)] hover:-translate-y-0.5 active:translate-y-0"
           >
             <UserRound className="size-4" />
-            <span>{user ? user.username : "Đăng nhập"}</span>
+            <span>{user ? user.username : t.nav.login}</span>
           </Link>
 
           <div className="space-y-1 text-xs text-slate-600">
             <div className="flex items-center gap-2">
               <Phone className="size-3.5 text-[#0098a2]" />
-              <span>+1 334 445 623</span>
+              <span>{t.nav.phoneLabel}</span>
             </div>
             <div className="flex items-center gap-2">
               <Mail className="size-3.5 text-[#0098a2]" />
-              <span>contact@startravels.com</span>
+              <span>{t.nav.emailLabel}</span>
             </div>
           </div>
 

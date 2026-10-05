@@ -5,12 +5,16 @@ import Image from "next/image";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { VIETNAM_TOURS, type TourItem } from "@/lib/tours-data";
+import { useLanguage } from "@/lib/i18n/context";
 
 interface FeaturedToursProps {
   initialTours?: TourItem[];
 }
 
 export function FeaturedTours({ initialTours }: FeaturedToursProps) {
+  const { t, locale } = useLanguage();
+  const isEn = locale === "en";
+
   const tours = initialTours || VIETNAM_TOURS;
   const itemsPerPage = 4;
   const totalPages = Math.ceil(tours.length / itemsPerPage);
@@ -35,10 +39,10 @@ export function FeaturedTours({ initialTours }: FeaturedToursProps) {
       <div className="mx-auto max-w-7xl">
         <div className="text-center mb-10">
           <h2 className="script-title text-5xl md:text-6xl text-[#1e293b]">
-            Featured Tours
+            {t.featured.heading}
           </h2>
           <p className="mt-2 text-sm md:text-base text-[#64748b] font-light max-w-xl mx-auto">
-            Hành trình trọn gói tuyển chọn đặc sắc với dịch vụ cao cấp và giá ưu đãi nhất
+            {t.featured.subheading}
           </p>
         </div>
 
@@ -46,21 +50,21 @@ export function FeaturedTours({ initialTours }: FeaturedToursProps) {
           {/* Floating navigation chevrons matching DestinationsCarousel if > 4 cards */}
           {hasMultiplePages && (
             <>
-              {/* Floating Left Arrow: pure white chevron with drop shadow */}
+              {/* Floating Left Arrow */}
               <button
                 type="button"
                 onClick={handlePrev}
-                aria-label="Previous tours"
+                aria-label={isEn ? "Previous tours" : "Tour trước"}
                 className="absolute -left-6 md:-left-12 top-1/2 z-20 -translate-y-1/2 text-white/90 hover:text-white transition drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)] hover:scale-110 cursor-pointer"
               >
                 <ChevronLeft className="size-12 md:size-16 stroke-[1.2]" />
               </button>
 
-              {/* Floating Right Arrow: pure white chevron with drop shadow */}
+              {/* Floating Right Arrow */}
               <button
                 type="button"
                 onClick={handleNext}
-                aria-label="Next tours"
+                aria-label={isEn ? "Next tours" : "Tour tiếp theo"}
                 className="absolute -right-6 md:-right-12 top-1/2 z-20 -translate-y-1/2 text-white/90 hover:text-white transition drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)] hover:scale-110 cursor-pointer"
               >
                 <ChevronRight className="size-12 md:size-16 stroke-[1.2]" />
@@ -71,7 +75,11 @@ export function FeaturedTours({ initialTours }: FeaturedToursProps) {
           {/* 4 Cards Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 transition-opacity duration-300">
             {currentTours.map((tour) => {
-              const shortDest = tour.destination.split(",")[0].trim();
+              const fullDest = isEn && tour.destination_en ? tour.destination_en : tour.destination;
+              const shortDest = fullDest.split(",")[0].trim();
+              const displayTitle = isEn && tour.title_en ? tour.title_en : tour.title;
+              const displayDuration = isEn && tour.duration_en ? tour.duration_en : tour.duration;
+
               return (
                 <Link
                   key={tour.id}
@@ -81,13 +89,13 @@ export function FeaturedTours({ initialTours }: FeaturedToursProps) {
                   <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-100">
                     <Image
                       src={tour.image}
-                      alt={tour.title}
+                      alt={displayTitle}
                       fill
                       unoptimized
                       className="object-cover transition duration-500 group-hover:scale-105"
                     />
                     <div className="absolute top-3 left-3 bg-black/50 text-white text-[11px] font-medium px-2 py-0.5 rounded-[2px] backdrop-blur-sm">
-                      {tour.duration}
+                      {displayDuration}
                     </div>
                   </div>
 
@@ -97,7 +105,7 @@ export function FeaturedTours({ initialTours }: FeaturedToursProps) {
                         {shortDest}
                       </h3>
                       <p className="mt-1 text-[11px] font-light text-[#64748b] leading-snug line-clamp-2">
-                        {tour.title}
+                        {displayTitle}
                       </p>
                     </div>
 
@@ -106,7 +114,7 @@ export function FeaturedTours({ initialTours }: FeaturedToursProps) {
                         {tour.price.toLocaleString("vi-VN")}đ
                       </span>
                       <span className="text-[10px] text-[#94a3b8] font-light block">
-                        / người
+                        {t.featured.pricePerPerson}
                       </span>
                     </div>
                   </div>
@@ -121,7 +129,7 @@ export function FeaturedTours({ initialTours }: FeaturedToursProps) {
             href="/tours"
             className="inline-block border border-slate-700/70 bg-white px-8 py-3 text-xs md:text-sm font-bold tracking-[0.2em] uppercase text-[#1e293b] rounded-[2px] template-shadow-text shadow-sm transition-all duration-200 hover:border-black hover:text-black hover:bg-slate-50 hover:shadow-[0px_8px_25px_rgba(0,0,0,0.15)] hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
           >
-            XEM TẤT CẢ TOUR
+            {t.featured.viewAllBtn}
           </Link>
         </div>
       </div>

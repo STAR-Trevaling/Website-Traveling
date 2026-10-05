@@ -27,10 +27,20 @@
   - **Immutable Audit Log (`/audit`)**: Tamper-proof activity tracking with actor, role, entity, timestamp, and metadata payload.
   - **Role-Based Access Control (RBAC)**: Enforced across 6 roles (`SUPER_ADMIN`, `ADMIN`, `CONTENT_EDITOR`, `MODERATOR`, `OPERATIONS_MANAGER`, `PARTNER_REVIEWER`) with topbar role switcher for interactive testing.
 
+- Complete Bilingual i18n Architecture & Language Switcher (`apps/frontend/`):
+  - Solved mixed Vietnamese/English content by enforcing single active language policy across all customer-facing routes and components.
+  - Implemented `LanguageProvider` and `useLanguage` context supporting reactive locale switching (`vi` and `en`) with `localStorage` and cookie persistence (`star_travels_locale`) and automatic `document.documentElement.lang` attribute sync.
+  - Added extensible pill language switcher `[ 🇻🇳 VI | 🇬🇧 EN ]` with active state indicators supporting both transparent header overlay mode and standard mode, on both desktop header and mobile navigation drawer.
+  - Applied high-ranking travel SEO terminology based on `seo-optimization` skill:
+    - Vietnamese: *Điểm Đến Nổi Tiếng*, *Tour Du Lịch Trọn Gói*, *Vì Sao Chọn Star Travels?*, *Trải Nghiệm Bản Địa Hôm Nay*, *Bản Tin Du Lịch*, *Vinh Danh Kỳ Quan & Di Sản*, *Bạn Đang Tìm Kiếm Trải Nghiệm Độc Bản?*.
+    - English: *Popular Destinations*, *Featured All-Inclusive Tours*, *Why Choose Star Travels?*, *Have an Adventure Today*, *NEWSLETTER*, *Award Winning*, *Looking for an Experience?*.
+  - Added bilingual data contracts and fallback records for all 12 destinations (`name_en`, `summary_en`, `description_en`) and 8 curated tours (`title_en`, `destination_en`, `duration_en`, `departure_en`).
+
 ## Validation status
 - GitHub Actions CI (Run #10) & CodeQL Analysis: **PASSED (All 3 jobs green)**.
 - Local static sanity (`validate_context.py`, `static_sanity.py`, Python AST across 3,205 files): **PASSED**.
-- Next.js production build (`npm run build` in `apps/frontend`): **PASSED (19/19 pages static & dynamic generated)**.
+- Next.js production build & typecheck (`npm run build` & `npm run typecheck` in `apps/frontend`): **PASSED (zero errors)**.
+- ESLint checks (`npm run lint` in `apps/frontend`): **PASSED (zero warnings/errors)**.
 - Admin Portal production build (`npm run build` in `apps/admin`): **PASSED (1,656 modules transformed, zero errors)**.
 - Admin Portal TypeScript typecheck (`npm run typecheck` in `apps/admin`): **PASSED (zero errors)**.
 - Admin Portal integration tests (`npm test` in `apps/admin`): **PASSED (8/8 test suites green, 100% assertions verified)**.

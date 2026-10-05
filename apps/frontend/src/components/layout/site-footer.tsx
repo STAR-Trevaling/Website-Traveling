@@ -1,15 +1,22 @@
-import Link from "next/link";
+"use client";
 
-const navLinks = [
-  { label: "Trang chủ", href: "/" },
-  { label: "Điểm đến", href: "/destinations" },
-  { label: "Trải nghiệm", href: "/experiences" },
-  { label: "Tours", href: "/tours" },
-  { label: "Câu chuyện", href: "/stories" },
-  { label: "Liên hệ", href: "/contact" },
-];
+import Link from "next/link";
+import { useLanguage } from "@/lib/i18n/context";
 
 export function SiteFooter() {
+  const { t, isVietnamese } = useLanguage();
+
+  const navLinks = [
+    { label: t.footer.home, href: "/" },
+    { label: t.footer.destinations, href: "/destinations" },
+    { label: t.footer.experiences, href: "/experiences" },
+    { label: t.footer.tours, href: "/tours" },
+    { label: t.footer.stories, href: "/stories" },
+    { label: t.footer.aboutUs, href: "/about" },
+    { label: t.footer.contact, href: "/contact" },
+    { label: t.footer.partner, href: "/partner" },
+  ];
+
   return (
     <footer className="template-page-bg py-12 md:py-16 relative z-10">
       <div className="mx-auto max-w-7xl px-6">
@@ -19,7 +26,7 @@ export function SiteFooter() {
           <Link
             href="/"
             className="group relative inline-flex items-center justify-center mb-6 sm:mb-8 transition-transform hover:scale-[1.03]"
-            aria-label="Star Travels Trang chủ"
+            aria-label="Star Travels"
           >
             {/* Brand name with golden star backdrop */}
             <span className="logo-title text-6xl sm:text-7xl md:text-8xl lg:text-[96px] leading-none text-slate-900 select-none tracking-normal font-normal flex items-center">
@@ -59,11 +66,8 @@ export function SiteFooter() {
           </nav>
 
           {/* Centered Copyright */}
-          <p className="text-center text-xs sm:text-sm font-normal text-slate-600">
-            © 2026 StarTravels Vietnam · Khám phá Việt Nam theo cách của bạn ·{" "}
-            <Link href="/privacy" className="hover:text-black hover:underline transition">
-              Chính sách bảo mật
-            </Link>
+          <p className="text-center text-xs sm:text-sm font-normal text-slate-600 max-w-2xl leading-relaxed">
+            © 2026 Star Travels Vietnam · {t.footer.copyright}
           </p>
         </div>
       </div>

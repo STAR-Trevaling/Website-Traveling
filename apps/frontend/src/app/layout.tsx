@@ -3,6 +3,7 @@ import Image from "next/image";
 import Script from "next/script";
 import "./globals.css";
 import { SiteFooter } from "@/components/layout/site-footer";
+import { LanguageProvider } from "@/lib/i18n/context";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://startravels.vn";
 const SITE_NAME = "Star Travels Vietnam";
@@ -155,8 +156,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <div className="absolute inset-0 bg-[#eaf4f2]/30" />
         </div>
 
-        <div className="flex-1 relative z-0">{children}</div>
-        <SiteFooter />
+        <LanguageProvider>
+          <div className="flex-1 relative z-0">{children}</div>
+          <SiteFooter />
+        </LanguageProvider>
       </body>
     </html>
   );

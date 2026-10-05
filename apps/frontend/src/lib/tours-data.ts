@@ -13,10 +13,14 @@ export interface TourItem {
   slug: string;
   aliases?: string[];
   title: string;
+  title_en?: string;
   destination: string;
+  destination_en?: string;
   region: "north" | "central" | "south";
   duration: string;
+  duration_en?: string;
   departure: string;
+  departure_en?: string;
   price: number;
   originalPrice?: number;
   rating: number;
@@ -24,6 +28,7 @@ export interface TourItem {
   image: string;
   gallery?: string[];
   overview: string;
+  overview_en?: string;
   highlights: string[];
   itinerary: TourItineraryDay[];
   inclusions: string[];
@@ -38,10 +43,14 @@ export const VIETNAM_TOURS: TourItem[] = [
     slug: "tour-ha-long-cruise-2n1d",
     aliases: ["ha-long-cruise"],
     title: "Du Thuyền 5 Sao Vịnh Hạ Long & Lan Hạ — Kỳ Quan Biển Ngọc",
+    title_en: "5-Star Ha Long & Lan Ha Bay Cruise — Emerald Sea Wonder",
     destination: "Vịnh Hạ Long, Quảng Ninh",
+    destination_en: "Ha Long Bay, Quang Ninh",
     region: "north",
     duration: "2 Ngày 1 Đêm",
+    duration_en: "2 Days 1 Night",
     departure: "Hà Nội / Quảng Ninh",
+    departure_en: "Hanoi / Quang Ninh",
     price: 1850000,
     originalPrice: 2300000,
     rating: 5.0,
@@ -93,10 +102,14 @@ export const VIETNAM_TOURS: TourItem[] = [
     slug: "tour-sapa-fansipan-2n1d",
     aliases: ["sapa-fansipan-trek"],
     title: "Tour Sa Pa — Chinh Phục Nóc Nhà Fansipan & Bản Cát Cát Thơ Mộng",
+    title_en: "Sa Pa Tour — Conquering Fansipan Peak & Poetic Cat Cat Village",
     destination: "Sa Pa, Lào Cai",
+    destination_en: "Sa Pa, Lao Cai",
     region: "north",
     duration: "2 Ngày 1 Đêm",
+    duration_en: "2 Days 1 Night",
     departure: "Hà Nội",
+    departure_en: "Hanoi",
     price: 1650000,
     originalPrice: 1950000,
     rating: 4.9,
@@ -148,10 +161,14 @@ export const VIETNAM_TOURS: TourItem[] = [
     slug: "tour-da-nang-hoi-an-trail",
     aliases: ["da-nang-hoi-an-trail", "tour-hoi-an-di-san-3n2d"],
     title: "Đà Nẵng — Phố Cổ Hội An — Cầu Vàng Bà Nà Hills Di Sản",
+    title_en: "Da Nang — Hoi An Ancient Town — Ba Na Hills Golden Bridge",
     destination: "Đà Nẵng & Hội An",
+    destination_en: "Da Nang & Hoi An",
     region: "central",
     duration: "3 Ngày 2 Đêm",
+    duration_en: "3 Days 2 Nights",
     departure: "Đà Nẵng / Hà Nội / TP.HCM",
+    departure_en: "Da Nang / Hanoi / HCMC",
     price: 2850000,
     originalPrice: 3400000,
     rating: 4.9,
@@ -210,10 +227,14 @@ export const VIETNAM_TOURS: TourItem[] = [
     slug: "tour-mekong-delta-floating-market",
     aliases: ["mekong-delta-floating-market", "tour-mien-tay-song-nuoc-2n1d"],
     title: "Mê Kông Sông Nước — Chợ Nổi Cái Răng & Miệt Vườn Cần Thơ",
+    title_en: "Mekong Riverways — Cai Rang Floating Market & Can Tho Orchards",
     destination: "Cần Thơ & Bến Tre",
+    destination_en: "Can Tho & Ben Tre",
     region: "south",
     duration: "2 Ngày 1 Đêm",
+    duration_en: "2 Days 1 Night",
     departure: "TP. Hồ Chí Minh",
+    departure_en: "Ho Chi Minh City",
     price: 1950000,
     originalPrice: 2400000,
     rating: 4.8,
@@ -263,10 +284,14 @@ export const VIETNAM_TOURS: TourItem[] = [
     id: "tour-da-lat-3n2d",
     slug: "tour-da-lat-3n2d",
     title: "Tour Đà Lạt — Săn Mây Đồi Chè & Thung Lũng Ngàn Hoa Mộng Mơ",
+    title_en: "Da Lat Highland Tour — Cloud Hunting & Valley of Thousand Flowers",
     destination: "Đà Lạt, Lâm Đồng",
+    destination_en: "Da Lat, Lam Dong",
     region: "central",
     duration: "3 Ngày 2 Đêm",
+    duration_en: "3 Days 2 Nights",
     departure: "TP. Hồ Chí Minh / Hà Nội",
+    departure_en: "Ho Chi Minh City / Hanoi",
     price: 2450000,
     originalPrice: 2950000,
     rating: 4.9,
@@ -319,10 +344,14 @@ export const VIETNAM_TOURS: TourItem[] = [
     id: "tour-trang-an-hang-mua-1n",
     slug: "tour-trang-an-hang-mua-1n",
     title: "Tour Ninh Bình — Danh Thắng Tràng An & Đỉnh Hang Múa Kỳ Vĩ",
+    title_en: "Ninh Binh Day Tour — Trang An Heritage & Mua Cave Panorama",
     destination: "Ninh Bình",
+    destination_en: "Ninh Binh",
     region: "north",
     duration: "1 Ngày",
+    duration_en: "1 Day",
     departure: "Hà Nội",
+    departure_en: "Hanoi",
     price: 950000,
     originalPrice: 1200000,
     rating: 4.8,
@@ -361,10 +390,14 @@ export const VIETNAM_TOURS: TourItem[] = [
     id: "tour-phu-quoc-nam-dao-4n3d",
     slug: "tour-phu-quoc-nam-dao-4n3d",
     title: "Đảo Ngọc Phú Quốc — Lặn Ngắm San Hô & Hoàng Hôn Sunset Sanato",
+    title_en: "Phu Quoc Pearl Island — 4-Island Speedboat & Sunset Sanato",
     destination: "Phú Quốc, Kiên Giang",
+    destination_en: "Phu Quoc, Kien Giang",
     region: "south",
     duration: "4 Ngày 3 Đêm",
+    duration_en: "4 Days 3 Nights",
     departure: "Phú Quốc / Hà Nội / TP.HCM",
+    departure_en: "Phu Quoc / Hanoi / HCMC",
     price: 3650000,
     originalPrice: 4200000,
     rating: 5.0,
@@ -429,10 +462,14 @@ export const VIETNAM_TOURS: TourItem[] = [
     id: "tour-ha-giang-dong-van-3n2d",
     slug: "tour-ha-giang-dong-van-3n2d",
     title: "Hà Giang Kỳ Vĩ — Chinh Phục Đèo Mã Pí Lèng & Hẻm Tu Sản",
+    title_en: "Majestic Ha Giang — Ma Pi Leng Pass & Tu San Canyon Cruise",
     destination: "Hà Giang & Đồng Văn",
+    destination_en: "Ha Giang & Dong Van",
     region: "north",
     duration: "3 Ngày 2 Đêm",
+    duration_en: "3 Days 2 Nights",
     departure: "Hà Nội / Hà Giang",
+    departure_en: "Hanoi / Ha Giang",
     price: 2450000,
     originalPrice: 2890000,
     rating: 5.0,

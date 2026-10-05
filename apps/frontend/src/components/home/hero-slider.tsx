@@ -5,8 +5,10 @@ import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { DiscoverySearch } from "./discovery-search";
 import { VIETNAM_IMAGES } from "@/lib/assets";
+import { useLanguage } from "@/lib/i18n/context";
 
 export function HeroSlider() {
+  const { t, locale } = useLanguage();
   const [currentSlide, setCurrentSlide] = useState(0);
   const slides = VIETNAM_IMAGES.heroSlides;
 
@@ -55,7 +57,7 @@ export function HeroSlider() {
       <button
         type="button"
         onClick={prevSlide}
-        aria-label="Slide trước"
+        aria-label={locale === "vi" ? "Slide trước" : "Previous slide"}
         className="absolute left-4 md:left-8 top-1/2 z-20 -translate-y-1/2 flex size-12 items-center justify-center rounded-full bg-black/30 text-white backdrop-blur-md transition-all duration-200 hover:bg-white hover:text-slate-900 hover:shadow-[0px_8px_25px_rgba(0,0,0,0.35)] hover:scale-105 active:scale-95 cursor-pointer"
       >
         <ChevronLeft className="size-7" />
@@ -64,7 +66,7 @@ export function HeroSlider() {
       <button
         type="button"
         onClick={nextSlide}
-        aria-label="Slide tiếp theo"
+        aria-label={locale === "vi" ? "Slide tiếp theo" : "Next slide"}
         className="absolute right-4 md:right-8 top-1/2 z-20 -translate-y-1/2 flex size-12 items-center justify-center rounded-full bg-black/30 text-white backdrop-blur-md transition-all duration-200 hover:bg-white hover:text-slate-900 hover:shadow-[0px_8px_25px_rgba(0,0,0,0.35)] hover:scale-105 active:scale-95 cursor-pointer"
       >
         <ChevronRight className="size-7" />
@@ -74,11 +76,11 @@ export function HeroSlider() {
       <div className="relative z-10 flex h-full flex-col items-center justify-between pb-16 sm:pb-20 md:pb-24 lg:pb-28 pt-20 sm:pt-24 text-white">
         <div className="mt-8 sm:mt-12 md:mt-14 text-center px-4 max-w-5xl">
           <h1 className="display-title template-shadow-text text-5xl leading-tight sm:text-6xl md:text-7xl lg:text-[76px] transition-all duration-700">
-            {slides[currentSlide].title || "Việt Nam — Non Sông Gấm Vóc"}
+            {t.hero.slides[currentSlide]?.title || slides[currentSlide].title}
           </h1>
 
           <p className="script-title mt-4 text-3xl leading-tight sm:text-4xl md:text-5xl text-white/95 [-webkit-text-stroke:.4px_#fff]">
-            {slides[currentSlide].subtitle || "Khám phá kỳ quan thiên nhiên và danh thắng di sản cùng Star Travels."}
+            {t.hero.slides[currentSlide]?.subtitle || slides[currentSlide].subtitle}
           </p>
         </div>
 
