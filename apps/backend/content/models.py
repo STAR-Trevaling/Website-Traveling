@@ -1,7 +1,10 @@
 import uuid
+
 from django.db import models
+
 from destinations.models import Destination
 from places.models import Place
+
 
 class Article(models.Model):
     class Status(models.TextChoices):
@@ -15,9 +18,15 @@ class Article(models.Model):
     excerpt = models.TextField(blank=True)
     body = models.TextField()
     cover_image = models.URLField(blank=True)
-    destination = models.ForeignKey(Destination, on_delete=models.SET_NULL, null=True, blank=True, related_name="articles")
-    place = models.ForeignKey(Place, on_delete=models.SET_NULL, null=True, blank=True, related_name="articles")
-    status = models.CharField(max_length=20, choices=Status.choices, default=Status.DRAFT, db_index=True)
+    destination = models.ForeignKey(
+        Destination, on_delete=models.SET_NULL, null=True, blank=True, related_name="articles"
+    )
+    place = models.ForeignKey(
+        Place, on_delete=models.SET_NULL, null=True, blank=True, related_name="articles"
+    )
+    status = models.CharField(
+        max_length=20, choices=Status.choices, default=Status.DRAFT, db_index=True
+    )
     published_at = models.DateTimeField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

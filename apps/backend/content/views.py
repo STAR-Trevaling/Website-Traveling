@@ -1,6 +1,8 @@
 from rest_framework import viewsets
+
 from .models import Article
 from .serializers import ArticleSerializer
+
 
 class ArticleViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = ArticleSerializer
@@ -11,4 +13,6 @@ class ArticleViewSet(viewsets.ReadOnlyModelViewSet):
     ordering = ("-published_at",)
 
     def get_queryset(self):
-        return Article.objects.filter(status=Article.Status.PUBLISHED).select_related("destination", "place")
+        return Article.objects.filter(status=Article.Status.PUBLISHED).select_related(
+            "destination", "place"
+        )

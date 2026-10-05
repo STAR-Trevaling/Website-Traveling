@@ -1,6 +1,9 @@
 import uuid
+
 from django.contrib.gis.db import models
+
 from destinations.models import Destination
+
 
 class Category(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -13,6 +16,7 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
+
 
 class Place(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -36,8 +40,8 @@ class Place(models.Model):
     class Meta:
         ordering = ("name",)
         indexes = [
-            models.Index(fields=("is_published", "destination")),
-            models.Index(fields=("category", "is_published")),
+            models.Index(fields=("is_published", "destination"), name="place_pub_dest_idx"),
+            models.Index(fields=("category", "is_published"), name="place_cat_pub_idx"),
         ]
 
     def __str__(self):

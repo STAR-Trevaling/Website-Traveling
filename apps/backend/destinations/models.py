@@ -1,5 +1,7 @@
 import uuid
+
 from django.contrib.gis.db import models
+
 
 class Destination(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -18,7 +20,7 @@ class Destination(models.Model):
 
     class Meta:
         ordering = ("name",)
-        indexes = [models.Index(fields=("is_published", "name"))]
+        indexes = [models.Index(fields=("is_published", "name"), name="dest_pub_name_idx")]
 
     def __str__(self):
         return self.name
