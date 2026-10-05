@@ -57,117 +57,110 @@ export function PartnerSubmissionsPage() {
   });
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-300">
-      {/* Title */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <h1 className="text-2xl font-bold text-slate-900 tracking-tight">
-            Thẩm Định Đề Xuất Thay Đổi (Side-by-Side Diff)
-          </h1>
-          <p className="text-xs text-slate-500 mt-1">
-            So sánh dữ liệu hiện tại trên hệ thống với đề xuất mới của đối tác lữ hành trước khi ghi đè vào website công khai.
-          </p>
+    <div className="space-y-6 animate-in fade-in duration-300 font-['Poppins',sans-serif]">
+      {/* Main Card - Exact Match to Figma Template */}
+      <div className="bg-white rounded-[30px] p-6 sm:p-10 shadow-[0px_10px_60px_rgba(226,236,249,0.50)]">
+        {/* Card Header: Content Submissions & Subtitle with Search & Filter */}
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+          <div>
+            <h1 className="text-[22px] font-semibold text-black tracking-tight leading-tight">
+              Content Submissions
+            </h1>
+            <p className="text-[14px] text-[#16C098] font-normal mt-0.5">
+              Side-by-Side Diff Resolution ({filtered.length} submissions)
+            </p>
+          </div>
+
+          <div className="flex items-center gap-3 flex-wrap">
+            {/* Search Input */}
+            <div className="relative w-64">
+              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 size-4 text-[#7E7E7E]" />
+              <input
+                type="text"
+                placeholder="Search..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full pl-10 pr-4 py-2 rounded-[10px] bg-[#F9FBFF] border border-slate-100 text-[12px] text-[#292D32] placeholder:text-[#B5B7C0] focus:border-[#5932EA] focus:outline-hidden transition"
+              />
+            </div>
+
+            {/* Status Filter */}
+            <select
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value)}
+              className="text-[12px] py-2 px-3 rounded-[10px] bg-[#F9FBFF] border border-slate-100 text-[#7E7E7E] focus:outline-hidden cursor-pointer"
+            >
+              <option value="ALL">Mọi Trạng Thái</option>
+              <option value="PENDING">Chờ Đối Soát</option>
+              <option value="APPROVED">Đã Duyệt</option>
+              <option value="REJECTED">Từ Chối</option>
+              <option value="CHANGES_REQUESTED">Yêu Cầu Sửa</option>
+            </select>
+          </div>
         </div>
 
-        <Badge variant="purple">
-          {submissions.filter((s) => s.status === "PENDING" || s.status === "PENDING_REVIEW").length} đề xuất chờ so khớp
-        </Badge>
-      </div>
-
-      {/* Filter and Search */}
-      <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-xs flex flex-col sm:flex-row gap-3 items-center justify-between">
-        <div className="relative w-full sm:w-80">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 size-4 text-slate-400" />
-          <input
-            type="text"
-            placeholder="Tìm theo đối tác, địa điểm..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 text-xs rounded-xl bg-slate-50 border border-slate-200 focus:outline-hidden focus:border-[#5932EA]"
-          />
-        </div>
-
-        <div className="flex items-center gap-3">
-          <select
-            value={statusFilter}
-            onChange={(e) => setStatusFilter(e.target.value)}
-            className="text-xs py-2 px-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-700 focus:outline-hidden"
-          >
-            <option value="ALL">Mọi Trạng Thái</option>
-            <option value="PENDING">Chờ Đối Soát (PENDING)</option>
-            <option value="APPROVED">Đã Áp Dụng (APPROVED)</option>
-            <option value="REJECTED">Từ Chối (REJECTED)</option>
-            <option value="CHANGES_REQUESTED">Yêu Cầu Sửa Lại (CHANGES_REQUESTED)</option>
-          </select>
-
-          <span className="text-xs text-slate-400 font-semibold">{filtered.length} đề xuất</span>
-        </div>
-      </div>
-
-      {/* Submissions Table */}
-      <div className="bg-white rounded-2xl border border-slate-100 shadow-xs overflow-hidden">
+        {/* Submissions Table */}
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs text-slate-600">
-            <thead className="bg-[#F9FBFF] border-b border-slate-100 text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
-              <tr>
-                <th className="py-3.5 px-4">Đối Tác Đề Xuất</th>
-                <th className="py-3.5 px-4">Địa Điểm Đích</th>
-                <th className="py-3.5 px-4">Loại Thay Đổi</th>
-                <th className="py-3.5 px-4">Số Trường Khác Biệt</th>
-                <th className="py-3.5 px-4">Thời Gian Nộp</th>
-                <th className="py-3.5 px-4">Trạng Thái</th>
-                <th className="py-3.5 px-4 text-right">So Sánh Diff</th>
+          <table className="w-full text-left">
+            <thead>
+              <tr className="border-b border-[#EEEEEE]">
+                <th className="pb-4 text-[14px] font-medium text-[#B5B7C0]">Đối Tác Đề Xuất</th>
+                <th className="pb-4 text-[14px] font-medium text-[#B5B7C0]">Địa Điểm Đích</th>
+                <th className="pb-4 text-[14px] font-medium text-[#B5B7C0]">Loại Thay Đổi</th>
+                <th className="pb-4 text-[14px] font-medium text-[#B5B7C0]">Trường Thay Đổi</th>
+                <th className="pb-4 text-[14px] font-medium text-[#B5B7C0]">Thời Gian Nộp</th>
+                <th className="pb-4 text-[14px] font-medium text-[#B5B7C0] text-center">Trạng Thái</th>
+                <th className="pb-4 text-[14px] font-medium text-[#B5B7C0] text-right">So Sánh Diff</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-[#EEEEEE]">
               {filtered.map((sub) => {
                 const diffCount = Object.keys(sub.proposedData).filter(
                   (key) => JSON.stringify(sub.proposedData[key]) !== JSON.stringify(sub.currentData[key])
                 ).length;
 
                 return (
-                  <tr key={sub.id} className="hover:bg-slate-50/80 transition">
-                    <td className="py-3 px-4">
-                      <div className="font-bold text-slate-900 text-sm flex items-center gap-1.5">
+                  <tr key={sub.id} className="hover:bg-slate-50/60 transition">
+                    <td className="py-4 text-[14px] font-medium text-[#292D32]">
+                      <div className="font-semibold text-black text-[14px] flex items-center gap-1.5">
                         <Building2 className="size-3.5 text-[#5932EA]" />
                         <span>{sub.partnerName}</span>
                       </div>
                     </td>
 
-                    <td className="py-3 px-4 font-medium text-slate-800">
+                    <td className="py-4 text-[14px] font-medium text-[#292D32]">
                       {sub.entityName}
                     </td>
 
-                    <td className="py-3 px-4">
-                      <span className="font-semibold text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded text-[11px]">
+                    <td className="py-4 text-[13px] font-medium text-[#292D32]">
+                      <span className="bg-[#F9FBFF] border border-slate-100 text-[#5932EA] px-2.5 py-1 rounded-[6px] text-[11px] font-semibold">
                         {sub.changeType}
                       </span>
                     </td>
 
-                    <td className="py-3 px-4">
-                      <span className="font-mono text-xs font-bold text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200">
+                    <td className="py-4">
+                      <span className="font-mono text-[12px] font-medium text-amber-700 bg-amber-50 px-2 py-0.5 rounded-[4px] border border-amber-200">
                         {diffCount} trường sửa đổi
                       </span>
                     </td>
 
-                    <td className="py-3 px-4 font-mono text-slate-500 text-[11px]">
+                    <td className="py-4 font-mono text-[13px] text-[#7E7E7E]">
                       {sub.submittedAt}
                     </td>
 
-                    <td className="py-3 px-4">
+                    <td className="py-4 text-center">
                       <Badge variant={sub.status}>
-                        {(sub.status === "PENDING" || sub.status === "PENDING_REVIEW") && "Chờ So Sánh"}
-                        {sub.status === "APPROVED" && "Đã Đồng Bộ"}
-                        {sub.status === "REJECTED" && "Đã Từ Chối"}
-                        {sub.status === "CHANGES_REQUESTED" && "Yêu Cầu Sửa"}
+                        {(sub.status === "PENDING" || sub.status === "PENDING_REVIEW") && "Pending"}
+                        {sub.status === "APPROVED" && "Approved"}
+                        {sub.status === "REJECTED" && "Rejected"}
+                        {sub.status === "CHANGES_REQUESTED" && "Needs Info"}
                       </Badge>
                     </td>
 
-                    <td className="py-3 px-4 text-right">
+                    <td className="py-4 text-right">
                       <Button
                         size="sm"
-                        variant="primary"
-                        className="text-xs gap-1.5"
+                        className="text-xs gap-1.5 bg-[#5932EA] text-white rounded-[8px]"
                         onClick={() => handleOpenDiff(sub)}
                       >
                         <GitPullRequest className="size-3.5" />
@@ -179,6 +172,34 @@ export function PartnerSubmissionsPage() {
               })}
             </tbody>
           </table>
+        </div>
+
+        {/* Table Footer: Showing data + Pagination */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mt-8 pt-4">
+          <p className="text-[14px] font-medium text-[#B5B7C0]">
+            Showing data 1 to {filtered.length} of {submissions.length} entries
+          </p>
+
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              className="size-7 rounded-[4px] bg-[#F5F5F5] border border-[#EEEEEE] text-[#404B52] text-[12px] font-medium flex items-center justify-center hover:bg-slate-200 transition cursor-pointer"
+            >
+              &lt;
+            </button>
+            <button
+              type="button"
+              className="size-7 rounded-[4px] bg-[#5932EA] border border-[#5932EA] text-white text-[12px] font-medium flex items-center justify-center shadow-xs cursor-pointer"
+            >
+              1
+            </button>
+            <button
+              type="button"
+              className="size-7 rounded-[4px] bg-[#F5F5F5] border border-[#EEEEEE] text-[#404B52] text-[12px] font-medium flex items-center justify-center hover:bg-slate-200 transition cursor-pointer"
+            >
+              &gt;
+            </button>
+          </div>
         </div>
       </div>
 

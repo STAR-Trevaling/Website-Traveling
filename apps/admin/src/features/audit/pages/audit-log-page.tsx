@@ -32,142 +32,165 @@ export function AuditLogPage() {
   });
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-300">
-      {/* Title */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <div className="flex items-center gap-2">
-            <span className="flex items-center gap-1 text-[11px] font-semibold text-[#16C098] bg-[#E7F8F4] px-2.5 py-0.5 rounded-full">
-              <Lock className="size-3" />
-              <span>BẢN GHI BẤT BIẾN (IMMUTABLE LOGS)</span>
-            </span>
+    <div className="space-y-6 animate-in fade-in duration-300 font-['Poppins',sans-serif]">
+      {/* Main Card - Exact Match to Figma Template */}
+      <div className="bg-white rounded-[30px] p-6 sm:p-10 shadow-[0px_10px_60px_rgba(226,236,249,0.50)]">
+        {/* Card Header: Audit Trail & Subtitle with Search & Filter */}
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+          <div>
+            <div className="flex items-center gap-2 mb-1">
+              <span className="flex items-center gap-1 text-[11px] font-semibold text-[#008767] bg-[rgba(22,192,152,0.15)] px-2.5 py-0.5 rounded-full">
+                <Lock className="size-3" />
+                <span>IMMUTABLE AUDIT TRAIL</span>
+              </span>
+            </div>
+            <h1 className="text-[22px] font-semibold text-black tracking-tight leading-tight">
+              Audit Logs & Security Trail
+            </h1>
+            <p className="text-[14px] text-[#16C098] font-normal mt-0.5">
+              Traceability & Compliance Records ({filtered.length} sự kiện)
+            </p>
           </div>
-          <h1 className="text-2xl font-bold text-slate-900 tracking-tight mt-1">
-            Nhật Ký Thẩm Định & Truy Vết Hoạt Động (Audit Log)
-          </h1>
-          <p className="text-xs text-slate-500 mt-1">
-            Lưu vết chi tiết toàn bộ các hành động thay đổi dữ liệu, cấp quyền đối tác, kiểm duyệt đánh giá và cấu hình hệ thống.
-          </p>
+
+          <div className="flex items-center gap-3 flex-wrap">
+            {/* Search Input */}
+            <div className="relative w-64">
+              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 size-4 text-[#7E7E7E]" />
+              <input
+                type="text"
+                placeholder="Search..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full pl-10 pr-4 py-2 rounded-[10px] bg-[#F9FBFF] border border-slate-100 text-[12px] text-[#292D32] placeholder:text-[#B5B7C0] focus:border-[#5932EA] focus:outline-hidden transition"
+              />
+            </div>
+
+            {/* Entity Filter */}
+            <select
+              value={entityFilter}
+              onChange={(e) => setEntityFilter(e.target.value)}
+              className="text-[12px] py-2 px-3 rounded-[10px] bg-[#F9FBFF] border border-slate-100 text-[#7E7E7E] focus:outline-hidden cursor-pointer"
+            >
+              <option value="ALL">Mọi Thực Thể</option>
+              <option value="destination">Danh Thắng</option>
+              <option value="place">Địa Điểm</option>
+              <option value="partner">Đối Tác</option>
+              <option value="article">Bài Viết</option>
+              <option value="review">Đánh Giá</option>
+              <option value="lead">Khách Hàng / Lead</option>
+              <option value="knowledge">Cơ Sở Tri Thức</option>
+            </select>
+
+            {/* Role Filter */}
+            <select
+              value={roleFilter}
+              onChange={(e) => setRoleFilter(e.target.value)}
+              className="text-[12px] py-2 px-3 rounded-[10px] bg-[#F9FBFF] border border-slate-100 text-[#7E7E7E] focus:outline-hidden cursor-pointer"
+            >
+              <option value="ALL">Mọi Vai Trò</option>
+              <option value="SUPER_ADMIN">SUPER_ADMIN</option>
+              <option value="ADMIN">ADMIN</option>
+              <option value="CONTENT_EDITOR">CONTENT_EDITOR</option>
+              <option value="PARTNER_REVIEWER">PARTNER_REVIEWER</option>
+              <option value="MODERATOR">MODERATOR</option>
+              <option value="OPERATIONS_MANAGER">OPERATIONS_MANAGER</option>
+            </select>
+          </div>
         </div>
 
-        <Badge variant="purple">
-          {events.length} sự kiện kiểm toán
-        </Badge>
-      </div>
-
-      {/* Filter and Search */}
-      <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-xs flex flex-col lg:flex-row gap-3 items-center justify-between">
-        <div className="relative w-full lg:w-80">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 size-4 text-slate-400" />
-          <input
-            type="text"
-            placeholder="Tìm theo nhân sự, hành động, đối tượng..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 text-xs rounded-xl bg-slate-50 border border-slate-200 focus:outline-hidden focus:border-[#5932EA]"
-          />
-        </div>
-
-        <div className="flex items-center gap-3 w-full lg:w-auto flex-wrap">
-          <select
-            value={entityFilter}
-            onChange={(e) => setEntityFilter(e.target.value)}
-            className="text-xs py-2 px-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-700 focus:outline-hidden"
-          >
-            <option value="ALL">Mọi Thực Thể (Entity)</option>
-            <option value="destination">Danh Thắng (destination)</option>
-            <option value="place">Địa Điểm (place)</option>
-            <option value="partner">Đối Tác (partner)</option>
-            <option value="article">Bài Viết (article)</option>
-            <option value="review">Đánh Giá (review)</option>
-            <option value="lead">Khách Hàng / Lead</option>
-            <option value="knowledge">Cơ Sở Tri Thức (knowledge)</option>
-          </select>
-
-          <select
-            value={roleFilter}
-            onChange={(e) => setRoleFilter(e.target.value)}
-            className="text-xs py-2 px-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-700 focus:outline-hidden"
-          >
-            <option value="ALL">Mọi Vai Trò (Role)</option>
-            <option value="SUPER_ADMIN">SUPER_ADMIN</option>
-            <option value="ADMIN">ADMIN</option>
-            <option value="CONTENT_EDITOR">CONTENT_EDITOR</option>
-            <option value="PARTNER_REVIEWER">PARTNER_REVIEWER</option>
-            <option value="MODERATOR">MODERATOR</option>
-            <option value="OPERATIONS_MANAGER">OPERATIONS_MANAGER</option>
-          </select>
-
-          <span className="text-xs text-slate-400 font-semibold">{filtered.length} sự kiện</span>
-        </div>
-      </div>
-
-      {/* Audit Events Table */}
-      <div className="bg-white rounded-2xl border border-slate-100 shadow-xs overflow-hidden">
+        {/* Audit Events Table */}
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs text-slate-600">
-            <thead className="bg-[#F9FBFF] border-b border-slate-100 text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
-              <tr>
-                <th className="py-3.5 px-4">Nhân Sự & Vai Trò</th>
-                <th className="py-3.5 px-4">Mã Lệnh Thao Tác (Action)</th>
-                <th className="py-3.5 px-4">Thực Thể Tác Động</th>
-                <th className="py-3.5 px-4">Thời Điểm Ghi Nhận</th>
-                <th className="py-3.5 px-4">Địa Chỉ IP / Phiên</th>
-                <th className="py-3.5 px-4 text-right">Chi Tiết Payload</th>
+          <table className="w-full text-left">
+            <thead>
+              <tr className="border-b border-[#EEEEEE]">
+                <th className="pb-4 text-[14px] font-medium text-[#B5B7C0]">Nhân Sự & Vai Trò</th>
+                <th className="pb-4 text-[14px] font-medium text-[#B5B7C0]">Hành Động (Action)</th>
+                <th className="pb-4 text-[14px] font-medium text-[#B5B7C0]">Thực Thể Tác Động</th>
+                <th className="pb-4 text-[14px] font-medium text-[#B5B7C0]">Thời Điểm</th>
+                <th className="pb-4 text-[14px] font-medium text-[#B5B7C0]">IP / Session</th>
+                <th className="pb-4 text-[14px] font-medium text-[#B5B7C0] text-right">Chi Tiết Payload</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-[#EEEEEE]">
               {filtered.map((ev) => (
-                <tr key={ev.id} className="hover:bg-slate-50/80 transition">
-                  <td className="py-3 px-4">
+                <tr key={ev.id} className="hover:bg-slate-50/60 transition">
+                  <td className="py-4 text-[14px] font-medium text-[#292D32]">
                     <div className="flex items-center gap-2.5">
-                      <div className="size-8 rounded-full bg-slate-100 flex items-center justify-center font-bold text-slate-600 text-xs">
+                      <div className="size-8 rounded-full bg-[#ECE7FF] flex items-center justify-center font-bold text-[#5932EA] text-[12px]">
                         {ev.actor.slice(0, 2).toUpperCase()}
                       </div>
                       <div>
-                        <div className="font-bold text-slate-900 text-sm">{ev.actor}</div>
-                        <Badge variant="purple" className="text-[10px] py-0 px-1.5">{ev.actorRole}</Badge>
+                        <div className="font-semibold text-black text-[14px]">{ev.actor}</div>
+                        <span className="text-[11px] text-[#7E7E7E]">{ev.actorRole}</span>
                       </div>
                     </div>
                   </td>
 
-                  <td className="py-3 px-4">
-                    <span className="font-mono text-xs font-bold text-indigo-700 bg-indigo-50 border border-indigo-100 px-2 py-0.5 rounded">
+                  <td className="py-4 text-[13px]">
+                    <span className="font-mono text-[12px] font-medium text-[#5932EA] bg-[#F9FBFF] border border-slate-100 px-2 py-0.5 rounded-[4px]">
                       {ev.action}
                     </span>
                   </td>
 
-                  <td className="py-3 px-4">
-                    <div className="font-semibold text-slate-800">{ev.entityName}</div>
-                    <div className="text-[11px] text-slate-400 font-mono">
+                  <td className="py-4 text-[14px] text-[#292D32]">
+                    <div className="font-semibold text-black">{ev.entityName}</div>
+                    <div className="text-[12px] text-[#B5B7C0] font-mono">
                       type: {ev.entityType} • id: {ev.entityId}
                     </div>
                   </td>
 
-                  <td className="py-3 px-4 font-mono text-slate-500 text-[11px]">
+                  <td className="py-4 font-mono text-[13px] text-[#7E7E7E]">
                     <div className="flex items-center gap-1.5">
-                      <Clock className="size-3 text-slate-400" />
+                      <Clock className="size-3 text-[#B5B7C0]" />
                       <span>{ev.timestamp}</span>
                     </div>
                   </td>
 
-                  <td className="py-3 px-4 font-mono text-slate-400 text-[11px]">
+                  <td className="py-4 font-mono text-[12px] text-[#7E7E7E]">
                     {ev.ipAddress}
                   </td>
 
-                  <td className="py-3 px-4 text-right font-mono text-[11px] text-slate-500">
+                  <td className="py-4 text-right font-mono text-[12px] text-[#7E7E7E]">
                     {Object.keys(ev.metadata).length > 0 ? (
-                      <span className="bg-slate-100 px-2 py-0.5 rounded text-slate-600 truncate max-w-xs inline-block">
+                      <span className="bg-[#F9FBFF] border border-slate-100 px-2 py-0.5 rounded-[4px] text-[#7E7E7E] truncate max-w-xs inline-block">
                         {JSON.stringify(ev.metadata)}
                       </span>
                     ) : (
-                      <span className="text-slate-300">none</span>
+                      <span className="text-[#B5B7C0]">none</span>
                     )}
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
+        </div>
+
+        {/* Table Footer: Showing data + Pagination */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mt-8 pt-4">
+          <p className="text-[14px] font-medium text-[#B5B7C0]">
+            Showing data 1 to {filtered.length} of {events.length} entries
+          </p>
+
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              className="size-7 rounded-[4px] bg-[#F5F5F5] border border-[#EEEEEE] text-[#404B52] text-[12px] font-medium flex items-center justify-center hover:bg-slate-200 transition cursor-pointer"
+            >
+              &lt;
+            </button>
+            <button
+              type="button"
+              className="size-7 rounded-[4px] bg-[#5932EA] border border-[#5932EA] text-white text-[12px] font-medium flex items-center justify-center shadow-xs cursor-pointer"
+            >
+              1
+            </button>
+            <button
+              type="button"
+              className="size-7 rounded-[4px] bg-[#F5F5F5] border border-[#EEEEEE] text-[#404B52] text-[12px] font-medium flex items-center justify-center hover:bg-slate-200 transition cursor-pointer"
+            >
+              &gt;
+            </button>
+          </div>
         </div>
       </div>
     </div>

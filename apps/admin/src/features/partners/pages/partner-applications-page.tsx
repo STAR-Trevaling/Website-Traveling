@@ -65,134 +65,153 @@ export function PartnerApplicationsPage() {
   });
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-300">
-      {/* Title */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <h1 className="text-2xl font-bold text-slate-900 tracking-tight">
-            Thẩm Định Hồ Sơ Đăng Ký Đối Tác
-          </h1>
-          <p className="text-xs text-slate-500 mt-1">
-            Quy trình phê duyệt nghiêm ngặt đối tác lữ hành, khách sạn, nhà hàng trước khi cấp quyền đưa cơ sở kinh doanh lên nền tảng.
-          </p>
+    <div className="space-y-6 animate-in fade-in duration-300 font-['Poppins',sans-serif]">
+      {/* Main Card - Exact Match to Figma Template */}
+      <div className="bg-white rounded-[30px] p-6 sm:p-10 shadow-[0px_10px_60px_rgba(226,236,249,0.50)]">
+        {/* Card Header: Partner Applications & Subtitle with Search & Filter */}
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+          <div>
+            <h1 className="text-[22px] font-semibold text-black tracking-tight leading-tight">
+              Partner Applications
+            </h1>
+            <p className="text-[14px] text-[#16C098] font-normal mt-0.5">
+              Active Onboarding & Verifications ({filtered.length} hồ sơ)
+            </p>
+          </div>
+
+          <div className="flex items-center gap-3 flex-wrap">
+            {/* Search Input */}
+            <div className="relative w-64">
+              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 size-4 text-[#7E7E7E]" />
+              <input
+                type="text"
+                placeholder="Search..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full pl-10 pr-4 py-2 rounded-[10px] bg-[#F9FBFF] border border-slate-100 text-[12px] text-[#292D32] placeholder:text-[#B5B7C0] focus:border-[#5932EA] focus:outline-hidden transition"
+              />
+            </div>
+
+            {/* Status Filter */}
+            <select
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value)}
+              className="text-[12px] py-2 px-3 rounded-[10px] bg-[#F9FBFF] border border-slate-100 text-[#7E7E7E] focus:outline-hidden cursor-pointer"
+            >
+              <option value="ALL">Mọi Trạng Thái</option>
+              <option value="SUBMITTED">Mới Nộp</option>
+              <option value="UNDER_REVIEW">Đang Thẩm Định</option>
+              <option value="CHANGES_REQUESTED">Cần Bổ Sung</option>
+              <option value="APPROVED">Đã Duyệt</option>
+              <option value="REJECTED">Từ Chối</option>
+            </select>
+          </div>
         </div>
 
-        <div className="flex items-center gap-2">
-          <Badge variant="warning">
-            {applications.filter((a) => a.status === "SUBMITTED" || a.status === "UNDER_REVIEW").length} hồ sơ chờ xử lý
-          </Badge>
-        </div>
-      </div>
-
-      {/* Filter and Search */}
-      <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-xs flex flex-col sm:flex-row gap-3 items-center justify-between">
-        <div className="relative w-full sm:w-80">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 size-4 text-slate-400" />
-          <input
-            type="text"
-            placeholder="Tìm theo doanh nghiệp, người nộp đơn..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 text-xs rounded-xl bg-slate-50 border border-slate-200 focus:outline-hidden focus:border-[#5932EA]"
-          />
-        </div>
-
-        <div className="flex items-center gap-3 w-full sm:w-auto">
-          <select
-            value={statusFilter}
-            onChange={(e) => setStatusFilter(e.target.value)}
-            className="text-xs py-2 px-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-700 focus:outline-hidden"
-          >
-            <option value="ALL">Mọi Trạng Thái</option>
-            <option value="SUBMITTED">Mới Nộp (SUBMITTED)</option>
-            <option value="UNDER_REVIEW">Đang Thẩm Định (UNDER_REVIEW)</option>
-            <option value="CHANGES_REQUESTED">Yêu Cầu Bổ Sung (CHANGES_REQUESTED)</option>
-            <option value="APPROVED">Đã Duyệt (APPROVED)</option>
-            <option value="REJECTED">Từ Chối (REJECTED)</option>
-          </select>
-          <span className="text-xs text-slate-400 font-semibold">{filtered.length} hồ sơ</span>
-        </div>
-      </div>
-
-      {/* Applications Table */}
-      <div className="bg-white rounded-2xl border border-slate-100 shadow-xs overflow-hidden">
+        {/* Applications Table */}
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs text-slate-600">
-            <thead className="bg-[#F9FBFF] border-b border-slate-100 text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
-              <tr>
-                <th className="py-3.5 px-4">Doanh Nghiệp / Cơ Sở</th>
-                <th className="py-3.5 px-4">Loại Hình</th>
-                <th className="py-3.5 px-4">Người Đại Diện</th>
-                <th className="py-3.5 px-4">Thời Điểm Nộp</th>
-                <th className="py-3.5 px-4">Trạng Thái</th>
-                <th className="py-3.5 px-4">Người Phụ Trách</th>
-                <th className="py-3.5 px-4">Cờ Cảnh Báo</th>
-                <th className="py-3.5 px-4 text-right">Chi Tiết</th>
+          <table className="w-full text-left">
+            <thead>
+              <tr className="border-b border-[#EEEEEE]">
+                <th className="pb-4 text-[14px] font-medium text-[#B5B7C0]">Doanh Nghiệp / Cơ Sở</th>
+                <th className="pb-4 text-[14px] font-medium text-[#B5B7C0]">Loại Hình</th>
+                <th className="pb-4 text-[14px] font-medium text-[#B5B7C0]">Người Đại Diện</th>
+                <th className="pb-4 text-[14px] font-medium text-[#B5B7C0]">Thời Điểm Nộp</th>
+                <th className="pb-4 text-[14px] font-medium text-[#B5B7C0] text-center">Trạng Thái</th>
+                <th className="pb-4 text-[14px] font-medium text-[#B5B7C0]">Phụ Trách</th>
+                <th className="pb-4 text-[14px] font-medium text-[#B5B7C0]">Rủi Ro</th>
+                <th className="pb-4 text-[14px] font-medium text-[#B5B7C0] text-right">Thao Tác</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-[#EEEEEE]">
               {filtered.map((app) => (
-                <tr key={app.id} className="hover:bg-slate-50/80 transition">
-                  <td className="py-3 px-4">
-                    <div className="font-bold text-slate-900 text-sm">{app.businessName}</div>
-                    <div className="text-[11px] text-slate-400 font-mono">MST: {app.taxId}</div>
+                <tr key={app.id} className="hover:bg-slate-50/60 transition">
+                  <td className="py-4 text-[14px] font-medium text-[#292D32]">
+                    <div className="font-semibold text-black text-[14px]">{app.businessName}</div>
+                    <div className="text-[12px] text-[#B5B7C0] font-mono">MST: {app.taxId}</div>
                   </td>
 
-                  <td className="py-3 px-4">
-                    <span className="font-semibold text-slate-700 bg-slate-100 px-2 py-0.5 rounded text-[11px]">
+                  <td className="py-4 text-[13px] font-medium text-[#292D32]">
+                    <span className="bg-[#F9FBFF] border border-slate-100 text-[#7E7E7E] px-2.5 py-1 rounded-[6px] text-[11px] font-semibold">
                       {app.businessType}
                     </span>
                   </td>
 
-                  <td className="py-3 px-4">
-                    <div className="font-medium text-slate-800">{app.applicantName}</div>
-                    <div className="text-[11px] text-slate-400">{app.email}</div>
+                  <td className="py-4 text-[14px] font-medium text-[#292D32]">
+                    <div className="font-medium text-black">{app.applicantName}</div>
+                    <div className="text-[12px] text-[#B5B7C0]">{app.email}</div>
                   </td>
 
-                  <td className="py-3 px-4 text-slate-500 font-mono text-[11px]">
+                  <td className="py-4 text-[13px] text-[#7E7E7E] font-mono">
                     {app.submittedAt}
                   </td>
 
-                  <td className="py-3 px-4">
+                  <td className="py-4 text-center">
                     <Badge variant={app.status}>
-                      {app.status === "SUBMITTED" && "Chờ Tiếp Nhận"}
-                      {app.status === "UNDER_REVIEW" && "Đang Thẩm Định"}
-                      {app.status === "CHANGES_REQUESTED" && "Cần Bổ Sung"}
-                      {app.status === "APPROVED" && "Đã Chấp Thuận"}
-                      {app.status === "REJECTED" && "Từ Chối"}
+                      {app.status === "SUBMITTED" && "Pending"}
+                      {app.status === "UNDER_REVIEW" && "Reviewing"}
+                      {app.status === "CHANGES_REQUESTED" && "Needs Info"}
+                      {app.status === "APPROVED" && "Approved"}
+                      {app.status === "REJECTED" && "Rejected"}
                     </Badge>
                   </td>
 
-                  <td className="py-3 px-4 text-slate-700 font-medium">
-                    {app.reviewerName || <span className="text-slate-400 italic">Chưa gán</span>}
+                  <td className="py-4 text-[13px] text-[#292D32] font-medium">
+                    {app.reviewerName || <span className="text-[#B5B7C0] italic">Chưa gán</span>}
                   </td>
 
-                  <td className="py-3 px-4">
+                  <td className="py-4">
                     {app.riskFlags.length > 0 ? (
-                      <div className="flex items-center gap-1 text-rose-600 font-semibold text-[11px]">
+                      <div className="flex items-center gap-1 text-[#DF0404] font-medium text-[12px]">
                         <ShieldAlert className="size-3.5" />
                         <span>{app.riskFlags.length} Cảnh báo</span>
                       </div>
                     ) : (
-                      <span className="text-[#16C098] font-medium text-[11px]">An toàn</span>
+                      <span className="text-[#008767] font-medium text-[12px]">An toàn</span>
                     )}
                   </td>
 
-                  <td className="py-3 px-4 text-right">
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      className="text-xs gap-1.5"
+                  <td className="py-4 text-right">
+                    <button
+                      type="button"
                       onClick={() => handleOpenDetail(app)}
+                      className="text-[12px] font-medium text-[#5932EA] hover:underline cursor-pointer"
                     >
-                      <Eye className="size-3.5" />
-                      <span>Xem Hồ Sơ</span>
-                    </Button>
+                      Chi Tiết
+                    </button>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
+        </div>
+
+        {/* Table Footer: Showing data + Pagination */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mt-8 pt-4">
+          <p className="text-[14px] font-medium text-[#B5B7C0]">
+            Showing data 1 to {filtered.length} of {applications.length} entries
+          </p>
+
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              className="size-7 rounded-[4px] bg-[#F5F5F5] border border-[#EEEEEE] text-[#404B52] text-[12px] font-medium flex items-center justify-center hover:bg-slate-200 transition cursor-pointer"
+            >
+              &lt;
+            </button>
+            <button
+              type="button"
+              className="size-7 rounded-[4px] bg-[#5932EA] border border-[#5932EA] text-white text-[12px] font-medium flex items-center justify-center shadow-xs cursor-pointer"
+            >
+              1
+            </button>
+            <button
+              type="button"
+              className="size-7 rounded-[4px] bg-[#F5F5F5] border border-[#EEEEEE] text-[#404B52] text-[12px] font-medium flex items-center justify-center hover:bg-slate-200 transition cursor-pointer"
+            >
+              &gt;
+            </button>
+          </div>
         </div>
       </div>
 

@@ -49,53 +49,46 @@ export function KnowledgeBasePage() {
   });
 
   return (
-    <div className="space-y-8 animate-in fade-in duration-300">
-      {/* Title */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <h1 className="text-2xl font-bold text-slate-900 tracking-tight">
-            Cơ Sở Tri Thức AI & RAG (Retrieval-Augmented Generation)
-          </h1>
-          <p className="text-xs text-slate-500 mt-1">
-            Quản trị dữ liệu nguồn tin cậy cung cấp bối cảnh cho trợ lý du lịch AI: cẩm nang lịch sử, toạ độ di sản và chỉ số vector hoá.
-          </p>
+    <div className="space-y-8 animate-in fade-in duration-300 font-['Poppins',sans-serif]">
+      {/* SECTION 1: KNOWLEDGE SOURCES (Nguồn Dữ Liệu Được Cấp Phép) */}
+      <div className="bg-white rounded-[30px] p-6 sm:p-8 shadow-[0px_10px_60px_rgba(226,236,249,0.50)]">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+          <div>
+            <h1 className="text-[22px] font-semibold text-black tracking-tight leading-tight">
+              AI Knowledge Sources
+            </h1>
+            <p className="text-[14px] text-[#16C098] font-normal mt-0.5">
+              Authorized Grounding & RAG Datasets
+            </p>
+          </div>
+          <Badge variant="purple">
+            {documents.filter((d) => d.indexStatus === "INDEXED").length}/{documents.length} Vector Indexed
+          </Badge>
         </div>
-
-        <Badge variant="purple">
-          {documents.filter((d) => d.indexStatus === "INDEXED").length}/{documents.length} tài liệu đã vector hoá
-        </Badge>
-      </div>
-
-      {/* SECTION: KNOWLEDGE SOURCES (Nguồn Dữ Liệu Được Cấp Phép) */}
-      <div>
-        <h2 className="text-base font-bold text-slate-900 mb-3 flex items-center gap-2">
-          <Database className="size-4 text-[#5932EA]" />
-          <span>Nguồn Dữ Liệu Được Cấp Phép (Authorized Knowledge Sources)</span>
-        </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {sources.map((src) => (
             <div
               key={src.id}
-              className="bg-white rounded-2xl border border-slate-100 p-5 shadow-xs flex flex-col justify-between"
+              className="bg-[#F9FBFF] rounded-[20px] border border-slate-100 p-5 flex flex-col justify-between"
             >
               <div>
                 <div className="flex items-center justify-between mb-2">
-                  <span className="font-mono text-[11px] bg-slate-100 text-slate-700 px-2 py-0.5 rounded font-semibold">
+                  <span className="font-mono text-[11px] bg-white border border-slate-200 text-[#7E7E7E] px-2 py-0.5 rounded-[4px] font-semibold">
                     {src.type}
                   </span>
                   <Badge variant={src.status === "ACTIVE" ? "success" : "neutral"}>
-                    {src.status}
+                    {src.status === "ACTIVE" ? "Active" : "Inactive"}
                   </Badge>
                 </div>
 
-                <h3 className="font-bold text-slate-900 text-sm">{src.name}</h3>
-                <p className="text-xs text-slate-400 truncate mt-1">{src.sourceUrl}</p>
+                <h3 className="font-semibold text-black text-[14px]">{src.name}</h3>
+                <p className="text-[12px] text-[#B5B7C0] truncate mt-1">{src.sourceUrl}</p>
               </div>
 
-              <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
-                <span className="text-slate-500">Mức độ tin cậy:</span>
-                <span className="font-bold text-[#16C098] bg-[#E7F8F4] px-2 py-0.5 rounded-full text-[11px]">
+              <div className="mt-4 pt-3 border-t border-slate-200/60 flex items-center justify-between text-[12px]">
+                <span className="text-[#7E7E7E]">Độ tin cậy:</span>
+                <span className="font-semibold text-[#008767] bg-[rgba(22,192,152,0.15)] px-2.5 py-0.5 rounded-[4px] text-[11px]">
                   {src.trustLevel}
                 </span>
               </div>
@@ -104,117 +97,149 @@ export function KnowledgeBasePage() {
         </div>
       </div>
 
-      {/* SECTION: KNOWLEDGE DOCUMENTS & INDEXING STATUS */}
-      <div className="space-y-4">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
-            <Layers className="size-4 text-[#0098a2]" />
-            <span>Tài Liệu Tri Thức & Trạng Thái Vector Hoá</span>
-          </h2>
+      {/* SECTION 2: KNOWLEDGE DOCUMENTS & VECTOR INDEX */}
+      <div className="bg-white rounded-[30px] p-6 sm:p-10 shadow-[0px_10px_60px_rgba(226,236,249,0.50)]">
+        {/* Card Header: Knowledge Documents & Vector RAG with Search & Filter */}
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+          <div>
+            <h2 className="text-[22px] font-semibold text-black tracking-tight leading-tight">
+              Knowledge Documents
+            </h2>
+            <p className="text-[14px] text-[#16C098] font-normal mt-0.5">
+              Vector Embeddings & Heritage Grounding ({filtered.length} tài liệu)
+            </p>
+          </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 flex-wrap">
+            {/* Search Input */}
             <div className="relative w-64">
-              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 size-4 text-slate-400" />
+              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 size-4 text-[#7E7E7E]" />
               <input
                 type="text"
-                placeholder="Tìm tài liệu, điểm đến..."
+                placeholder="Search..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-1.5 text-xs rounded-xl bg-white border border-slate-200 focus:outline-hidden focus:border-[#5932EA]"
+                className="w-full pl-10 pr-4 py-2 rounded-[10px] bg-[#F9FBFF] border border-slate-100 text-[12px] text-[#292D32] placeholder:text-[#B5B7C0] focus:border-[#5932EA] focus:outline-hidden transition"
               />
             </div>
 
+            {/* Status Filter */}
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="text-xs py-1.5 px-3 rounded-xl bg-white border border-slate-200 text-slate-700 focus:outline-hidden"
+              className="text-[12px] py-2 px-3 rounded-[10px] bg-[#F9FBFF] border border-slate-100 text-[#7E7E7E] focus:outline-hidden cursor-pointer"
             >
               <option value="ALL">Mọi Trạng Thái Vector</option>
-              <option value="INDEXED">Đã Vector Hoá (INDEXED)</option>
-              <option value="PENDING">Đang Xử Lý (PENDING)</option>
-              <option value="FAILED">Thất Bại (FAILED)</option>
+              <option value="INDEXED">Đã Vector Hoá</option>
+              <option value="PENDING">Đang Xử Lý</option>
+              <option value="FAILED">Thất Bại</option>
             </select>
           </div>
         </div>
 
         {/* Documents Table */}
-        <div className="bg-white rounded-2xl border border-slate-100 shadow-xs overflow-hidden">
-          <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs text-slate-600">
-              <thead className="bg-[#F9FBFF] border-b border-slate-100 text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
-                <tr>
-                  <th className="py-3.5 px-4">Tài Liệu Tri Thức</th>
-                  <th className="py-3.5 px-4">Điểm Đến Trực Thuộc</th>
-                  <th className="py-3.5 px-4">Phân Loại Dữ Liệu</th>
-                  <th className="py-3.5 px-4">Nguồn Dữ Liệu</th>
-                  <th className="py-3.5 px-4">Xác Minh</th>
-                  <th className="py-3.5 px-4">Trạng Thái Vector RAG</th>
-                  <th className="py-3.5 px-4 text-right">Thao Tác</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-100">
-                {filtered.map((doc) => (
-                  <tr key={doc.id} className="hover:bg-slate-50/80 transition">
-                    <td className="py-3 px-4">
-                      <div className="font-bold text-slate-900 text-sm flex items-center gap-1.5">
-                        <FileText className="size-3.5 text-[#5932EA]" />
-                        <span>{doc.title}</span>
-                      </div>
-                      <div className="text-[11px] text-slate-400">Ngôn ngữ: {doc.language.toUpperCase()} • Cập nhật: {doc.lastUpdated}</div>
-                    </td>
+        <div className="overflow-x-auto">
+          <table className="w-full text-left">
+            <thead>
+              <tr className="border-b border-[#EEEEEE]">
+                <th className="pb-4 text-[14px] font-medium text-[#B5B7C0]">Tài Liệu Tri Thức</th>
+                <th className="pb-4 text-[14px] font-medium text-[#B5B7C0]">Điểm Đến</th>
+                <th className="pb-4 text-[14px] font-medium text-[#B5B7C0]">Phân Loại</th>
+                <th className="pb-4 text-[14px] font-medium text-[#B5B7C0]">Nguồn Dữ Liệu</th>
+                <th className="pb-4 text-[14px] font-medium text-[#B5B7C0]">Xác Minh</th>
+                <th className="pb-4 text-[14px] font-medium text-[#B5B7C0] text-center">Trạng Thái Vector RAG</th>
+                <th className="pb-4 text-[14px] font-medium text-[#B5B7C0] text-right">Thao Tác</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-[#EEEEEE]">
+              {filtered.map((doc) => (
+                <tr key={doc.id} className="hover:bg-slate-50/60 transition">
+                  <td className="py-4 text-[14px] font-medium text-[#292D32]">
+                    <div className="font-semibold text-black text-[14px] flex items-center gap-1.5">
+                      <FileText className="size-3.5 text-[#5932EA]" />
+                      <span>{doc.title}</span>
+                    </div>
+                    <div className="text-[12px] text-[#B5B7C0]">Ngôn ngữ: {doc.language.toUpperCase()} • {doc.lastUpdated}</div>
+                  </td>
 
-                    <td className="py-3 px-4 font-medium text-slate-800">
-                      {doc.destination}
-                    </td>
+                  <td className="py-4 text-[14px] font-medium text-[#292D32]">
+                    {doc.destination}
+                  </td>
 
-                    <td className="py-3 px-4">
-                      <span className="bg-slate-100 text-slate-700 px-2 py-0.5 rounded font-mono text-[11px]">
-                        {doc.contentType}
+                  <td className="py-4 text-[13px] font-medium text-[#292D32]">
+                    <span className="bg-[#F9FBFF] border border-slate-100 text-[#7E7E7E] px-2.5 py-1 rounded-[6px] text-[11px] font-semibold">
+                      {doc.contentType}
+                    </span>
+                  </td>
+
+                  <td className="py-4 text-[13px] text-[#292D32]">
+                    {doc.source}
+                  </td>
+
+                  <td className="py-4">
+                    {doc.verified ? (
+                      <span className="text-[#008767] font-medium text-[12px] flex items-center gap-1">
+                        <CheckCircle className="size-3.5 text-[#16C098]" />
+                        <span>Đã xác minh</span>
                       </span>
-                    </td>
+                    ) : (
+                      <span className="text-amber-600 font-medium text-[12px]">Chờ xác minh</span>
+                    )}
+                  </td>
 
-                    <td className="py-3 px-4 text-slate-600">
-                      {doc.source}
-                    </td>
+                  <td className="py-4 text-center">
+                    <Badge variant={doc.indexStatus}>
+                      {doc.indexStatus === "INDEXED" && "Active"}
+                      {doc.indexStatus === "PENDING" && "Pending"}
+                      {doc.indexStatus === "FAILED" && "Inactive"}
+                      {doc.indexStatus === "NOT_INDEXED" && "Inactive"}
+                    </Badge>
+                  </td>
 
-                    <td className="py-3 px-4">
-                      {doc.verified ? (
-                        <span className="text-[#16C098] font-bold text-[11px] flex items-center gap-1">
-                          <CheckCircle className="size-3.5" />
-                          <span>Đã xác minh</span>
-                        </span>
-                      ) : (
-                        <span className="text-amber-600 font-medium text-[11px]">Chờ xác minh</span>
-                      )}
-                    </td>
+                  <td className="py-4 text-right">
+                    {canPerformAction("edit") && (
+                      <button
+                        type="button"
+                        disabled={reindexingId === doc.id}
+                        onClick={() => handleReindex(doc.id)}
+                        className="text-[12px] font-medium text-[#5932EA] hover:underline cursor-pointer inline-flex items-center gap-1"
+                      >
+                        <RefreshCw className={`size-3 text-[#5932EA] ${reindexingId === doc.id ? "animate-spin" : ""}`} />
+                        <span>{reindexingId === doc.id ? "Index..." : "Re-Index"}</span>
+                      </button>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
 
-                    <td className="py-3 px-4">
-                      <Badge variant={doc.indexStatus}>
-                        {doc.indexStatus === "INDEXED" && "Đã Vector Hoá"}
-                        {doc.indexStatus === "PENDING" && "Đang Index..."}
-                        {doc.indexStatus === "FAILED" && "Lỗi Nhúng Vector"}
-                        {doc.indexStatus === "NOT_INDEXED" && "Chưa Index"}
-                      </Badge>
-                    </td>
+        {/* Table Footer: Showing data + Pagination */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mt-8 pt-4">
+          <p className="text-[14px] font-medium text-[#B5B7C0]">
+            Showing data 1 to {filtered.length} of {documents.length} entries
+          </p>
 
-                    <td className="py-3 px-4 text-right">
-                      {canPerformAction("edit") && (
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          className="text-xs gap-1"
-                          disabled={reindexingId === doc.id}
-                          onClick={() => handleReindex(doc.id)}
-                        >
-                          <RefreshCw className={`size-3 text-[#5932EA] ${reindexingId === doc.id ? "animate-spin" : ""}`} />
-                          <span>{reindexingId === doc.id ? "Đang Index..." : "Re-Index"}</span>
-                        </Button>
-                      )}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              className="size-7 rounded-[4px] bg-[#F5F5F5] border border-[#EEEEEE] text-[#404B52] text-[12px] font-medium flex items-center justify-center hover:bg-slate-200 transition cursor-pointer"
+            >
+              &lt;
+            </button>
+            <button
+              type="button"
+              className="size-7 rounded-[4px] bg-[#5932EA] border border-[#5932EA] text-white text-[12px] font-medium flex items-center justify-center shadow-xs cursor-pointer"
+            >
+              1
+            </button>
+            <button
+              type="button"
+              className="size-7 rounded-[4px] bg-[#F5F5F5] border border-[#EEEEEE] text-[#404B52] text-[12px] font-medium flex items-center justify-center hover:bg-slate-200 transition cursor-pointer"
+            >
+              &gt;
+            </button>
           </div>
         </div>
       </div>

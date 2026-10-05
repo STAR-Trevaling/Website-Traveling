@@ -89,140 +89,162 @@ export function CrmLeadsPage() {
   });
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-300">
-      {/* Title */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <h1 className="text-2xl font-bold text-slate-900 tracking-tight">
-            Quản Lý Leads & Yêu Cầu Tư Vấn (CRM-Lite)
-          </h1>
-          <p className="text-xs text-slate-500 mt-1">
-            Quy trình tiếp nhận và chuyển hoá nhu cầu đặt tour, booking phòng, và tư vấn lịch trình từ website, chatbot AI và Zalo.
-          </p>
+    <div className="space-y-6 animate-in fade-in duration-300 font-['Poppins',sans-serif]">
+      {/* Main Card - Exact Match to Figma Template */}
+      <div className="bg-white rounded-[30px] p-6 sm:p-10 shadow-[0px_10px_60px_rgba(226,236,249,0.50)]">
+        {/* Card Header: CRM Leads & Subtitle with Search & Filter */}
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+          <div>
+            <h1 className="text-[22px] font-semibold text-black tracking-tight leading-tight">
+              CRM Leads & Inquiries
+            </h1>
+            <p className="text-[14px] text-[#16C098] font-normal mt-0.5">
+              Active Pipeline & Inquiries ({filtered.length} leads)
+            </p>
+          </div>
+
+          <div className="flex items-center gap-3 flex-wrap">
+            {/* Search Input */}
+            <div className="relative w-64">
+              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 size-4 text-[#7E7E7E]" />
+              <input
+                type="text"
+                placeholder="Search..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full pl-10 pr-4 py-2 rounded-[10px] bg-[#F9FBFF] border border-slate-100 text-[12px] text-[#292D32] placeholder:text-[#B5B7C0] focus:border-[#5932EA] focus:outline-hidden transition"
+              />
+            </div>
+
+            {/* Status Filter */}
+            <select
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value)}
+              className="text-[12px] py-2 px-3 rounded-[10px] bg-[#F9FBFF] border border-slate-100 text-[#7E7E7E] focus:outline-hidden cursor-pointer"
+            >
+              <option value="ALL">Mọi Phễu</option>
+              <option value="NEW">Mới Tiếp Nhận</option>
+              <option value="ASSIGNED">Đã Gán</option>
+              <option value="CONTACTED">Đã Trao Đổi</option>
+              <option value="QUALIFIED">Tiềm Năng Cao</option>
+              <option value="CONVERTED">Thành Công</option>
+              <option value="LOST">Thất Bại</option>
+            </select>
+
+            {/* Source Filter */}
+            <select
+              value={sourceFilter}
+              onChange={(e) => setSourceFilter(e.target.value)}
+              className="text-[12px] py-2 px-3 rounded-[10px] bg-[#F9FBFF] border border-slate-100 text-[#7E7E7E] focus:outline-hidden cursor-pointer"
+            >
+              <option value="ALL">Mọi Kênh</option>
+              <option value="website">Website</option>
+              <option value="ai_assistant">Trợ Lý AI</option>
+              <option value="zalo">Zalo OA</option>
+              <option value="facebook">Facebook</option>
+              <option value="partner">Đối Tác</option>
+            </select>
+          </div>
         </div>
 
-        <Badge variant="purple">
-          {leads.filter((l) => l.status === "NEW" || l.status === "ASSIGNED").length} leads đang theo sát
-        </Badge>
-      </div>
-
-      {/* Filter and Search */}
-      <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-xs flex flex-col lg:flex-row gap-3 items-center justify-between">
-        <div className="relative w-full lg:w-72">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 size-4 text-slate-400" />
-          <input
-            type="text"
-            placeholder="Tìm theo tên khách, số điện thoại..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 text-xs rounded-xl bg-slate-50 border border-slate-200 focus:outline-hidden focus:border-[#5932EA]"
-          />
-        </div>
-
-        <div className="flex items-center gap-2.5 w-full lg:w-auto flex-wrap">
-          <select
-            value={statusFilter}
-            onChange={(e) => setStatusFilter(e.target.value)}
-            className="text-xs py-2 px-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-700 focus:outline-hidden"
-          >
-            <option value="ALL">Mọi Trạng Thái Phễu</option>
-            <option value="NEW">Mới Tiếp Nhận (NEW)</option>
-            <option value="ASSIGNED">Đã Phân Bổ (ASSIGNED)</option>
-            <option value="CONTACTED">Đã Liên Hệ (CONTACTED)</option>
-            <option value="QUALIFIED">Đủ Điều Kiện (QUALIFIED)</option>
-            <option value="CONVERTED">Thành Công (CONVERTED)</option>
-            <option value="LOST">Đã Thất Bại (LOST)</option>
-          </select>
-
-          <select
-            value={sourceFilter}
-            onChange={(e) => setSourceFilter(e.target.value)}
-            className="text-xs py-2 px-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-700 focus:outline-hidden"
-          >
-            <option value="ALL">Mọi Nguồn Kênh</option>
-            <option value="website">Website Trực Tiếp</option>
-            <option value="ai_assistant">Trợ Lý AI Star Travels</option>
-            <option value="zalo">Zalo OA</option>
-            <option value="facebook">Facebook Fanpage</option>
-            <option value="partner">Đối Tác Giới Thiệu</option>
-          </select>
-
-          <span className="text-xs text-slate-400 font-semibold">{filtered.length} leads</span>
-        </div>
-      </div>
-
-      {/* Leads Table */}
-      <div className="bg-white rounded-2xl border border-slate-100 shadow-xs overflow-hidden">
+        {/* Leads Table */}
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs text-slate-600">
-            <thead className="bg-[#F9FBFF] border-b border-slate-100 text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
-              <tr>
-                <th className="py-3.5 px-4">Khách Hàng Nhu Cầu</th>
-                <th className="py-3.5 px-4">Nguồn Tiếp Cận</th>
-                <th className="py-3.5 px-4">Nội Dung Yêu Cầu</th>
-                <th className="py-3.5 px-4">Nhân Sự Phụ Trách</th>
-                <th className="py-3.5 px-4">Trạng Thái Phễu</th>
-                <th className="py-3.5 px-4">Ghi Chú</th>
-                <th className="py-3.5 px-4 text-right">Chi Tiết</th>
+          <table className="w-full text-left">
+            <thead>
+              <tr className="border-b border-[#EEEEEE]">
+                <th className="pb-4 text-[14px] font-medium text-[#B5B7C0]">Khách Hàng Nhu Cầu</th>
+                <th className="pb-4 text-[14px] font-medium text-[#B5B7C0]">Nguồn Kênh</th>
+                <th className="pb-4 text-[14px] font-medium text-[#B5B7C0]">Nội Dung Yêu Cầu</th>
+                <th className="pb-4 text-[14px] font-medium text-[#B5B7C0]">Nhân Sự Phụ Trách</th>
+                <th className="pb-4 text-[14px] font-medium text-[#B5B7C0] text-center">Trạng Thái Phễu</th>
+                <th className="pb-4 text-[14px] font-medium text-[#B5B7C0]">Ghi Chú</th>
+                <th className="pb-4 text-[14px] font-medium text-[#B5B7C0] text-right">Chi Tiết</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-[#EEEEEE]">
               {filtered.map((lead) => (
-                <tr key={lead.id} className="hover:bg-slate-50/80 transition">
-                  <td className="py-3 px-4">
-                    <div className="font-bold text-slate-900 text-sm">{lead.name}</div>
-                    <div className="text-[11px] text-slate-400 font-mono">{lead.phone} • {lead.email}</div>
+                <tr key={lead.id} className="hover:bg-slate-50/60 transition">
+                  <td className="py-4 text-[14px] font-medium text-[#292D32]">
+                    <div className="font-semibold text-black text-[14px]">{lead.name}</div>
+                    <div className="text-[12px] text-[#B5B7C0] font-mono">{lead.phone} • {lead.email}</div>
                   </td>
 
-                  <td className="py-3 px-4">
-                    <span className="font-semibold text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded text-[11px]">
+                  <td className="py-4 text-[13px] font-medium text-[#292D32]">
+                    <span className="bg-[#F9FBFF] border border-slate-100 text-[#5932EA] px-2.5 py-1 rounded-[6px] text-[11px] font-semibold">
                       {lead.source}
                     </span>
                   </td>
 
-                  <td className="py-3 px-4 max-w-xs">
-                    <p className="line-clamp-2 text-slate-700">{lead.inquiryDetails}</p>
+                  <td className="py-4 max-w-xs text-[13px] text-[#292D32]">
+                    <p className="line-clamp-2 text-[#555]">{lead.inquiryDetails}</p>
                   </td>
 
-                  <td className="py-3 px-4">
+                  <td className="py-4 text-[13px] font-medium text-[#292D32]">
                     {lead.assignedStaff ? (
-                      <span className="font-medium text-slate-800">{lead.assignedStaff}</span>
+                      <span className="text-[#292D32]">{lead.assignedStaff}</span>
                     ) : (
-                      <span className="text-amber-600 bg-amber-50 px-2 py-0.5 rounded text-[11px] font-bold">
+                      <span className="text-amber-700 bg-amber-50 px-2 py-0.5 rounded-[4px] text-[11px] font-medium border border-amber-200">
                         Chưa gán
                       </span>
                     )}
                   </td>
 
-                  <td className="py-3 px-4">
+                  <td className="py-4 text-center">
                     <Badge variant={lead.status}>
-                      {lead.status === "NEW" && "Tiếp Nhận"}
-                      {lead.status === "ASSIGNED" && "Đã Gán"}
-                      {lead.status === "CONTACTED" && "Đã Trao Đổi"}
-                      {lead.status === "QUALIFIED" && "Tiềm Năng Cao"}
-                      {lead.status === "CONVERTED" && "Chốt Thành Công"}
-                      {lead.status === "LOST" && "Thất Bại"}
+                      {lead.status === "NEW" && "Active"}
+                      {lead.status === "ASSIGNED" && "Pending"}
+                      {lead.status === "CONTACTED" && "In Progress"}
+                      {lead.status === "QUALIFIED" && "Active"}
+                      {lead.status === "CONVERTED" && "Converted"}
+                      {lead.status === "LOST" && "Inactive"}
                     </Badge>
                   </td>
 
-                  <td className="py-3 px-4 text-slate-400">
+                  <td className="py-4 text-[13px] text-[#7E7E7E]">
                     {lead.internalNotes.length} lượt
                   </td>
 
-                  <td className="py-3 px-4 text-right">
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      className="text-xs"
+                  <td className="py-4 text-right">
+                    <button
+                      type="button"
                       onClick={() => handleOpenDetail(lead)}
+                      className="text-[12px] font-medium text-[#5932EA] hover:underline cursor-pointer"
                     >
                       Xử Lý Lead
-                    </Button>
+                    </button>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
+        </div>
+
+        {/* Table Footer: Showing data + Pagination */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mt-8 pt-4">
+          <p className="text-[14px] font-medium text-[#B5B7C0]">
+            Showing data 1 to {filtered.length} of {leads.length} entries
+          </p>
+
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              className="size-7 rounded-[4px] bg-[#F5F5F5] border border-[#EEEEEE] text-[#404B52] text-[12px] font-medium flex items-center justify-center hover:bg-slate-200 transition cursor-pointer"
+            >
+              &lt;
+            </button>
+            <button
+              type="button"
+              className="size-7 rounded-[4px] bg-[#5932EA] border border-[#5932EA] text-white text-[12px] font-medium flex items-center justify-center shadow-xs cursor-pointer"
+            >
+              1
+            </button>
+            <button
+              type="button"
+              className="size-7 rounded-[4px] bg-[#F5F5F5] border border-[#EEEEEE] text-[#404B52] text-[12px] font-medium flex items-center justify-center hover:bg-slate-200 transition cursor-pointer"
+            >
+              &gt;
+            </button>
+          </div>
         </div>
       </div>
 

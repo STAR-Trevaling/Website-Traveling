@@ -54,165 +54,154 @@ export function ReviewModerationPage() {
   });
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-300">
-      {/* Title */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <h1 className="text-2xl font-bold text-slate-900 tracking-tight">
-            Kiểm Duyệt Đánh Giá Cộng Đồng
-          </h1>
-          <p className="text-xs text-slate-500 mt-1">
-            Bảo vệ tính khách quan của nền tảng du lịch: xử lý báo cáo vi phạm, ngôn từ tiêu cực hoặc đánh giá mạo danh.
-          </p>
+    <div className="space-y-6 animate-in fade-in duration-300 font-['Poppins',sans-serif]">
+      {/* Main Card - Exact Match to Figma Template */}
+      <div className="bg-white rounded-[30px] p-6 sm:p-10 shadow-[0px_10px_60px_rgba(226,236,249,0.50)]">
+        {/* Card Header: Review Moderation & Subtitle with Search & Filter */}
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+          <div>
+            <h1 className="text-[22px] font-semibold text-black tracking-tight leading-tight">
+              Review Moderation
+            </h1>
+            <p className="text-[14px] text-[#16C098] font-normal mt-0.5">
+              Community Trust & Safety Governance ({filtered.length} đánh giá)
+            </p>
+          </div>
+
+          <div className="flex items-center gap-3 flex-wrap">
+            {/* Search Input */}
+            <div className="relative w-64">
+              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 size-4 text-[#7E7E7E]" />
+              <input
+                type="text"
+                placeholder="Search..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full pl-10 pr-4 py-2 rounded-[10px] bg-[#F9FBFF] border border-slate-100 text-[12px] text-[#292D32] placeholder:text-[#B5B7C0] focus:border-[#5932EA] focus:outline-hidden transition"
+              />
+            </div>
+
+            {/* Status Filter */}
+            <select
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value)}
+              className="text-[12px] py-2 px-3 rounded-[10px] bg-[#F9FBFF] border border-slate-100 text-[#7E7E7E] focus:outline-hidden cursor-pointer"
+            >
+              <option value="ALL">Mọi Trạng Thái</option>
+              <option value="REPORTED">Bị Báo Cáo</option>
+              <option value="PUBLISHED">Công Khai</option>
+              <option value="HIDDEN">Đã Ẩn</option>
+              <option value="REMOVED">Đã Xoá</option>
+            </select>
+          </div>
         </div>
 
-        <Badge variant="destructive">
-          {reviews.filter((r) => r.status === "REPORTED").length} đánh giá bị báo cáo
-        </Badge>
-      </div>
-
-      {/* Filter and Search */}
-      <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-xs flex flex-col sm:flex-row gap-3 items-center justify-between">
-        <div className="relative w-full sm:w-80">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 size-4 text-slate-400" />
-          <input
-            type="text"
-            placeholder="Tìm theo nội dung, tác giả, địa điểm..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 text-xs rounded-xl bg-slate-50 border border-slate-200 focus:outline-hidden focus:border-[#5932EA]"
-          />
-        </div>
-
-        <div className="flex items-center gap-3">
-          <select
-            value={statusFilter}
-            onChange={(e) => setStatusFilter(e.target.value)}
-            className="text-xs py-2 px-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-700 focus:outline-hidden"
-          >
-            <option value="ALL">Mọi Trạng Thái</option>
-            <option value="REPORTED">Bị Báo Cáo (REPORTED)</option>
-            <option value="PUBLISHED">Công Khai (PUBLISHED)</option>
-            <option value="HIDDEN">Đã Ẩn (HIDDEN)</option>
-            <option value="REMOVED">Đã Xoá Vi Phạm (REMOVED)</option>
-          </select>
-
-          <span className="text-xs text-slate-400 font-semibold">{filtered.length} đánh giá</span>
-        </div>
-      </div>
-
-      {/* Reviews Table */}
-      <div className="bg-white rounded-2xl border border-slate-100 shadow-xs overflow-hidden">
+        {/* Reviews Table */}
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs text-slate-600">
-            <thead className="bg-[#F9FBFF] border-b border-slate-100 text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
-              <tr>
-                <th className="py-3.5 px-4">Tác Giả & Địa Điểm</th>
-                <th className="py-3.5 px-4">Điểm Đánh Giá</th>
-                <th className="py-3.5 px-4">Nội Dung Đánh Giá</th>
-                <th className="py-3.5 px-4">Báo Cáo Vi Phạm</th>
-                <th className="py-3.5 px-4">Trạng Thái</th>
-                <th className="py-3.5 px-4">Thời Gian</th>
-                <th className="py-3.5 px-4 text-right">Hành Động Kiểm Duyệt</th>
+          <table className="w-full text-left">
+            <thead>
+              <tr className="border-b border-[#EEEEEE]">
+                <th className="pb-4 text-[14px] font-medium text-[#B5B7C0]">Tác Giả & Địa Điểm</th>
+                <th className="pb-4 text-[14px] font-medium text-[#B5B7C0]">Điểm Đánh Giá</th>
+                <th className="pb-4 text-[14px] font-medium text-[#B5B7C0]">Nội Dung</th>
+                <th className="pb-4 text-[14px] font-medium text-[#B5B7C0]">Báo Cáo Vi Phạm</th>
+                <th className="pb-4 text-[14px] font-medium text-[#B5B7C0] text-center">Trạng Thái</th>
+                <th className="pb-4 text-[14px] font-medium text-[#B5B7C0]">Thời Gian</th>
+                <th className="pb-4 text-[14px] font-medium text-[#B5B7C0] text-right">Kiểm Duyệt</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-[#EEEEEE]">
               {filtered.map((rev) => (
-                <tr key={rev.id} className="hover:bg-slate-50/80 transition">
-                  <td className="py-3 px-4">
-                    <div className="font-bold text-slate-900 text-sm">{rev.authorName}</div>
-                    <div className="text-[11px] text-indigo-600 font-semibold">{rev.placeName}</div>
+                <tr key={rev.id} className="hover:bg-slate-50/60 transition">
+                  <td className="py-4 text-[14px] font-medium text-[#292D32]">
+                    <div className="font-semibold text-black text-[14px]">{rev.authorName}</div>
+                    <div className="text-[12px] text-[#5932EA] font-medium">{rev.placeName}</div>
                   </td>
 
-                  <td className="py-3 px-4">
-                    <div className="flex items-center gap-1 font-bold text-amber-500">
+                  <td className="py-4">
+                    <div className="flex items-center gap-1 font-semibold text-amber-500 text-[13px]">
                       <Star className="size-3.5 fill-amber-400 text-amber-400" />
                       <span>{rev.rating}.0</span>
                     </div>
                   </td>
 
-                  <td className="py-3 px-4 max-w-xs">
-                    <p className="line-clamp-2 text-slate-700 italic">"{rev.content || rev.body}"</p>
+                  <td className="py-4 max-w-xs text-[13px] text-[#292D32]">
+                    <p className="line-clamp-2 italic text-[#555]">"{rev.content || rev.body}"</p>
                   </td>
 
-                  <td className="py-3 px-4">
+                  <td className="py-4">
                     {rev.reportCount > 0 ? (
-                      <div className="flex items-center gap-1.5 text-rose-600 font-bold text-[11px]">
-                        <Flag className="size-3.5 fill-rose-500 text-rose-500" />
+                      <div className="flex items-center gap-1 text-[#DF0404] font-medium text-[12px]">
+                        <Flag className="size-3.5 fill-[#DF0404] text-[#DF0404]" />
                         <span>
                           {rev.reportCount} lần ({rev.reportReason || (rev.reportReasons && rev.reportReasons.join(", ")) || "Nghi vấn vi phạm"})
                         </span>
                       </div>
                     ) : (
-                      <span className="text-slate-400">Không có</span>
+                      <span className="text-[#B5B7C0] text-[12px]">Không có</span>
                     )}
                   </td>
 
-                  <td className="py-3 px-4">
+                  <td className="py-4 text-center">
                     <Badge variant={rev.status}>
-                      {rev.status === "PUBLISHED" && "Công Khai"}
-                      {rev.status === "REPORTED" && "Chờ Xử Lý"}
-                      {rev.status === "HIDDEN" && "Đã Tạm Ẩn"}
-                      {rev.status === "REMOVED" && "Đã Xoá Bỏ"}
+                      {rev.status === "PUBLISHED" && "Active"}
+                      {rev.status === "REPORTED" && "Pending"}
+                      {rev.status === "HIDDEN" && "Inactive"}
+                      {rev.status === "REMOVED" && "Rejected"}
                     </Badge>
                   </td>
 
-                  <td className="py-3 px-4 text-slate-500 font-mono text-[11px]">
+                  <td className="py-4 font-mono text-[13px] text-[#7E7E7E]">
                     {rev.createdAt}
                   </td>
 
-                  <td className="py-3 px-4 text-right">
+                  <td className="py-4 text-right">
                     <div className="flex items-center justify-end gap-1.5">
                       {/* Keep action */}
                       {rev.status === "REPORTED" && canPerformAction("moderate") && (
-                        <Button
-                          size="sm"
-                          variant="ghost"
-                          className="text-[#16C098] hover:bg-emerald-50 px-2 py-1 text-[11px]"
+                        <button
+                          type="button"
+                          className="text-[#16C098] hover:underline px-1.5 py-1 text-[12px] font-medium cursor-pointer"
                           onClick={() => handleOpenActionModal(rev, "Keep")}
                           title="Bỏ qua báo cáo, giữ lại đánh giá"
                         >
-                          Giữ Lại
-                        </Button>
+                          Giữ
+                        </button>
                       )}
 
                       {/* Hide action */}
                       {rev.status !== "HIDDEN" && rev.status !== "REMOVED" && canPerformAction("moderate") && (
-                        <Button
-                          size="sm"
-                          variant="ghost"
-                          className="text-amber-600 hover:bg-amber-50 px-2 py-1 text-[11px]"
+                        <button
+                          type="button"
+                          className="text-amber-600 hover:underline px-1.5 py-1 text-[12px] font-medium cursor-pointer"
                           onClick={() => handleOpenActionModal(rev, "Hide")}
                           title="Tạm ẩn đánh giá"
                         >
-                          Tạm Ẩn
-                        </Button>
+                          Ẩn
+                        </button>
                       )}
 
                       {/* Remove destructive action */}
                       {rev.status !== "REMOVED" && canPerformAction("moderate") && (
-                        <Button
-                          size="sm"
-                          variant="ghost"
-                          className="text-rose-600 hover:bg-rose-50 px-2 py-1 text-[11px]"
+                        <button
+                          type="button"
+                          className="text-[#DF0404] hover:underline px-1.5 py-1 text-[12px] font-medium cursor-pointer"
                           onClick={() => handleOpenActionModal(rev, "Remove")}
                           title="Xoá vĩnh viễn vi phạm"
                         >
                           Xoá
-                        </Button>
+                        </button>
                       )}
 
                       {/* Restore action */}
                       {(rev.status === "HIDDEN" || rev.status === "REMOVED") && canPerformAction("moderate") && (
-                        <Button
-                          size="sm"
-                          variant="ghost"
-                          className="text-indigo-600 hover:bg-indigo-50 px-2 py-1 text-[11px]"
+                        <button
+                          type="button"
+                          className="text-[#5932EA] hover:underline px-1.5 py-1 text-[12px] font-medium cursor-pointer"
                           onClick={() => handleOpenActionModal(rev, "Restore")}
-                          title="Khôi phục đánh giá"
                         >
-                          Khôi Phục
-                        </Button>
+                          Phục Hồi
+                        </button>
                       )}
                     </div>
                   </td>
@@ -220,6 +209,34 @@ export function ReviewModerationPage() {
               ))}
             </tbody>
           </table>
+        </div>
+
+        {/* Table Footer: Showing data + Pagination */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mt-8 pt-4">
+          <p className="text-[14px] font-medium text-[#B5B7C0]">
+            Showing data 1 to {filtered.length} of {reviews.length} entries
+          </p>
+
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              className="size-7 rounded-[4px] bg-[#F5F5F5] border border-[#EEEEEE] text-[#404B52] text-[12px] font-medium flex items-center justify-center hover:bg-slate-200 transition cursor-pointer"
+            >
+              &lt;
+            </button>
+            <button
+              type="button"
+              className="size-7 rounded-[4px] bg-[#5932EA] border border-[#5932EA] text-white text-[12px] font-medium flex items-center justify-center shadow-xs cursor-pointer"
+            >
+              1
+            </button>
+            <button
+              type="button"
+              className="size-7 rounded-[4px] bg-[#F5F5F5] border border-[#EEEEEE] text-[#404B52] text-[12px] font-medium flex items-center justify-center hover:bg-slate-200 transition cursor-pointer"
+            >
+              &gt;
+            </button>
+          </div>
         </div>
       </div>
 
