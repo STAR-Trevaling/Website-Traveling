@@ -202,7 +202,7 @@ export function KnowledgeBasePage() {
                         type="button"
                         disabled={reindexingId === doc.id}
                         onClick={() => handleReindex(doc.id)}
-                        className="text-[12px] font-medium text-[#5932EA] hover:underline cursor-pointer inline-flex items-center gap-1"
+                        className="px-2.5 py-1 rounded-[6px] text-[12px] font-medium text-[#5932EA] hover:bg-white hover:shadow-[0px_4px_14px_rgba(89,50,234,0.18)] hover:-translate-y-0.5 transition-all duration-200 cursor-pointer inline-flex items-center gap-1"
                       >
                         <RefreshCw className={`size-3 text-[#5932EA] ${reindexingId === doc.id ? "animate-spin" : ""}`} />
                         <span>{reindexingId === doc.id ? "Index..." : "Re-Index"}</span>
@@ -224,19 +224,19 @@ export function KnowledgeBasePage() {
           <div className="flex items-center gap-2">
             <button
               type="button"
-              className="size-7 rounded-[4px] bg-[#F5F5F5] border border-[#EEEEEE] text-[#404B52] text-[12px] font-medium flex items-center justify-center hover:bg-slate-200 transition cursor-pointer"
+              className="size-7 rounded-[6px] bg-[#F5F5F5] border border-[#EEEEEE] text-[#404B52] text-[12px] font-medium flex items-center justify-center hover:bg-white hover:border-slate-300 hover:shadow-[0px_4px_14px_rgba(0,0,0,0.10)] hover:-translate-y-0.5 transition-all duration-200 cursor-pointer"
             >
               &lt;
             </button>
             <button
               type="button"
-              className="size-7 rounded-[4px] bg-[#5932EA] border border-[#5932EA] text-white text-[12px] font-medium flex items-center justify-center shadow-xs cursor-pointer"
+              className="size-7 rounded-[6px] bg-[#5932EA] border border-[#5932EA] text-white text-[12px] font-medium flex items-center justify-center shadow-[0px_4px_14px_rgba(89,50,234,0.35)] cursor-pointer"
             >
               1
             </button>
             <button
               type="button"
-              className="size-7 rounded-[4px] bg-[#F5F5F5] border border-[#EEEEEE] text-[#404B52] text-[12px] font-medium flex items-center justify-center hover:bg-slate-200 transition cursor-pointer"
+              className="size-7 rounded-[6px] bg-[#F5F5F5] border border-[#EEEEEE] text-[#404B52] text-[12px] font-medium flex items-center justify-center hover:bg-white hover:border-slate-300 hover:shadow-[0px_4px_14px_rgba(0,0,0,0.10)] hover:-translate-y-0.5 transition-all duration-200 cursor-pointer"
             >
               &gt;
             </button>

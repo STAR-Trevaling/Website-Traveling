@@ -218,10 +218,10 @@ export function PlacesListPage() {
                     <button
                       type="button"
                       onClick={() => handleToggleVerification(place)}
-                      className={`px-3 py-0.5 rounded-full text-[11px] font-medium cursor-pointer transition ${
+                      className={`px-3 py-0.5 rounded-full text-[11px] font-medium cursor-pointer transition-all duration-200 ${
                         place.isVerified
-                          ? "bg-[rgba(22,192,152,0.15)] text-[#008767] border border-[#00B087]"
-                          : "bg-slate-100 text-[#B5B7C0] hover:bg-slate-200"
+                          ? "bg-[rgba(22,192,152,0.15)] text-[#008767] border border-[#00B087] hover:bg-white hover:shadow-[0px_4px_14px_rgba(22,192,152,0.25)] hover:-translate-y-0.5"
+                          : "bg-slate-100 text-[#B5B7C0] hover:bg-white hover:border-slate-300 hover:shadow-[0px_4px_14px_rgba(0,0,0,0.10)] hover:-translate-y-0.5"
                       }`}
                     >
                       {place.isVerified ? "✓ Đã Duyệt" : "Chưa Duyệt"}
@@ -270,7 +270,7 @@ export function PlacesListPage() {
                         <Button
                           size="sm"
                           variant="ghost"
-                          className="text-[11px] text-[#16C098] hover:bg-emerald-50 px-2 py-1 font-semibold"
+                          className="text-[11px] text-[#16C098] hover:bg-white hover:shadow-[0px_4px_14px_rgba(22,192,152,0.25)] hover:-translate-y-0.5 px-2.5 py-1 rounded-[6px] font-semibold transition-all duration-200"
                           onClick={() => handleStatusTransition(place, "PUBLISHED")}
                         >
                           Duyệt
@@ -293,19 +293,19 @@ export function PlacesListPage() {
           <div className="flex items-center gap-2">
             <button
               type="button"
-              className="size-7 rounded-[4px] bg-[#F5F5F5] border border-[#EEEEEE] text-[#404B52] text-[12px] font-medium flex items-center justify-center hover:bg-slate-200 transition cursor-pointer"
+              className="size-7 rounded-[6px] bg-[#F5F5F5] border border-[#EEEEEE] text-[#404B52] text-[12px] font-medium flex items-center justify-center hover:bg-white hover:border-slate-300 hover:shadow-[0px_4px_14px_rgba(0,0,0,0.10)] hover:-translate-y-0.5 transition-all duration-200 cursor-pointer"
             >
               &lt;
             </button>
             <button
               type="button"
-              className="size-7 rounded-[4px] bg-[#5932EA] border border-[#5932EA] text-white text-[12px] font-medium flex items-center justify-center shadow-xs cursor-pointer"
+              className="size-7 rounded-[6px] bg-[#5932EA] border border-[#5932EA] text-white text-[12px] font-medium flex items-center justify-center shadow-[0px_4px_14px_rgba(89,50,234,0.35)] cursor-pointer"
             >
               1
             </button>
             <button
               type="button"
-              className="size-7 rounded-[4px] bg-[#F5F5F5] border border-[#EEEEEE] text-[#404B52] text-[12px] font-medium flex items-center justify-center hover:bg-slate-200 transition cursor-pointer"
+              className="size-7 rounded-[6px] bg-[#F5F5F5] border border-[#EEEEEE] text-[#404B52] text-[12px] font-medium flex items-center justify-center hover:bg-white hover:border-slate-300 hover:shadow-[0px_4px_14px_rgba(0,0,0,0.10)] hover:-translate-y-0.5 transition-all duration-200 cursor-pointer"
             >
               &gt;
             </button>

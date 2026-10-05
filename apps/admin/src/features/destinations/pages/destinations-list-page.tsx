@@ -218,10 +218,10 @@ export function DestinationsListPage() {
                     <button
                       type="button"
                       onClick={() => handleToggleFeatured(dest)}
-                      className={`px-3 py-0.5 rounded-full text-[11px] font-medium cursor-pointer transition ${
+                      className={`px-3 py-0.5 rounded-full text-[11px] font-medium cursor-pointer transition-all duration-200 ${
                         dest.isFeatured
-                          ? "bg-amber-100 text-amber-800 border border-amber-200"
-                          : "bg-slate-100 text-[#B5B7C0] hover:bg-slate-200"
+                          ? "bg-amber-100 text-amber-800 border border-amber-200 hover:bg-white hover:shadow-[0px_4px_14px_rgba(245,158,11,0.25)] hover:-translate-y-0.5"
+                          : "bg-slate-100 text-[#B5B7C0] hover:bg-white hover:border-slate-300 hover:shadow-[0px_4px_14px_rgba(0,0,0,0.10)] hover:-translate-y-0.5"
                       }`}
                     >
                       {dest.isFeatured ? "★ Nổi Bật" : "Thường"}
@@ -254,7 +254,7 @@ export function DestinationsListPage() {
                         <Button
                           size="sm"
                           variant="ghost"
-                          className="text-[11px] text-[#5932EA] hover:bg-indigo-50 px-2 py-1"
+                          className="text-[11px] text-[#5932EA] hover:bg-white hover:shadow-[0px_4px_14px_rgba(89,50,234,0.20)] hover:-translate-y-0.5 px-2.5 py-1 rounded-[6px] transition-all duration-200"
                           onClick={() => handleStatusTransition(dest, "IN_REVIEW")}
                         >
                           Gửi Duyệt
@@ -265,7 +265,7 @@ export function DestinationsListPage() {
                         <Button
                           size="sm"
                           variant="ghost"
-                          className="text-[11px] text-[#16C098] hover:bg-emerald-50 px-2 py-1 font-semibold"
+                          className="text-[11px] text-[#16C098] hover:bg-white hover:shadow-[0px_4px_14px_rgba(22,192,152,0.25)] hover:-translate-y-0.5 px-2.5 py-1 rounded-[6px] font-semibold transition-all duration-200"
                           onClick={() => handleStatusTransition(dest, "PUBLISHED")}
                         >
                           Xuất Bản
@@ -276,7 +276,7 @@ export function DestinationsListPage() {
                         <Button
                           size="sm"
                           variant="ghost"
-                          className="text-[11px] text-rose-500 hover:bg-rose-50 px-2 py-1"
+                          className="text-[11px] text-rose-500 hover:bg-white hover:shadow-[0px_4px_14px_rgba(223,4,4,0.20)] hover:-translate-y-0.5 px-2.5 py-1 rounded-[6px] transition-all duration-200"
                           onClick={() => handleStatusTransition(dest, "ARCHIVED")}
                         >
                           Lưu Trữ
@@ -287,7 +287,7 @@ export function DestinationsListPage() {
                         <Button
                           size="sm"
                           variant="ghost"
-                          className="text-[11px] text-slate-600 hover:bg-slate-100 px-2 py-1"
+                          className="text-[11px] text-slate-600 hover:bg-white hover:shadow-[0px_4px_14px_rgba(0,0,0,0.10)] hover:-translate-y-0.5 px-2.5 py-1 rounded-[6px] transition-all duration-200"
                           onClick={() => handleStatusTransition(dest, "PUBLISHED")}
                         >
                           Tái Kích Hoạt
@@ -310,19 +310,19 @@ export function DestinationsListPage() {
           <div className="flex items-center gap-2">
             <button
               type="button"
-              className="size-7 rounded-[4px] bg-[#F5F5F5] border border-[#EEEEEE] text-[#404B52] text-[12px] font-medium flex items-center justify-center hover:bg-slate-200 transition cursor-pointer"
+              className="size-7 rounded-[6px] bg-[#F5F5F5] border border-[#EEEEEE] text-[#404B52] text-[12px] font-medium flex items-center justify-center hover:bg-white hover:border-slate-300 hover:shadow-[0px_4px_14px_rgba(0,0,0,0.10)] hover:-translate-y-0.5 transition-all duration-200 cursor-pointer"
             >
               &lt;
             </button>
             <button
               type="button"
-              className="size-7 rounded-[4px] bg-[#5932EA] border border-[#5932EA] text-white text-[12px] font-medium flex items-center justify-center shadow-xs cursor-pointer"
+              className="size-7 rounded-[6px] bg-[#5932EA] border border-[#5932EA] text-white text-[12px] font-medium flex items-center justify-center shadow-[0px_4px_14px_rgba(89,50,234,0.35)] cursor-pointer"
             >
               1
             </button>
             <button
               type="button"
-              className="size-7 rounded-[4px] bg-[#F5F5F5] border border-[#EEEEEE] text-[#404B52] text-[12px] font-medium flex items-center justify-center hover:bg-slate-200 transition cursor-pointer"
+              className="size-7 rounded-[6px] bg-[#F5F5F5] border border-[#EEEEEE] text-[#404B52] text-[12px] font-medium flex items-center justify-center hover:bg-white hover:border-slate-300 hover:shadow-[0px_4px_14px_rgba(0,0,0,0.10)] hover:-translate-y-0.5 transition-all duration-200 cursor-pointer"
             >
               &gt;
             </button>

@@ -273,25 +273,25 @@ export function CustomersPage() {
                   </td>
 
                   <td className="py-5 text-right">
-                    <div className="flex items-center justify-end gap-2">
+                    <div className="flex items-center justify-end gap-1.5">
                       <button
                         type="button"
                         onClick={() => {
                           setSelectedCustomer(c);
                           setIsDetailModalOpen(true);
                         }}
-                        className="text-[12px] font-medium text-[#5932EA] hover:underline cursor-pointer"
+                        className="px-2.5 py-1 rounded-[6px] text-[12px] font-medium text-[#5932EA] hover:bg-white hover:shadow-[0px_4px_14px_rgba(89,50,234,0.18)] hover:-translate-y-0.5 transition-all duration-200 cursor-pointer"
                       >
                         Detail
                       </button>
-                      <span>•</span>
+                      <span className="text-slate-300">•</span>
                       <button
                         type="button"
                         onClick={() => handleToggleStatus(c)}
-                        className={`text-[12px] font-medium cursor-pointer ${
+                        className={`px-2.5 py-1 rounded-[6px] text-[12px] font-medium transition-all duration-200 cursor-pointer ${
                           c.status === "ACTIVE"
-                            ? "text-rose-500 hover:underline"
-                            : "text-[#16C098] hover:underline"
+                            ? "text-rose-500 hover:bg-white hover:shadow-[0px_4px_14px_rgba(223,4,4,0.18)] hover:-translate-y-0.5"
+                            : "text-[#16C098] hover:bg-white hover:shadow-[0px_4px_14px_rgba(22,192,152,0.20)] hover:-translate-y-0.5"
                         }`}
                       >
                         {c.status === "ACTIVE" ? "Lock" : "Unlock"}
@@ -313,35 +313,35 @@ export function CustomersPage() {
           <div className="flex items-center gap-2">
             <button
               type="button"
-              className="size-7 rounded-[4px] bg-[#F5F5F5] border border-[#EEEEEE] text-[#404B52] text-[12px] font-medium flex items-center justify-center hover:bg-slate-200 transition cursor-pointer"
+              className="size-7 rounded-[6px] bg-[#F5F5F5] border border-[#EEEEEE] text-[#404B52] text-[12px] font-medium flex items-center justify-center hover:bg-white hover:border-slate-300 hover:shadow-[0px_4px_14px_rgba(0,0,0,0.10)] hover:-translate-y-0.5 transition-all duration-200 cursor-pointer"
             >
               <ChevronLeft className="size-3.5" />
             </button>
 
             <button
               type="button"
-              className="size-7 rounded-[4px] bg-[#5932EA] border border-[#5932EA] text-white text-[12px] font-medium flex items-center justify-center shadow-xs cursor-pointer"
+              className="size-7 rounded-[6px] bg-[#5932EA] border border-[#5932EA] text-white text-[12px] font-medium flex items-center justify-center shadow-[0px_4px_14px_rgba(89,50,234,0.35)] cursor-pointer"
             >
               1
             </button>
 
             <button
               type="button"
-              className="size-7 rounded-[4px] bg-[#F5F5F5] border border-[#EEEEEE] text-[#404B52] text-[12px] font-medium flex items-center justify-center hover:bg-slate-200 transition cursor-pointer"
+              className="size-7 rounded-[6px] bg-[#F5F5F5] border border-[#EEEEEE] text-[#404B52] text-[12px] font-medium flex items-center justify-center hover:bg-white hover:border-slate-300 hover:shadow-[0px_4px_14px_rgba(0,0,0,0.10)] hover:-translate-y-0.5 transition-all duration-200 cursor-pointer"
             >
               2
             </button>
 
             <button
               type="button"
-              className="size-7 rounded-[4px] bg-[#F5F5F5] border border-[#EEEEEE] text-[#404B52] text-[12px] font-medium flex items-center justify-center hover:bg-slate-200 transition cursor-pointer"
+              className="size-7 rounded-[6px] bg-[#F5F5F5] border border-[#EEEEEE] text-[#404B52] text-[12px] font-medium flex items-center justify-center hover:bg-white hover:border-slate-300 hover:shadow-[0px_4px_14px_rgba(0,0,0,0.10)] hover:-translate-y-0.5 transition-all duration-200 cursor-pointer"
             >
               3
             </button>
 
             <button
               type="button"
-              className="size-7 rounded-[4px] bg-[#F5F5F5] border border-[#EEEEEE] text-[#404B52] text-[12px] font-medium flex items-center justify-center hover:bg-slate-200 transition cursor-pointer"
+              className="size-7 rounded-[6px] bg-[#F5F5F5] border border-[#EEEEEE] text-[#404B52] text-[12px] font-medium flex items-center justify-center hover:bg-white hover:border-slate-300 hover:shadow-[0px_4px_14px_rgba(0,0,0,0.10)] hover:-translate-y-0.5 transition-all duration-200 cursor-pointer"
             >
               4
             </button>
@@ -350,14 +350,14 @@ export function CustomersPage() {
 
             <button
               type="button"
-              className="size-7 rounded-[4px] bg-[#F5F5F5] border border-[#EEEEEE] text-[#404B52] text-[12px] font-medium flex items-center justify-center hover:bg-slate-200 transition cursor-pointer"
+              className="size-7 rounded-[6px] bg-[#F5F5F5] border border-[#EEEEEE] text-[#404B52] text-[12px] font-medium flex items-center justify-center hover:bg-white hover:border-slate-300 hover:shadow-[0px_4px_14px_rgba(0,0,0,0.10)] hover:-translate-y-0.5 transition-all duration-200 cursor-pointer"
             >
               40
             </button>
 
             <button
               type="button"
-              className="size-7 rounded-[4px] bg-[#F5F5F5] border border-[#EEEEEE] text-[#404B52] text-[12px] font-medium flex items-center justify-center hover:bg-slate-200 transition cursor-pointer"
+              className="size-7 rounded-[6px] bg-[#F5F5F5] border border-[#EEEEEE] text-[#404B52] text-[12px] font-medium flex items-center justify-center hover:bg-white hover:border-slate-300 hover:shadow-[0px_4px_14px_rgba(0,0,0,0.10)] hover:-translate-y-0.5 transition-all duration-200 cursor-pointer"
             >
               <ChevronRight className="size-3.5" />
             </button>

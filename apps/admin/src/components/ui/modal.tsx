@@ -58,7 +58,7 @@ export function Modal({
       >
         <button
           onClick={onClose}
-          className="absolute top-5 right-5 p-2 rounded-full text-slate-400 hover:text-black hover:bg-slate-100 transition cursor-pointer"
+          className="absolute top-5 right-5 p-2 rounded-full text-slate-400 hover:text-black hover:bg-white hover:shadow-[0px_4px_16px_rgba(0,0,0,0.12)] hover:-translate-y-0.5 transition-all duration-200 cursor-pointer"
           aria-label="Đóng"
         >
           <X className="size-5" />

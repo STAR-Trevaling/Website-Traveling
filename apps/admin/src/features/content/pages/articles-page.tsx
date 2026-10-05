@@ -203,7 +203,7 @@ export function ArticlesPage() {
                         <Button
                           size="sm"
                           variant="ghost"
-                          className="text-[11px] text-[#5932EA] hover:bg-indigo-50 px-2 py-1"
+                          className="text-[11px] text-[#5932EA] hover:bg-white hover:shadow-[0px_4px_14px_rgba(89,50,234,0.20)] hover:-translate-y-0.5 px-2.5 py-1 rounded-[6px] transition-all duration-200"
                           onClick={() => handleStatusTransition(art, "IN_REVIEW")}
                         >
                           Gửi Duyệt
@@ -214,7 +214,7 @@ export function ArticlesPage() {
                         <Button
                           size="sm"
                           variant="ghost"
-                          className="text-[11px] text-[#16C098] hover:bg-emerald-50 px-2 py-1 font-semibold"
+                          className="text-[11px] text-[#16C098] hover:bg-white hover:shadow-[0px_4px_14px_rgba(22,192,152,0.25)] hover:-translate-y-0.5 px-2.5 py-1 rounded-[6px] font-semibold transition-all duration-200"
                           onClick={() => handleStatusTransition(art, "PUBLISHED")}
                         >
                           Phê Duyệt
@@ -225,7 +225,7 @@ export function ArticlesPage() {
                         <Button
                           size="sm"
                           variant="ghost"
-                          className="text-[11px] text-rose-500 hover:bg-rose-50 px-2 py-1"
+                          className="text-[11px] text-rose-500 hover:bg-white hover:shadow-[0px_4px_14px_rgba(223,4,4,0.20)] hover:-translate-y-0.5 px-2.5 py-1 rounded-[6px] transition-all duration-200"
                           onClick={() => handleStatusTransition(art, "ARCHIVED")}
                         >
                           Lưu Trữ

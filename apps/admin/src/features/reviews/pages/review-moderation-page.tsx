@@ -161,7 +161,7 @@ export function ReviewModerationPage() {
                       {rev.status === "REPORTED" && canPerformAction("moderate") && (
                         <button
                           type="button"
-                          className="text-[#16C098] hover:underline px-1.5 py-1 text-[12px] font-medium cursor-pointer"
+                          className="px-2.5 py-1 rounded-[6px] text-[#16C098] hover:bg-white hover:shadow-[0px_4px_14px_rgba(22,192,152,0.25)] hover:-translate-y-0.5 text-[12px] font-semibold transition-all duration-200 cursor-pointer"
                           onClick={() => handleOpenActionModal(rev, "Keep")}
                           title="Bỏ qua báo cáo, giữ lại đánh giá"
                         >
@@ -173,7 +173,7 @@ export function ReviewModerationPage() {
                       {rev.status !== "HIDDEN" && rev.status !== "REMOVED" && canPerformAction("moderate") && (
                         <button
                           type="button"
-                          className="text-amber-600 hover:underline px-1.5 py-1 text-[12px] font-medium cursor-pointer"
+                          className="px-2.5 py-1 rounded-[6px] text-amber-600 hover:bg-white hover:shadow-[0px_4px_14px_rgba(245,158,11,0.25)] hover:-translate-y-0.5 text-[12px] font-medium transition-all duration-200 cursor-pointer"
                           onClick={() => handleOpenActionModal(rev, "Hide")}
                           title="Tạm ẩn đánh giá"
                         >
@@ -185,7 +185,7 @@ export function ReviewModerationPage() {
                       {rev.status !== "REMOVED" && canPerformAction("moderate") && (
                         <button
                           type="button"
-                          className="text-[#DF0404] hover:underline px-1.5 py-1 text-[12px] font-medium cursor-pointer"
+                          className="px-2.5 py-1 rounded-[6px] text-[#DF0404] hover:bg-white hover:shadow-[0px_4px_14px_rgba(223,4,4,0.20)] hover:-translate-y-0.5 text-[12px] font-medium transition-all duration-200 cursor-pointer"
                           onClick={() => handleOpenActionModal(rev, "Remove")}
                           title="Xoá vĩnh viễn vi phạm"
                         >
@@ -197,7 +197,7 @@ export function ReviewModerationPage() {
                       {(rev.status === "HIDDEN" || rev.status === "REMOVED") && canPerformAction("moderate") && (
                         <button
                           type="button"
-                          className="text-[#5932EA] hover:underline px-1.5 py-1 text-[12px] font-medium cursor-pointer"
+                          className="px-2.5 py-1 rounded-[6px] text-[#5932EA] hover:bg-white hover:shadow-[0px_4px_14px_rgba(89,50,234,0.20)] hover:-translate-y-0.5 text-[12px] font-medium transition-all duration-200 cursor-pointer"
                           onClick={() => handleOpenActionModal(rev, "Restore")}
                         >
                           Phục Hồi
@@ -220,19 +220,19 @@ export function ReviewModerationPage() {
           <div className="flex items-center gap-2">
             <button
               type="button"
-              className="size-7 rounded-[4px] bg-[#F5F5F5] border border-[#EEEEEE] text-[#404B52] text-[12px] font-medium flex items-center justify-center hover:bg-slate-200 transition cursor-pointer"
+              className="size-7 rounded-[6px] bg-[#F5F5F5] border border-[#EEEEEE] text-[#404B52] text-[12px] font-medium flex items-center justify-center hover:bg-white hover:border-slate-300 hover:shadow-[0px_4px_14px_rgba(0,0,0,0.10)] hover:-translate-y-0.5 transition-all duration-200 cursor-pointer"
             >
               &lt;
             </button>
             <button
               type="button"
-              className="size-7 rounded-[4px] bg-[#5932EA] border border-[#5932EA] text-white text-[12px] font-medium flex items-center justify-center shadow-xs cursor-pointer"
+              className="size-7 rounded-[6px] bg-[#5932EA] border border-[#5932EA] text-white text-[12px] font-medium flex items-center justify-center shadow-[0px_4px_14px_rgba(89,50,234,0.35)] cursor-pointer"
             >
               1
             </button>
             <button
               type="button"
-              className="size-7 rounded-[4px] bg-[#F5F5F5] border border-[#EEEEEE] text-[#404B52] text-[12px] font-medium flex items-center justify-center hover:bg-slate-200 transition cursor-pointer"
+              className="size-7 rounded-[6px] bg-[#F5F5F5] border border-[#EEEEEE] text-[#404B52] text-[12px] font-medium flex items-center justify-center hover:bg-white hover:border-slate-300 hover:shadow-[0px_4px_14px_rgba(0,0,0,0.10)] hover:-translate-y-0.5 transition-all duration-200 cursor-pointer"
             >
               &gt;
             </button>

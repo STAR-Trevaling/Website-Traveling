@@ -32,7 +32,7 @@ export function Topbar({ onOpenSidebar, isSidebarCollapsed, onToggleSidebar }: T
         <button
           type="button"
           onClick={onOpenSidebar}
-          className="lg:hidden p-2 rounded-xl text-slate-500 hover:bg-white shadow-xs cursor-pointer"
+          className="lg:hidden p-2 rounded-xl text-slate-500 bg-white hover:text-slate-800 hover:shadow-[0px_6px_20px_rgba(0,0,0,0.10)] hover:-translate-y-0.5 transition-all duration-200 cursor-pointer"
           aria-label="Mở Menu Điều Hướng"
         >
           <Menu className="size-6 text-[#292D32]" />
@@ -42,7 +42,7 @@ export function Topbar({ onOpenSidebar, isSidebarCollapsed, onToggleSidebar }: T
         <button
           type="button"
           onClick={onToggleSidebar}
-          className="hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-[10px] bg-white border border-slate-200/80 text-[12px] font-medium text-[#292D32] shadow-[0px_4px_20px_rgba(218,222,232,0.30)] hover:border-[#5932EA] transition cursor-pointer group"
+          className="hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-[10px] bg-white border border-slate-200/80 text-[12px] font-medium text-[#292D32] shadow-[0px_4px_20px_rgba(218,222,232,0.30)] hover:shadow-[0px_8px_25px_rgba(89,50,234,0.18)] hover:-translate-y-0.5 hover:border-slate-300 transition-all duration-200 cursor-pointer group"
           title={isSidebarCollapsed ? "Bật thanh menu (Mở rộng menu — Ctrl+B)" : "Tắt thanh menu (Mở rộng không gian làm việc — Ctrl+B)"}
         >
           {isSidebarCollapsed ? (
@@ -92,7 +92,7 @@ export function Topbar({ onOpenSidebar, isSidebarCollapsed, onToggleSidebar }: T
           <button
             type="button"
             onClick={() => setIsRoleDropdownOpen(!isRoleDropdownOpen)}
-            className="flex items-center gap-2 px-3.5 py-2 rounded-[10px] bg-white border border-slate-200/80 text-[12px] font-medium text-[#292D32] shadow-[0px_4px_20px_rgba(218,222,232,0.30)] hover:border-[#5932EA] transition cursor-pointer"
+            className="flex items-center gap-2 px-3.5 py-2 rounded-[10px] bg-white border border-slate-200/80 text-[12px] font-medium text-[#292D32] shadow-[0px_4px_20px_rgba(218,222,232,0.30)] hover:shadow-[0px_8px_25px_rgba(89,50,234,0.18)] hover:-translate-y-0.5 hover:border-slate-300 transition-all duration-200 cursor-pointer"
             title="Đổi vai trò để kiểm thử phân quyền RBAC"
           >
             <Shield className="size-4 text-[#5932EA]" />
@@ -102,7 +102,7 @@ export function Topbar({ onOpenSidebar, isSidebarCollapsed, onToggleSidebar }: T
           </button>
 
           {isRoleDropdownOpen && (
-            <div className="absolute right-0 mt-2 w-72 bg-white rounded-[20px] shadow-[0px_10px_60px_rgba(226,236,249,0.90)] border border-slate-1 công nghệ p-2 z-50 animate-in fade-in zoom-in-95 duration-150">
+            <div className="absolute right-0 mt-2 w-72 bg-white rounded-[20px] shadow-[0px_10px_60px_rgba(226,236,249,0.90)] border border-slate-100 p-2 z-50 animate-in fade-in zoom-in-95 duration-150">
               <div className="px-3 py-2 border-b border-slate-100 mb-1">
                 <span className="text-[11px] font-semibold uppercase tracking-wider text-[#B5B7C0]">
                   Chuyển Vai Trò Thẩm Định
@@ -118,10 +118,10 @@ export function Topbar({ onOpenSidebar, isSidebarCollapsed, onToggleSidebar }: T
                       switchRole(r.role);
                       setIsRoleDropdownOpen(false);
                     }}
-                    className={`w-full flex items-center justify-between p-2.5 rounded-[10px] text-left transition cursor-pointer ${
+                    className={`w-full flex items-center justify-between p-2.5 rounded-[10px] text-left transition-all duration-200 cursor-pointer ${
                       role === r.role
-                        ? "bg-[#ECE7FF] text-[#5932EA]"
-                        : "hover:bg-[#F9FBFF] text-[#292D32]"
+                        ? "bg-[#ECE7FF] text-[#5932EA] shadow-[0px_4px_14px_rgba(89,50,234,0.15)]"
+                        : "hover:bg-white hover:shadow-[0px_4px_16px_rgba(89,50,234,0.12)] hover:-translate-y-0.5 text-[#292D32]"
                     }`}
                   >
                     <div>

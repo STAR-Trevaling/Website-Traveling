@@ -99,7 +99,7 @@ export function Sidebar({ isOpen, onClose, isCollapsed = false, onToggleCollapse
               <button
                 type="button"
                 onClick={onToggleCollapse}
-                className="hidden lg:flex p-2 rounded-xl text-[#9197B3] hover:text-[#5932EA] hover:bg-[#F9FBFF] transition cursor-pointer"
+                className="hidden lg:flex p-2 rounded-xl text-[#9197B3] hover:text-[#5932EA] hover:bg-white hover:shadow-[0px_6px_20px_rgba(89,50,234,0.12)] hover:-translate-y-0.5 transition-all duration-200 cursor-pointer"
                 title="Tắt menu để mở rộng không gian làm việc (Ctrl+B)"
               >
                 <PanelLeftClose className="size-5" />
@@ -110,7 +110,7 @@ export function Sidebar({ isOpen, onClose, isCollapsed = false, onToggleCollapse
             <button
               type="button"
               onClick={onClose}
-              className="lg:hidden p-1.5 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100"
+              className="lg:hidden p-1.5 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-white hover:shadow-[0px_4px_16px_rgba(0,0,0,0.08)] hover:-translate-y-0.5 transition-all duration-200"
             >
               <X className="size-5" />
             </button>
@@ -130,10 +130,10 @@ export function Sidebar({ isOpen, onClose, isCollapsed = false, onToggleCollapse
                       to={item.path}
                       onClick={() => onClose()}
                       className={({ isActive }) =>
-                        `group flex items-center justify-between px-3.5 py-3 rounded-[8px] text-[14px] font-medium transition-all ${
+                        `group flex items-center justify-between px-3.5 py-3 rounded-[10px] text-[14px] font-medium transition-all duration-200 ${
                           isActive
-                            ? "bg-[#5932EA] text-white shadow-sm"
-                            : "text-[#9197B3] hover:text-[#5932EA] hover:bg-[#F9FBFF]"
+                            ? "bg-[#5932EA] text-white shadow-[0px_8px_20px_rgba(89,50,234,0.30)]"
+                            : "text-[#9197B3] hover:text-[#292D32] hover:bg-white hover:shadow-[0px_6px_20px_rgba(89,50,234,0.10)] hover:-translate-y-0.5"
                         }`
                       }
                     >
