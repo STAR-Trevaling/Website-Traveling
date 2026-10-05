@@ -66,7 +66,7 @@ TEMPLATES = [
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.contrib.gis.db.backends.postgis",
+        "ENGINE": os.getenv("DJANGO_DB_ENGINE", "django.contrib.gis.db.backends.postgis"),
         "NAME": os.getenv("POSTGRES_DB", "travel"),
         "USER": os.getenv("POSTGRES_USER", "travel"),
         "PASSWORD": os.getenv("POSTGRES_PASSWORD", "travel"),
