@@ -77,20 +77,22 @@ export function MobileNav({ user, overlay = false }: MobileNavProps) {
           <div className="flex items-center justify-between pb-4 border-b border-slate-100">
             <Link
               href="/"
-              className="flex items-center gap-2"
+              className="flex items-center"
               onClick={() => setIsOpen(false)}
             >
-              <svg
-                width="28"
-                height="28"
-                viewBox="0 0 100 100"
-                fill="#0098a2"
-                aria-hidden="true"
-              >
-                <polygon points="50,5 64,36 98,38 72,60 80,94 50,75 20,94 28,60 2,38 36,36" />
-              </svg>
-              <span className="logo-title text-2xl font-normal text-slate-900">
-                Star Travels
+              <span className="logo-title text-3xl font-normal text-slate-900 flex items-center">
+                <span className="relative inline-flex items-center justify-center">
+                  <svg
+                    viewBox="0 0 100 100"
+                    fill="#eab308"
+                    aria-hidden="true"
+                    className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 size-8 text-[#eab308] opacity-85 -z-10 pointer-events-none drop-shadow-[0_1px_6px_rgba(234,179,8,0.4)]"
+                  >
+                    <polygon points="50,5 64,36 98,38 72,60 80,94 50,75 20,94 28,60 2,38 36,36" />
+                  </svg>
+                  <span className="relative z-10">Star</span>
+                </span>
+                <span className="ml-1.5">Travels</span>
               </span>
             </Link>
             <button
