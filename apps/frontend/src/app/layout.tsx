@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Script from "next/script";
 import "./globals.css";
-import { SiteFooter } from "@/components/layout/site-footer";
+import { ClientLayoutWrapper } from "@/components/layout/client-layout-wrapper";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://startravels.vn";
 const SITE_NAME = "Star Travels Vietnam";
@@ -142,21 +141,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body className="antialiased min-h-screen flex flex-col justify-between relative">
-        {/* Global background: Nha Trang beach */}
-        <div className="fixed inset-0 -z-50 pointer-events-none overflow-hidden select-none">
-          <Image
-            src="/assets/nha-trang-beach-bg.jpg"
-            alt="Bãi biển Nha Trang — Star Travels Vietnam"
-            fill
-            priority
-            unoptimized
-            className="object-cover object-center"
-          />
-          <div className="absolute inset-0 bg-[#eaf4f2]/30" />
-        </div>
-
-        <div className="flex-1 relative z-0">{children}</div>
-        <SiteFooter />
+        <ClientLayoutWrapper>{children}</ClientLayoutWrapper>
       </body>
     </html>
   );

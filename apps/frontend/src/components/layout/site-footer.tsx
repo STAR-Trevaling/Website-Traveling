@@ -7,6 +7,7 @@ const navLinks = [
   { label: "Tours", href: "/tours" },
   { label: "Câu chuyện", href: "/stories" },
   { label: "Liên hệ", href: "/contact" },
+  { label: "Quản trị Portal", href: "/portal" },
 ];
 
 export function SiteFooter() {

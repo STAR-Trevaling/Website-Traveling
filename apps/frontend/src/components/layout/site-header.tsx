@@ -12,6 +12,7 @@ const NAV_ITEMS = [
   { label: "Tours", href: "/tours" },
   { label: "About Us", href: "/about" },
   { label: "Contact", href: "/contact" },
+  { label: "Portal", href: "/portal" },
 ];
 
 export async function SiteHeader({ overlay = false }: SiteHeaderProps) {

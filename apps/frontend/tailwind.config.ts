@@ -22,12 +22,16 @@ export default {
       },
       fontFamily: {
         sans: ["Work Sans", "Arial", "sans-serif"],
+        poppins: ["Poppins", "sans-serif"],
         headline: ["Abril Fatface", "Georgia", "serif"],
         script: ["Grape Nuts", "cursive"],
         logo: ["Allison", "cursive"],
         alegreya: ["Alegreya Sans", "Arial", "sans-serif"]
       },
-      boxShadow: { template: "0 0 10px rgba(0,0,0,.25)" }
+      boxShadow: { 
+        template: "0 0 10px rgba(0,0,0,.25)",
+        dashboard: "0px 10px 60px rgba(226, 236, 249, 0.50)"
+      }
     }
   },
   plugins: []
