@@ -64,18 +64,18 @@ export default async function DestinationDetail({ params }: DestinationDetailPro
           unoptimized
           className="object-cover"
         />
-        <div className="absolute inset-0 bg-black/45" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/65 to-black/45" />
         <SiteHeader overlay />
 
         <div className="relative z-10 mx-auto flex min-h-[620px] max-w-7xl items-end px-6 pb-16 md:px-12">
-          <div>
-            <p className="text-xs uppercase tracking-[.25em] text-[#00c2cb] font-semibold">
+          <div className="max-w-4xl">
+            <p className="text-xs sm:text-sm uppercase tracking-[.25em] text-[#00c2cb] font-bold">
               {destination.country}
             </p>
-            <h1 className="display-title template-shadow-text mt-2 text-6xl md:text-8xl">
+            <h1 className="display-title mt-2 text-5xl sm:text-7xl md:text-8xl font-black text-white drop-shadow-[0_2px_14px_rgba(0,0,0,0.95)]">
               {destination.name}
             </h1>
-            <p className="mt-5 max-w-2xl text-base md:text-lg font-light leading-relaxed text-white/95">
+            <p className="mt-4 max-w-3xl text-base sm:text-lg md:text-xl font-normal leading-relaxed text-white/95 drop-shadow-[0_1px_8px_rgba(0,0,0,0.9)]">
               {destination.summary}
             </p>
           </div>

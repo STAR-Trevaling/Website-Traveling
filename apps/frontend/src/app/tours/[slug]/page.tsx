@@ -62,7 +62,7 @@ export default async function TourDetailPage({ params }: TourDetailPageProps) {
   return (
     <>
       {/* 1. HERO HEADER WITH TEMPLATE VIBE */}
-      <section className="relative min-h-[580px] w-full overflow-hidden text-white">
+      <section className="relative min-h-[620px] md:min-h-[680px] w-full overflow-hidden text-white flex items-end">
         <Image
           src={tour.image}
           alt={tour.title}
@@ -71,30 +71,31 @@ export default async function TourDetailPage({ params }: TourDetailPageProps) {
           unoptimized
           className="object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/45 to-black/35" />
+        {/* Deep contrast gradient overlay so text is never washed out by background */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/65 to-black/45" />
         <SiteHeader overlay />
 
-        <div className="relative z-10 mx-auto flex min-h-[580px] max-w-7xl items-end px-6 pb-16 md:px-12">
-          <div className="max-w-4xl">
+        <div className="relative z-10 mx-auto w-full max-w-7xl px-6 pb-16 md:px-12 pt-32">
+          <div className="max-w-4xl bg-black/40 backdrop-blur-[3px] p-6 sm:p-9 rounded-[2px] border border-white/20 shadow-2xl">
             <div className="flex flex-wrap items-center gap-3">
-              <span className="rounded-[2px] bg-[#0098a2] px-3 py-1 text-xs font-semibold uppercase tracking-wider text-white shadow-sm">
+              <span className="rounded-[2px] bg-[#0098a2] px-3.5 py-1.5 text-xs sm:text-sm font-bold uppercase tracking-wider text-white shadow-md">
                 {tour.duration}
               </span>
-              <span className="flex items-center gap-1 rounded-[2px] bg-white/20 px-3 py-1 text-xs font-medium text-white backdrop-blur-md">
-                <MapPin className="size-3.5 text-[#7de1df]" />
+              <span className="flex items-center gap-1.5 rounded-[2px] bg-black/60 px-3.5 py-1.5 text-xs sm:text-sm font-semibold text-white backdrop-blur-md border border-white/20 shadow-sm">
+                <MapPin className="size-4 text-[#00c2cb]" />
                 {tour.destination}
               </span>
-              <span className="flex items-center gap-1 rounded-[2px] bg-amber-500/80 px-2.5 py-1 text-xs font-semibold text-white backdrop-blur-md">
-                <Star className="size-3.5 fill-white text-white" />
+              <span className="flex items-center gap-1.5 rounded-[2px] bg-amber-500/90 px-3 py-1.5 text-xs sm:text-sm font-bold text-white backdrop-blur-md shadow-sm">
+                <Star className="size-4 fill-white text-white" />
                 {tour.rating.toFixed(1)} ({tour.reviewCount} đánh giá)
               </span>
             </div>
 
-            <h1 className="display-title template-shadow-text mt-4 text-3xl sm:text-4xl md:text-6xl font-bold leading-tight text-white">
+            <h1 className="display-title mt-5 text-3xl sm:text-5xl md:text-6xl font-black leading-tight text-white drop-shadow-[0_2px_14px_rgba(0,0,0,0.95)]">
               {tour.title}
             </h1>
 
-            <p className="mt-4 max-w-3xl text-sm sm:text-base md:text-lg font-light leading-relaxed text-white/90">
+            <p className="mt-4 max-w-3xl text-base sm:text-lg md:text-xl font-normal leading-relaxed text-white/95 drop-shadow-[0_1px_8px_rgba(0,0,0,0.9)]">
               {tour.overview}
             </p>
           </div>

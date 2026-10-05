@@ -70,26 +70,26 @@ export default async function StoryDetailPage({ params }: StoryDetailPageProps) 
           unoptimized
           className="object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/55 to-black/35" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/65 to-black/45" />
         <SiteHeader overlay />
 
         <div className="relative z-10 mx-auto flex min-h-[620px] max-w-7xl items-end px-6 pb-16 md:px-12">
-          <div className="max-w-4xl">
+          <div className="max-w-4xl bg-black/40 backdrop-blur-[2px] p-6 sm:p-8 rounded-[2px] border border-white/15 shadow-xl">
             <div className="flex flex-wrap items-center gap-3">
-              <span className="rounded-[2px] bg-[#0098a2] px-3 py-1 text-xs font-semibold uppercase tracking-wider text-white shadow-sm">
+              <span className="rounded-[2px] bg-[#0098a2] px-3.5 py-1.5 text-xs sm:text-sm font-bold uppercase tracking-wider text-white shadow-sm">
                 {story.category}
               </span>
-              <span className="flex items-center gap-1 text-xs font-light text-white/80">
-                <Clock className="size-3.5 text-[#7de1df]" />
+              <span className="flex items-center gap-1.5 text-xs sm:text-sm font-medium text-white/90 bg-black/50 px-3 py-1 rounded-[2px] backdrop-blur-sm border border-white/20">
+                <Clock className="size-3.5 text-[#00c2cb]" />
                 {story.readTime}
               </span>
             </div>
 
-            <h1 className="display-title template-shadow-text mt-4 text-3xl sm:text-5xl md:text-6xl font-bold leading-tight text-white">
+            <h1 className="display-title mt-4 text-3xl sm:text-5xl md:text-6xl font-black leading-tight text-white drop-shadow-[0_2px_14px_rgba(0,0,0,0.95)]">
               {story.title}
             </h1>
 
-            <p className="mt-5 text-base sm:text-lg md:text-xl font-light leading-relaxed text-white/90">
+            <p className="mt-4 text-base sm:text-lg md:text-xl font-normal leading-relaxed text-white/95 drop-shadow-[0_1px_8px_rgba(0,0,0,0.9)]">
               {story.excerpt}
             </p>
 
