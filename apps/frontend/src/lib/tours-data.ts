@@ -425,6 +425,66 @@ export const VIETNAM_TOURS: TourItem[] = [
     transport: "Cano siêu tốc & xe du lịch",
     hotel: "Resort 4 sao sát biển",
   },
+  {
+    id: "tour-ha-giang-dong-van-3n2d",
+    slug: "tour-ha-giang-dong-van-3n2d",
+    title: "Hà Giang Kỳ Vĩ — Chinh Phục Đèo Mã Pí Lèng & Hẻm Tu Sản",
+    destination: "Hà Giang & Đồng Văn",
+    region: "north",
+    duration: "3 Ngày 2 Đêm",
+    departure: "Hà Nội / Hà Giang",
+    price: 2450000,
+    originalPrice: 2890000,
+    rating: 5.0,
+    reviewCount: 188,
+    image: VIETNAM_IMAGES.haGiang,
+    gallery: [VIETNAM_IMAGES.haGiang, VIETNAM_IMAGES.saPa, VIETNAM_IMAGES.hero],
+    overview:
+      "Hành trình huyền thoại khám phá Công viên Địa chất Toàn cầu Cao nguyên đá Đồng Văn, chinh phục 'Tứ đại đỉnh đèo' Mã Pí Lèng hùng vĩ, xuôi thuyền ngắm dòng sông Nho Quế xanh như ngọc và hòa mình vào sắc màu thổ cẩm rực rỡ vùng cao.",
+    highlights: [
+      "Chinh phục đèo Mã Pí Lèng kỳ vĩ và đi thuyền hẻm vực Tu Sản sâu nhất Đông Nam Á",
+      "Check-in Cột cờ Lũng Cú — điểm cực Bắc linh thiêng của Tổ quốc",
+      "Thăm Dinh thự Vua Mèo Vương Chính Đức và phố cổ Đồng Văn trăm năm tuổi",
+      "Thưởng thức đặc sản cháo ấu tẩu, thắng cố và rượu ngô men lá nồng ấm",
+    ],
+    itinerary: [
+      {
+        day: 1,
+        title: "Hà Nội — Cổng Trời Quản Bạ — Rừng Thông Yên Minh — Đồng Văn",
+        morning: "Khởi hành từ Hà Nội theo cao tốc Tuyên Quang lên Hà Giang. Dừng chân check-in Km0 trung tâm thành phố.",
+        afternoon: "Vượt dốc Bắc Sum lên Cổng Trời Quản Bạ, ngắm Núi Đôi Cô Tiên kỳ thú. Tiếp tục qua rừng thông Yên Minh xanh rì.",
+        evening: "Đến thị trấn Đồng Văn nhận phòng khách sạn. Tối dạo phố cổ Đồng Văn, nhâm nhi cà phê phố cổ.",
+      },
+      {
+        day: 2,
+        title: "Cột Cờ Lũng Cú — Dinh Vua Mèo — Đèo Mã Pí Lèng — Sông Nho Quế",
+        morning: "Đón bình minh tại Cột cờ Lũng Cú thiêng liêng. Ghé thăm Dinh thự Họ Vương với kiến trúc giao thoa Pháp - H'Mông độc đáo.",
+        afternoon: "Chinh phục đỉnh đèo Mã Pí Lèng ngắm toàn cảnh hẻm vực Tu Sản. Xuống bến thuyền xuôi dòng sông Nho Quế ngọc bích.",
+        evening: "Về thị trấn Mèo Vạc hoặc Pả Vi nghỉ đêm tại homestay người Mông bản địa. Thưởng thức lẩu gà đen vùng cao.",
+      },
+      {
+        day: 3,
+        title: "Mèo Vạc — Cung Đường Chữ M — Hà Giang — Trở Về Hà Nội",
+        morning: "Thưởng thức điểm tâm bánh cuốn chan Đồng Văn nóng hổi. Khởi hành về qua Cua chữ M kỳ thú.",
+        afternoon: "Dùng cơm trưa tại thành phố Hà Giang. Lên xe khởi hành về lại Hà Nội.",
+        evening: "19:00 Về đến Hà Nội, chia tay đoàn và hẹn gặp lại trong những hành trình tiếp theo.",
+      },
+    ],
+    inclusions: [
+      "Xe du lịch đời mới đưa đón suốt hành trình Hà Nội - Hà Giang",
+      "2 đêm nghỉ tại khách sạn và homestay tiêu chuẩn 3 sao",
+      "Vé thắng cảnh: Cột cờ Lũng Cú, Dinh Vua Mèo, vé thuyền sông Nho Quế",
+      "Các bữa ăn tiêu chuẩn đặc sản vùng cao",
+      "Hướng dẫn viên am hiểu văn hóa bản địa phục vụ suốt tuyến",
+      "Bảo hiểm du lịch trọn gói",
+    ],
+    exclusions: [
+      "Chi tiêu cá nhân, đồ uống ngoài chương trình",
+      "Thuế VAT",
+    ],
+    transport: "Xe du lịch đời mới",
+    hotel: "Khách sạn & Homestay 3 sao",
+  },
 ];
 
 export function getTourBySlug(slug: string): TourItem | undefined {

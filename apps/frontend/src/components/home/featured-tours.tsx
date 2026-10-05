@@ -1,9 +1,34 @@
+"use client";
+
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { VIETNAM_TOURS } from "@/lib/tours-data";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { VIETNAM_TOURS, type TourItem } from "@/lib/tours-data";
 
-export function FeaturedTours() {
-  const topTours = VIETNAM_TOURS.slice(0, 4);
+interface FeaturedToursProps {
+  initialTours?: TourItem[];
+}
+
+export function FeaturedTours({ initialTours }: FeaturedToursProps) {
+  const tours = initialTours || VIETNAM_TOURS;
+  const itemsPerPage = 4;
+  const totalPages = Math.ceil(tours.length / itemsPerPage);
+  const hasMultiplePages = tours.length > itemsPerPage;
+  const [currentPage, setCurrentPage] = useState(0);
+
+  const handlePrev = () => {
+    setCurrentPage((prev) => (prev - 1 + totalPages) % totalPages);
+  };
+
+  const handleNext = () => {
+    setCurrentPage((prev) => (prev + 1) % totalPages);
+  };
+
+  const currentTours = tours.slice(
+    currentPage * itemsPerPage,
+    (currentPage + 1) * itemsPerPage
+  );
 
   return (
     <section className="w-full px-6 py-16 md:px-12 lg:px-16">
@@ -17,50 +42,78 @@ export function FeaturedTours() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {topTours.map((tour) => {
-            const shortDest = tour.destination.split(",")[0].trim();
-            return (
-              <Link
-                key={tour.id}
-                href={`/tours/${tour.slug}`}
-                className="group flex flex-col overflow-hidden rounded-[2px] bg-white shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
+        <div className="relative w-full">
+          {/* Floating navigation chevrons matching DestinationsCarousel if > 4 cards */}
+          {hasMultiplePages && (
+            <>
+              {/* Floating Left Arrow: pure white chevron with drop shadow */}
+              <button
+                type="button"
+                onClick={handlePrev}
+                aria-label="Previous tours"
+                className="absolute -left-6 md:-left-12 top-1/2 z-20 -translate-y-1/2 text-white/90 hover:text-white transition drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)] hover:scale-110 cursor-pointer"
               >
-                <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-100">
-                  <Image
-                    src={tour.image}
-                    alt={tour.title}
-                    fill
-                    unoptimized
-                    className="object-cover transition duration-500 group-hover:scale-105"
-                  />
-                  <div className="absolute top-3 left-3 bg-black/50 text-white text-[11px] font-medium px-2 py-0.5 rounded-[2px] backdrop-blur-sm">
-                    {tour.duration}
-                  </div>
-                </div>
+                <ChevronLeft className="size-12 md:size-16 stroke-[1.2]" />
+              </button>
 
-                <div className="p-4 flex items-start justify-between gap-3 bg-white">
-                  <div className="flex-1 min-w-0 pr-1">
-                    <h3 className="script-title text-2xl font-bold text-[#1e293b] leading-tight truncate group-hover:text-amber-700 transition-colors">
-                      {shortDest}
-                    </h3>
-                    <p className="mt-1 text-[11px] font-light text-[#64748b] leading-snug line-clamp-2">
-                      {tour.title}
-                    </p>
+              {/* Floating Right Arrow: pure white chevron with drop shadow */}
+              <button
+                type="button"
+                onClick={handleNext}
+                aria-label="Next tours"
+                className="absolute -right-6 md:-right-12 top-1/2 z-20 -translate-y-1/2 text-white/90 hover:text-white transition drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)] hover:scale-110 cursor-pointer"
+              >
+                <ChevronRight className="size-12 md:size-16 stroke-[1.2]" />
+              </button>
+            </>
+          )}
+
+          {/* 4 Cards Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 transition-opacity duration-300">
+            {currentTours.map((tour) => {
+              const shortDest = tour.destination.split(",")[0].trim();
+              return (
+                <Link
+                  key={tour.id}
+                  href={`/tours/${tour.slug}`}
+                  className="group flex flex-col overflow-hidden rounded-[2px] bg-white shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
+                >
+                  <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-100">
+                    <Image
+                      src={tour.image}
+                      alt={tour.title}
+                      fill
+                      unoptimized
+                      className="object-cover transition duration-500 group-hover:scale-105"
+                    />
+                    <div className="absolute top-3 left-3 bg-black/50 text-white text-[11px] font-medium px-2 py-0.5 rounded-[2px] backdrop-blur-sm">
+                      {tour.duration}
+                    </div>
                   </div>
 
-                  <div className="text-right shrink-0">
-                    <span className="script-title text-2xl font-bold text-[#1e293b] block leading-tight">
-                      {tour.price.toLocaleString("vi-VN")}đ
-                    </span>
-                    <span className="text-[10px] text-[#94a3b8] font-light block">
-                      / người
-                    </span>
+                  <div className="p-4 flex items-start justify-between gap-3 bg-white">
+                    <div className="flex-1 min-w-0 pr-1">
+                      <h3 className="script-title text-2xl font-bold text-[#1e293b] leading-tight truncate group-hover:text-amber-700 transition-colors">
+                        {shortDest}
+                      </h3>
+                      <p className="mt-1 text-[11px] font-light text-[#64748b] leading-snug line-clamp-2">
+                        {tour.title}
+                      </p>
+                    </div>
+
+                    <div className="text-right shrink-0">
+                      <span className="script-title text-2xl font-bold text-[#1e293b] block leading-tight">
+                        {tour.price.toLocaleString("vi-VN")}đ
+                      </span>
+                      <span className="text-[10px] text-[#94a3b8] font-light block">
+                        / người
+                      </span>
+                    </div>
                   </div>
-                </div>
-              </Link>
-            );
-          })}
+                </Link>
+              );
+            })}
+          </div>
         </div>
 
         <div className="mt-10 text-center">
@@ -75,4 +128,3 @@ export function FeaturedTours() {
     </section>
   );
 }
-
