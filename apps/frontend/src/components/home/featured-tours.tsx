@@ -23,7 +23,7 @@ export function FeaturedTours() {
             return (
               <Link
                 key={tour.id}
-                href="/tours"
+                href={`/tours/${tour.slug}`}
                 className="group flex flex-col overflow-hidden rounded-[2px] bg-white shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
               >
                 <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-100">
