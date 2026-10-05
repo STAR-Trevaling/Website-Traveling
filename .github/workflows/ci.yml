@@ -34,6 +34,18 @@ jobs:
       REDIS_URL: redis://localhost:6379/0
     steps:
       - uses: actions/checkout@v4
+      - name: Install system geospatial dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends binutils gdal-bin libgdal-dev libgeos-dev libproj-dev
+          GDAL_LIB=$(find /usr/lib -name "libgdal.so*" | head -n 1)
+          if [ -n "$GDAL_LIB" ]; then
+            echo "GDAL_LIBRARY_PATH=$GDAL_LIB" >> $GITHUB_ENV
+          fi
+          GEOS_LIB=$(find /usr/lib -name "libgeos_c.so*" | head -n 1)
+          if [ -n "$GEOS_LIB" ]; then
+            echo "GEOS_LIBRARY_PATH=$GEOS_LIB" >> $GITHUB_ENV
+          fi
       - uses: actions/setup-python@v5
         with: {python-version: "3.13", cache: pip, cache-dependency-path: apps/backend/requirements.txt}
       - run: pip install -r apps/backend/requirements.txt
