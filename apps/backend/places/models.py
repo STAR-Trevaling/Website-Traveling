@@ -36,8 +36,8 @@ class Place(models.Model):
     class Meta:
         ordering = ("name",)
         indexes = [
-            models.Index(fields=("is_published", "destination")),
-            models.Index(fields=("category", "is_published")),
+            models.Index(fields=("is_published", "destination"), name="place_pub_dest_idx"),
+            models.Index(fields=("category", "is_published"), name="place_cat_pub_idx"),
         ]
 
     def __str__(self):

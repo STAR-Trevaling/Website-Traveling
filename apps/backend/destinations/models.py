@@ -18,7 +18,7 @@ class Destination(models.Model):
 
     class Meta:
         ordering = ("name",)
-        indexes = [models.Index(fields=("is_published", "name"))]
+        indexes = [models.Index(fields=("is_published", "name"), name="dest_pub_name_idx")]
 
     def __str__(self):
         return self.name
