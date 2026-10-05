@@ -11,17 +11,21 @@ import {
   Bus,
   Hotel,
   ShieldCheck,
-  Calendar,
-  Users,
   ChevronRight,
   PhoneCall,
 } from "lucide-react";
 import { SiteHeader } from "@/components/layout/site-header";
 import { getTourBySlug, VIETNAM_TOURS } from "@/lib/tours-data";
-import { TourBookingCard } from "@/components/tours/tour-booking-card";
+import { TourBookingCard } from "@/components/tours";
 
 interface TourDetailPageProps {
   params: Promise<{ slug: string }>;
+}
+
+export function generateStaticParams() {
+  return VIETNAM_TOURS.map((tour) => ({
+    slug: tour.slug,
+  }));
 }
 
 export async function generateMetadata({ params }: TourDetailPageProps): Promise<Metadata> {
