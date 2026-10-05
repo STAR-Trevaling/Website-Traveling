@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { Users, TrendingUp, Luggage, MapPin, Calendar, ArrowUp, ArrowRight } from "lucide-react";
 import { NavItemKey } from "./portal-sidebar";
 
@@ -8,6 +9,29 @@ interface PortalDashboardProps {
 }
 
 export function PortalDashboard({ onNavigateTab }: PortalDashboardProps) {
+  const [stats, setStats] = useState({
+    totalCustomers: 256,
+    activeMembers: 189,
+    totalInquiries: 5,
+    activeTours: 7,
+    totalTours: 8,
+    totalBookings: 1248,
+    revenueText: "842.5M ₫",
+    growthMonth: "24.5%",
+    travelersOnTour: 189,
+  });
+
+  useEffect(() => {
+    fetch("/api/portal/stats")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.ok && data.stats) {
+          setStats(data.stats);
+        }
+      })
+      .catch((err) => console.error("Could not fetch portal stats:", err));
+  }, []);
+
   return (
     <div className="space-y-8 font-poppins">
       {/* 3 Overview Stat Cards */}
@@ -20,12 +44,12 @@ export function PortalDashboard({ onNavigateTab }: PortalDashboardProps) {
             <div>
               <span className="text-[14px] text-[#ACACAC] block mb-1">Tổng doanh thu du lịch</span>
               <span className="text-[32px] font-semibold text-[#333333] leading-none block mb-2">
-                842.5M ₫
+                {stats.revenueText}
               </span>
               <div className="flex items-center gap-1 text-[12px]">
                 <ArrowUp className="size-3.5 text-[#00AC4F] stroke-[2.5]" />
-                <span className="font-bold text-[#00AC4F]">24.5%</span>
-                <span className="text-[#292D32]">tăng trưởng tháng 4</span>
+                <span className="font-bold text-[#00AC4F]">{stats.growthMonth}</span>
+                <span className="text-[#292D32]">tăng trưởng tháng này</span>
               </div>
             </div>
           </div>
@@ -37,12 +61,12 @@ export function PortalDashboard({ onNavigateTab }: PortalDashboardProps) {
             <div>
               <span className="text-[14px] text-[#ACACAC] block mb-1">Lượt đặt tour thành công</span>
               <span className="text-[32px] font-semibold text-[#333333] leading-none block mb-2">
-                1,248
+                {stats.totalBookings.toLocaleString("vi-VN")}
               </span>
               <div className="flex items-center gap-1 text-[12px]">
                 <ArrowUp className="size-3.5 text-[#00AC4F] stroke-[2.5]" />
-                <span className="font-bold text-[#00AC4F]">18%</span>
-                <span className="text-[#292D32]">đặt chỗ giữ phòng</span>
+                <span className="font-bold text-[#00AC4F]">{stats.activeTours} Tours</span>
+                <span className="text-[#292D32]">đang mở nhận khách</span>
               </div>
             </div>
           </div>
@@ -52,13 +76,13 @@ export function PortalDashboard({ onNavigateTab }: PortalDashboardProps) {
               <Users className="size-8 text-[#00AC4F] stroke-[1.8]" />
             </div>
             <div>
-              <span className="text-[14px] text-[#ACACAC] block mb-1">Du khách đang đi tour</span>
+              <span className="text-[14px] text-[#ACACAC] block mb-1">Hồ sơ khách hàng CRM</span>
               <span className="text-[32px] font-semibold text-[#333333] leading-none block mb-2">
-                189
+                {stats.totalCustomers}
               </span>
               <div className="flex items-center gap-1 text-[12px]">
-                <span className="font-bold text-[#00AC4F]">100%</span>
-                <span className="text-[#292D32]">danh thắng Việt Nam</span>
+                <span className="font-bold text-[#00AC4F]">{stats.activeMembers} Active</span>
+                <span className="text-[#292D32]">du khách & đối tác</span>
               </div>
             </div>
           </div>

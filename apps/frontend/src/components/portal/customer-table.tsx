@@ -13,6 +13,8 @@ import { CustomerModal } from "./customer-modal";
 type DatasetKey = "template" | "vietnam-travelers" | "partners";
 type SortOption = "Newest" | "Oldest" | "Name A-Z" | "Active First";
 
+import { useEffect } from "react";
+
 export function CustomerTable() {
   const [currentDataset, setCurrentDataset] = useState<DatasetKey>("template");
   const [searchQuery, setSearchQuery] = useState("");
@@ -25,6 +27,28 @@ export function CustomerTable() {
   const [templateList, setTemplateList] = useState<Customer[]>(TEMPLATE_CUSTOMERS);
   const [vietnamList, setVietnamList] = useState<Customer[]>(VIETNAM_TRAVEL_CUSTOMERS);
   const [partnerList, setPartnerList] = useState<Customer[]>(PARTNER_INQUIRIES);
+
+  // Load latest data from API route on mount
+  useEffect(() => {
+    fetch("/api/portal/customers")
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (data?.customers?.length) {
+          const vnOnly = data.customers.filter((c: Customer) =>
+            c.id.startsWith("vn-") || c.id.startsWith("lead-")
+          );
+          if (vnOnly.length) {
+            setVietnamList(vnOnly);
+          }
+        }
+        if (data?.partners?.length) {
+          setPartnerList(data.partners);
+        }
+      })
+      .catch(() => {
+        // Fallback to initial local datasets
+      });
+  }, []);
 
   // Active list based on dataset
   const rawList = useMemo(() => {
@@ -66,17 +90,21 @@ export function CustomerTable() {
     return result;
   }, [rawList, searchQuery, sortBy]);
 
-  // Toggle Active/Inactive status
+  // Toggle Active/Inactive status and sync via API
   const handleToggleStatus = (customerId: string) => {
+    let nextStatus: "Active" | "Inactive" = "Active";
+
     const updater = (prev: Customer[]): Customer[] =>
-      prev.map((c) =>
-        c.id === customerId
-          ? {
-              ...c,
-              status: (c.status === "Active" ? "Inactive" : "Active") as Customer["status"],
-            }
-          : c
-      );
+      prev.map((c) => {
+        if (c.id === customerId) {
+          nextStatus = c.status === "Active" ? "Inactive" : "Active";
+          return {
+            ...c,
+            status: nextStatus,
+          };
+        }
+        return c;
+      });
 
     if (currentDataset === "template") setTemplateList(updater);
     else if (currentDataset === "vietnam-travelers") setVietnamList(updater);
@@ -87,11 +115,18 @@ export function CustomerTable() {
         prev
           ? {
               ...prev,
-              status: (prev.status === "Active" ? "Inactive" : "Active") as Customer["status"],
+              status: prev.status === "Active" ? "Inactive" : "Active",
             }
           : null
       );
     }
+
+    // Fire-and-forget sync to backend API
+    fetch("/api/portal/customers", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id: customerId, status: nextStatus }),
+    }).catch(() => {});
   };
 
   return (

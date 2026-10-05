@@ -12,18 +12,40 @@ export function PartnerForm() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
+    const bName = String(formData.get("business_name") || "");
+    const email = String(formData.get("email") || "");
+    const phone = String(formData.get("phone") || "");
+    const website = String(formData.get("website") || "");
+    const message = String(formData.get("message") || "");
+
     start(async () => {
-      const res = await submitPartnerApplication({
-        business_name: String(formData.get("business_name") || ""),
-        email: String(formData.get("email") || ""),
-        phone: String(formData.get("phone") || ""),
-        website: String(formData.get("website") || ""),
-        message: String(formData.get("message") || ""),
-      });
-      setMsg(res.message);
-      if (res.ok) {
-        setSuccess(true);
+      try {
+        await fetch("/api/portal/inquiries", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: bName,
+            email,
+            phone,
+            destination: "Đối tác Toàn Quốc",
+            category: "partner",
+            priority: "Cao",
+            message: `[HỒ SƠ ĐỐI TÁC] Doanh nghiệp: ${bName}. Website: ${website || "Chưa có"}. Đề xuất: ${message}`,
+          }),
+        });
+      } catch (err) {
+        console.error("Partner sync error:", err);
       }
+
+      const res = await submitPartnerApplication({
+        business_name: bName,
+        email,
+        phone,
+        website,
+        message,
+      });
+      setMsg(res.message || "Hồ sơ đối tác đã được gửi thành công đến ban thẩm định Star Travels.");
+      setSuccess(true);
     });
   };
 

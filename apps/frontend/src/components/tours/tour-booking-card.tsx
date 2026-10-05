@@ -22,9 +22,30 @@ export function TourBookingCard({ tour }: TourBookingCardProps) {
   const pricePerChild = Math.round(tour.price * 0.75);
   const totalPrice = adults * pricePerAdult + children * pricePerChild;
 
-  const handleBookingSubmit = (e: React.FormEvent) => {
+  const handleBookingSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsBooked(true);
+
+    try {
+      await fetch("/api/portal/inquiries", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: fullName || "Khách Hàng Trực Tuyến",
+          email: email || "traveler@example.vn",
+          phone: phone || "",
+          destination: tour.destination,
+          travelDate: departureDate,
+          guests: `${adults} người lớn${children > 0 ? `, ${children} trẻ em` : ""}`,
+          category: "tour_advice",
+          priority: "Cao",
+          message: `[ĐẶT TOUR TRỰC TUYẾN] ${tour.title} (Khởi hành: ${departureDate}, Số khách: ${adults} lớn${children > 0 ? `, ${children} trẻ` : ""}, Tổng tiền dự kiến: ${totalPrice.toLocaleString("vi-VN")} ₫)`,
+        }),
+      });
+    } catch (err) {
+      console.error("Failed to sync booking inquiry to CRM:", err);
+    }
+
     setTimeout(() => {
       setShowModal(false);
     }, 2500);

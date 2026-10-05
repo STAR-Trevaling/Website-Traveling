@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Search, ChevronDown, Plus, MapPin, Calendar, Users, X, Check } from "lucide-react";
 
 export interface TourProduct {
@@ -133,6 +133,18 @@ export function PortalProducts() {
   const [selectedTour, setSelectedTour] = useState<TourProduct | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
 
+  // Sync with /api/portal/tours
+  useEffect(() => {
+    fetch("/api/portal/tours")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.ok && Array.isArray(data.tours) && data.tours.length > 0) {
+          setTours(data.tours);
+        }
+      })
+      .catch((err) => console.error("Could not fetch portal tours:", err));
+  }, []);
+
   // New tour modal state
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [newTour, setNewTour] = useState({
@@ -170,43 +182,90 @@ export function PortalProducts() {
     return result;
   }, [tours, selectedRegion, searchQuery, sortBy]);
 
-  const handleToggleStatus = (tourId: string) => {
+  const handleToggleStatus = async (tourId: string) => {
+    const currentTour = tours.find((t) => t.id === tourId);
+    if (!currentTour) return;
+    const newStatus = currentTour.status === "Active" ? "Inactive" : "Active";
+
     setTours((prev) =>
       prev.map((t) =>
-        t.id === tourId
-          ? { ...t, status: t.status === "Active" ? "Inactive" : "Active" }
-          : t
+        t.id === tourId ? { ...t, status: newStatus } : t
       )
     );
 
     if (selectedTour && selectedTour.id === tourId) {
       setSelectedTour((prev) =>
-        prev
-          ? { ...prev, status: prev.status === "Active" ? "Inactive" : "Active" }
-          : null
+        prev ? { ...prev, status: newStatus } : null
       );
+    }
+
+    try {
+      await fetch("/api/portal/tours", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: tourId, status: newStatus }),
+      });
+    } catch (e) {
+      console.error("Failed to sync tour status:", e);
     }
   };
 
-  const handleCreateTour = (e: React.FormEvent) => {
+  const handleCreateTour = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newTour.name.trim() || !newTour.destination.trim()) return;
 
-    const created: TourProduct = {
-      id: `tour-${Date.now()}`,
-      code: `TOUR-VN-${Math.floor(10 + Math.random() * 90)}`,
+    const payload = {
       name: newTour.name,
       destination: newTour.destination,
       region: newTour.region,
       duration: newTour.duration,
       price: newTour.price,
-      bookings: 0,
-      maxSlots: 100,
-      status: "Active",
+      numericPrice: parseInt(newTour.price.replace(/\D/g, "")) || 2500000,
       description: newTour.description || "Gói tour chất lượng cao do Star Travels Việt Nam tổ chức.",
     };
 
-    setTours((prev) => [created, ...prev]);
+    try {
+      const res = await fetch("/api/portal/tours", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const data = await res.json();
+      if (data.ok && data.tour) {
+        setTours((prev) => [data.tour, ...prev]);
+      } else {
+        const created: TourProduct = {
+          id: `tour-${Date.now()}`,
+          code: `TOUR-VN-${Math.floor(10 + Math.random() * 90)}`,
+          name: newTour.name,
+          destination: newTour.destination,
+          region: newTour.region,
+          duration: newTour.duration,
+          price: newTour.price,
+          bookings: 0,
+          maxSlots: 100,
+          status: "Active",
+          description: newTour.description || "Gói tour chất lượng cao do Star Travels Việt Nam tổ chức.",
+        };
+        setTours((prev) => [created, ...prev]);
+      }
+    } catch {
+      const created: TourProduct = {
+        id: `tour-${Date.now()}`,
+        code: `TOUR-VN-${Math.floor(10 + Math.random() * 90)}`,
+        name: newTour.name,
+        destination: newTour.destination,
+        region: newTour.region,
+        duration: newTour.duration,
+        price: newTour.price,
+        bookings: 0,
+        maxSlots: 100,
+        status: "Active",
+        description: newTour.description || "Gói tour chất lượng cao do Star Travels Việt Nam tổ chức.",
+      };
+      setTours((prev) => [created, ...prev]);
+    }
+
     setIsCreateOpen(false);
     setNewTour({
       name: "",

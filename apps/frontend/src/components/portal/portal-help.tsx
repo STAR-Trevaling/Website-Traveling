@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Search, ChevronDown, MessageSquare, Phone, Mail, Clock, CheckCircle2, X } from "lucide-react";
 
 export interface SupportTicket {
@@ -104,6 +104,31 @@ export function PortalHelp() {
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [selectedTicket, setSelectedTicket] = useState<SupportTicket | null>(null);
 
+  // Sync inquiries from /api/portal/inquiries
+  useEffect(() => {
+    fetch("/api/portal/inquiries")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.ok && Array.isArray(data.inquiries) && data.inquiries.length > 0) {
+          const formatted: SupportTicket[] = data.inquiries.map((inq: any) => ({
+            id: inq.id,
+            ticketCode: inq.ticketCode || `TK-VN-${inq.id.replace(/\D/g, "").slice(-4) || "1045"}`,
+            senderName: inq.name,
+            contact: inq.phone || inq.email,
+            subject: inq.message.length > 60 ? inq.message.slice(0, 60) + "..." : inq.message,
+            category: inq.category || (inq.destination?.toLowerCase().includes("đối tác") ? "partner" : "tour_advice"),
+            categoryLabel: inq.category === "partner" ? "Đối tác Lữ hành" : `Tư vấn ${inq.destination || "Tour"}`,
+            time: inq.createdAt || "Vừa xong",
+            priority: inq.priority || "Cao",
+            status: inq.status || "Active",
+            content: inq.message,
+          }));
+          setTickets(formatted);
+        }
+      })
+      .catch((err) => console.error("Could not sync inquiries:", err));
+  }, []);
+
   const filteredTickets = useMemo(() => {
     let result = [...tickets];
 
@@ -124,11 +149,15 @@ export function PortalHelp() {
     return result;
   }, [tickets, selectedCategory, searchQuery]);
 
-  const handleToggleStatus = (ticketId: string) => {
+  const handleToggleStatus = async (ticketId: string) => {
+    const currentTicket = tickets.find((t) => t.id === ticketId);
+    if (!currentTicket) return;
+    const newStatus = currentTicket.status === "Active" ? "Inactive" : "Active";
+
     setTickets((prev) =>
       prev.map((t) =>
         t.id === ticketId
-          ? { ...t, status: t.status === "Active" ? "Inactive" : "Active" }
+          ? { ...t, status: newStatus }
           : t
       )
     );
@@ -136,9 +165,19 @@ export function PortalHelp() {
     if (selectedTicket && selectedTicket.id === ticketId) {
       setSelectedTicket((prev) =>
         prev
-          ? { ...prev, status: prev.status === "Active" ? "Inactive" : "Active" }
+          ? { ...prev, status: newStatus }
           : null
       );
+    }
+
+    try {
+      await fetch("/api/portal/inquiries", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: ticketId, status: newStatus }),
+      });
+    } catch (err) {
+      console.error("Failed to sync inquiry status:", err);
     }
   };
 

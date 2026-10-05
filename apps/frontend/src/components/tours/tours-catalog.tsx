@@ -1,18 +1,64 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Clock, MapPin, Star, CheckCircle2, ShieldCheck, Bus, Hotel, ArrowRight } from "lucide-react";
-import { VIETNAM_TOURS } from "@/lib/tours-data";
+import { VIETNAM_TOURS, TourItem } from "@/lib/tours-data";
+import { VIETNAM_IMAGES } from "@/lib/assets";
 
 export function ToursCatalog() {
+  const [allTours, setAllTours] = useState<TourItem[]>(VIETNAM_TOURS);
   const [selectedRegion, setSelectedRegion] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [sortBy, setSortBy] = useState<"featured" | "price-asc" | "price-desc">("featured");
 
+  useEffect(() => {
+    fetch("/api/portal/tours")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.ok && Array.isArray(data.tours)) {
+          const existingIds = new Set(VIETNAM_TOURS.map((t) => t.id));
+          const inactiveIds = new Set(
+            data.tours.filter((t: any) => t.status === "Inactive").map((t: any) => t.id)
+          );
+
+          const cmsNewTours: TourItem[] = data.tours
+            .filter((t: any) => !existingIds.has(t.id) && t.status === "Active")
+            .map((t: any) => ({
+              id: t.id,
+              slug: t.id,
+              title: t.name,
+              destination: t.destination,
+              region: t.region,
+              duration: t.duration,
+              departure: "Khởi hành hàng ngày",
+              price: t.numericPrice || parseInt(t.price.replace(/\D/g, "")) || 2500000,
+              rating: 5.0,
+              reviewCount: 12,
+              image: VIETNAM_IMAGES.hero,
+              overview: t.description || "Gói tour chất lượng cao do Star Travels Việt Nam tổ chức.",
+              highlights: [
+                "Lịch trình độc quyền khám phá danh thắng",
+                "Khách sạn & du thuyền tiêu chuẩn 4-5 sao",
+                "Bảo hiểm du lịch trọn gói cao cấp",
+              ],
+              itinerary: [],
+              inclusions: ["Xe đưa đón", "Khách sạn/du thuyền", "Bữa ăn theo lịch trình"],
+              exclusions: ["Chi phí cá nhân"],
+              transport: "Xe du lịch đời mới",
+              hotel: "Khách sạn 4-5 sao",
+            }));
+
+          const activeStaticTours = VIETNAM_TOURS.filter((t) => !inactiveIds.has(t.id));
+          setAllTours([...cmsNewTours, ...activeStaticTours]);
+        }
+      })
+      .catch((err) => console.error("Could not sync public tours with CMS:", err));
+  }, []);
+
   const filteredTours = useMemo(() => {
-    let result = [...VIETNAM_TOURS];
+    let result = [...allTours];
 
     if (selectedRegion !== "all") {
       result = result.filter((t) => t.region === selectedRegion);
@@ -35,7 +81,7 @@ export function ToursCatalog() {
     }
 
     return result;
-  }, [selectedRegion, searchQuery, sortBy]);
+  }, [allTours, selectedRegion, searchQuery, sortBy]);
 
   return (
     <div className="w-full">
