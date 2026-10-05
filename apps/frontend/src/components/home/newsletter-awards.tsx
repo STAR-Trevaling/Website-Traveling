@@ -58,10 +58,10 @@ export function NewsletterAwards() {
     <section className="relative w-full py-24 md:py-32">
 
       <div className="mx-auto max-w-7xl px-6 md:px-12 lg:px-16">
-        <div className="grid gap-12 lg:grid-cols-[1fr_1.15fr] lg:gap-20 items-center">
+        <div className="grid gap-12 lg:grid-cols-[400px_1fr] xl:grid-cols-[440px_1fr] lg:gap-14 xl:gap-16 items-center">
           
           {/* LEFT: NEWSLETTER CARD (Pixel-perfect template replication) */}
-          <div className="mx-auto w-full max-w-[500px] bg-[#dceee9]/85 p-10 md:p-14 shadow-2xl backdrop-blur-md">
+          <div className="mx-auto w-full max-w-[440px] bg-[#dceee9]/85 p-8 sm:p-10 md:p-12 shadow-2xl backdrop-blur-md rounded-[2px]">
             <h2 className="display-title text-center text-3xl sm:text-4xl md:text-[42px] font-black tracking-wider text-[#1e293b]">
               NEWSLETTER
             </h2>
@@ -117,14 +117,14 @@ export function NewsletterAwards() {
             </p>
 
             {/* 2 Columns x 3 Rows Layout */}
-            <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-7">
+            <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-7">
               {AWARD_ITEMS.map((item, idx) => (
                 <div
                   key={idx}
-                  className="group flex items-center gap-4 transition hover:-translate-y-0.5"
+                  className="group flex items-center gap-4 md:gap-5 transition hover:-translate-y-0.5"
                 >
-                  {/* Photo thumbnail */}
-                  <div className="relative h-[85px] w-[120px] shrink-0 overflow-hidden shadow-sm bg-slate-200">
+                  {/* Photo thumbnail enlarged */}
+                  <div className="relative h-[105px] w-[150px] sm:h-[115px] sm:w-[165px] md:h-[120px] md:w-[175px] shrink-0 overflow-hidden shadow-sm rounded-[2px] bg-slate-200">
                     <Image
                       src={item.image}
                       alt={item.title}
@@ -135,11 +135,11 @@ export function NewsletterAwards() {
                   </div>
 
                   {/* Text details */}
-                  <div>
-                    <h3 className="text-sm md:text-base font-bold text-[#1e293b] group-hover:text-amber-700 transition-colors">
+                  <div className="flex-1 min-w-0">
+                    <h3 className="text-sm md:text-base font-bold text-[#1e293b] leading-snug group-hover:text-amber-700 transition-colors">
                       {item.title}
                     </h3>
-                    <p className="mt-0.5 text-xs text-[#64748b] font-light">
+                    <p className="mt-1 text-xs text-[#64748b] font-light leading-relaxed">
                       {item.subtitle}
                     </p>
                   </div>
