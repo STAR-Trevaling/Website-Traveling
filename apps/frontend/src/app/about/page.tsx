@@ -92,7 +92,7 @@ export default function AboutPage() {
           <div className="mx-auto max-w-7xl">
             <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 items-center">
               <div>
-                <span className="text-xs font-bold uppercase tracking-[0.25em] text-[#0098a2]">
+                <span className="text-xs font-bold uppercase tracking-[0.25em] text-slate-900">
                   Câu Chuyện Của Chúng Tôi
                 </span>
                 <h2 className="script-title mt-2 text-5xl md:text-6xl text-[#1e293b] leading-tight">
@@ -112,15 +112,15 @@ export default function AboutPage() {
 
                 <div className="mt-8 flex flex-wrap gap-4 pt-4 border-t border-slate-200">
                   <div className="flex items-center gap-2 text-sm font-medium text-slate-700">
-                    <CheckCircle className="size-4 text-[#0098a2]" />
+                    <CheckCircle className="size-4 text-emerald-700" />
                     <span>Minh bạch 100% chất lượng</span>
                   </div>
                   <div className="flex items-center gap-2 text-sm font-medium text-slate-700">
-                    <CheckCircle className="size-4 text-[#0098a2]" />
+                    <CheckCircle className="size-4 text-emerald-700" />
                     <span>Bảo tồn văn hóa bản địa</span>
                   </div>
                   <div className="flex items-center gap-2 text-sm font-medium text-slate-700">
-                    <CheckCircle className="size-4 text-[#0098a2]" />
+                    <CheckCircle className="size-4 text-emerald-700" />
                     <span>Hỗ trợ khẩn cấp 24/7</span>
                   </div>
                 </div>
@@ -137,7 +137,7 @@ export default function AboutPage() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                 <div className="absolute bottom-6 left-6 right-6 bg-white/90 backdrop-blur-md p-6 rounded-[2px] border border-white/60">
-                  <p className="text-xs uppercase tracking-[0.2em] font-bold text-[#0098a2]">
+                  <p className="text-xs uppercase tracking-[0.2em] font-bold text-slate-900">
                     Giá trị cốt lõi
                   </p>
                   <h3 className="display-title mt-1 text-2xl font-bold text-[#1e293b]">
@@ -156,7 +156,7 @@ export default function AboutPage() {
         <section className="w-full bg-white/60 py-20 md:py-28 border-y border-slate-200/60">
           <div className="mx-auto max-w-7xl px-6 md:px-12 lg:px-16">
             <div className="text-center">
-              <span className="text-xs font-bold uppercase tracking-[0.25em] text-[#0098a2]">
+              <span className="text-xs font-bold uppercase tracking-[0.25em] text-slate-900">
                 Tiêu chuẩn đồng hành
               </span>
               <h2 className="script-title mt-2 text-5xl md:text-6xl text-[#1e293b]">
@@ -175,13 +175,13 @@ export default function AboutPage() {
                     key={item.title}
                     className="bg-white/85 p-8 md:p-10 text-center backdrop-blur-md shadow-sm border border-white/70 transition-all hover:bg-white min-h-[300px] flex flex-col items-center justify-start rounded-[2px]"
                   >
-                    <div className="flex size-14 items-center justify-center rounded-full bg-[#0098a2]/10 text-[#0098a2]">
+                    <div className="flex size-14 items-center justify-center rounded-full bg-slate-100 text-slate-800">
                       <Icon className="size-7 stroke-[1.75]" />
                     </div>
                     <h3 className="display-title mt-6 text-xl font-bold tracking-wider text-[#1e293b] uppercase">
                       {item.title}
                     </h3>
-                    <p className="mt-1 text-xs font-semibold text-[#0098a2] tracking-wide">
+                    <p className="mt-1 text-xs font-semibold text-slate-800 tracking-wide">
                       {item.subtitle}
                     </p>
                     <p className="mt-4 text-xs md:text-sm font-light leading-relaxed text-[#555]">
@@ -200,7 +200,7 @@ export default function AboutPage() {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 text-center divide-y md:divide-y-0 md:divide-x divide-white/10">
               {METRICS.map((m, idx) => (
                 <div key={idx} className="pt-6 md:pt-0 md:px-4">
-                  <div className="display-title text-4xl md:text-5xl font-black text-[#00c2cb]">
+                  <div className="display-title text-4xl md:text-5xl font-black text-amber-400">
                     {m.value}
                   </div>
                   <div className="mt-2 text-sm md:text-base font-semibold tracking-wide text-white">
@@ -219,7 +219,7 @@ export default function AboutPage() {
         <section className="w-full px-6 py-20 md:px-12 lg:px-16">
           <div className="mx-auto max-w-7xl">
             <div className="text-center">
-              <span className="text-xs font-bold uppercase tracking-[0.25em] text-[#0098a2]">
+              <span className="text-xs font-bold uppercase tracking-[0.25em] text-slate-900">
                 Hệ Sinh Thái Danh Tiếng
               </span>
               <h2 className="script-title mt-2 text-5xl md:text-6xl text-[#1e293b]">
@@ -249,7 +249,7 @@ export default function AboutPage() {
                     </div>
                   </div>
                   <div className="mt-4">
-                    <h3 className="display-title text-xl font-bold text-[#1e293b] group-hover:text-[#0098a2] transition-colors">
+                    <h3 className="display-title text-xl font-bold text-[#1e293b] group-hover:text-amber-700 transition-colors">
                       {award.title}
                     </h3>
                     <p className="mt-2 text-xs md:text-sm text-[#64748b] font-light leading-relaxed">

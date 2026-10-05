@@ -37,7 +37,7 @@ export function ExperienceBookingCard({ place }: ExperienceBookingCardProps) {
           <span className="text-xs uppercase tracking-wider text-slate-500 font-medium">
             Giá từ
           </span>
-          <div className="text-2xl font-black text-[#0098a2]">
+          <div className="text-2xl font-black text-slate-900">
             {formatVND(basePrice)}
             <span className="text-xs font-normal text-slate-500"> / khách</span>
           </div>
@@ -94,7 +94,7 @@ export function ExperienceBookingCard({ place }: ExperienceBookingCardProps) {
                 onClick={() => setSession("morning")}
                 className={`py-2 px-3 text-xs font-medium rounded-[2px] border transition ${
                   session === "morning"
-                    ? "border-[#0098a2] bg-[#0098a2]/10 text-[#0098a2]"
+                    ? "border-slate-900 bg-slate-900 text-white"
                     : "border-slate-200 text-slate-600 hover:bg-slate-50"
                 }`}
               >
@@ -105,7 +105,7 @@ export function ExperienceBookingCard({ place }: ExperienceBookingCardProps) {
                 onClick={() => setSession("afternoon")}
                 className={`py-2 px-3 text-xs font-medium rounded-[2px] border transition ${
                   session === "afternoon"
-                    ? "border-[#0098a2] bg-[#0098a2]/10 text-[#0098a2]"
+                    ? "border-slate-900 bg-slate-900 text-white"
                     : "border-slate-200 text-slate-600 hover:bg-slate-50"
                 }`}
               >
@@ -153,7 +153,7 @@ export function ExperienceBookingCard({ place }: ExperienceBookingCardProps) {
             </div>
             <div className="flex items-center justify-between text-sm font-bold text-slate-900 pt-2 border-t border-slate-200">
               <span>Tổng thanh toán:</span>
-              <span className="text-lg text-[#0098a2]">{formatVND(totalPrice)}</span>
+              <span className="text-lg font-black text-slate-900">{formatVND(totalPrice)}</span>
             </div>
           </div>
 

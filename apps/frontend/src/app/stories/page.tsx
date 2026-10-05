@@ -52,17 +52,17 @@ export default async function StoriesPage() {
                 <div>
                   <div className="flex items-center gap-3 text-xs text-slate-400 font-light">
                     <span className="flex items-center gap-1">
-                      <User className="size-3 text-[#0098a2]" />
+                      <User className="size-3 text-slate-500" />
                       {featuredStory.authorName}
                     </span>
                     <span>•</span>
                     <span className="flex items-center gap-1">
-                      <Clock className="size-3 text-[#0098a2]" />
+                      <Clock className="size-3 text-slate-500" />
                       {featuredStory.readTime}
                     </span>
                   </div>
 
-                  <h2 className="display-title mt-4 text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight text-[#1e293b] group-hover:text-[#0098a2] transition-colors">
+                  <h2 className="display-title mt-4 text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight text-[#1e293b] group-hover:text-amber-700 transition-colors">
                     {featuredStory.title}
                   </h2>
 
@@ -72,7 +72,7 @@ export default async function StoriesPage() {
                 </div>
 
                 <div className="mt-8 pt-6 border-t border-slate-100 flex items-center justify-between">
-                  <span className="text-xs font-bold uppercase tracking-wider text-[#0098a2] flex items-center gap-1.5 group-hover:translate-x-1 transition">
+                  <span className="text-xs font-bold uppercase tracking-wider text-slate-900 flex items-center gap-1.5 group-hover:translate-x-1 transition">
                     ĐỌC TIẾP CÂU CHUYỆN <ArrowUpRight className="size-4" />
                   </span>
                   <span className="text-xs text-slate-400 font-light">
@@ -121,7 +121,7 @@ export default async function StoriesPage() {
                       <span>{story.readTime}</span>
                     </div>
 
-                    <h3 className="display-title mt-2 text-xl font-bold leading-snug text-[#1e293b] group-hover:text-[#0098a2] transition-colors line-clamp-2">
+                    <h3 className="display-title mt-2 text-xl font-bold leading-snug text-[#1e293b] group-hover:text-amber-700 transition-colors line-clamp-2">
                       {story.title}
                     </h3>
 
@@ -132,7 +132,7 @@ export default async function StoriesPage() {
                 </div>
 
                 <div className="p-6 pt-0 border-t border-slate-50 flex items-center justify-between text-xs">
-                  <span className="font-semibold text-[#0098a2] flex items-center gap-1 group-hover:translate-x-1 transition">
+                  <span className="font-semibold text-slate-900 flex items-center gap-1 group-hover:translate-x-1 transition">
                     Khám phá <ChevronRight className="size-3.5" />
                   </span>
                   <span className="text-[11px] text-slate-400 font-light">
@@ -146,7 +146,7 @@ export default async function StoriesPage() {
           {/* 3. NEWSLETTER BANNER MATCHING TEMPLATE */}
           <div className="mt-20 rounded-[2px] bg-[#1e293b] p-8 md:p-14 text-center text-white shadow-xl relative overflow-hidden">
             <div className="relative z-10 max-w-2xl mx-auto">
-              <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[#7de1df]">
+              <span className="text-xs font-bold uppercase tracking-[0.25em] text-amber-400">
                 ĐĂNG KÝ BẢN TIN DI SẢN
               </span>
               <h3 className="script-title text-4xl md:text-5xl mt-3 text-white">

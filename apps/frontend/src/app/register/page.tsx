@@ -32,7 +32,7 @@ export default function RegisterPage() {
           <p className="mt-6 text-center text-sm text-slate-600">
             Bạn đã có tài khoản?{" "}
             <Link
-              className="font-medium text-[#0098a2] hover:underline"
+              className="font-bold text-slate-900 underline hover:text-black"
               href="/login"
             >
               Đăng nhập tại đây

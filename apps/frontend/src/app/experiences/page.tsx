@@ -81,7 +81,7 @@ export default async function ExperiencesPage({ searchParams }: ExperiencesPageP
           {/* HEADER & FILTER BAR */}
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 pb-10 border-b border-slate-200">
             <div>
-              <span className="text-xs font-bold uppercase tracking-[0.25em] text-[#0098a2]">
+              <span className="text-xs font-bold uppercase tracking-[0.25em] text-slate-900">
                 Tuyển Tập Trải Nghiệm
               </span>
               <h2 className="script-title mt-1 text-4xl md:text-5xl text-[#1e293b]">

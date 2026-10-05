@@ -189,7 +189,7 @@ export function DiscoverySearch() {
                   key={c}
                   type="button"
                   onClick={() => { setCol1Value(c); setOpenCol1(false); }}
-                  className="w-full rounded px-3 py-2 text-left text-sm text-slate-700 hover:bg-[#0098a2]/10 hover:text-[#0098a2]"
+                  className="w-full rounded px-3 py-2 text-left text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900"
                 >
                   {c}
                 </button>
@@ -223,7 +223,7 @@ export function DiscoverySearch() {
                   key={c}
                   type="button"
                   onClick={() => { setCol2Value(c); setOpenCol2(false); }}
-                  className="w-full rounded px-3 py-2 text-left text-sm text-slate-700 hover:bg-[#0098a2]/10 hover:text-[#0098a2]"
+                  className="w-full rounded px-3 py-2 text-left text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900"
                 >
                   {c}
                 </button>
@@ -289,7 +289,7 @@ export function DiscoverySearch() {
                   key={opt}
                   type="button"
                   onClick={() => { setTravellers(opt); setOpenTravellers(false); }}
-                  className="w-full rounded px-3 py-2 text-left text-sm text-slate-700 hover:bg-[#0098a2]/10 hover:text-[#0098a2]"
+                  className="w-full rounded px-3 py-2 text-left text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900"
                 >
                   {opt}
                 </button>

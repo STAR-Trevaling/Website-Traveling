@@ -32,14 +32,14 @@ export default async function Account() {
           <div className="bg-white/90 p-8 md:p-10 rounded-[2px] shadow-sm border border-slate-100 backdrop-blur-md">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 pb-6 border-b border-slate-100">
               <div className="flex items-center gap-4">
-                <div className="flex size-14 items-center justify-center rounded-full bg-[#0098a2]/10 text-[#0098a2]">
+                <div className="flex size-14 items-center justify-center rounded-full bg-slate-100 text-slate-800">
                   <User className="size-7" />
                 </div>
                 <div>
                   <h2 className="display-title text-2xl font-bold text-[#1e293b]">
                     {user.username}
                   </h2>
-                  <p className="text-xs uppercase tracking-wider text-[#0098a2] font-semibold mt-0.5">
+                  <p className="text-xs uppercase tracking-wider text-slate-700 font-bold mt-0.5">
                     {roleLabel}
                   </p>
                 </div>
@@ -51,54 +51,54 @@ export default async function Account() {
             <div className="mt-8 grid sm:grid-cols-3 gap-6">
               <Link
                 href="/tours"
-                className="group p-5 bg-slate-50 hover:bg-[#0098a2]/5 border border-slate-200/80 rounded-[2px] transition flex flex-col justify-between"
+                className="group p-5 bg-slate-50 hover:bg-slate-100 border border-slate-200/80 rounded-[2px] transition flex flex-col justify-between"
               >
                 <div>
-                  <Compass className="size-6 text-[#0098a2] mb-3" />
-                  <h3 className="display-title text-base font-bold text-slate-900 group-hover:text-[#0098a2] transition-colors">
+                  <Compass className="size-6 text-slate-700 mb-3" />
+                  <h3 className="display-title text-base font-bold text-slate-900 group-hover:text-amber-700 transition-colors">
                     Khám Phá Tour
                   </h3>
                   <p className="mt-1 text-xs text-slate-500 font-light">
                     Tuyển tập hành trình trọn gói tại Hạ Long, Sa Pa, Đà Nẵng.
                   </p>
                 </div>
-                <span className="mt-4 text-xs font-semibold text-[#0098a2] flex items-center gap-1">
+                <span className="mt-4 text-xs font-semibold text-slate-900 flex items-center gap-1">
                   Xem ngay <ArrowRight className="size-3" />
                 </span>
               </Link>
 
               <Link
                 href="/experiences"
-                className="group p-5 bg-slate-50 hover:bg-[#0098a2]/5 border border-slate-200/80 rounded-[2px] transition flex flex-col justify-between"
+                className="group p-5 bg-slate-50 hover:bg-slate-100 border border-slate-200/80 rounded-[2px] transition flex flex-col justify-between"
               >
                 <div>
-                  <Heart className="size-6 text-[#0098a2] mb-3" />
-                  <h3 className="display-title text-base font-bold text-slate-900 group-hover:text-[#0098a2] transition-colors">
+                  <Heart className="size-6 text-slate-700 mb-3" />
+                  <h3 className="display-title text-base font-bold text-slate-900 group-hover:text-amber-700 transition-colors">
                     Gói Trải Nghiệm
                   </h3>
                   <p className="mt-1 text-xs text-slate-500 font-light">
                     Chèo thuyền, lặn san hô, cắm trại và khám phá bản địa.
                   </p>
                 </div>
-                <span className="mt-4 text-xs font-semibold text-[#0098a2] flex items-center gap-1">
+                <span className="mt-4 text-xs font-semibold text-slate-900 flex items-center gap-1">
                   Khám phá <ArrowRight className="size-3" />
                 </span>
               </Link>
 
               <Link
                 href="/partner"
-                className="group p-5 bg-slate-50 hover:bg-[#0098a2]/5 border border-slate-200/80 rounded-[2px] transition flex flex-col justify-between"
+                className="group p-5 bg-slate-50 hover:bg-slate-100 border border-slate-200/80 rounded-[2px] transition flex flex-col justify-between"
               >
                 <div>
-                  <Shield className="size-6 text-[#0098a2] mb-3" />
-                  <h3 className="display-title text-base font-bold text-slate-900 group-hover:text-[#0098a2] transition-colors">
+                  <Shield className="size-6 text-slate-700 mb-3" />
+                  <h3 className="display-title text-base font-bold text-slate-900 group-hover:text-amber-700 transition-colors">
                     Cổng Đối Tác
                   </h3>
                   <p className="mt-1 text-xs text-slate-500 font-light">
                     Đăng ký hồ sơ cung cấp dịch vụ và tour du lịch bản địa.
                   </p>
                 </div>
-                <span className="mt-4 text-xs font-semibold text-[#0098a2] flex items-center gap-1">
+                <span className="mt-4 text-xs font-semibold text-slate-900 flex items-center gap-1">
                   Đăng ký <ArrowRight className="size-3" />
                 </span>
               </Link>

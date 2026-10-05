@@ -45,9 +45,9 @@ export default async function ExperienceDetail({ params }: ExperienceDetailProps
         <div className="mx-auto max-w-7xl">
           {/* Breadcrumb Bar */}
           <nav className="flex items-center gap-2 text-xs text-slate-500 mb-8 font-light">
-            <Link href="/" className="hover:text-[#0098a2] transition">Trang chủ</Link>
+            <Link href="/" className="hover:text-slate-900 transition">Trang chủ</Link>
             <ChevronRight className="size-3 text-slate-400" />
-            <Link href="/experiences" className="hover:text-[#0098a2] transition">Trải nghiệm</Link>
+            <Link href="/experiences" className="hover:text-slate-900 transition">Trải nghiệm</Link>
             <ChevronRight className="size-3 text-slate-400" />
             <span className="text-slate-800 font-medium truncate max-w-xs">{place.name}</span>
           </nav>
@@ -58,28 +58,28 @@ export default async function ExperienceDetail({ params }: ExperienceDetailProps
               {/* SPECS BAR */}
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 bg-white/90 p-6 rounded-[2px] shadow-sm border border-slate-100">
                 <div className="flex items-center gap-3">
-                  <Clock className="size-5 text-[#0098a2]" />
+                  <Clock className="size-5 text-slate-700" />
                   <div>
                     <span className="text-[11px] text-slate-400 uppercase tracking-wider block">Thời lượng</span>
                     <strong className="text-xs sm:text-sm font-semibold text-slate-800">Nửa ngày / Cả ngày</strong>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
-                  <Users className="size-5 text-[#0098a2]" />
+                  <Users className="size-5 text-slate-700" />
                   <div>
                     <span className="text-[11px] text-slate-400 uppercase tracking-wider block">Quy mô</span>
                     <strong className="text-xs sm:text-sm font-semibold text-slate-800">Nhóm nhỏ (2 - 12 khách)</strong>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
-                  <Compass className="size-5 text-[#0098a2]" />
+                  <Compass className="size-5 text-slate-700" />
                   <div>
                     <span className="text-[11px] text-slate-400 uppercase tracking-wider block">Ngôn ngữ</span>
                     <strong className="text-xs sm:text-sm font-semibold text-slate-800">Tiếng Việt & Anh</strong>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
-                  <ShieldCheck className="size-5 text-[#0098a2]" />
+                  <ShieldCheck className="size-5 text-slate-700" />
                   <div>
                     <span className="text-[11px] text-slate-400 uppercase tracking-wider block">Bảo hiểm</span>
                     <strong className="text-xs sm:text-sm font-semibold text-slate-800">Bảo hiểm 100tr VNĐ</strong>
@@ -89,7 +89,7 @@ export default async function ExperienceDetail({ params }: ExperienceDetailProps
 
               {/* OVERVIEW & HIGHLIGHTS */}
               <div className="bg-white/90 p-8 sm:p-10 rounded-[2px] shadow-sm border border-slate-100">
-                <span className="text-xs font-bold uppercase tracking-[0.25em] text-[#0098a2]">
+                <span className="text-xs font-bold uppercase tracking-[0.25em] text-slate-900">
                   Tổng Quan Hoạt Động
                 </span>
                 <h2 className="script-title mt-2 text-4xl sm:text-5xl text-[#1e293b]">
@@ -98,7 +98,7 @@ export default async function ExperienceDetail({ params }: ExperienceDetailProps
 
                 <div className="mt-4 flex flex-wrap items-center gap-6 text-sm text-slate-600 pb-6 border-b border-slate-100">
                   <span className="flex items-center gap-1.5 font-light">
-                    <MapPin className="size-4 text-[#0098a2]" />
+                    <MapPin className="size-4 text-slate-600" />
                     {place.address}
                   </span>
                   <span className="flex items-center gap-1.5 font-medium text-amber-600">
@@ -118,19 +118,19 @@ export default async function ExperienceDetail({ params }: ExperienceDetailProps
                   </h3>
                   <div className="grid sm:grid-cols-2 gap-3.5">
                     <div className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-700 font-light">
-                      <CheckCircle2 className="size-4 text-[#0098a2] shrink-0 mt-0.5" />
+                      <CheckCircle2 className="size-4 text-slate-800 shrink-0 mt-0.5" />
                       <span>Hướng dẫn viên bản địa am hiểu sâu sắc địa hình và câu chuyện di sản.</span>
                     </div>
                     <div className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-700 font-light">
-                      <CheckCircle2 className="size-4 text-[#0098a2] shrink-0 mt-0.5" />
+                      <CheckCircle2 className="size-4 text-slate-800 shrink-0 mt-0.5" />
                       <span>Trang thiết bị chuyên dụng tiêu chuẩn quốc tế an toàn tuyệt đối.</span>
                     </div>
                     <div className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-700 font-light">
-                      <CheckCircle2 className="size-4 text-[#0098a2] shrink-0 mt-0.5" />
+                      <CheckCircle2 className="size-4 text-slate-800 shrink-0 mt-0.5" />
                       <span>Thưởng thức ẩm thực và đồ uống giải khát đặc sản miệt vườn/vùng cao.</span>
                     </div>
                     <div className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-700 font-light">
-                      <CheckCircle2 className="size-4 text-[#0098a2] shrink-0 mt-0.5" />
+                      <CheckCircle2 className="size-4 text-slate-800 shrink-0 mt-0.5" />
                       <span>Hỗ trợ chụp hình kỷ niệm chất lượng cao trong suốt hành trình.</span>
                     </div>
                   </div>
@@ -145,19 +145,19 @@ export default async function ExperienceDetail({ params }: ExperienceDetailProps
                   </h3>
                   <ul className="space-y-2.5 text-xs sm:text-sm font-light text-slate-600">
                     <li className="flex items-center gap-2">
-                      <span className="text-[#0098a2] font-bold">✓</span>
+                      <span className="text-slate-800 font-bold">✓</span>
                       <span>Toàn bộ vé tham quan và phí môi trường</span>
                     </li>
                     <li className="flex items-center gap-2">
-                      <span className="text-[#0098a2] font-bold">✓</span>
+                      <span className="text-slate-800 font-bold">✓</span>
                       <span>Hướng dẫn viên chuyên nghiệp theo sát đoàn</span>
                     </li>
                     <li className="flex items-center gap-2">
-                      <span className="text-[#0098a2] font-bold">✓</span>
+                      <span className="text-slate-800 font-bold">✓</span>
                       <span>Nước suối và đồ uống nhẹ trên hành trình</span>
                     </li>
                     <li className="flex items-center gap-2">
-                      <span className="text-[#0098a2] font-bold">✓</span>
+                      <span className="text-slate-800 font-bold">✓</span>
                       <span>Bảo hiểm tai nạn du lịch tiêu chuẩn</span>
                     </li>
                   </ul>
@@ -190,7 +190,7 @@ export default async function ExperienceDetail({ params }: ExperienceDetailProps
 
               {/* REVIEWS & SUBMIT SECTION */}
               <div className="bg-white/90 p-8 sm:p-10 rounded-[2px] shadow-sm border border-slate-100">
-                <span className="text-xs font-bold uppercase tracking-[0.25em] text-[#0098a2]">
+                <span className="text-xs font-bold uppercase tracking-[0.25em] text-slate-900">
                   Cảm Nhận Thực Tế
                 </span>
                 <h2 className="script-title mt-2 text-4xl sm:text-5xl text-[#1e293b]">
@@ -250,7 +250,7 @@ export default async function ExperienceDetail({ params }: ExperienceDetailProps
           {related.length > 0 && (
             <section className="mt-24 pt-16 border-t border-slate-200">
               <div className="text-center mb-12">
-                <span className="text-xs font-bold uppercase tracking-[0.25em] text-[#0098a2]">
+                <span className="text-xs font-bold uppercase tracking-[0.25em] text-slate-900">
                   Khám Phá Thêm
                 </span>
                 <h2 className="script-title mt-2 text-4xl sm:text-5xl text-[#1e293b]">

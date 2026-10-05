@@ -30,7 +30,7 @@ export function ContactForm() {
   if (submitted) {
     return (
       <div className="rounded-[2px] bg-white p-8 md:p-12 text-center shadow-sm border border-slate-100">
-        <div className="mx-auto flex size-16 items-center justify-center rounded-full bg-[#0098a2]/10 text-[#0098a2]">
+        <div className="mx-auto flex size-16 items-center justify-center rounded-full bg-emerald-50 text-emerald-700">
           <CheckCircle2 className="size-8" />
         </div>
         <h3 className="display-title mt-6 text-2xl font-bold text-[#1e293b]">

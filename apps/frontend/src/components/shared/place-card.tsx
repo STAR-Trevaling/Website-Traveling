@@ -34,13 +34,13 @@ export function PlaceCard({ place }: PlaceCardProps) {
       </div>
 
       <div className="p-5">
-        <h3 className="script-title text-2xl font-bold text-slate-900 group-hover:text-[#0098a2] transition-colors leading-tight">
+        <h3 className="script-title text-2xl font-bold text-slate-900 group-hover:text-amber-700 transition-colors leading-tight">
           {place.name}
         </h3>
 
         {place.address && (
           <p className="mt-1 flex items-center gap-1 text-xs text-slate-400 font-light truncate">
-            <MapPin className="size-3 text-[#0098a2] shrink-0" />
+            <MapPin className="size-3 text-slate-400 shrink-0" />
             <span>{place.address}</span>
           </p>
         )}
@@ -56,7 +56,7 @@ export function PlaceCard({ place }: PlaceCardProps) {
             <span className="text-slate-400 font-light">({place.review_count || 12} đánh giá)</span>
           </div>
 
-          <span className="text-[#0098a2] font-semibold text-xs tracking-wider uppercase group-hover:underline">
+          <span className="text-slate-900 font-bold text-xs tracking-wider uppercase group-hover:underline">
             Chi tiết →
           </span>
         </div>

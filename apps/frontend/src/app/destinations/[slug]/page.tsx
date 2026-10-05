@@ -69,7 +69,7 @@ export default async function DestinationDetail({ params }: DestinationDetailPro
 
         <div className="relative z-10 mx-auto flex min-h-[620px] max-w-7xl items-end px-6 pb-16 md:px-12">
           <div className="max-w-4xl">
-            <p className="text-xs sm:text-sm uppercase tracking-[.25em] text-[#00c2cb] font-bold">
+            <p className="text-xs sm:text-sm uppercase tracking-[.25em] text-white/90 font-bold">
               {destination.country}
             </p>
             <h1 className="display-title mt-2 text-5xl sm:text-7xl md:text-8xl font-black text-white drop-shadow-[0_2px_14px_rgba(0,0,0,0.95)]">
@@ -86,7 +86,7 @@ export default async function DestinationDetail({ params }: DestinationDetailPro
         <div className="mx-auto max-w-7xl space-y-20">
           {/* DESTINATION OVERVIEW CARD */}
           <div className="bg-white/90 p-8 md:p-12 rounded-[2px] shadow-sm border border-slate-100 max-w-4xl">
-            <span className="text-xs font-bold uppercase tracking-[0.25em] text-[#0098a2]">
+            <span className="text-xs font-bold uppercase tracking-[0.25em] text-slate-900">
               Giới Thiệu Điểm Đến
             </span>
             <h2 className="script-title mt-2 text-4xl md:text-5xl text-[#1e293b]">
@@ -100,7 +100,7 @@ export default async function DestinationDetail({ params }: DestinationDetailPro
           {/* FEATURED TOURS FOR THIS DESTINATION */}
           {matchedTours.length > 0 && (
             <div>
-              <span className="text-xs font-bold uppercase tracking-[0.25em] text-[#0098a2]">
+              <span className="text-xs font-bold uppercase tracking-[0.25em] text-slate-900">
                 Hành Trình Trọn Gói
               </span>
               <h2 className="script-title mt-1 text-4xl md:text-5xl text-[#1e293b]">
@@ -128,7 +128,7 @@ export default async function DestinationDetail({ params }: DestinationDetailPro
                       </div>
 
                       <div className="p-5">
-                        <h3 className="script-title text-2xl font-bold text-slate-900 group-hover:text-[#0098a2] transition-colors leading-tight">
+                        <h3 className="script-title text-2xl font-bold text-slate-900 group-hover:text-amber-700 transition-colors leading-tight">
                           {tour.title}
                         </h3>
                         <p className="mt-2 text-xs md:text-sm font-light text-slate-600 line-clamp-2 leading-relaxed">
@@ -140,11 +140,11 @@ export default async function DestinationDetail({ params }: DestinationDetailPro
                     <div className="p-5 pt-0 border-t border-slate-100 mt-4 flex items-center justify-between">
                       <div>
                         <span className="text-[11px] text-slate-400 font-light block">Giá trọn gói từ</span>
-                        <strong className="text-sm font-black text-[#0098a2]">
+                        <strong className="text-sm font-black text-slate-900">
                           {tour.price.toLocaleString("vi-VN")}đ
                         </strong>
                       </div>
-                      <span className="text-xs font-semibold uppercase tracking-wider text-slate-700 group-hover:text-[#0098a2] flex items-center gap-1">
+                      <span className="text-xs font-semibold uppercase tracking-wider text-slate-700 group-hover:text-amber-700 flex items-center gap-1">
                         Chi tiết <ArrowRight className="size-3" />
                       </span>
                     </div>
@@ -156,7 +156,7 @@ export default async function DestinationDetail({ params }: DestinationDetailPro
 
           {/* EXPERIENCES AT THIS DESTINATION */}
           <div>
-            <span className="text-xs font-bold uppercase tracking-[0.25em] text-[#0098a2]">
+            <span className="text-xs font-bold uppercase tracking-[0.25em] text-slate-900">
               Hoạt Động Khám Phá
             </span>
             <h2 className="script-title mt-1 text-4xl md:text-5xl text-[#1e293b]">

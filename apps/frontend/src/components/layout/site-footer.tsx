@@ -47,7 +47,7 @@ export function SiteFooter() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="transition hover:text-[#0098a2]"
+                className="transition hover:text-black hover:underline"
               >
                 {link.label}
               </Link>
@@ -57,7 +57,7 @@ export function SiteFooter() {
           {/* Copyright */}
           <p className="text-xs font-normal text-black/50 md:text-sm">
             © 2026 StarTravels Vietnam · Khám phá Việt Nam theo cách của bạn ·{" "}
-            <Link href="/privacy" className="hover:text-[#0098a2] transition">
+            <Link href="/privacy" className="hover:text-black hover:underline transition">
               Chính sách bảo mật
             </Link>
           </p>

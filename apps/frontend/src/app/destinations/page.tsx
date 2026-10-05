@@ -45,7 +45,7 @@ export default async function DestinationsPage({ searchParams }: DestinationsPag
           {/* Section Header & Search */}
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 pb-10 border-b border-slate-200">
             <div>
-              <span className="text-xs font-bold uppercase tracking-[0.25em] text-[#0098a2]">
+              <span className="text-xs font-bold uppercase tracking-[0.25em] text-slate-900">
                 Danh Thắng Di Sản
               </span>
               <h2 className="script-title mt-1 text-4xl md:text-5xl text-[#1e293b]">
@@ -62,12 +62,12 @@ export default async function DestinationsPage({ searchParams }: DestinationsPag
                 name="search"
                 defaultValue={search || ""}
                 placeholder="Tìm điểm đến (Hạ Long, Sa Pa, Phú Quốc...)"
-                className="w-full bg-white border border-slate-200 px-4 py-3 pr-10 text-xs md:text-sm text-slate-800 placeholder:text-slate-400 outline-none focus:border-[#0098a2] focus:ring-1 focus:ring-[#0098a2] rounded-[2px]"
+                className="w-full bg-white border border-slate-200 px-4 py-3 pr-10 text-xs md:text-sm text-slate-800 placeholder:text-slate-400 outline-none focus:border-slate-800 focus:ring-1 focus:ring-slate-800 rounded-[2px]"
               />
               <button
                 type="submit"
                 aria-label="Tìm kiếm"
-                className="absolute right-3 top-3 text-slate-400 hover:text-[#0098a2] transition"
+                className="absolute right-3 top-3 text-slate-400 hover:text-slate-900 transition"
               >
                 <Search className="size-4" />
               </button>

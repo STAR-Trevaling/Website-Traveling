@@ -64,7 +64,7 @@ export async function SiteHeader({ overlay = false }: SiteHeaderProps) {
               <Link
                 key={item.href}
                 href={item.href}
-                className="transition hover:text-[#0098a2] hover:opacity-90"
+                className="transition hover:text-white/80 hover:underline"
               >
                 {item.label}
               </Link>
@@ -74,14 +74,14 @@ export async function SiteHeader({ overlay = false }: SiteHeaderProps) {
           {/* Right: Phone, Email & Login matching template image(20261004-085822).png */}
           <div className="flex items-center gap-5 text-xs lg:text-sm">
             <span className="hidden sm:flex items-center gap-1.5 text-white/90">
-              <Phone className="size-3.5 text-[#0098a2]" />
+              <Phone className="size-3.5 text-white/90" />
               +1 334 445 623
             </span>
             <a
               href="mailto:contact@startravels.com"
               className="hidden lg:flex items-center gap-1.5 text-white/90 hover:opacity-80 transition"
             >
-              <Mail className="size-3.5 text-[#0098a2]" />
+              <Mail className="size-3.5 text-white/90" />
               contact@startravels.com
             </a>
             <Link
@@ -89,7 +89,7 @@ export async function SiteHeader({ overlay = false }: SiteHeaderProps) {
               aria-label="Tài khoản"
               className="flex items-center gap-1.5 font-medium hover:opacity-80 transition"
             >
-              <UserRound className="size-4 text-[#0098a2]" />
+              <UserRound className="size-4 text-white/90" />
               <span>{user ? user.username : "Đăng nhập"}</span>
             </Link>
           </div>

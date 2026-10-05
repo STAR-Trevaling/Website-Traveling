@@ -72,7 +72,7 @@ export function DestinationsCarousel({ initialDestinations }: DestinationsCarous
 
                 {/* White strip on bottom matching template */}
                 <div className="p-4 pt-3.5 pb-4 min-h-[82px] flex flex-col justify-center">
-                  <h3 className="script-title text-2xl font-bold leading-none text-[#222] group-hover:text-[#0098a2] transition-colors">
+                  <h3 className="script-title text-2xl font-bold leading-none text-[#222] group-hover:text-amber-700 transition-colors">
                     {d.name}
                   </h3>
                   <p className="mt-2 line-clamp-2 text-[11px] font-normal leading-relaxed text-[#777]">

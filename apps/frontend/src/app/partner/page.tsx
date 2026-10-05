@@ -74,7 +74,7 @@ export default function PartnerPage() {
         <section className="relative w-full px-6 py-20 md:px-12 lg:px-16">
           <div className="mx-auto max-w-7xl">
             <div className="text-center max-w-3xl mx-auto">
-              <span className="text-xs font-bold uppercase tracking-[0.25em] text-[#0098a2]">
+              <span className="text-xs font-bold uppercase tracking-[0.25em] text-slate-900">
                 Quyền Lợi Đối Tác
               </span>
               <h2 className="script-title mt-2 text-5xl md:text-6xl text-[#1e293b]">
@@ -94,7 +94,7 @@ export default function PartnerPage() {
                     className="bg-white/90 p-8 rounded-[2px] shadow-sm border border-slate-100 flex flex-col justify-between transition hover:shadow-md hover:-translate-y-1"
                   >
                     <div>
-                      <div className="flex size-12 items-center justify-center rounded-full bg-[#0098a2]/10 text-[#0098a2]">
+                      <div className="flex size-12 items-center justify-center rounded-full bg-slate-100 text-slate-800">
                         <Icon className="size-6 stroke-[1.75]" />
                       </div>
                       <h3 className="display-title mt-6 text-lg font-bold text-[#1e293b]">
@@ -115,7 +115,7 @@ export default function PartnerPage() {
         <section className="w-full bg-white/70 py-20 md:py-28 border-y border-slate-200/60">
           <div className="mx-auto max-w-7xl px-6 md:px-12 lg:px-16">
             <div className="text-center max-w-3xl mx-auto">
-              <span className="text-xs font-bold uppercase tracking-[0.25em] text-[#0098a2]">
+              <span className="text-xs font-bold uppercase tracking-[0.25em] text-slate-900">
                 Quy Trình Gia Nhập
               </span>
               <h2 className="script-title mt-2 text-5xl md:text-6xl text-[#1e293b]">
@@ -137,7 +137,7 @@ export default function PartnerPage() {
                     <div className="text-3xl font-black text-slate-200 display-title">
                       {step.num}
                     </div>
-                    <div className="mt-3 flex size-10 items-center justify-center rounded-full bg-[#0098a2]/10 text-[#0098a2]">
+                    <div className="mt-3 flex size-10 items-center justify-center rounded-full bg-slate-100 text-slate-800">
                       <Icon className="size-5" />
                     </div>
                     <h3 className="display-title mt-4 text-base font-bold text-[#1e293b]">
@@ -158,7 +158,7 @@ export default function PartnerPage() {
           <div className="mx-auto max-w-5xl">
             <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] items-start bg-white/90 p-8 md:p-12 rounded-[2px] shadow-sm border border-slate-100">
               <div>
-                <span className="text-xs font-bold uppercase tracking-[0.25em] text-[#0098a2]">
+                <span className="text-xs font-bold uppercase tracking-[0.25em] text-slate-900">
                   Nộp Đơn Trực Tuyến
                 </span>
                 <h2 className="script-title mt-2 text-4xl md:text-5xl text-[#1e293b] leading-tight">
@@ -170,13 +170,13 @@ export default function PartnerPage() {
 
                 <div className="mt-8 space-y-4 pt-6 border-t border-slate-100">
                   <div className="flex items-start gap-3">
-                    <div className="mt-1 size-2 rounded-full bg-[#0098a2] shrink-0" />
+                    <div className="mt-1 size-2 rounded-full bg-slate-800 shrink-0" />
                     <p className="text-xs md:text-sm text-slate-600 font-light">
                       Ưu tiên các đơn vị sở hữu sản phẩm nguyên bản tại Vịnh Hạ Long, Sa Pa, Đà Nẵng, Hội An, Phú Quốc và Đồng bằng Sông Cửu Long.
                     </p>
                   </div>
                   <div className="flex items-start gap-3">
-                    <div className="mt-1 size-2 rounded-full bg-[#0098a2] shrink-0" />
+                    <div className="mt-1 size-2 rounded-full bg-slate-800 shrink-0" />
                     <p className="text-xs md:text-sm text-slate-600 font-light">
                       Cam kết tôn trọng quy chuẩn an toàn, sinh thái và bảo tồn giá trị văn hóa địa phương.
                     </p>
@@ -185,8 +185,8 @@ export default function PartnerPage() {
 
                 <div className="mt-10 rounded-[2px] bg-slate-50 p-5 border border-slate-200 text-xs text-slate-500 font-light">
                   <strong>Cần giải đáp gấp?</strong> Liên hệ trực tiếp bộ phận Phát Triển Đối Tác:{" "}
-                  <span className="text-[#0098a2] font-semibold">partner@startravels.vn</span> hoặc hotline{" "}
-                  <span className="text-[#0098a2] font-semibold">+84 912 345 678</span>.
+                  <span className="text-slate-900 font-bold">partner@startravels.vn</span> hoặc hotline{" "}
+                  <span className="text-slate-900 font-bold">+84 912 345 678</span>.
                 </div>
               </div>
 

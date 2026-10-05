@@ -105,7 +105,7 @@ export function ToursCatalog() {
       {/* Results Count */}
       <div className="mb-6 flex items-center justify-between">
         <p className="text-xs md:text-sm font-medium text-slate-600">
-          Tìm thấy <span className="font-bold text-[#0098a2]">{filteredTours.length}</span> tour du lịch trọn gói phù hợp
+          Tìm thấy <span className="font-bold text-slate-900">{filteredTours.length}</span> tour du lịch trọn gói phù hợp
         </p>
       </div>
 
@@ -130,13 +130,13 @@ export function ToursCatalog() {
 
                 {/* Duration Badge */}
                 <div className="absolute top-3 left-3 flex items-center gap-1.5 rounded-[2px] bg-[#1e293b]/85 px-2.5 py-1 text-[11px] font-semibold text-white backdrop-blur-md uppercase tracking-wider">
-                  <Clock className="size-3 text-[#00c2cb]" />
+                  <Clock className="size-3 text-white" />
                   <span>{tour.duration}</span>
                 </div>
 
                 {/* Location Badge */}
                 <div className="absolute bottom-3 left-3 flex items-center gap-1 text-xs font-medium text-white/95">
-                  <MapPin className="size-3.5 text-[#00c2cb]" />
+                  <MapPin className="size-3.5 text-white" />
                   <span>{tour.destination}</span>
                 </div>
               </div>
@@ -151,18 +151,18 @@ export function ToursCatalog() {
                   <span className="text-slate-400 font-light">({tour.reviewCount} đánh giá)</span>
                 </div>
 
-                <h3 className="script-title mt-2 text-2xl font-bold leading-tight text-slate-900 group-hover:text-[#0098a2] transition-colors line-clamp-2">
+                <h3 className="script-title mt-2 text-2xl font-bold leading-tight text-slate-900 group-hover:text-amber-700 transition-colors line-clamp-2">
                   {tour.title}
                 </h3>
 
                 {/* Inclusions */}
                 <div className="mt-3 flex flex-wrap gap-2 text-[11px] text-slate-500 font-light">
                   <span className="flex items-center gap-1 rounded-[2px] bg-slate-100 px-2 py-0.5">
-                    <Bus className="size-3 text-[#0098a2]" />
+                    <Bus className="size-3 text-slate-700" />
                     {tour.transport}
                   </span>
                   <span className="flex items-center gap-1 rounded-[2px] bg-slate-100 px-2 py-0.5">
-                    <Hotel className="size-3 text-[#0098a2]" />
+                    <Hotel className="size-3 text-slate-700" />
                     {tour.hotel}
                   </span>
                 </div>
@@ -171,7 +171,7 @@ export function ToursCatalog() {
                 <ul className="mt-4 space-y-1.5 border-t border-slate-100 pt-3 text-xs text-slate-600 font-light">
                   {tour.highlights.slice(0, 3).map((h, i) => (
                     <li key={i} className="flex items-start gap-2">
-                      <CheckCircle2 className="size-3.5 shrink-0 text-[#0098a2] mt-0.5" />
+                      <CheckCircle2 className="size-3.5 shrink-0 text-slate-800 mt-0.5" />
                       <span className="line-clamp-1">{h}</span>
                     </li>
                   ))}
@@ -184,7 +184,7 @@ export function ToursCatalog() {
               <div>
                 <span className="block text-[10px] text-slate-400 uppercase tracking-wider font-light">Giá trọn gói từ</span>
                 <div className="flex items-baseline gap-2">
-                  <span className="text-xl font-black text-[#0098a2]">
+                  <span className="text-xl font-black text-slate-900">
                     {tour.price.toLocaleString("vi-VN")}đ
                   </span>
                   {tour.originalPrice && (

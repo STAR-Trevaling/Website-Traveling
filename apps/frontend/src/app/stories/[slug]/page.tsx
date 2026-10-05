@@ -80,7 +80,7 @@ export default async function StoryDetailPage({ params }: StoryDetailPageProps) 
                 {story.category}
               </span>
               <span className="flex items-center gap-1.5 text-xs sm:text-sm font-medium text-white/90 bg-black/50 px-3 py-1 rounded-[2px] backdrop-blur-sm border border-white/20">
-                <Clock className="size-3.5 text-[#00c2cb]" />
+                <Clock className="size-3.5 text-white" />
                 {story.readTime}
               </span>
             </div>
@@ -115,7 +115,7 @@ export default async function StoryDetailPage({ params }: StoryDetailPageProps) 
             <div className="mb-8">
               <Link
                 href="/stories"
-                className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-[#0098a2] hover:underline"
+                className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-slate-900 hover:underline"
               >
                 <ArrowLeft className="size-3.5" /> Quay lại danh sách câu chuyện
               </Link>
@@ -181,7 +181,7 @@ export default async function StoryDetailPage({ params }: StoryDetailPageProps) 
               <h3 className="display-title text-lg font-bold text-slate-900">
                 {story.authorName}
               </h3>
-              <p className="text-xs text-[#0098a2] font-medium mt-1">
+              <p className="text-xs text-slate-800 font-semibold mt-1">
                 {story.authorRole}
               </p>
               <p className="mt-3 text-xs font-light text-slate-500 leading-relaxed">
@@ -192,7 +192,7 @@ export default async function StoryDetailPage({ params }: StoryDetailPageProps) 
             {/* Destination Spotlight */}
             {story.destination && (
               <div className="rounded-[2px] bg-white p-7 shadow-sm border border-slate-100">
-                <span className="text-[11px] font-semibold text-[#0098a2] uppercase tracking-wider block mb-2">
+                <span className="text-[11px] font-bold text-slate-900 uppercase tracking-wider block mb-2">
                   Điểm Đến Trong Bài
                 </span>
                 <h4 className="display-title text-xl font-bold text-slate-900">
@@ -203,7 +203,7 @@ export default async function StoryDetailPage({ params }: StoryDetailPageProps) 
                 </p>
                 <Link
                   href={`/destinations/${story.destination.slug}`}
-                  className="mt-4 inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-[#0098a2] hover:underline"
+                  className="mt-4 inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-slate-900 hover:underline"
                 >
                   Xem hướng dẫn điểm đến <ChevronRight className="size-3.5" />
                 </Link>
@@ -245,7 +245,7 @@ export default async function StoryDetailPage({ params }: StoryDetailPageProps) 
                   </div>
 
                   <div className="p-6">
-                    <h3 className="display-title text-lg font-bold text-[#1e293b] group-hover:text-[#0098a2] transition line-clamp-2">
+                    <h3 className="display-title text-lg font-bold text-[#1e293b] group-hover:text-amber-700 transition line-clamp-2">
                       {rStory.title}
                     </h3>
                     <p className="mt-2 text-xs font-light text-slate-500 line-clamp-2">
@@ -255,7 +255,7 @@ export default async function StoryDetailPage({ params }: StoryDetailPageProps) 
                 </div>
 
                 <div className="p-6 pt-0 border-t border-slate-50 flex items-center justify-between text-xs">
-                  <span className="font-semibold text-[#0098a2] flex items-center gap-1 group-hover:translate-x-1 transition">
+                  <span className="font-semibold text-slate-900 flex items-center gap-1 group-hover:translate-x-1 transition">
                     Đọc tiếp <ChevronRight className="size-3.5" />
                   </span>
                   <span className="text-[11px] text-slate-400 font-light">

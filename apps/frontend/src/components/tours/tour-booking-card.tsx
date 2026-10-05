@@ -56,7 +56,7 @@ export function TourBookingCard({ tour }: TourBookingCardProps) {
           {/* Departure Date */}
           <div>
             <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-700 mb-1.5">
-              <Calendar className="size-3.5 text-[#0098a2]" />
+              <Calendar className="size-3.5 text-slate-700" />
               Ngày khởi hành dự kiến
             </label>
             <input
@@ -122,7 +122,7 @@ export function TourBookingCard({ tour }: TourBookingCardProps) {
         <div className="mt-6 rounded-[2px] bg-slate-50 p-4 border border-slate-100">
           <div className="flex items-center justify-between">
             <span className="text-xs font-semibold text-slate-600">Tổng tạm tính:</span>
-            <span className="text-lg font-bold text-[#0098a2]">
+            <span className="text-lg font-black text-slate-900">
               {totalPrice.toLocaleString("vi-VN")}đ
             </span>
           </div>
@@ -166,7 +166,7 @@ export function TourBookingCard({ tour }: TourBookingCardProps) {
               <>
                 <div className="flex items-start justify-between border-b border-slate-100 pb-4">
                   <div>
-                    <span className="text-[11px] font-semibold text-[#0098a2] uppercase tracking-wider">
+                    <span className="text-[11px] font-bold text-slate-900 uppercase tracking-wider">
                       Xác nhận thông tin
                     </span>
                     <h3 className="display-title mt-1 text-xl font-bold text-slate-900">
@@ -229,7 +229,7 @@ export function TourBookingCard({ tour }: TourBookingCardProps) {
                   <div className="rounded-[2px] bg-slate-50 p-3.5 text-xs text-slate-600 font-light">
                     <p>Khởi hành: <strong>{departureDate}</strong></p>
                     <p>Số lượng: <strong>{adults} người lớn{children > 0 ? `, ${children} trẻ em` : ""}</strong></p>
-                    <p className="mt-1 font-semibold text-[#0098a2] text-sm">
+                    <p className="mt-1 font-bold text-slate-900 text-sm">
                       Tổng thanh toán: {totalPrice.toLocaleString("vi-VN")}đ
                     </p>
                   </div>

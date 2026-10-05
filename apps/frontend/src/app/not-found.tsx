@@ -5,10 +5,10 @@ export default function NotFound() {
   return (
     <main className="template-page-bg flex min-h-screen items-center justify-center px-6 text-center text-[#282828]">
       <div className="mx-auto max-w-md bg-white/90 p-10 md:p-14 rounded-[2px] shadow-sm border border-slate-100 backdrop-blur-md">
-        <div className="mx-auto flex size-16 items-center justify-center rounded-full bg-[#0098a2]/10 text-[#0098a2]">
+        <div className="mx-auto flex size-16 items-center justify-center rounded-full bg-slate-100 text-slate-800">
           <Compass className="size-8" />
         </div>
-        <p className="mt-4 text-xs font-bold uppercase tracking-[0.25em] text-[#0098a2]">
+        <p className="mt-4 text-xs font-bold uppercase tracking-[0.25em] text-slate-900">
           Mã Lỗi 404
         </p>
         <h1 className="script-title mt-2 text-5xl md:text-6xl text-[#1e293b]">

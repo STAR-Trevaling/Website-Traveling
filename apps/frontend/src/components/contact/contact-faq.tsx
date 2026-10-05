@@ -55,7 +55,7 @@ export function ContactFAQ() {
                 {faq.question}
               </span>
               <ChevronDown
-                className={`size-5 text-[#0098a2] shrink-0 transition-transform duration-300 ${
+                className={`size-5 text-slate-700 shrink-0 transition-transform duration-300 ${
                   isOpen ? "rotate-180" : ""
                 }`}
               />
