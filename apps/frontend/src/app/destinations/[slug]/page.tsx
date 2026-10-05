@@ -188,7 +188,7 @@ export default async function DestinationDetail({ params }: DestinationDetailPro
               <div className="mt-6 flex flex-wrap items-center justify-center gap-4">
                 <Link
                   href="/contact"
-                  className="bg-[#0098a2] text-white px-8 py-3 text-xs md:text-sm font-semibold tracking-widest uppercase rounded-[2px] shadow-sm transition-all duration-200 hover:bg-[#008f99] hover:shadow-[0px_8px_25px_rgba(0,152,162,0.35)] hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
+                  className="border border-slate-700/70 bg-transparent text-[#1e293b] px-8 py-3 text-xs md:text-sm font-bold tracking-[0.2em] uppercase rounded-[2px] template-shadow-text shadow-sm transition-all duration-200 hover:border-black hover:text-black hover:bg-white/60 hover:shadow-[0px_8px_25px_rgba(0,0,0,0.15)] hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
                 >
                   Tư Vấn Tour {destination.name}
                 </Link>
