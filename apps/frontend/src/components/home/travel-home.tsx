@@ -10,37 +10,37 @@ import type { Place } from "@/lib/types";
 import { SiteHeader } from "@/components/layout/site-header";
 import { NewsletterAwards } from "./newsletter-awards";
 
-// Fallback Adventures matching template image(20261004-085849).png
+// Fallback Adventures matching Vietnam scenic destinations
 const adventureFallback: Partial<Place>[] = [
   {
     slug: "canal-cruise",
-    name: "Canal Cruise",
+    name: "Du Thuyền Kênh Rạch Miền Tây",
     image_url: VIETNAM_IMAGES.cruise,
-    short_description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit",
+    short_description: "Xuôi mái chèo len lỏi qua rặng dừa nước Bến Tre rợp bóng và vịnh biển Hạ Long nguyên sơ.",
   },
   {
     slug: "sailing",
-    name: "Sailing",
+    name: "Thuyền Buồm Vịnh Lan Hạ",
     image_url: VIETNAM_IMAGES.kayak,
-    short_description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    short_description: "Cảm nhận sức gió biển khơi và lướt êm ái qua những vách núi đá vôi kỳ vĩ.",
   },
   {
     slug: "camping",
-    name: "Camping",
+    name: "Cắm Trại Đêm Săn Mây Tà Xùa",
     image_url: VIETNAM_IMAGES.camping,
-    short_description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    short_description: "Thức giấc giữa ngàn vì sao, đón bình minh dát vàng thung lũng mây và rừng thông Đà Lạt.",
   },
   {
     slug: "hiking",
-    name: "Hiking",
+    name: "Trekking Chinh Phục Đỉnh Fansipan",
     image_url: VIETNAM_IMAGES.hiking,
-    short_description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    short_description: "Cung đường vượt rừng trúc nguyên sinh và chạm nóc nhà Đông Dương 3.143m linh thiêng Sa Pa.",
   },
   {
     slug: "scuba-diving",
-    name: "Scuba Diving",
+    name: "Lặn Ngắm San Hô Biển Phú Quốc",
     image_url: VIETNAM_IMAGES.scubaDiving,
-    short_description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    short_description: "Đắm chìm vào thế giới thủy cung huyền ảo và ngắm nhìn rạn san hô nguyên sinh quý hiếm.",
   },
 ];
 
@@ -150,7 +150,7 @@ export async function TravelHome() {
             })}
           </div>
 
-          {/* Have an Adventure Today (image(20261004-085849).png) */}
+          {/* Have an Adventure Today — Tuyển tập thám hiểm bản địa Việt Nam */}
           <div className="mt-28 text-center">
             <h2 className="script-title text-5xl md:text-6xl text-[#1e293b]">
               Have an Adventure Today
@@ -165,7 +165,7 @@ export async function TravelHome() {
             >
               <Image
                 src="/assets/adventures/canal-cruise.jpg"
-                alt="Canal Cruise"
+                alt="Du Thuyền Kênh Rạch"
                 fill
                 unoptimized
                 className="object-cover transition duration-500 group-hover:scale-105"
@@ -176,7 +176,7 @@ export async function TravelHome() {
                   Canal Cruise
                 </h3>
                 <p className="mt-1 text-[11px] font-normal text-[#64748b] leading-tight line-clamp-2">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit
+                  Xuôi mái chèo len lỏi qua rặng dừa nước Bến Tre rợp bóng và kỳ quan Vịnh Hạ Long ngọc bích
                 </p>
               </div>
               {/* White circular arrow button on right over uncovered photo */}
@@ -194,7 +194,7 @@ export async function TravelHome() {
               >
                 <Image
                   src="/assets/adventures/sailing.jpg"
-                  alt="Sailing"
+                  alt="Thuyền Buồm Vịnh Biển"
                   fill
                   unoptimized
                   className="object-cover transition duration-500 group-hover:scale-105"
@@ -204,7 +204,7 @@ export async function TravelHome() {
                     Sailing
                   </h3>
                   <p className="mt-0.5 text-[10px] sm:text-[11px] font-normal text-[#64748b] leading-tight line-clamp-2">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit
+                    Căng buồm đón gió biển khơi và lướt nhẹ qua những hòn đảo đá vôi kỳ vĩ Vịnh Lan Hạ
                   </p>
                 </div>
                 <div className="absolute bottom-3.5 right-3.5 sm:bottom-4 sm:right-4 flex size-7 sm:size-8 items-center justify-center rounded-full border border-white/90 text-white transition-transform duration-300 group-hover:scale-110 group-hover:bg-white/20 shadow-sm">
@@ -219,7 +219,7 @@ export async function TravelHome() {
               >
                 <Image
                   src="/assets/adventures/hiking.jpg"
-                  alt="Hiking"
+                  alt="Trekking Fansipan Sa Pa"
                   fill
                   unoptimized
                   className="object-cover transition duration-500 group-hover:scale-105"
@@ -229,7 +229,7 @@ export async function TravelHome() {
                     Hiking
                   </h3>
                   <p className="mt-0.5 text-[10px] sm:text-[11px] font-normal text-[#64748b] leading-tight line-clamp-2">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit
+                    Băng qua những thung lũng ruộng bậc thang uốn lượn và chạm nóc nhà Đông Dương Fansipan
                   </p>
                 </div>
                 <div className="absolute bottom-3.5 right-3.5 sm:bottom-4 sm:right-4 flex size-7 sm:size-8 items-center justify-center rounded-full border border-white/90 text-white transition-transform duration-300 group-hover:scale-110 group-hover:bg-white/20 shadow-sm">
@@ -247,7 +247,7 @@ export async function TravelHome() {
               >
                 <Image
                   src="/assets/adventures/camping.jpg"
-                  alt="Camping"
+                  alt="Cắm Trại Săn Mây Tà Xùa"
                   fill
                   unoptimized
                   className="object-cover transition duration-500 group-hover:scale-105"
@@ -257,7 +257,7 @@ export async function TravelHome() {
                     Camping
                   </h3>
                   <p className="mt-0.5 text-[10px] sm:text-[11px] font-normal text-[#64748b] leading-tight line-clamp-2">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit
+                    Đón bình minh rực rỡ trên đỉnh đồi lộng gió Tà Xùa và hòa mình giữa rừng thông Đà Lạt
                   </p>
                 </div>
                 <div className="absolute bottom-3.5 right-3.5 sm:bottom-4 sm:right-4 flex size-7 sm:size-8 items-center justify-center rounded-full border border-white/90 text-white transition-transform duration-300 group-hover:scale-110 group-hover:bg-white/20 shadow-sm">
@@ -272,7 +272,7 @@ export async function TravelHome() {
               >
                 <Image
                   src="/assets/adventures/scuba-diving.jpg"
-                  alt="Scuba Diving"
+                  alt="Lặn San Hô Phú Quốc"
                   fill
                   unoptimized
                   className="object-cover transition duration-500 group-hover:scale-105"
@@ -282,7 +282,7 @@ export async function TravelHome() {
                     Scuba Diving
                   </h3>
                   <p className="mt-0.5 text-[10px] sm:text-[11px] font-normal text-[#64748b] leading-tight line-clamp-2">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit
+                    Khám phá thủy cung rực rỡ sắc màu với những rạn san hô nguyên sinh tại quần đảo An Thới
                   </p>
                 </div>
                 <div className="absolute bottom-3.5 right-3.5 sm:bottom-4 sm:right-4 flex size-7 sm:size-8 items-center justify-center rounded-full border border-white/90 text-white transition-transform duration-300 group-hover:scale-110 group-hover:bg-white/20 shadow-sm">
@@ -297,21 +297,21 @@ export async function TravelHome() {
       {/* 5. NEWSLETTER & AWARD WINNING (image(20261004-085901).png) */}
       <NewsletterAwards />
 
-      {/* 6. LOOKING FOR AN EXPERIENCE? (image(20261004-085901).png & image(20261004-085907).png) */}
+      {/* 6. LOOKING FOR AN EXPERIENCE? — Bản địa Việt Nam */}
       <section className="w-full bg-white/75 backdrop-blur-md py-16 md:py-20 text-center border-y border-white/40">
         <div className="mx-auto max-w-4xl px-6">
           <h2 className="script-title text-4xl sm:text-5xl md:text-6xl text-[#1e293b]">
             Looking for an experience?
           </h2>
           <p className="mt-3 text-sm md:text-base text-[#4b5563] font-light max-w-xl mx-auto">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit dolor sit amet.
+            Khám phá danh lam thắng cảnh tuyệt mỹ và văn hóa bản địa độc bản của non sông Việt Nam cùng Star Travels.
           </p>
           <div className="mt-6">
             <Link
               href="/experiences"
               className="inline-block bg-[#0098a2] hover:bg-[#087c86] text-white px-8 py-2.5 text-xs md:text-sm font-semibold tracking-widest uppercase transition rounded-[2px] shadow-sm"
             >
-              VIEW PACKAGES
+              XEM TẤT CẢ GÓI TRẢI NGHIỆM
             </Link>
           </div>
         </div>

@@ -74,11 +74,11 @@ export function HeroSlider() {
       <div className="relative z-10 flex h-full flex-col items-center justify-between pb-16 sm:pb-20 md:pb-24 lg:pb-28 pt-20 sm:pt-24 text-white">
         <div className="mt-8 sm:mt-12 md:mt-14 text-center px-4 max-w-5xl">
           <h1 className="display-title template-shadow-text text-5xl leading-tight sm:text-6xl md:text-7xl lg:text-[76px] transition-all duration-700">
-            {slides[currentSlide].title || "Your Dream Vacation Awaits"}
+            {slides[currentSlide].title || "Việt Nam — Non Sông Gấm Vóc"}
           </h1>
 
           <p className="script-title mt-4 text-3xl leading-tight sm:text-4xl md:text-5xl text-white/95 [-webkit-text-stroke:.4px_#fff]">
-            {slides[currentSlide].subtitle || "Explore the World with us."}
+            {slides[currentSlide].subtitle || "Khám phá kỳ quan thiên nhiên và danh thắng di sản cùng Star Travels."}
           </p>
         </div>
 
