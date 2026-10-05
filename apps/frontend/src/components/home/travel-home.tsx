@@ -146,7 +146,7 @@ export async function TravelHome() {
                 className="object-cover transition duration-500 group-hover:scale-105"
               />
               {/* Frosted white box on bottom-left */}
-              <div className="absolute bottom-0 left-0 w-[74%] sm:w-[76%] bg-white/85 backdrop-blur-md p-4 sm:p-5 flex flex-col justify-center border-t border-r border-white/60">
+              <div className="absolute bottom-0 left-0 w-[74%] sm:w-[76%] bg-white/85 backdrop-blur-md p-4 sm:p-5 flex flex-col justify-center border-t border-r border-white/60 transition-all duration-500 ease-out group-hover:opacity-0 group-hover:translate-y-4 group-hover:pointer-events-none">
                 <h3 className="script-title text-2xl font-bold text-[#1e293b] leading-tight">
                   Canal Cruise
                 </h3>
@@ -174,7 +174,7 @@ export async function TravelHome() {
                   unoptimized
                   className="object-cover transition duration-500 group-hover:scale-105"
                 />
-                <div className="absolute bottom-0 left-0 w-[74%] sm:w-[76%] bg-white/85 backdrop-blur-md p-3.5 sm:p-4 flex flex-col justify-center border-t border-r border-white/60">
+                <div className="absolute bottom-0 left-0 w-[74%] sm:w-[76%] bg-white/85 backdrop-blur-md p-3.5 sm:p-4 flex flex-col justify-center border-t border-r border-white/60 transition-all duration-500 ease-out group-hover:opacity-0 group-hover:translate-y-4 group-hover:pointer-events-none">
                   <h3 className="script-title text-xl sm:text-2xl font-bold text-[#1e293b] leading-tight">
                     Sailing
                   </h3>
@@ -199,7 +199,7 @@ export async function TravelHome() {
                   unoptimized
                   className="object-cover transition duration-500 group-hover:scale-105"
                 />
-                <div className="absolute bottom-0 left-0 w-[74%] sm:w-[76%] bg-white/85 backdrop-blur-md p-3.5 sm:p-4 flex flex-col justify-center border-t border-r border-white/60">
+                <div className="absolute bottom-0 left-0 w-[74%] sm:w-[76%] bg-white/85 backdrop-blur-md p-3.5 sm:p-4 flex flex-col justify-center border-t border-r border-white/60 transition-all duration-500 ease-out group-hover:opacity-0 group-hover:translate-y-4 group-hover:pointer-events-none">
                   <h3 className="script-title text-xl sm:text-2xl font-bold text-[#1e293b] leading-tight">
                     Hiking
                   </h3>
@@ -227,7 +227,7 @@ export async function TravelHome() {
                   unoptimized
                   className="object-cover transition duration-500 group-hover:scale-105"
                 />
-                <div className="absolute bottom-0 left-0 w-[74%] sm:w-[76%] bg-white/85 backdrop-blur-md p-3.5 sm:p-4 flex flex-col justify-center border-t border-r border-white/60">
+                <div className="absolute bottom-0 left-0 w-[74%] sm:w-[76%] bg-white/85 backdrop-blur-md p-3.5 sm:p-4 flex flex-col justify-center border-t border-r border-white/60 transition-all duration-500 ease-out group-hover:opacity-0 group-hover:translate-y-4 group-hover:pointer-events-none">
                   <h3 className="script-title text-xl sm:text-2xl font-bold text-[#1e293b] leading-tight">
                     Camping
                   </h3>
@@ -252,7 +252,7 @@ export async function TravelHome() {
                   unoptimized
                   className="object-cover transition duration-500 group-hover:scale-105"
                 />
-                <div className="absolute bottom-0 left-0 w-[74%] sm:w-[76%] bg-white/85 backdrop-blur-md p-3.5 sm:p-4 flex flex-col justify-center border-t border-r border-white/60">
+                <div className="absolute bottom-0 left-0 w-[74%] sm:w-[76%] bg-white/85 backdrop-blur-md p-3.5 sm:p-4 flex flex-col justify-center border-t border-r border-white/60 transition-all duration-500 ease-out group-hover:opacity-0 group-hover:translate-y-4 group-hover:pointer-events-none">
                   <h3 className="script-title text-xl sm:text-2xl font-bold text-[#1e293b] leading-tight">
                     Scuba Diving
                   </h3>
