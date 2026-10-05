@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import { Menu, Search, Shield, ChevronDown, Check } from "lucide-react";
+import { Menu, Search, Shield, ChevronDown, Check, PanelLeftClose, PanelLeftOpen } from "lucide-react";
 import { useAuth } from "@/auth/auth-context";
 import { AdminRole } from "@/types";
 
 interface TopbarProps {
   onOpenSidebar: () => void;
+  isSidebarCollapsed: boolean;
+  onToggleSidebar: () => void;
 }
 
 const ALL_ROLES: { role: AdminRole; label: string; desc: string }[] = [
@@ -16,7 +18,7 @@ const ALL_ROLES: { role: AdminRole; label: string; desc: string }[] = [
   { role: "OPERATIONS_MANAGER", label: "Operations Lead", desc: "Quản lý leads CRM, phễu & thống kê" },
 ];
 
-export function Topbar({ onOpenSidebar }: TopbarProps) {
+export function Topbar({ onOpenSidebar, isSidebarCollapsed, onToggleSidebar }: TopbarProps) {
   const { user, role, switchRole } = useAuth();
   const [isRoleDropdownOpen, setIsRoleDropdownOpen] = useState(false);
 
@@ -24,8 +26,9 @@ export function Topbar({ onOpenSidebar }: TopbarProps) {
 
   return (
     <header className="sticky top-0 z-30 h-24 bg-[#FAFBFF] px-6 sm:px-10 flex items-center justify-between font-['Poppins',sans-serif]">
-      {/* Left: Mobile Toggle & Warm Greeting */}
-      <div className="flex items-center gap-4">
+      {/* Left: Mobile Toggle & Desktop Mode ON/OFF & Warm Greeting */}
+      <div className="flex items-center gap-3 sm:gap-4">
+        {/* Mobile Hamburger Button */}
         <button
           type="button"
           onClick={onOpenSidebar}
@@ -33,6 +36,32 @@ export function Topbar({ onOpenSidebar }: TopbarProps) {
           aria-label="Mở Menu Điều Hướng"
         >
           <Menu className="size-6 text-[#292D32]" />
+        </button>
+
+        {/* Desktop Sidebar Mode ON/OFF Toggle Switch */}
+        <button
+          type="button"
+          onClick={onToggleSidebar}
+          className="hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-[10px] bg-white border border-slate-200/80 text-[12px] font-medium text-[#292D32] shadow-[0px_4px_20px_rgba(218,222,232,0.30)] hover:border-[#5932EA] transition cursor-pointer group"
+          title={isSidebarCollapsed ? "Bật thanh menu (Mở rộng menu — Ctrl+B)" : "Tắt thanh menu (Mở rộng không gian làm việc — Ctrl+B)"}
+        >
+          {isSidebarCollapsed ? (
+            <>
+              <PanelLeftOpen className="size-4 text-[#5932EA] transition-transform group-hover:scale-110" />
+              <span className="text-[#7E7E7E]">Thanh Menu:</span>
+              <span className="font-semibold text-[#DF0404] bg-[#FFC5C5]/50 px-2 py-0.5 rounded-[4px] text-[11px] border border-[#DF0404]/30">
+                OFF
+              </span>
+            </>
+          ) : (
+            <>
+              <PanelLeftClose className="size-4 text-[#5932EA] transition-transform group-hover:scale-110" />
+              <span className="text-[#7E7E7E]">Thanh Menu:</span>
+              <span className="font-semibold text-[#008767] bg-[rgba(22,192,152,0.18)] px-2 py-0.5 rounded-[4px] text-[11px] border border-[#00B087]/40">
+                ON
+              </span>
+            </>
+          )}
         </button>
 
         <div>

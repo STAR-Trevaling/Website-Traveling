@@ -14,6 +14,7 @@ import {
   Bot,
   BarChart3,
   ShieldCheck,
+  PanelLeftClose,
   ChevronRight,
   X,
   Settings,
@@ -23,6 +24,8 @@ import { useAuth } from "@/auth/auth-context";
 interface SidebarProps {
   isOpen: boolean;
   onClose: () => void;
+  isCollapsed?: boolean;
+  onToggleCollapse?: () => void;
 }
 
 interface NavItem {
@@ -38,7 +41,7 @@ interface NavSection {
   items: NavItem[];
 }
 
-export function Sidebar({ isOpen, onClose }: SidebarProps) {
+export function Sidebar({ isOpen, onClose, isCollapsed = false, onToggleCollapse }: SidebarProps) {
   const { user, canAccessModule } = useAuth();
 
   const sections: NavSection[] = [
@@ -73,9 +76,9 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
 
       {/* Sidebar Drawer */}
       <aside
-        className={`fixed top-0 bottom-0 left-0 z-50 w-72 bg-white border-r border-[#EEEEEE] flex flex-col justify-between transition-transform duration-300 ease-in-out lg:translate-x-0 ${
-          isOpen ? "translate-x-0" : "-translate-x-full"
-        }`}
+        className={`fixed top-0 bottom-0 left-0 z-50 w-72 bg-white border-r border-[#EEEEEE] flex flex-col justify-between transition-all duration-300 ease-in-out ${
+          isCollapsed ? "-translate-x-full lg:-translate-x-full" : "lg:translate-x-0"
+        } ${isOpen ? "!translate-x-0 shadow-2xl" : ""}`}
       >
         {/* Top Header / Brand Logo */}
         <div>
@@ -92,6 +95,19 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
               </div>
             </div>
 
+            {/* Desktop Mode Toggle Button */}
+            {onToggleCollapse && (
+              <button
+                type="button"
+                onClick={onToggleCollapse}
+                className="hidden lg:flex p-2 rounded-xl text-[#9197B3] hover:text-[#5932EA] hover:bg-[#F9FBFF] transition cursor-pointer"
+                title="Tắt menu để mở rộng không gian làm việc (Ctrl+B)"
+              >
+                <PanelLeftClose className="size-5" />
+              </button>
+            )}
+
+            {/* Mobile Close Button */}
             <button
               type="button"
               onClick={onClose}

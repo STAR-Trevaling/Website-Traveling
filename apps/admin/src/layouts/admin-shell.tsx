@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Outlet, useLocation, Link } from "react-router-dom";
 import { Sidebar } from "./sidebar";
 import { Topbar } from "./topbar";
@@ -23,7 +23,30 @@ const ROUTE_LABELS: Record<string, string> = {
 
 export function AdminShell() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(() => {
+    return localStorage.getItem("admin_sidebar_collapsed") === "true";
+  });
   const location = useLocation();
+
+  const handleToggleSidebar = () => {
+    setIsSidebarCollapsed((prev) => {
+      const next = !prev;
+      localStorage.setItem("admin_sidebar_collapsed", String(next));
+      return next;
+    });
+  };
+
+  // Keyboard shortcut Ctrl+B or Cmd+B to toggle sidebar on/off
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "b") {
+        e.preventDefault();
+        handleToggleSidebar();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   // Generate breadcrumb items from URL path
   const pathSegments = location.pathname.split("/").filter(Boolean);
@@ -34,12 +57,22 @@ export function AdminShell() {
       <Sidebar
         isOpen={isSidebarOpen}
         onClose={() => setIsSidebarOpen(false)}
+        isCollapsed={isSidebarCollapsed}
+        onToggleCollapse={handleToggleSidebar}
       />
 
       {/* Main Administrative Container */}
-      <div className="flex-1 flex flex-col min-w-0 lg:pl-72 transition-all duration-300">
+      <div
+        className={`flex-1 flex flex-col min-w-0 transition-all duration-300 ease-in-out ${
+          isSidebarCollapsed ? "lg:pl-0" : "lg:pl-72"
+        }`}
+      >
         {/* Topbar with Search, Role Switcher, & Profile */}
-        <Topbar onOpenSidebar={() => setIsSidebarOpen(true)} />
+        <Topbar
+          onOpenSidebar={() => setIsSidebarOpen(true)}
+          isSidebarCollapsed={isSidebarCollapsed}
+          onToggleSidebar={handleToggleSidebar}
+        />
 
         {/* Breadcrumb Bar */}
         <div className="px-6 sm:px-10 py-3.5 bg-white/60 border-b border-[#EEEEEE]/80 flex items-center justify-between text-xs text-slate-500">
@@ -82,7 +115,11 @@ export function AdminShell() {
         </div>
 
         {/* Content Area */}
-        <main className="flex-1 p-6 sm:p-10 max-w-7xl w-full mx-auto">
+        <main
+          className={`flex-1 p-6 sm:p-10 w-full mx-auto transition-all duration-300 ${
+            isSidebarCollapsed ? "max-w-[1600px]" : "max-w-7xl"
+          }`}
+        >
           <Outlet />
         </main>
 
