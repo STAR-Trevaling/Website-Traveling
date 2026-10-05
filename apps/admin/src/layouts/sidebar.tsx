@@ -15,7 +15,6 @@ import {
   BarChart3,
   ShieldCheck,
   PanelLeftClose,
-  ChevronRight,
   X,
   Settings,
 } from "lucide-react";
@@ -149,24 +148,17 @@ export function Sidebar({ isOpen, onClose, isCollapsed = false, onToggleCollapse
                             <span className="truncate">{item.name}</span>
                           </div>
 
-                          <div className="flex items-center gap-1.5">
-                            {item.badge && (
-                              <span
-                                className={`px-2 py-0.5 rounded-full text-[11px] font-bold ${
-                                  isActive
-                                    ? "bg-white/20 text-white"
-                                    : "bg-indigo-50 text-[#5932EA]"
-                                }`}
-                              >
-                                {item.badge}
-                              </span>
-                            )}
-                            <ChevronRight
-                              className={`size-4 transition-transform ${
-                                isActive ? "text-white" : "text-[#9197B3] opacity-60 group-hover:opacity-100"
+                          {item.badge && (
+                            <span
+                              className={`px-2 py-0.5 rounded-full text-[11px] font-bold ${
+                                isActive
+                                  ? "bg-white/20 text-white"
+                                  : "bg-[#ECE7FF] text-[#5932EA]"
                               }`}
-                            />
-                          </div>
+                            >
+                              {item.badge}
+                            </span>
+                          )}
                         </>
                       )}
                     </NavLink>
