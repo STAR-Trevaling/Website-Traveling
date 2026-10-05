@@ -10,7 +10,7 @@
 - Next.js customer frontend with Anima-template home page and supporting pages.
 - Next.js BFF auth cookie flow for authenticated customer actions.
 - Docker Compose wiring for DB, Redis, Django, Celery and Next.js.
-- Git repository setup: initial empty commit on `main`, scoped conventional branches (`chore/project-setup`, `feat/shared-contracts`, `feat/backend-core`, `feat/frontend-web`, `docs/project-context`, `feat/agent-skills`), clean star-graph branching from `main`, integration into `develop`, and remote push to `https://github.com/huynguyen2k5/Website-Traveling.git`.
+- Git repository setup: initial empty commit on `main`, scoped conventional branches (`chore/project-setup`, `feat/shared-contracts`, `feat/backend-core`, `feat/frontend-web`, `docs/project-context`, `feat/agent-skills`), clean star-graph branching from `main`, integration into `chore/platform-integration`, and remote push to `https://github.com/huynguyen2k5/Website-Traveling.git`.
 
 ## Validation status
 See `docs/validation-report.md` generated for this artifact. Static sanity (71 Python AST files) and frontend TypeScript check (`tsc --noEmit`) passing cleanly.
