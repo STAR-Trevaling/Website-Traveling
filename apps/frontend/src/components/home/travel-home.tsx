@@ -90,32 +90,7 @@ export async function TravelHome() {
         </div>
       </section>
 
-      {/* 3. VIDEO BANNER (image(20261004-085838).png) - Play Button Only */}
-      <section className="relative h-[480px] md:h-[600px] w-full overflow-hidden">
-        <Image
-          src={VIETNAM_IMAGES.oceanBanner}
-          alt="Travel Video Banner"
-          fill
-          unoptimized
-          className="object-cover"
-        />
-        <div className="absolute inset-0 flex items-center justify-center">
-          <Link
-            href="/stories"
-            className="flex size-24 md:size-28 items-center justify-center rounded-full border-2 border-white text-white transition-all duration-300 hover:scale-110 hover:bg-white/20"
-            aria-label="Play video"
-          >
-            <svg
-              className="size-10 md:size-12 translate-x-1 fill-white"
-              viewBox="0 0 24 24"
-            >
-              <polygon points="6 4 20 12 6 20 6 4" />
-            </svg>
-          </Link>
-        </div>
-      </section>
-
-      {/* 4. FEATURED TOURS (image(20261004-085838).png style) */}
+      {/* 3. FEATURED TOURS (image(20261004-085838).png style) */}
       <FeaturedTours />
 
       {/* 5. WHY US & ADVENTURES (image(20261004-085849).png) */}
