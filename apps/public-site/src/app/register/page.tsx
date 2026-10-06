@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { cookies } from "next/headers";
-import { PageHero } from "@/components/layout/page-hero";
+import { SiteHeader } from "@/components/layout/site-header";
 import { RegisterForm } from "@/components/auth/register-form";
-import { VIETNAM_IMAGES } from "@/lib/assets";
 import { DICTIONARY } from "@/lib/i18n/dictionary";
 
 export const metadata: Metadata = {
@@ -19,14 +18,10 @@ export default async function RegisterPage() {
 
   return (
     <>
-      <PageHero
-        title={a.registerHeroTitle}
-        subtitle={a.registerHeroSubtitle}
-        image={VIETNAM_IMAGES.hero}
-      />
+      <SiteHeader overlay={false} />
 
-      <main className="template-page-bg min-h-screen px-6 py-20 md:px-12">
-        <div className="mx-auto max-w-md rounded-[2px] bg-white p-8 md:p-10 shadow-md border border-slate-100">
+      <main className="template-page-bg min-h-[calc(100vh-64px)] px-4 sm:px-6 py-12 sm:py-16 flex items-center justify-center">
+        <div className="w-full max-w-md rounded-[2px] bg-white p-6 sm:p-10 shadow-md border border-slate-100">
           <div className="mb-6 text-center">
             <h2 className="display-title text-2xl text-slate-900">{a.registerCardTitle}</h2>
             <p className="mt-1 text-xs text-slate-500">

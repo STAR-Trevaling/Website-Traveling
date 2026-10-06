@@ -62,40 +62,43 @@ export function SiteHeaderClient({ user, overlay = false }: SiteHeaderClientProp
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-12">
         <div className="flex h-16 items-center justify-between text-xs md:text-sm font-normal">
-          {/* Mobile Brand Logo (< md screen) */}
-          <div className="flex md:hidden items-center">
+          {/* Brand Logo & Name (Visible on all screen sizes) */}
+          <div className="flex items-center gap-3 sm:gap-4 shrink-0">
             <StarLogo variant="horizontal" size="sm" inverted={overlay} />
-          </div>
-
-          {/* Desktop Left: Social Icons (hidden on mobile to make room for brand logo) */}
-          <div className="hidden md:flex items-center gap-3 sm:gap-4">
-            <a
-              href="https://instagram.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Instagram"
-              className="hover:opacity-80 transition"
+            {/* Desktop Social Icons (Subtle and non-intrusive) */}
+            <div
+              className={`hidden xl:flex items-center gap-2 pl-3 border-l ${
+                overlay ? "border-white/20 text-white/80" : "border-slate-200 text-slate-400"
+              }`}
             >
-              <Instagram className="size-4" />
-            </a>
-            <a
-              href="https://twitter.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Twitter"
-              className="hover:opacity-80 transition"
-            >
-              <Twitter className="size-4" />
-            </a>
-            <a
-              href="https://facebook.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Facebook"
-              className="hover:opacity-80 transition"
-            >
-              <Facebook className="size-4" />
-            </a>
+              <a
+                href="https://instagram.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram"
+                className="hover:text-[#0098a2] transition p-0.5"
+              >
+                <Instagram className="size-3.5" />
+              </a>
+              <a
+                href="https://twitter.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Twitter"
+                className="hover:text-[#0098a2] transition p-0.5"
+              >
+                <Twitter className="size-3.5" />
+              </a>
+              <a
+                href="https://facebook.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Facebook"
+                className="hover:text-[#0098a2] transition p-0.5"
+              >
+                <Facebook className="size-3.5" />
+              </a>
+            </div>
           </div>
 
           {/* Center: Bilingual Goal-Based Navigation Links with Dropdowns (Desktop Only) */}

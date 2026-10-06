@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { cookies } from "next/headers";
-import { Mail, Phone, MapPin, Clock, ShieldCheck, ArrowRight } from "lucide-react";
-import { PageHero } from "@/components/layout/page-hero";
+import { Mail, Phone, MapPin, Clock, ShieldCheck, ArrowRight, ChevronRight } from "lucide-react";
+import { SiteHeader } from "@/components/layout/site-header";
 import { ContactForm } from "@/components/contact/contact-form";
 import { ContactFAQ } from "@/components/contact/contact-faq";
-import { VIETNAM_IMAGES } from "@/lib/assets";
 import { DICTIONARY } from "@/lib/i18n/dictionary";
 
 export const metadata: Metadata = {
@@ -23,18 +22,22 @@ export default async function ContactPage() {
 
   return (
     <>
-      <PageHero
-        title="Liên Hệ Với Star Travels"
-        titleEn="Contact & Concierge Support"
-        subtitle="Mọi câu hỏi về điểm đến, trải nghiệm bản địa hay thiết kế lịch trình riêng, đội ngũ chuyên gia luôn sẵn sàng hỗ trợ bạn."
-        subtitleEn="Have questions about destinations, experiences, or bespoke journeys? Our team is always here for you."
-        image={VIETNAM_IMAGES.ctaBanner}
-      />
+      <SiteHeader overlay={false} />
 
       <main className="template-page-bg min-h-screen text-[#282828] overflow-x-hidden">
         {/* SECTION 1: QUICK CHANNELS */}
-        <section className="relative w-full px-4 sm:px-6 py-10 sm:py-16 md:px-12 lg:px-16">
+        <section className="relative w-full px-4 sm:px-6 py-8 sm:py-12 md:px-12 lg:px-16">
           <div className="mx-auto max-w-7xl">
+            {/* Breadcrumb Navigation */}
+            <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs text-slate-500 mb-6 sm:mb-8 font-normal">
+              <Link href="/" className="hover:text-[#0098a2] transition">
+                {isEn ? "Home" : "Trang Chủ"}
+              </Link>
+              <ChevronRight className="size-3 text-slate-400" />
+              <span className="text-slate-800 font-medium">
+                {isEn ? "Contact" : "Liên Hệ"}
+              </span>
+            </nav>
             <div className="grid gap-4 sm:gap-6 md:grid-cols-3">
               {t.channels.map((item, idx) => {
                 const Icon = CHANNEL_ICONS[idx] || Phone;

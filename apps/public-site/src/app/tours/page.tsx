@@ -1,26 +1,36 @@
 import type { Metadata } from "next";
-import { PageHero } from "@/components/layout/page-hero";
+import Link from "next/link";
+import { cookies } from "next/headers";
+import { ChevronRight } from "lucide-react";
+import { SiteHeader } from "@/components/layout/site-header";
 import { ToursCatalog } from "@/components/tours/tours-catalog";
-import { VIETNAM_IMAGES } from "@/lib/assets";
 
 export const metadata: Metadata = {
   title: "Tour du lịch trọn gói Việt Nam | Star Travels Vietnam",
   description: "Tuyển tập các tour du lịch trọn gói chất lượng cao tại Đà Lạt, Hạ Long, Sa Pa, Tràng An, Phú Quốc.",
 };
 
-export default function ToursPage() {
+export default async function ToursPage() {
+  const cookieStore = await cookies();
+  const isEn = cookieStore.get("star_travels_locale")?.value === "en";
+
   return (
     <>
-      <PageHero
-        title="Tour Du Lịch Trọn Gói"
-        titleEn="Curated Vietnam Tours"
-        subtitle="Hành trình tuyển chọn đặc sắc với dịch vụ cao cấp, lịch trình minh bạch và giá trọn gói tốt nhất."
-        subtitleEn="Handcrafted all-inclusive journeys featuring premium services, transparent itineraries, and best value."
-        image={VIETNAM_IMAGES.hero}
-      />
+      <SiteHeader overlay={false} />
 
-      <main className="template-page-bg min-h-screen px-4 sm:px-6 py-10 sm:py-16 md:px-12 lg:px-16">
+      <main className="template-page-bg min-h-screen px-4 sm:px-6 py-8 sm:py-12 md:px-12 lg:px-16">
         <div className="mx-auto max-w-7xl">
+          {/* Breadcrumb Navigation */}
+          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs text-slate-500 mb-6 sm:mb-8 font-normal">
+            <Link href="/" className="hover:text-[#0098a2] transition">
+              {isEn ? "Home" : "Trang Chủ"}
+            </Link>
+            <ChevronRight className="size-3 text-slate-400" />
+            <span className="text-slate-800 font-medium">
+              {isEn ? "Tours" : "Tour Tuyển Chọn"}
+            </span>
+          </nav>
+
           <ToursCatalog />
         </div>
       </main>

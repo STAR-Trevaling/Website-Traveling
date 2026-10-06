@@ -3,9 +3,8 @@ import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { User, Shield, Compass, Heart, ArrowRight } from "lucide-react";
 import { getCurrentUser } from "@/lib/auth";
-import { PageHero } from "@/components/layout/page-hero";
+import { SiteHeader } from "@/components/layout/site-header";
 import { LogoutButton } from "@/components/auth/logout-button";
-import { VIETNAM_IMAGES } from "@/lib/assets";
 import { DICTIONARY } from "@/lib/i18n/dictionary";
 
 export default async function Account() {
@@ -28,12 +27,8 @@ export default async function Account() {
 
   return (
     <>
-      <PageHero
-        title={`${a.accountWelcome}, ${user.username}`}
-        subtitle={`${a.accountRolePrefix} ${roleLabel}`}
-        image={VIETNAM_IMAGES.ctaBanner}
-      />
-      <main className="template-page-bg min-h-screen text-[#282828] px-6 py-16 md:px-12 lg:px-16 overflow-x-hidden">
+      <SiteHeader overlay={false} />
+      <main className="template-page-bg min-h-screen text-[#282828] px-4 sm:px-6 py-8 sm:py-12 md:px-12 lg:px-16 overflow-x-hidden">
         <div className="mx-auto max-w-4xl space-y-8">
           {/* USER PROFILE CARD */}
           <div className="bg-white/90 p-8 md:p-10 rounded-[2px] shadow-sm border border-slate-100 backdrop-blur-md">

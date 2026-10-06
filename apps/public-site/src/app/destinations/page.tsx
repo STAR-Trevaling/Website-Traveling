@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { cookies } from "next/headers";
-import { Search } from "lucide-react";
-import { PageHero } from "@/components/layout/page-hero";
+import { Search, ChevronRight } from "lucide-react";
+import { SiteHeader } from "@/components/layout/site-header";
 import { DestinationCard } from "@/components/shared/destination-card";
 import { publicApi, safe } from "@/lib/api";
 import { VIETNAM_IMAGES } from "@/lib/assets";
@@ -44,16 +44,21 @@ export default async function DestinationsPage({ searchParams }: DestinationsPag
 
   return (
     <>
-      <PageHero
-        title={dp.heroTitle}
-        titleEn="Vietnam Destinations"
-        subtitle={dp.heroSubtitle}
-        subtitleEn="Journeys through magnificent natural wonders and timeless cultural heritage across Vietnam."
-        image={VIETNAM_IMAGES.hero}
-      />
+      <SiteHeader overlay={false} />
 
-      <main className="template-page-bg min-h-screen text-[#282828] px-4 sm:px-6 py-10 sm:py-16 md:px-12 lg:px-16 overflow-x-hidden">
+      <main className="template-page-bg min-h-screen text-[#282828] px-4 sm:px-6 py-8 sm:py-12 md:px-12 lg:px-16 overflow-x-hidden">
         <div className="mx-auto max-w-7xl">
+          {/* Breadcrumb Navigation */}
+          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs text-slate-500 mb-6 sm:mb-8 font-normal">
+            <Link href="/" className="hover:text-[#0098a2] transition">
+              {locale === "en" ? "Home" : "Trang Chủ"}
+            </Link>
+            <ChevronRight className="size-3 text-slate-400" />
+            <span className="text-slate-800 font-medium">
+              {locale === "en" ? "Destinations" : "Điểm Đến"}
+            </span>
+          </nav>
+
           {/* Section Header & Search */}
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 sm:gap-6 pb-6 sm:pb-10 border-b border-slate-200">
             <div>
