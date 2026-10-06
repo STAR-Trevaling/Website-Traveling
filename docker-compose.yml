@@ -25,11 +25,11 @@ services:
       retries: 20
 
   backend:
-    build: ./apps/backend
+    build: ./api
     env_file: .env
     command: gunicorn config.wsgi:application --bind 0.0.0.0:8000 --workers 2 --timeout 60
     volumes:
-      - ./apps/backend:/app
+      - ./api:/app
     ports:
       - "8000:8000"
     depends_on:
@@ -39,11 +39,11 @@ services:
         condition: service_healthy
 
   worker:
-    build: ./apps/backend
+    build: ./api
     env_file: .env
     command: celery -A config worker -l INFO
     volumes:
-      - ./apps/backend:/app
+      - ./api:/app
     depends_on:
       db:
         condition: service_healthy
@@ -51,7 +51,7 @@ services:
         condition: service_healthy
 
   frontend:
-    build: ./apps/frontend
+    build: ./public-site
     env_file: .env
     environment:
       BACKEND_URL: ${BACKEND_URL:-http://backend:8000/api/v1}

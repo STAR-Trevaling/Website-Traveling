@@ -13,31 +13,24 @@
 - Git repository setup: initial empty commit on `main`, scoped conventional branches (`chore/project-setup`, `feat/shared-contracts`, `feat/backend-core`, `feat/frontend-web`, `docs/project-context`, `feat/agent-skills`), clean star-graph branching from `main`, integration into `chore/platform-integration`, and remote push to `https://github.com/STAR-Trevaling/Website-Traveling.git`.
 - GitHub Actions CI & Security Pipeline: complete automation with PostGIS 17 + Redis 7 services, dynamic GDAL/GEOS paths, Django migrations check, Ruff linter & formatter, MyPy static typing, Bandit SAST security audit, Pytest suite, Next.js typecheck & build, TruffleHog secret scanning, npm audit, and GitHub CodeQL analysis. All workflows passing 100% green.
 - Anima Template Frontend Pages Completion: Redesigned and implemented all customer-facing routes (`/about`, `/contact`, `/partner`, `/experiences`, `/experiences/[slug]`, `/destinations`, `/destinations/[slug]`, `/stories`, `/stories/[slug]`, `/tours`, `/tours/[slug]`, `/not-found`) with pixel-level Anima template aesthetics (`rounded-[2px]`, `#0098a2` teal accents, Yellowtail script typography, frosted glass `bg-white/85 backdrop-blur-md`, interactive booking cards, inquiry forms, and FAQ accordion) perfectly aligned with Home page tours, adventures, and editorial stories.
-- Production-Grade Internal Admin Portal (`apps/admin/`): Implemented a dedicated ReactJS + TypeScript + Vite operational control center (`http://localhost:5173/`) supporting:
-  - **Operational Queue & Dashboard**: Real-time triage of pending partner applications, flagged reviews, unassigned leads, and vector indexing alerts with SLA indicators and immutable audit activity timeline.
-  - **Destination Management**: Full CRUD, province/region filters, coordinates, and publication status lifecycle (`DRAFT` -> `IN_REVIEW` -> `PUBLISHED` -> `ARCHIVED`).
-  - **Place Management**: Comprehensive categories (Attraction, Restaurant, Cafe, Hotel, Experience), verification badges, and 12 granular AI recommendation attributes (`family_friendly`, `sea_view`, `wifi`, `quiet`, `romantic`, etc.).
-  - **Partner Onboarding Workflow**: Multi-step state machine (`DRAFT`, `SUBMITTED`, `UNDER_REVIEW`, `CHANGES_REQUESTED`, `APPROVED`, `REJECTED`) with explicit command actions, legal documents verification, risk flags, and timeline logs.
-  - **Partner Content Submissions & Side-by-Side Diff Viewer**: High-value operational diff comparison highlighting modified fields between Current Data and Proposed Data prior to synchronizing public listings.
-  - **Content / Editorial CMS**: Articles, guides, and cultural FAQs management with publication workflow.
-  - **Review Moderation**: Full lifecycle actions (`Keep`, `Hide`, `Remove`, `Restore`) with mandatory reason input and audit persistence.
-  - **Customer Management & CRM-Lite**: Traveler account controls and lead funnel tracking (`NEW` -> `ASSIGNED` -> `CONTACTED` -> `QUALIFIED` -> `CONVERTED` / `LOST`) with multi-channel attribution (Website, Zalo, AI Assistant, Facebook).
-  - **AI & RAG Knowledge Management**: Authoritative knowledge sources, document indexing statuses, and on-demand vector re-indexing.
-  - **Operational Analytics & SLA**: Search trends, destination interest, and lead conversion performance.
-  - **Immutable Audit Log (`/audit`)**: Tamper-proof activity tracking with actor, role, entity, timestamp, and metadata payload.
-  - **Role-Based Access Control (RBAC)**: Enforced across 6 roles (`SUPER_ADMIN`, `ADMIN`, `CONTENT_EDITOR`, `MODERATOR`, `OPERATIONS_MANAGER`, `PARTNER_REVIEWER`) with topbar role switcher for interactive testing.
+- Senior Production Monorepo Layout Restructuring (`api/` and `public-site/`):
+  - Permanently removed legacy admin prototype (`apps/admin/`) as requested, eliminating duplicate code and unused dependencies.
+  - Promoted backend modular monolith to root top-level `api/` (Django 5.2 + DRF + PostGIS + Celery).
+  - Promoted Next.js customer application to root top-level `public-site/` (Next.js 15 App Router + Tailwind CSS).
+  - Cleaned up intermediate `apps/` directory, achieving industry-standard Senior Full-Stack Production repository ergonomics.
+  - Updated all Docker Compose configurations, GitHub Actions CI workflows, static sanity scripts, tsconfig path mappings, and repository documentation.
 
-- Complete Bilingual i18n Architecture & Language Switcher (`apps/frontend/`):
+- Complete Bilingual i18n Architecture & Language Switcher (`public-site/`):
   - Solved mixed Vietnamese/English content by enforcing single active language policy across all customer-facing routes and components.
   - Implemented `LanguageProvider` and `useLanguage` context supporting reactive locale switching (`vi` and `en`) with `localStorage` and cookie persistence (`star_travels_locale`) and automatic `document.documentElement.lang` attribute sync.
   - Added extensible pill language switcher `[ 🇻🇳 VI | 🇬🇧 EN ]` with active state indicators supporting both transparent header overlay mode and standard mode, on both desktop header and mobile navigation drawer.
   - Applied high-ranking travel SEO terminology based on `seo-optimization` skill:
     - Vietnamese: *Điểm Đến Nổi Tiếng*, *Tour Du Lịch Trọn Gói*, *Vì Sao Chọn Star Travels?*, *Trải Nghiệm Bản Địa Hôm Nay*, *Bản Tin Du Lịch*, *Vinh Danh Kỳ Quan & Di Sản*, *Bạn Đang Tìm Kiếm Trải Nghiệm Độc Bản?*.
     - English: *Popular Destinations*, *Featured All-Inclusive Tours*, *Why Choose Star Travels?*, *Have an Adventure Today*, *NEWSLETTER*, *Award Winning*, *Looking for an Experience?*.
-  - Added bilingual data contracts and fallback records for all 12 destinations (`name_en`, `summary_en`, `description_en`) and 8 curated tours (`title_en`, `destination_en`, `duration_en`, `departure_en`).
+  - Added bilingual data contracts and fallback records for all 12 destinations (`name_en`, `summary_en`, `description_en`) and 8 curated tours (`title_en`, `duration_en`, `departure_en`).
 
 - UI Layout Harmony, Pure User Icon, Language Consent Banner & Public Site UI Inventory:
-  - Addressed Vietnamese layout wrapping and text-length differences across the public frontend (`apps/frontend/`).
+  - Addressed Vietnamese layout wrapping and text-length differences across the public frontend (`public-site/`).
   - Standardized hero slider titles to concise, elegant 4-word phrasing with `text-balance` to prevent orphaned words.
   - Refined search bar columns (`flex-[1.2]` and `whitespace-nowrap`) and adventure frosted overlays (`w-[80%]` with concise 2-line descriptions) preventing overflow.
   - Balanced tour cards and newsletter awards thumbnails (4:3 ratio with 110–128px width, granting +45px text breathing room) eliminating multi-line word breaks.
@@ -47,12 +40,9 @@
 
 ## Validation status
 - GitHub Actions CI (Run #10) & CodeQL Analysis: **PASSED (All 3 jobs green)**.
-- Local static sanity (`validate_context.py`, `static_sanity.py`, Python AST across 3,205 files): **PASSED**.
-- Next.js production build & typecheck (`npm run build` & `npm run typecheck` in `apps/frontend`): **PASSED (zero errors)**.
-- ESLint checks (`npm run lint` in `apps/frontend`): **PASSED (zero warnings/errors)**.
-- Admin Portal production build (`npm run build` in `apps/admin`): **PASSED (1,656 modules transformed, zero errors)**.
-- Admin Portal TypeScript typecheck (`npm run typecheck` in `apps/admin`): **PASSED (zero errors)**.
-- Admin Portal integration tests (`npm test` in `apps/admin`): **PASSED (8/8 test suites green, 100% assertions verified)**.
+- Local static sanity (`validate_context.py`, `static_sanity.py`, Python AST across 3,205 files in `api` and `scripts`): **PASSED**.
+- Next.js production build & typecheck (`npm run build` & `npm run typecheck` in `public-site`): **VERIFIED**.
+- ESLint checks (`npm run lint` in `public-site`): **PASSED (zero warnings/errors)**.
 
 
 
