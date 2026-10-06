@@ -60,13 +60,13 @@ export function SiteHeaderClient({ user, overlay = false }: SiteHeaderClientProp
       }
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-12">
-        <div className="flex h-16 items-center justify-between text-xs md:text-sm font-normal">
-          {/* Brand Logo & Name (Visible on all screen sizes) */}
-          <div className="flex items-center gap-3 sm:gap-4 shrink-0">
+        <div className="relative flex h-16 sm:h-20 items-center justify-between text-xs md:text-sm font-normal">
+          {/* Brand Logo & Name with Social Icons (Mirrors template layout) */}
+          <div className="flex items-center gap-3 sm:gap-4 shrink-0 z-10">
             <StarLogo variant="horizontal" size="sm" inverted={overlay} />
-            {/* Desktop Social Icons (Subtle and non-intrusive) */}
+            {/* Social Icons (Instagram, Twitter, Facebook) */}
             <div
-              className={`hidden xl:flex items-center gap-2 pl-3 border-l ${
+              className={`hidden sm:flex items-center gap-2.5 pl-3 border-l ${
                 overlay ? "border-white/20 text-white/80" : "border-slate-200 text-slate-400"
               }`}
             >
@@ -100,8 +100,8 @@ export function SiteHeaderClient({ user, overlay = false }: SiteHeaderClientProp
             </div>
           </div>
 
-          {/* Center: Bilingual Goal-Based Navigation Links with Dropdowns (Desktop Only) */}
-          <nav className="hidden md:flex items-center gap-5 lg:gap-7 xl:gap-8 text-xs md:text-sm lg:text-[14px] font-normal whitespace-nowrap">
+          {/* Center: Truly Centered Navigation Links (Dead-center in viewport like template) */}
+          <nav className="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center gap-3.5 lg:gap-5 xl:gap-6.5 text-xs md:text-[13px] lg:text-sm font-normal whitespace-nowrap z-10">
             {navItems.map((item) => {
               if (item.type === "link") {
                 return (
@@ -159,7 +159,7 @@ export function SiteHeaderClient({ user, overlay = false }: SiteHeaderClientProp
           </nav>
 
           {/* Right: Phone, Email, Login & Mobile Navigation Toggle */}
-          <div className="flex items-center gap-2.5 sm:gap-3.5 lg:gap-4 text-xs lg:text-sm">
+          <div className="flex items-center gap-2.5 sm:gap-3 lg:gap-4 text-xs lg:text-[13px] shrink-0 z-10">
             <span
               className={
                 overlay

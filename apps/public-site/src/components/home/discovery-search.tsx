@@ -129,9 +129,9 @@ export function DiscoverySearch() {
 
   return (
     <div className="w-full select-none">
-      {/* 1. Top Tabs (Responsive Grid on Mobile, Flex on Desktop - Centered) */}
+      {/* 1. Top Tabs (Responsive Grid on Mobile, Flex on Desktop - Brand Teal Bar like Template) */}
       <div className="flex justify-center w-full">
-        <div className="grid grid-cols-3 w-full sm:w-auto sm:flex bg-[#c5d2cf]/85 backdrop-blur-md rounded-t-[4px] sm:rounded-t-[5px] overflow-hidden shadow-sm">
+        <div className="grid grid-cols-3 w-full sm:w-auto sm:flex bg-[#0098a2] rounded-t-[4px] sm:rounded-t-[6px] overflow-hidden shadow-md">
           {tabs.map((tab) => (
             <button
               key={tab.key}
@@ -142,10 +142,10 @@ export function DiscoverySearch() {
                 setOpenCol2(false);
                 setOpenTravellers(false);
               }}
-              className={`px-3 sm:px-7 py-2.5 sm:py-3 text-[11px] sm:text-xs font-bold tracking-wider sm:tracking-[0.2em] transition-all cursor-pointer text-center truncate ${
+              className={`relative px-3.5 sm:px-8 py-2.5 sm:py-3 text-[11px] sm:text-xs font-bold tracking-wider sm:tracking-[0.2em] transition-all cursor-pointer text-center truncate ${
                 activeTab === tab.key
-                  ? "bg-[#e5ecea]/95 text-slate-900 shadow-sm"
-                  : "text-slate-700 hover:text-slate-900 hover:bg-white/30"
+                  ? "text-white font-black after:absolute after:bottom-0 after:inset-x-2 sm:after:inset-x-4 after:h-[2.5px] after:bg-white"
+                  : "text-white/80 hover:text-white hover:bg-white/10"
               }`}
             >
               {isEn ? tab.labelEn : tab.labelVi}
@@ -154,10 +154,10 @@ export function DiscoverySearch() {
         </div>
       </div>
 
-      {/* 2. Main Search Bar (Optimized Grid/Flex for Mobile Ergonomics) */}
-      <div className="relative flex flex-col md:flex-row items-stretch bg-[#e5ecea]/95 text-slate-700 shadow-2xl backdrop-blur-md border border-white/50 rounded-[4px] sm:rounded-[5px]">
+      {/* 2. Main Search Bar (Crisp White Glass Backdrop & Fine Slate Dividers like Template) */}
+      <div className="relative flex flex-col md:flex-row items-stretch bg-white/95 backdrop-blur-md text-slate-700 shadow-2xl border border-white/80 rounded-[4px] sm:rounded-[6px]">
         {/* Column 1: Origin / Location */}
-        <div className="relative flex-1 border-b md:border-b-0 md:border-r border-[#c5d2cf]">
+        <div className="relative flex-1 border-b md:border-b-0 md:border-r border-slate-200">
           <button
             type="button"
             onClick={() => {
@@ -165,7 +165,7 @@ export function DiscoverySearch() {
               setOpenCol2(false);
               setOpenTravellers(false);
             }}
-            className="flex h-13 sm:h-14 md:h-full w-full items-center justify-between px-4 sm:px-5 transition hover:bg-white/40 text-left cursor-pointer"
+            className="flex h-13 sm:h-14 md:h-full w-full items-center justify-between px-4 sm:px-5 transition hover:bg-slate-50/70 text-left cursor-pointer"
           >
             <div className="flex items-center gap-2.5 min-w-0">
               <MapPin className="size-4 shrink-0 text-[#0098a2]" />
@@ -200,7 +200,7 @@ export function DiscoverySearch() {
         </div>
 
         {/* Column 2: Destination / Experience / Topic */}
-        <div className="relative flex-[1.2] border-b md:border-b-0 md:border-r border-[#c5d2cf]">
+        <div className="relative flex-[1.2] border-b md:border-b-0 md:border-r border-slate-200">
           <button
             type="button"
             onClick={() => {
@@ -208,7 +208,7 @@ export function DiscoverySearch() {
               setOpenCol1(false);
               setOpenTravellers(false);
             }}
-            className="flex h-13 sm:h-14 md:h-full w-full items-center justify-between px-4 sm:px-5 transition hover:bg-white/40 text-left cursor-pointer"
+            className="flex h-13 sm:h-14 md:h-full w-full items-center justify-between px-4 sm:px-5 transition hover:bg-slate-50/70 text-left cursor-pointer"
           >
             <div className="flex items-center gap-2.5 min-w-0">
               {activeTab === "stories" ? (
@@ -249,10 +249,10 @@ export function DiscoverySearch() {
         </div>
 
         {/* Column 3 & 4: Date Range (2-Column Grid on Mobile to save vertical space) */}
-        <div className="grid grid-cols-2 flex-1 md:flex border-b md:border-b-0 md:border-r border-[#c5d2cf]">
+        <div className="grid grid-cols-2 flex-1 md:flex border-b md:border-b-0 md:border-r border-slate-200">
           {/* Start Date */}
-          <div className="relative border-r border-[#c5d2cf]">
-            <label className="flex h-13 sm:h-14 md:h-full w-full items-center justify-between px-3 sm:px-4 transition hover:bg-white/40 cursor-pointer">
+          <div className="relative border-r border-slate-200">
+            <label className="flex h-13 sm:h-14 md:h-full w-full items-center justify-between px-3 sm:px-4 transition hover:bg-slate-50/70 cursor-pointer">
               <div className="min-w-0 flex-1">
                 <span className="flex items-center gap-1 text-[10px] sm:text-[11px] text-slate-500 font-normal leading-none mb-0.5 whitespace-nowrap">
                   <Calendar className="size-3 text-[#0098a2]" />
@@ -269,7 +269,7 @@ export function DiscoverySearch() {
 
           {/* End Date */}
           <div className="relative">
-            <label className="flex h-13 sm:h-14 md:h-full w-full items-center justify-between px-3 sm:px-4 transition hover:bg-white/40 cursor-pointer">
+            <label className="flex h-13 sm:h-14 md:h-full w-full items-center justify-between px-3 sm:px-4 transition hover:bg-slate-50/70 cursor-pointer">
               <div className="min-w-0 flex-1">
                 <span className="flex items-center gap-1 text-[10px] sm:text-[11px] text-slate-500 font-normal leading-none mb-0.5 whitespace-nowrap">
                   <Calendar className="size-3 text-[#0098a2]" />
@@ -286,7 +286,7 @@ export function DiscoverySearch() {
         </div>
 
         {/* Column 5: Travellers */}
-        <div className="relative flex-[0.95] border-b md:border-b-0 md:border-r border-[#c5d2cf]">
+        <div className="relative flex-[0.95] border-b md:border-b-0 md:border-r border-slate-200">
           <button
             type="button"
             onClick={() => {
@@ -294,7 +294,7 @@ export function DiscoverySearch() {
               setOpenCol1(false);
               setOpenCol2(false);
             }}
-            className="flex h-13 sm:h-14 md:h-full w-full items-center justify-between px-4 sm:px-5 transition hover:bg-white/40 text-left cursor-pointer"
+            className="flex h-13 sm:h-14 md:h-full w-full items-center justify-between px-4 sm:px-5 transition hover:bg-slate-50/70 text-left cursor-pointer"
           >
             <div className="flex items-center gap-2.5 min-w-0 truncate">
               <Users className="size-4 shrink-0 text-[#0098a2]" />
