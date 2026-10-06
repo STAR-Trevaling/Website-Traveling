@@ -1,0 +1,13 @@
+{
+  "name": "travel-platform-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "npm --prefix apps/public-site run dev",
+    "dev:frontend": "npm --prefix apps/public-site run dev",
+    "build": "npm --prefix apps/public-site run build",
+    "start": "npm --prefix apps/public-site run start",
+    "lint": "npm --prefix apps/public-site run lint",
+    "typecheck": "npm --prefix apps/public-site run typecheck"
+  }
+}
