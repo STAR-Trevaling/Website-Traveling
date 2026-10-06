@@ -73,7 +73,7 @@ export function HeroSlider() {
       </button>
 
       {/* Hero Content */}
-      <div className="relative z-10 flex h-full flex-col items-center justify-between pb-16 sm:pb-20 md:pb-24 lg:pb-28 pt-20 sm:pt-24 text-white">
+      <div className="relative z-10 flex h-full flex-col items-center justify-between pb-6 sm:pb-8 md:pb-10 pt-20 sm:pt-24 text-white">
         <div className="mt-8 sm:mt-12 md:mt-14 text-center px-4 max-w-5xl mx-auto">
           <h1 className="display-title template-shadow-text leading-tight text-4xl sm:text-5xl md:text-6xl lg:text-[72px] transition-all duration-700 text-balance">
             {t.hero.slides[currentSlide]?.title || slides[currentSlide].title}
@@ -84,11 +84,49 @@ export function HeroSlider() {
           </p>
         </div>
 
-        {/* Search Bar shifted up with safe clearance from bottom edge & PC taskbar */}
-        <div className="w-full px-4 mb-4 sm:mb-6 md:mb-8">
-          <div className="mx-auto max-w-[1060px]">
+        {/* Search Bar & View More Indicator */}
+        <div className="w-full flex flex-col items-center px-4 mb-2 sm:mb-4">
+          <div className="w-full max-w-[1060px]">
             <DiscoverySearch />
           </div>
+
+          {/* View More with curved downward arrow */}
+          <a
+            href="#popular-destinations"
+            onClick={(e) => {
+              e.preventDefault();
+              document.getElementById("popular-destinations")?.scrollIntoView({ behavior: "smooth" });
+            }}
+            className="group mt-3 sm:mt-4 flex flex-col items-center gap-0.5 text-white/95 hover:text-white transition-all cursor-pointer select-none"
+            aria-label="View more"
+          >
+            <span className="script-title text-2xl sm:text-3xl md:text-4xl text-white tracking-wider drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)] group-hover:scale-105 group-hover:text-amber-200 transition-all">
+              view more
+            </span>
+            <svg
+              width="34"
+              height="42"
+              viewBox="0 0 34 42"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)] animate-bounce group-hover:text-amber-200 transition-colors"
+              aria-hidden="true"
+            >
+              <path
+                d="M14 2 C 27 7, 30 22, 17 34"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+              />
+              <path
+                d="M11 27 L 17 35 L 23 28"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </a>
         </div>
       </div>
     </div>

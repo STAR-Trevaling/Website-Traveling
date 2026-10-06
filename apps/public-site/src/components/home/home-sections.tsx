@@ -11,7 +11,7 @@ export function PopularDestinationsSection() {
   const { t } = useLanguage();
 
   return (
-    <section className="relative w-full px-6 py-20 md:px-12 lg:px-16">
+    <section id="popular-destinations" className="relative w-full px-6 py-20 md:px-12 lg:px-16 scroll-mt-6">
       <div className="mx-auto max-w-7xl">
         <div className="text-center mb-12">
           <h2 className="script-title text-5xl md:text-6xl text-[#1e293b]">
