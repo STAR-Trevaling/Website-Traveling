@@ -99,22 +99,27 @@ export function FeaturedTours({ initialTours }: FeaturedToursProps) {
                     </div>
                   </div>
 
-                  <div className="p-4 flex items-start justify-between gap-3 bg-white">
-                    <div className="flex-1 min-w-0 pr-1">
-                      <h3 className="script-title text-2xl font-bold text-[#1e293b] leading-tight truncate group-hover:text-amber-700 transition-colors">
-                        {shortDest}
-                      </h3>
-                      <p className="mt-1 text-[11px] font-light text-[#64748b] leading-snug line-clamp-2">
+                  <div className="p-4 flex flex-col justify-between flex-1 bg-white">
+                    <div>
+                      <div className="flex items-baseline justify-between gap-2">
+                        <h3 className="script-title text-xl sm:text-2xl font-bold text-[#1e293b] leading-tight truncate group-hover:text-amber-700 transition-colors">
+                          {shortDest}
+                        </h3>
+                        <div className="text-right shrink-0">
+                          <span className="script-title text-xl font-bold text-[#1e293b] leading-tight block">
+                            {tour.price.toLocaleString("vi-VN")}đ
+                          </span>
+                        </div>
+                      </div>
+                      <p className="mt-1.5 text-[11px] font-light text-[#64748b] leading-snug line-clamp-2 min-h-[30px]">
                         {displayTitle}
                       </p>
                     </div>
 
-                    <div className="text-right shrink-0">
-                      <span className="script-title text-2xl font-bold text-[#1e293b] block leading-tight">
-                        {tour.price.toLocaleString("vi-VN")}đ
-                      </span>
-                      <span className="text-[10px] text-[#94a3b8] font-light block">
-                        {t.featured.pricePerPerson}
+                    <div className="mt-3 pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] text-[#94a3b8]">
+                      <span className="font-light">{t.featured.pricePerPerson}</span>
+                      <span className="text-[#0098a2] font-semibold group-hover:underline">
+                        {isEn ? "View tour →" : "Xem tour →"}
                       </span>
                     </div>
                   </div>

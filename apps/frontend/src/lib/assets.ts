@@ -14,22 +14,22 @@ export const VIETNAM_IMAGES = {
   heroSlides: [
     {
       id: "vietnam-heritage",
-      title: "Việt Nam — Non Sông Gấm Vóc",
-      subtitle: "Khám phá kỳ quan thiên nhiên và danh thắng di sản cùng Star Travels.",
+      title: "Non Sông Gấm Vóc",
+      subtitle: "Khám phá kỳ quan thiên nhiên và di sản văn hóa cùng Star Travels.",
       image: "https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=1920&q=85",
       tag: "Di sản thiên nhiên thế giới UNESCO",
     },
     {
       id: "da-lat",
-      title: "Đà Lạt — Xứ Sở Sương Mù & Ngàn Hoa",
+      title: "Xứ Sở Ngàn Hoa",
       subtitle: "Thả hồn giữa đồi thông xanh ngát và hồ Tuyền Lâm phẳng lặng.",
       image: "https://upload.wikimedia.org/wikipedia/commons/e/e2/Da_Lat_-_Viet_Nam.jpg",
       tag: "Thành phố tình yêu & ngàn hoa",
     },
     {
       id: "trang-an",
-      title: "Tràng An — Non Nước Hữu Tình",
-      subtitle: "Chiêm ngưỡng thung lũng đá vôi ngập nước và di sản thế giới kép.",
+      title: "Non Nước Hữu Tình",
+      subtitle: "Chiêm ngưỡng thung lũng đá vôi và di sản thế giới kép UNESCO.",
       image: "https://upload.wikimedia.org/wikipedia/commons/5/5b/Vietnam%2C_Ninh_Binh%2C_Limestone_peaks.jpg",
       tag: "Di sản thế giới kép UNESCO",
     },

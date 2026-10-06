@@ -87,7 +87,7 @@ export function WhyUsAndAdventuresSection() {
               className="object-cover transition duration-500 group-hover:scale-105"
             />
             {/* Frosted white box on bottom-left */}
-            <div className="absolute bottom-0 left-0 w-[74%] sm:w-[76%] bg-white/85 backdrop-blur-md p-4 sm:p-5 flex flex-col justify-center border-t border-r border-white/60 transition-all duration-500 ease-out group-hover:opacity-0 group-hover:translate-y-4 group-hover:pointer-events-none">
+            <div className="absolute bottom-0 left-0 w-[78%] sm:w-[80%] max-w-[calc(100%-48px)] bg-white/85 backdrop-blur-md p-4 sm:p-5 flex flex-col justify-center border-t border-r border-white/60 transition-all duration-500 ease-out group-hover:opacity-0 group-hover:translate-y-4 group-hover:pointer-events-none">
               <h3 className="script-title text-2xl font-bold text-[#1e293b] leading-tight">
                 {t.adventures.items.canalCruise.title}
               </h3>
@@ -115,7 +115,7 @@ export function WhyUsAndAdventuresSection() {
                 unoptimized
                 className="object-cover transition duration-500 group-hover:scale-105"
               />
-              <div className="absolute bottom-0 left-0 w-[74%] sm:w-[76%] bg-white/85 backdrop-blur-md p-3.5 sm:p-4 flex flex-col justify-center border-t border-r border-white/60 transition-all duration-500 ease-out group-hover:opacity-0 group-hover:translate-y-4 group-hover:pointer-events-none">
+              <div className="absolute bottom-0 left-0 w-[78%] sm:w-[80%] max-w-[calc(100%-48px)] bg-white/85 backdrop-blur-md p-3.5 sm:p-4 flex flex-col justify-center border-t border-r border-white/60 transition-all duration-500 ease-out group-hover:opacity-0 group-hover:translate-y-4 group-hover:pointer-events-none">
                 <h3 className="script-title text-xl sm:text-2xl font-bold text-[#1e293b] leading-tight">
                   {t.adventures.items.sailing.title}
                 </h3>
@@ -140,7 +140,7 @@ export function WhyUsAndAdventuresSection() {
                 unoptimized
                 className="object-cover transition duration-500 group-hover:scale-105"
               />
-              <div className="absolute bottom-0 left-0 w-[74%] sm:w-[76%] bg-white/85 backdrop-blur-md p-3.5 sm:p-4 flex flex-col justify-center border-t border-r border-white/60 transition-all duration-500 ease-out group-hover:opacity-0 group-hover:translate-y-4 group-hover:pointer-events-none">
+              <div className="absolute bottom-0 left-0 w-[78%] sm:w-[80%] max-w-[calc(100%-48px)] bg-white/85 backdrop-blur-md p-3.5 sm:p-4 flex flex-col justify-center border-t border-r border-white/60 transition-all duration-500 ease-out group-hover:opacity-0 group-hover:translate-y-4 group-hover:pointer-events-none">
                 <h3 className="script-title text-xl sm:text-2xl font-bold text-[#1e293b] leading-tight">
                   {t.adventures.items.hiking.title}
                 </h3>
@@ -168,7 +168,7 @@ export function WhyUsAndAdventuresSection() {
                 unoptimized
                 className="object-cover transition duration-500 group-hover:scale-105"
               />
-              <div className="absolute bottom-0 left-0 w-[74%] sm:w-[76%] bg-white/85 backdrop-blur-md p-3.5 sm:p-4 flex flex-col justify-center border-t border-r border-white/60 transition-all duration-500 ease-out group-hover:opacity-0 group-hover:translate-y-4 group-hover:pointer-events-none">
+              <div className="absolute bottom-0 left-0 w-[78%] sm:w-[80%] max-w-[calc(100%-48px)] bg-white/85 backdrop-blur-md p-3.5 sm:p-4 flex flex-col justify-center border-t border-r border-white/60 transition-all duration-500 ease-out group-hover:opacity-0 group-hover:translate-y-4 group-hover:pointer-events-none">
                 <h3 className="script-title text-xl sm:text-2xl font-bold text-[#1e293b] leading-tight">
                   {t.adventures.items.camping.title}
                 </h3>
@@ -193,7 +193,7 @@ export function WhyUsAndAdventuresSection() {
                 unoptimized
                 className="object-cover transition duration-500 group-hover:scale-105"
               />
-              <div className="absolute bottom-0 left-0 w-[74%] sm:w-[76%] bg-white/85 backdrop-blur-md p-3.5 sm:p-4 flex flex-col justify-center border-t border-r border-white/60 transition-all duration-500 ease-out group-hover:opacity-0 group-hover:translate-y-4 group-hover:pointer-events-none">
+              <div className="absolute bottom-0 left-0 w-[78%] sm:w-[80%] max-w-[calc(100%-48px)] bg-white/85 backdrop-blur-md p-3.5 sm:p-4 flex flex-col justify-center border-t border-r border-white/60 transition-all duration-500 ease-out group-hover:opacity-0 group-hover:translate-y-4 group-hover:pointer-events-none">
                 <h3 className="script-title text-xl sm:text-2xl font-bold text-[#1e293b] leading-tight">
                   {t.adventures.items.scubaDiving.title}
                 </h3>
@@ -219,16 +219,16 @@ export function LookingForSection() {
   return (
     <section className="w-full bg-white/75 backdrop-blur-md py-16 md:py-20 text-center border-y border-white/40">
       <div className="mx-auto max-w-4xl px-6">
-        <h2 className="script-title text-4xl sm:text-5xl md:text-6xl text-[#1e293b]">
+        <h2 className="script-title text-4xl sm:text-5xl md:text-6xl text-[#1e293b] text-balance">
           {t.lookingFor.heading}
         </h2>
-        <p className="mt-3 text-sm md:text-base text-[#4b5563] font-light max-w-xl mx-auto">
+        <p className="mt-3 text-sm md:text-base text-[#4b5563] font-light max-w-xl mx-auto text-balance">
           {t.lookingFor.subheading}
         </p>
         <div className="mt-6">
           <Link
             href="/experiences"
-            className="inline-block border border-slate-700/70 bg-white px-8 py-3 text-xs md:text-sm font-bold tracking-[0.2em] uppercase text-[#1e293b] rounded-[2px] template-shadow-text shadow-sm transition-all duration-200 hover:border-black hover:text-black hover:bg-slate-50 hover:shadow-[0px_8px_25px_rgba(0,0,0,0.15)] hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
+            className="inline-block border border-slate-700/70 bg-white px-7 sm:px-8 py-3 text-xs md:text-sm font-bold tracking-[0.18em] uppercase text-[#1e293b] rounded-[2px] template-shadow-text shadow-sm transition-all duration-200 hover:border-black hover:text-black hover:bg-slate-50 hover:shadow-[0px_8px_25px_rgba(0,0,0,0.15)] hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
           >
             {t.lookingFor.button}
           </Link>

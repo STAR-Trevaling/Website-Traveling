@@ -74,12 +74,12 @@ export function HeroSlider() {
 
       {/* Hero Content */}
       <div className="relative z-10 flex h-full flex-col items-center justify-between pb-16 sm:pb-20 md:pb-24 lg:pb-28 pt-20 sm:pt-24 text-white">
-        <div className="mt-8 sm:mt-12 md:mt-14 text-center px-4 max-w-5xl">
-          <h1 className="display-title template-shadow-text text-5xl leading-tight sm:text-6xl md:text-7xl lg:text-[76px] transition-all duration-700">
+        <div className="mt-8 sm:mt-12 md:mt-14 text-center px-4 max-w-5xl mx-auto">
+          <h1 className="display-title template-shadow-text leading-tight text-4xl sm:text-5xl md:text-6xl lg:text-[72px] transition-all duration-700 text-balance">
             {t.hero.slides[currentSlide]?.title || slides[currentSlide].title}
           </h1>
 
-          <p className="script-title mt-4 text-3xl leading-tight sm:text-4xl md:text-5xl text-white/95 [-webkit-text-stroke:.4px_#fff]">
+          <p className="script-title mt-4 leading-tight text-white/95 [-webkit-text-stroke:.4px_#fff] text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-balance">
             {t.hero.slides[currentSlide]?.subtitle || slides[currentSlide].subtitle}
           </p>
         </div>

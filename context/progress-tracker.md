@@ -36,6 +36,15 @@
     - English: *Popular Destinations*, *Featured All-Inclusive Tours*, *Why Choose Star Travels?*, *Have an Adventure Today*, *NEWSLETTER*, *Award Winning*, *Looking for an Experience?*.
   - Added bilingual data contracts and fallback records for all 12 destinations (`name_en`, `summary_en`, `description_en`) and 8 curated tours (`title_en`, `destination_en`, `duration_en`, `departure_en`).
 
+- UI Layout Harmony, Pure User Icon, Language Consent Banner & Public Site UI Inventory:
+  - Addressed Vietnamese layout wrapping and text-length differences across the public frontend (`apps/frontend/`).
+  - Standardized hero slider titles to concise, elegant 4-word phrasing with `text-balance` to prevent orphaned words.
+  - Refined search bar columns (`flex-[1.2]` and `whitespace-nowrap`) and adventure frosted overlays (`w-[80%]` with concise 2-line descriptions) preventing overflow.
+  - Balanced tour cards and newsletter awards thumbnails (4:3 ratio with 110–128px width, granting +45px text breathing room) eliminating multi-line word breaks.
+  - Converted the desktop user account trigger to a clean icon-only button without accompanying text (`UserRound`), ensuring generous header spacing.
+  - Implemented international-standard Language Consent & Cookie Preference Banner (`LanguageConsentBanner`): floating glassmorphic card prompting first-time visitors to choose their preferred language (`[ 🇻🇳 Tiếng Việt ]` / `[ 🇬🇧 English ]`), automatically storing their choice via cookie and localStorage, fully synchronized with the header pill switcher.
+  - Published comprehensive Markdown UI inventory documentation: `docs/public-site-ui-inventory.md`.
+
 ## Validation status
 - GitHub Actions CI (Run #10) & CodeQL Analysis: **PASSED (All 3 jobs green)**.
 - Local static sanity (`validate_context.py`, `static_sanity.py`, Python AST across 3,205 files): **PASSED**.

@@ -88,14 +88,14 @@ export function NewsletterAwards() {
             </p>
 
             {/* 2 Columns x 3 Rows Layout */}
-            <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-7">
+            <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-x-6 sm:gap-x-8 gap-y-6 sm:gap-y-7">
               {t.awards.items.map((item, idx) => (
                 <div
                   key={idx}
-                  className="group flex items-center gap-4 md:gap-5 transition hover:-translate-y-0.5"
+                  className="group flex items-center gap-3.5 sm:gap-4 transition hover:-translate-y-0.5"
                 >
                   {/* Photo thumbnail */}
-                  <div className="relative h-[105px] w-[150px] sm:h-[115px] sm:w-[165px] md:h-[120px] md:w-[175px] shrink-0 overflow-hidden shadow-sm rounded-[2px] bg-slate-200">
+                  <div className="relative h-[80px] w-[110px] sm:h-[88px] sm:w-[120px] md:h-[92px] md:w-[128px] shrink-0 overflow-hidden shadow-sm rounded-[2px] bg-slate-200">
                     <Image
                       src={AWARD_IMAGES[idx] || AWARD_IMAGES[0]}
                       alt={item.title}
@@ -107,7 +107,7 @@ export function NewsletterAwards() {
 
                   {/* Text details */}
                   <div className="flex-1 min-w-0">
-                    <h3 className="text-sm md:text-base font-bold text-[#1e293b] leading-snug group-hover:text-amber-700 transition-colors">
+                    <h3 className="text-sm sm:text-[15px] font-bold text-[#1e293b] leading-snug group-hover:text-amber-700 transition-colors">
                       {item.title}
                     </h3>
                     <p className="mt-1 text-xs text-[#64748b] font-light leading-relaxed">

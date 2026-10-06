@@ -61,6 +61,7 @@ export function DiscoverySearch() {
   const router = useRouter();
   const { locale } = useLanguage();
   const isEn = locale === "en";
+  const isVi = locale === "vi";
 
   const [activeTab, setActiveTab] = useState<TabType>("destinations");
   const [col1Index, setCol1Index] = useState(0); // Hanoi
@@ -135,13 +136,13 @@ export function DiscoverySearch() {
     <div className="w-full">
       {/* 1. Teal Tab Ribbon */}
       <div className="flex justify-center">
-        <div className="flex h-11 items-center justify-center gap-10 bg-[#0098a2] px-8 sm:px-12 text-white shadow-md">
+        <div className={`flex h-11 items-center justify-center bg-[#0098a2] px-6 sm:px-10 text-white shadow-md ${isVi ? "gap-6 sm:gap-8" : "gap-10 sm:px-12"}`}>
           {tabs.map((tab) => (
             <button
               key={tab.key}
               type="button"
               onClick={() => handleTabChange(tab.key)}
-              className={`text-xs sm:text-sm font-semibold tracking-widest transition-all cursor-pointer ${
+              className={`font-semibold tracking-widest transition-all cursor-pointer ${isVi ? "text-[11px] sm:text-xs" : "text-xs sm:text-sm"} ${
                 activeTab === tab.key
                   ? "border-b-2 border-white pb-0.5 text-white"
                   : "text-white/80 hover:text-white"
@@ -199,7 +200,7 @@ export function DiscoverySearch() {
         </div>
 
         {/* Column 2: Destination / Experience / Topic */}
-        <div className="relative flex-1 border-b md:border-b-0 md:border-r border-[#c5d2cf]">
+        <div className="relative flex-[1.2] border-b md:border-b-0 md:border-r border-[#c5d2cf]">
           <button
             type="button"
             onClick={() => {
@@ -218,15 +219,15 @@ export function DiscoverySearch() {
                 <MapPin className="size-4 shrink-0 text-[#475569]" />
               )}
               <div className="truncate">
-                <span className="block text-[11px] text-slate-500 font-normal leading-none mb-0.5">
+                <span className="block text-[11px] text-slate-500 font-normal leading-none mb-0.5 whitespace-nowrap">
                   {col2Label}
                 </span>
-                <span className="text-sm font-medium text-slate-800 truncate">
+                <span className="text-sm font-medium text-slate-800 truncate block">
                   {isEn ? col2Options[col2Index]?.en : col2Options[col2Index]?.vi}
                 </span>
               </div>
             </div>
-            <ChevronDown className="size-4 shrink-0 text-slate-400" />
+            <ChevronDown className="size-4 shrink-0 text-slate-400 ml-1" />
           </button>
           {openCol2 && (
             <div className="absolute left-0 top-full z-50 mt-1 max-h-56 w-64 overflow-auto rounded-lg bg-white p-2 shadow-xl border border-slate-100">
@@ -251,12 +252,12 @@ export function DiscoverySearch() {
         <div className="relative flex-1 border-b md:border-b-0 md:border-r border-[#c5d2cf]">
           <label className="flex h-14 md:h-full w-full items-center justify-between px-4 sm:px-5 transition hover:bg-white/40 cursor-pointer">
             <div className="min-w-0 flex-1">
-              <span className="block text-[11px] text-slate-500 font-normal leading-none mb-0.5">
+              <span className="block text-[11px] text-slate-500 font-normal leading-none mb-0.5 whitespace-nowrap">
                 {isEn ? "Start date" : "Ngày bắt đầu"}
               </span>
               <input
                 type="date"
-                className="w-full bg-transparent text-sm font-medium text-slate-800 outline-none cursor-pointer"
+                className="w-full bg-transparent text-xs sm:text-sm font-medium text-slate-800 outline-none cursor-pointer"
                 aria-label={isEn ? "Trip start date" : "Ngày bắt đầu chuyến đi"}
               />
             </div>
@@ -267,12 +268,12 @@ export function DiscoverySearch() {
         <div className="relative flex-1 border-b md:border-b-0 md:border-r border-[#c5d2cf]">
           <label className="flex h-14 md:h-full w-full items-center justify-between px-4 sm:px-5 transition hover:bg-white/40 cursor-pointer">
             <div className="min-w-0 flex-1">
-              <span className="block text-[11px] text-slate-500 font-normal leading-none mb-0.5">
+              <span className="block text-[11px] text-slate-500 font-normal leading-none mb-0.5 whitespace-nowrap">
                 {isEn ? "End date" : "Ngày kết thúc"}
               </span>
               <input
                 type="date"
-                className="w-full bg-transparent text-sm font-medium text-slate-800 outline-none cursor-pointer"
+                className="w-full bg-transparent text-xs sm:text-sm font-medium text-slate-800 outline-none cursor-pointer"
                 aria-label={isEn ? "Trip end date" : "Ngày kết thúc chuyến đi"}
               />
             </div>
@@ -280,7 +281,7 @@ export function DiscoverySearch() {
         </div>
 
         {/* Column 5: Travellers */}
-        <div className="relative flex-1">
+        <div className="relative flex-[0.95]">
           <button
             type="button"
             onClick={() => {
@@ -293,15 +294,15 @@ export function DiscoverySearch() {
             <div className="flex items-center gap-2.5 min-w-0 truncate">
               <Users className="size-4 shrink-0 text-[#475569]" />
               <div className="min-w-0 truncate">
-                <span className="block text-[11px] text-slate-500 font-normal leading-none mb-0.5">
+                <span className="block text-[11px] text-slate-500 font-normal leading-none mb-0.5 whitespace-nowrap">
                   {isEn ? "Travellers" : "Du khách"}
                 </span>
-                <span className="text-sm font-medium text-slate-800 truncate">
+                <span className="text-sm font-medium text-slate-800 truncate block">
                   {isEn ? TRAVELLER_OPTIONS[travellerIndex]?.en : TRAVELLER_OPTIONS[travellerIndex]?.vi}
                 </span>
               </div>
             </div>
-            <ChevronDown className="size-4 shrink-0 text-slate-400" />
+            <ChevronDown className="size-4 shrink-0 text-slate-400 ml-1" />
           </button>
           {openTravellers && (
             <div className="absolute right-0 top-full z-50 mt-1 w-52 rounded-lg bg-white p-2 shadow-xl border border-slate-100">

@@ -21,17 +21,17 @@ export const DICTIONARY: Record<Locale, TranslationDictionary> = {
       slides: [
         {
           title: "Non Sông Gấm Vóc",
-          subtitle: "Khám phá kỳ quan thiên nhiên và danh thắng di sản văn hóa cùng Star Travels.",
+          subtitle: "Khám phá kỳ quan thiên nhiên và di sản văn hóa cùng Star Travels.",
           tag: "Di sản thiên nhiên thế giới UNESCO",
         },
         {
           title: "Xứ Sở Ngàn Hoa",
-          subtitle: "Thả hồn giữa đồi thông xanh ngát, hồ Tuyền Lâm phẳng lặng và khí hậu ôn đới mát lành.",
+          subtitle: "Thả hồn giữa đồi thông xanh ngát và hồ Tuyền Lâm phẳng lặng.",
           tag: "Thành phố tình yêu & ngàn hoa",
         },
         {
           title: "Non Nước Hữu Tình",
-          subtitle: "Chiêm ngưỡng thung lũng đá vôi ngập nước kỳ vĩ và di sản văn hóa kép thế giới.",
+          subtitle: "Chiêm ngưỡng thung lũng đá vôi và di sản thế giới kép UNESCO.",
           tag: "Di sản thế giới kép UNESCO",
         },
       ],
@@ -70,23 +70,23 @@ export const DICTIONARY: Record<Locale, TranslationDictionary> = {
       items: {
         canalCruise: {
           title: "Du Thuyền Kênh Rạch",
-          desc: "Xuôi mái chèo len lỏi qua rặng dừa nước Bến Tre rợp bóng và kỳ quan Vịnh Hạ Long ngọc bích",
+          desc: "Xuôi mái chèo qua rặng dừa nước Bến Tre & vịnh biển kỳ vĩ",
         },
         sailing: {
           title: "Thuyền Buồm Vịnh Biển",
-          desc: "Căng buồm đón gió biển khơi và lướt nhẹ qua những hòn đảo đá vôi kỳ vĩ Vịnh Lan Hạ",
+          desc: "Căng buồm đón gió khơi qua quần đảo đá vôi kỳ vĩ Lan Hạ",
         },
         hiking: {
           title: "Trekking Fansipan",
-          desc: "Băng qua những thung lũng ruộng bậc thang uốn lượn và chạm nóc nhà Đông Dương Fansipan",
+          desc: "Băng qua thung lũng ruộng bậc thang & chạm nóc nhà Đông Dương",
         },
         camping: {
           title: "Cắm Trại Săn Mây",
-          desc: "Đón bình minh rực rỡ trên đỉnh đồi lộng gió Tà Xùa và hòa mình giữa rừng thông Đà Lạt",
+          desc: "Đón bình minh rực rỡ trên đỉnh Tà Xùa & rừng thông Đà Lạt",
         },
         scubaDiving: {
           title: "Lặn San Hô Phú Quốc",
-          desc: "Khám phá thủy cung rực rỡ sắc màu với những rạn san hô nguyên sinh tại quần đảo An Thới",
+          desc: "Khám phá thủy cung rực rỡ sắc màu & rạn san hô nguyên sinh",
         },
       },
     },
@@ -124,14 +124,14 @@ export const DICTIONARY: Record<Locale, TranslationDictionary> = {
         },
         {
           title: "Miền Tây & Chợ Nổi Cần Thơ",
-          subtitle: "Top 5 Khám Phá Văn Hóa Miệt Vườn",
+          subtitle: "Top 5 Văn Hóa Miệt Vườn Sông Nước",
         },
       ],
     },
     lookingFor: {
-      heading: "Bạn Đang Tìm Kiếm Trải Nghiệm Độc Bản?",
+      heading: "Tìm Kiếm Trải Nghiệm Độc Bản?",
       subheading: "Khám phá danh lam thắng cảnh tuyệt mỹ và văn hóa bản địa độc bản của non sông Việt Nam cùng Star Travels.",
-      button: "XEM TẤT CẢ GÓI TRẢI NGHIỆM",
+      button: "XEM GÓI TRẢI NGHIỆM",
     },
     footer: {
       tagline: "Nền tảng du lịch khám phá & trải nghiệm bản địa Việt Nam",
@@ -143,7 +143,7 @@ export const DICTIONARY: Record<Locale, TranslationDictionary> = {
       stories: "Hành Trình & Cẩm Nang",
       contact: "Liên Hệ & Hỗ Trợ",
       partner: "Hợp Tác Đối Tác",
-      copyright: "Bản quyền thuộc về Star Travels Vietnam. Nền tảng du lịch khám phá di sản & trải nghiệm bản địa Việt Nam.",
+      copyright: "Bảo lưu mọi quyền. Nền tảng du lịch khám phá di sản & trải nghiệm bản địa Việt Nam.",
     },
   },
 

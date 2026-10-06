@@ -65,7 +65,7 @@ export function SiteHeaderClient({ user, overlay = false }: SiteHeaderClientProp
           </div>
 
           {/* Center: Bilingual Navigation Links */}
-          <nav className="hidden md:flex items-center gap-6 lg:gap-10 text-sm lg:text-base font-normal">
+          <nav className="hidden md:flex items-center gap-5 lg:gap-8 text-xs md:text-sm lg:text-[15px] font-normal whitespace-nowrap">
             {navItems.map((item) => (
               <Link
                 key={item.href}
@@ -82,7 +82,7 @@ export function SiteHeaderClient({ user, overlay = false }: SiteHeaderClientProp
           </nav>
 
           {/* Right: Phone, Email, Login & Language Switcher */}
-          <div className="flex items-center gap-3 sm:gap-4 lg:gap-5 text-xs lg:text-sm">
+          <div className="flex items-center gap-2.5 sm:gap-3.5 lg:gap-4 text-xs lg:text-sm">
             <span
               className={
                 overlay
@@ -105,17 +105,18 @@ export function SiteHeaderClient({ user, overlay = false }: SiteHeaderClientProp
               {t.nav.emailLabel}
             </a>
 
+            {/* Account Icon (No text label as requested) */}
             <Link
               href={user ? "/account" : "/login"}
-              aria-label={t.nav.account}
+              aria-label={user ? user.username : t.nav.login}
+              title={user ? user.username : t.nav.login}
               className={
                 overlay
-                  ? "hidden sm:flex items-center gap-1.5 font-medium hover:opacity-80 transition text-white"
-                  : "hidden sm:flex items-center gap-1.5 font-medium hover:text-[#0098a2] transition text-slate-800"
+                  ? "hidden sm:flex items-center justify-center p-1.5 rounded-full hover:bg-white/15 transition text-white"
+                  : "hidden sm:flex items-center justify-center p-1.5 rounded-full hover:bg-slate-100 text-slate-800 transition hover:text-[#0098a2]"
               }
             >
-              <UserRound className="size-4 opacity-80" />
-              <span>{user ? user.username : t.nav.login}</span>
+              <UserRound className="size-4.5 opacity-90" />
             </Link>
 
             {/* Language Switcher Button (VI | EN) */}
