@@ -3,7 +3,22 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, Phone, Mail, Instagram, Facebook, Twitter, UserRound, ArrowRight } from "lucide-react";
+import {
+  Menu,
+  X,
+  Phone,
+  Mail,
+  Instagram,
+  Facebook,
+  Twitter,
+  UserRound,
+  ArrowRight,
+  MapPin,
+  Compass,
+  Sparkles,
+  Building2,
+  Handshake,
+} from "lucide-react";
 import type { CurrentUser } from "@/lib/types";
 import { useLanguage } from "@/lib/i18n/context";
 
@@ -18,13 +33,26 @@ export function MobileNav({ user, overlay = false }: MobileNavProps) {
   const { t, isVietnamese, reopenLanguagePrompt } = useLanguage();
 
   const navItems = [
-    { label: t.nav.home, href: "/" },
-    { label: t.nav.packages, href: "/experiences" },
-    { label: t.nav.tours, href: "/tours" },
-    { label: isVietnamese ? "Điểm Đến" : "Destinations", href: "/destinations" },
-    { label: isVietnamese ? "Góc Nhìn Du Lịch" : "Stories", href: "/stories" },
-    { label: t.nav.aboutUs, href: "/about" },
-    { label: t.nav.contact, href: "/contact" },
+    { type: "link" as const, label: t.nav.home, href: "/" },
+    {
+      type: "group" as const,
+      heading: t.nav.explore,
+      items: [
+        { label: t.nav.destinations, href: "/destinations", icon: MapPin },
+        { label: t.nav.packages, href: "/experiences", icon: Sparkles },
+        { label: t.nav.tours, href: "/tours", icon: Compass },
+      ],
+    },
+    { type: "link" as const, label: t.nav.stories, href: "/stories" },
+    {
+      type: "group" as const,
+      heading: t.nav.aboutMenu,
+      items: [
+        { label: t.nav.aboutUs, href: "/about", icon: Building2 },
+        { label: t.nav.partner, href: "/partner", icon: Handshake },
+      ],
+    },
+    { type: "link" as const, label: t.nav.contact, href: "/contact" },
   ];
 
   // Close drawer when route changes
@@ -122,22 +150,55 @@ export function MobileNav({ user, overlay = false }: MobileNavProps) {
           </div>
 
           {/* Navigation Links */}
-          <nav className="mt-4 space-y-1">
+          <nav className="mt-4 space-y-2">
             {navItems.map((item) => {
-              const active = pathname === item.href;
+              if (item.type === "link") {
+                const active = pathname === item.href;
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={`flex items-center justify-between px-3 py-2.5 text-sm font-medium rounded-[2px] transition ${
+                      active
+                        ? "bg-[#0098a2]/10 text-[#0098a2] font-semibold"
+                        : "text-slate-700 hover:bg-slate-50 hover:text-slate-900"
+                    }`}
+                  >
+                    <span>{item.label}</span>
+                    <ArrowRight className="size-3.5 opacity-40" />
+                  </Link>
+                );
+              }
+
               return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={`flex items-center justify-between px-3 py-2.5 text-sm font-medium rounded-[2px] transition ${
-                    active
-                      ? "bg-[#0098a2]/10 text-[#0098a2] font-semibold"
-                      : "text-slate-700 hover:bg-slate-50 hover:text-slate-900"
-                  }`}
-                >
-                  <span>{item.label}</span>
-                  <ArrowRight className="size-3.5 opacity-40" />
-                </Link>
+                <div key={item.heading} className="pt-2">
+                  <div className="px-3 pb-1 text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                    {item.heading}
+                  </div>
+                  <div className="space-y-0.5 pl-1.5 border-l-2 border-slate-100 ml-2.5">
+                    {item.items.map((sub) => {
+                      const active = pathname === sub.href;
+                      const Icon = sub.icon;
+                      return (
+                        <Link
+                          key={sub.href}
+                          href={sub.href}
+                          className={`flex items-center justify-between px-2.5 py-2 text-xs md:text-sm font-medium rounded-[2px] transition ${
+                            active
+                              ? "bg-[#0098a2]/10 text-[#0098a2] font-semibold"
+                              : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
+                          }`}
+                        >
+                          <span className="flex items-center gap-2">
+                            <Icon className="size-3.5 text-[#0098a2] opacity-75 shrink-0" />
+                            <span>{sub.label}</span>
+                          </span>
+                          <ArrowRight className="size-3 opacity-30" />
+                        </Link>
+                      );
+                    })}
+                  </div>
+                </div>
               );
             })}
           </nav>

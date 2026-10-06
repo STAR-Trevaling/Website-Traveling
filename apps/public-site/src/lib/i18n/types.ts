@@ -2,9 +2,14 @@ export type Locale = "vi" | "en";
 
 export interface NavTranslations {
   home: string;
+  explore: string;
+  destinations: string;
   packages: string;
   tours: string;
+  stories: string;
+  aboutMenu: string;
   aboutUs: string;
+  partner: string;
   contact: string;
   login: string;
   account: string;
