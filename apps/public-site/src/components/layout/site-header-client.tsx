@@ -28,7 +28,8 @@ interface SiteHeaderClientProps {
 }
 
 export function SiteHeaderClient({ user, overlay = false }: SiteHeaderClientProps) {
-  const { t } = useLanguage();
+  const { t, locale } = useLanguage();
+  const isEn = locale === "en";
   const pathname = usePathname();
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -80,25 +81,33 @@ export function SiteHeaderClient({ user, overlay = false }: SiteHeaderClientProp
         {
           label: t.nav.tours,
           href: "/tours",
-          description: "Curated guided tours & itineraries",
+          description: isEn
+            ? "Curated guided tours & itineraries"
+            : "Lịch trình trọn gói & hướng dẫn viên tận tâm",
           icon: Compass,
         },
         {
           label: t.nav.packages,
           href: "/experiences",
-          description: "Exclusive vacation packages & stays",
+          description: isEn
+            ? "Exclusive vacation packages & stays"
+            : "Nghỉ dưỡng đẳng cấp & trải nghiệm độc bản",
           icon: Sparkles,
         },
         {
           label: t.nav.destinations,
           href: "/destinations",
-          description: "Top heritage sights & coastal gems",
+          description: isEn
+            ? "Top heritage sights & coastal gems"
+            : "Danh lam thắng cảnh & kỳ quan di sản",
           icon: MapPin,
         },
         {
           label: t.nav.stories,
           href: "/stories",
-          description: "Travel insights & insider guides",
+          description: isEn
+            ? "Travel insights & insider guides"
+            : "Cẩm nang du lịch & góc chia sẻ hữu ích",
           icon: BookOpen,
         },
       ],
@@ -111,13 +120,17 @@ export function SiteHeaderClient({ user, overlay = false }: SiteHeaderClientProp
         {
           label: t.nav.aboutUs,
           href: "/about",
-          description: "Our story, values & hospitality team",
+          description: isEn
+            ? "Our story, values & hospitality team"
+            : "Câu chuyện thương hiệu & sứ mệnh Star Travels",
           icon: Building2,
         },
         {
           label: t.nav.partner,
           href: "/partner",
-          description: "B2B travel collaboration & portal",
+          description: isEn
+            ? "B2B travel collaboration & portal"
+            : "Hợp tác đối tác lữ hành & dịch vụ du lịch",
           icon: Handshake,
         },
       ],
