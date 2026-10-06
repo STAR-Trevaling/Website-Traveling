@@ -1,7 +1,6 @@
 import Image from "next/image";
 import { cookies } from "next/headers";
 import { SiteHeader } from "@/components/layout/site-header";
-import { StarLogo } from "@/components/shared/star-logo";
 
 interface PageHeroProps {
   title: string;
@@ -33,12 +32,6 @@ export async function PageHero({ title, titleEn, subtitle, subtitleEn, image }: 
 
       <div className="relative z-10 mx-auto w-full max-w-7xl px-4 sm:px-6 md:px-12 pb-7 sm:pb-10 pt-24 sm:pt-28 md:pt-32">
         <div className="max-w-4xl">
-          <div className="flex items-center gap-2 mb-2 sm:mb-3">
-            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-[2px] bg-black/40 backdrop-blur-md border border-white/20 text-[10.5px] sm:text-xs font-bold tracking-[0.2em] uppercase text-white shadow-sm">
-              <StarLogo variant="icon-only" size="sm" />
-              <span>STAR TRAVELS</span>
-            </span>
-          </div>
           <h1 className="display-title text-2xl sm:text-4xl md:text-5xl font-black leading-tight text-white drop-shadow-[0_2px_14px_rgba(0,0,0,0.95)]">
             {displayTitle}
           </h1>
