@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import {
   MapPin,
@@ -51,6 +51,7 @@ interface CalendarPopoverProps {
   onClose: () => void;
   isEn: boolean;
   title: string;
+  align?: "left" | "right";
 }
 
 function CalendarPopover({
@@ -60,10 +61,24 @@ function CalendarPopover({
   onClose,
   isEn,
   title,
+  align = "left",
 }: CalendarPopoverProps) {
   const initial = selectedDate ? new Date(selectedDate) : new Date();
   const [viewYear, setViewYear] = useState(initial.getFullYear());
   const [viewMonth, setViewMonth] = useState(initial.getMonth());
+  const popoverRef = useRef<HTMLDivElement>(null);
+  const [openUpward, setOpenUpward] = useState(false);
+
+  // Auto-flip upward if there isn't enough vertical space below
+  useEffect(() => {
+    if (popoverRef.current) {
+      const rect = popoverRef.current.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+      if (rect.bottom > viewportHeight - 16) {
+        setOpenUpward(true);
+      }
+    }
+  }, []);
 
   const prevMonth = () => {
     if (viewMonth === 0) {
@@ -101,26 +116,36 @@ function CalendarPopover({
   const weekHeadersVi = ["T2", "T3", "T4", "T5", "T6", "T7", "CN"];
   const weekHeadersEn = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"];
 
+  const placementClass = openUpward
+    ? "bottom-full mb-1.5 slide-in-from-bottom-1"
+    : "top-full mt-1.5 slide-in-from-top-1";
+
+  const alignClass =
+    align === "right"
+      ? "left-1/2 -translate-x-1/2 sm:translate-x-0 sm:left-auto sm:right-0"
+      : "left-1/2 -translate-x-1/2 sm:translate-x-0 sm:left-0 sm:right-auto";
+
   return (
     <div
+      ref={popoverRef}
       onClick={(e) => e.stopPropagation()}
-      className="absolute left-0 sm:left-auto sm:right-0 md:left-0 top-full z-50 mt-1.5 w-[295px] sm:w-[315px] rounded-[6px] bg-white p-3.5 shadow-2xl border border-slate-200 text-slate-800"
+      className={`absolute ${placementClass} ${alignClass} z-50 w-[260px] sm:w-[275px] rounded-[6px] bg-white p-2.5 shadow-2xl border border-slate-200 text-slate-800 animate-in fade-in duration-150`}
     >
       {/* Header: Title and Month navigation */}
-      <div className="flex items-center justify-between pb-2.5 mb-2 border-b border-slate-100">
-        <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
+      <div className="flex items-center justify-between pb-1.5 mb-1.5 border-b border-slate-100">
+        <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">
           {title}
         </span>
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-0.5">
           <button
             type="button"
             onClick={prevMonth}
             aria-label="Previous month"
             className="p-1 rounded hover:bg-slate-100 text-slate-600 transition cursor-pointer"
           >
-            <ChevronLeft className="size-4" />
+            <ChevronLeft className="size-3.5" />
           </button>
-          <span className="text-xs font-bold text-slate-800 min-w-[105px] text-center">
+          <span className="text-xs font-bold text-slate-800 min-w-[95px] text-center">
             {isEn ? `${monthNamesEn[viewMonth]} ${viewYear}` : `${monthNamesVi[viewMonth]}, ${viewYear}`}
           </span>
           <button
@@ -129,25 +154,25 @@ function CalendarPopover({
             aria-label="Next month"
             className="p-1 rounded hover:bg-slate-100 text-slate-600 transition cursor-pointer"
           >
-            <ChevronRight className="size-4" />
+            <ChevronRight className="size-3.5" />
           </button>
         </div>
       </div>
 
       {/* Weekday headers */}
-      <div className="grid grid-cols-7 gap-1 text-center mb-1">
+      <div className="grid grid-cols-7 gap-0.5 text-center mb-0.5">
         {(isEn ? weekHeadersEn : weekHeadersVi).map((day, i) => (
-          <span key={i} className="text-[11px] font-semibold text-slate-400 py-1">
+          <span key={i} className="text-[10px] font-semibold text-slate-400 py-0.5">
             {day}
           </span>
         ))}
       </div>
 
       {/* Days grid */}
-      <div className="grid grid-cols-7 gap-1 text-center">
+      <div className="grid grid-cols-7 gap-0.5 text-center">
         {/* Leading empty days */}
         {Array.from({ length: firstDayOfWeek }).map((_, i) => (
-          <div key={`empty-${i}`} className="size-8" />
+          <div key={`empty-${i}`} className="size-7" />
         ))}
 
         {/* Days in month */}
@@ -164,7 +189,7 @@ function CalendarPopover({
               type="button"
               disabled={isPast}
               onClick={() => onSelectDate(dateStr)}
-              className={`size-8 text-xs font-medium rounded-full flex items-center justify-center transition cursor-pointer ${
+              className={`size-7 text-[11px] font-medium rounded-full flex items-center justify-center transition cursor-pointer ${
                 isSelected
                   ? "bg-[#0098a2] text-white font-bold shadow-sm"
                   : isPast
@@ -181,7 +206,7 @@ function CalendarPopover({
       </div>
 
       {/* Quick actions footer */}
-      <div className="flex items-center justify-between pt-2.5 mt-2 border-t border-slate-100 text-xs">
+      <div className="flex items-center justify-between pt-1.5 mt-1.5 border-t border-slate-100 text-[11px]">
         <button
           type="button"
           onClick={() => onSelectDate(todayStr)}
@@ -189,7 +214,7 @@ function CalendarPopover({
         >
           {isEn ? "Today" : "Hôm nay"}
         </button>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2.5">
           {selectedDate && (
             <button
               type="button"
@@ -450,6 +475,7 @@ export function DiscoverySearch() {
               onClose={() => setOpenDate(null)}
               isEn={isEn}
               title={isEn ? "Departure Date" : "Chọn Ngày Đi"}
+              align="left"
             />
           )}
         </div>
@@ -509,6 +535,7 @@ export function DiscoverySearch() {
               onClose={() => setOpenDate(null)}
               isEn={isEn}
               title={isEn ? "Return Date" : "Chọn Ngày Về"}
+              align="right"
             />
           )}
         </div>
