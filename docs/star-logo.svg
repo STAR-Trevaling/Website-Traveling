@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 100" fill="none" width="100%" height="100%">
+  <defs>
+    <linearGradient id="starGoldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FDE047" />
+      <stop offset="45%" stop-color="#EAB308" />
+      <stop offset="100%" stop-color="#CA8A04" />
+    </linearGradient>
+    <filter id="starGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="2" stdDeviation="5" flood-color="#EAB308" flood-opacity="0.5" />
+    </filter>
+    <style>
+      .brand-title {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+        font-size: 50px;
+        font-weight: 900;
+        letter-spacing: 5px;
+        fill: #0F172A;
+      }
+      .brand-desc {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+        font-size: 26px;
+        font-weight: 700;
+        letter-spacing: 6px;
+        fill: #0098A2;
+      }
+      .brand-tag {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        fill: #64748B;
+      }
+      @media (prefers-color-scheme: dark) {
+        .brand-title { fill: #F8FAFC; }
+        .brand-tag { fill: #94A3B8; }
+      }
+    </style>
+  </defs>
+
+  <!-- 5-Point Precision Golden Star Emblem -->
+  <g transform="translate(15, 10) scale(0.8)" filter="url(#starGlow)">
+    <polygon points="50,5 64,36 98,38 72,60 80,94 50,75 20,94 28,60 2,38 36,36" fill="url(#starGoldGrad)" />
+  </g>
+
+  <!-- Dual-Element Wordmark: STAR TRAVELS -->
+  <text x="112" y="60" class="brand-title">STAR</text>
+  <text x="272" y="60" class="brand-desc">TRAVELS</text>
+  <text x="114" y="82" class="brand-tag">DISCOVERY &bull; EXPERIENCES &bull; PARTNERS</text>
+</svg>

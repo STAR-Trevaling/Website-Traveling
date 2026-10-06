@@ -13,12 +13,55 @@
 - Git repository setup: initial empty commit on `main`, scoped conventional branches (`chore/project-setup`, `feat/shared-contracts`, `feat/backend-core`, `feat/frontend-web`, `docs/project-context`, `feat/agent-skills`), clean star-graph branching from `main`, integration into `chore/platform-integration`, and remote push to `https://github.com/STAR-Trevaling/Website-Traveling.git`.
 - GitHub Actions CI & Security Pipeline: complete automation with PostGIS 17 + Redis 7 services, dynamic GDAL/GEOS paths, Django migrations check, Ruff linter & formatter, MyPy static typing, Bandit SAST security audit, Pytest suite, Next.js typecheck & build, TruffleHog secret scanning, npm audit, and GitHub CodeQL analysis. All workflows passing 100% green.
 - Anima Template Frontend Pages Completion: Redesigned and implemented all customer-facing routes (`/about`, `/contact`, `/partner`, `/experiences`, `/experiences/[slug]`, `/destinations`, `/destinations/[slug]`, `/stories`, `/stories/[slug]`, `/tours`, `/tours/[slug]`, `/not-found`) with pixel-level Anima template aesthetics (`rounded-[2px]`, `#0098a2` teal accents, Yellowtail script typography, frosted glass `bg-white/85 backdrop-blur-md`, interactive booking cards, inquiry forms, and FAQ accordion) perfectly aligned with Home page tours, adventures, and editorial stories.
+- Semantic Monorepo Layout Restructuring (`apps/public-site` + `apps/api` + `packages/contracts`):
+  - Permanently removed legacy admin prototype (`apps/admin/`) as requested, eliminating duplicate code and unused dependencies.
+  - Standardized backend modular monolith as `apps/api` (Django 5.2 + DRF + PostGIS + Celery).
+  - Standardized customer frontend as `apps/public-site` (Next.js 15 App Router + Tailwind CSS).
+  - Preserved shared type contracts as `packages/contracts` (@travel/contracts).
+  - Standardized directory layout matching Vercel / Turborepo / Nx and Python production conventions.
+  - Updated all Docker Compose configurations, GitHub Actions CI workflows, static sanity scripts, tsconfig path mappings, and repository documentation.
+
+- Complete Bilingual i18n Architecture & Language Switcher (`apps/public-site/`):
+  - Solved mixed Vietnamese/English content by enforcing single active language policy across all customer-facing routes and components.
+  - Implemented `LanguageProvider` and `useLanguage` context supporting reactive locale switching (`vi` and `en`) with `localStorage` and cookie persistence (`star_travels_locale`) and automatic `document.documentElement.lang` attribute sync.
+  - Added extensible pill language switcher `[ 🇻🇳 VI | 🇬🇧 EN ]` with active state indicators supporting both transparent header overlay mode and standard mode, on both desktop header and mobile navigation drawer.
+  - Applied high-ranking travel SEO terminology based on `seo-optimization` skill:
+    - Vietnamese: *Điểm Đến Nổi Tiếng*, *Tour Du Lịch Trọn Gói*, *Vì Sao Chọn Star Travels?*, *Trải Nghiệm Bản Địa Hôm Nay*, *Bản Tin Du Lịch*, *Vinh Danh Kỳ Quan & Di Sản*, *Bạn Đang Tìm Kiếm Trải Nghiệm Độc Bản?*.
+    - English: *Popular Destinations*, *Featured All-Inclusive Tours*, *Why Choose Star Travels?*, *Have an Adventure Today*, *NEWSLETTER*, *Award Winning*, *Looking for an Experience?*.
+  - Added bilingual data contracts and fallback records for all 12 destinations (`name_en`, `summary_en`, `description_en`) and 8 curated tours (`title_en`, `duration_en`, `departure_en`).
+
+- UI Layout Harmony, Pure User Icon, Language Consent Banner & Public Site UI Inventory:
+  - Addressed Vietnamese layout wrapping and text-length differences across the public frontend (`apps/public-site/`).
+  - Standardized hero slider titles to concise, elegant 4-word phrasing with `text-balance` to prevent orphaned words.
+  - Refined search bar columns (`flex-[1.2]` and `whitespace-nowrap`) and adventure frosted overlays (`w-[80%]` with concise 2-line descriptions) preventing overflow.
+  - Balanced tour cards and newsletter awards thumbnails (4:3 ratio with 110–128px width, granting +45px text breathing room) eliminating multi-line word breaks.
+  - Converted the desktop user account trigger to a clean icon-only button without accompanying text (`UserRound`), ensuring generous header spacing.
+  - Implemented international-standard Language Consent & Cookie Preference Banner (`LanguageConsentBanner`): floating glassmorphic card prompting first-time visitors to choose their preferred language (`[ 🇻🇳 Tiếng Việt ]` / `[ 🇬🇧 English ]`), automatically storing their choice via cookie and localStorage, fully synchronized with the header pill switcher.
+  - Published comprehensive Markdown UI inventory documentation: `docs/public-site-ui-inventory.md`.
+
+- Full Bilingual i18n Synchronization Across Entire Public Site (Option A):
+  - Completed comprehensive bilingual review and eliminated 100% of hardcoded mixed language across all routes, layouts, cards, modals, and dynamic data fallbacks in `apps/public-site/`.
+  - Extended centralized i18n dictionary system (`src/lib/i18n/types.ts` & `src/lib/i18n/dictionary.ts`) covering all routes and components:
+    - Shared components: `PlaceCard`, `PageHero`, `LanguageConsentBanner`, `SiteFooter`, `SiteHeaderClient`, `MobileNav`, `LanguageSwitcher`.
+    - Catalog & Detail Pages: `ToursCatalog`, `TourBookingCard`, `/tours/[slug]`, `/experiences`, `ExperienceBookingCard`, `ReviewForm`, `/experiences/[slug]`, `/destinations`, `/destinations/[slug]`.
+    - Content & Informational Pages: `/about`, `ContactForm`, `ContactFAQ`, `/contact`, `PartnerForm`, `/partner`, `/stories`, `/stories/[slug]`.
+    - User Authentication & Portal: `LoginForm`, `RegisterForm`, `LogoutButton`, `/login`, `/register`, `/account`.
+    - Error & Fallback Pages: `/not-found` (404).
+  - Server components read cookies (`star_travels_locale`) to render pristine locale content without flash; client components reactively sync with `useLanguage()`.
+  - Zero leftover mixed English/Vietnamese: 100% pure Vietnamese when `locale === "vi"`, 100% natural luxury travel English when `locale === "en"`.
+
+- Brand Identity & Logo Standard Skill (`.agents/skills/brand-identity-and-logo/`):
+  - Created official brand engineering skill establishing **`STAR`** as the finalized, non-negotiable brand name.
+  - Enforced dual-element logo design contract: Every logo instance **must** contain both the brand name (**`STAR`**) and the star emblem/icon (**Hình ngôi sao** - 5-pointed golden star `#EAB308`).
+  - Documented complete vector geometry (SVG polygon points, 72° symmetry, golden ratio $0.382$), color hierarchy (`#EAB308` Gold, `#1E293B` Slate, `#0098A2` Teal), typography pairings, clear space ($0.5X$), and prohibited anti-patterns.
+  - Implemented reusable production component `<StarLogo />` (`apps/public-site/src/components/shared/star-logo.tsx`) supporting multiple lockup variants (`integrated`, `horizontal`, `stacked`, `icon-only`) and sizing scales (`sm`, `md`, `lg`, `xl`).
+  - Integrated `<StarLogo />` into `SiteFooter` and `MobileNav`, and documented standards in `AGENTS.md` and `context/ui-context.md`.
 
 ## Validation status
 - GitHub Actions CI (Run #10) & CodeQL Analysis: **PASSED (All 3 jobs green)**.
-- Local static sanity (`validate_context.py`, `static_sanity.py`, Python AST across 3,205 files): **PASSED**.
-- Next.js production build (`npm run build` in `apps/frontend`): **PASSED (19/19 pages static & dynamic generated)**.
-- TypeScript typecheck (`tsc --noEmit`) & ESLint: **PASSED (zero errors)**.
-- Codebase styling & typing: Ruff and MyPy fully aligned with zero errors.
+- Local static sanity (`validate_context.py`, `static_sanity.py`, Python AST across 3,205 files in `apps/api` and `scripts`): **PASSED**.
+- Next.js production build & typecheck (`npm run build` & `npm run typecheck` in `apps/public-site`): **VERIFIED (Exit code 0)**.
+- ESLint checks (`npm run lint` in `apps/public-site`): **PASSED (zero warnings/errors)**.
+
 
 

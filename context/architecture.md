@@ -67,8 +67,8 @@ Scale Next.js and the Django modular monolith horizontally first. Extract servic
 
 ## Monorepo Layout
 Structured as a clean polyglot monorepo with independent dependency domains:
-- `apps/frontend`: Next.js 15 customer web application.
-- `apps/backend`: Django 5.2 + DRF modular monolith.
+- `apps/public-site`: Next.js 15 customer web application.
+- `apps/api`: Django 5.2 + DRF modular monolith.
 - `packages/contracts`: Shared TypeScript data models and OpenAPI specifications (@travel/contracts).
 - `docs/`: Product architecture, design reference and template archives.
 - `scripts/`: Environment validation and sanity checks.

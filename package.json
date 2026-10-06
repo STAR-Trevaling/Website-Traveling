@@ -1,0 +1,12 @@
+{
+  "name": "travel-platform-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "pnpm --filter travel-platform-web dev",
+    "build": "pnpm --filter travel-platform-web build",
+    "start": "pnpm --filter travel-platform-web start",
+    "lint": "pnpm --filter travel-platform-web lint",
+    "typecheck": "pnpm --filter travel-platform-web typecheck"
+  }
+}

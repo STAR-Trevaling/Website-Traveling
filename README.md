@@ -1,79 +1,101 @@
 <div align="center">
 
-# 🌍 Wanderlust Vietnam
+<img src="./docs/star-logo.svg" alt="STAR Travels Logo" width="420" />
 
-### Travel Discovery, Partner Onboarding & Content Platform
+# STAR Travels
 
-*A production-grade polyglot monorepo featuring a Next.js 15 customer web application, a Django 5.2 REST Framework modular monolith, PostGIS geospatial engine, and shared TypeScript data contracts.*
+### Enterprise Travel Discovery, Partner Onboarding & Geospatial Intelligence Platform
 
----
-
-[![Next.js](https://img.shields.io/badge/Next.js-15.5-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)](https://nextjs.org/)
-[![React](https://img.shields.io/badge/React-19.1-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://react.dev/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![Django](https://img.shields.io/badge/Django-5.2_LTS-092E20?style=for-the-badge&logo=django&logoColor=white)](https://www.djangoproject.com/)
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-17-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
-[![PostGIS](https://img.shields.io/badge/PostGIS-3.5-336791?style=for-the-badge&logo=postgis&logoColor=white)](https://postgis.net/)
-[![Redis](https://img.shields.io/badge/Redis-7-DC382D?style=for-the-badge&logo=redis&logoColor=white)](https://redis.io/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
-[![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
+*A production-ready polyglot monorepo engineered with Next.js 15.5 App Router, React 19, Django 5.2 LTS modular monolith, PostGIS 3.5 spatial engine, and shared TypeScript data contracts.*
 
 <br/>
 
-[Key Highlights](#-key-engineering-highlights) • [Architecture](#-system-architecture) • [Repository Layout](#-repository-layout) • [Quickstart](#-quickstart-with-docker) • [Local Development](#-local-development) • [API Reference](#-rest-api-reference) • [Quality & CI](#-quality-assurance--testing)
+[![Next.js 15](https://img.shields.io/badge/Next.js-15.5-black?style=flat-square&logo=next.js)](https://nextjs.org/)
+[![React 19](https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react&logoColor=black)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Django](https://img.shields.io/badge/Django-5.2_LTS-092E20?style=flat-square&logo=django&logoColor=white)](https://www.djangoproject.com/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-17-4169E1?style=flat-square&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+[![PostGIS](https://img.shields.io/badge/PostGIS-3.5-336791?style=flat-square&logo=postgis&logoColor=white)](https://postgis.net/)
+[![Redis](https://img.shields.io/badge/Redis-7-DC382D?style=flat-square&logo=redis&logoColor=white)](https://redis.io/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
+[![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?style=flat-square&logo=docker&logoColor=white)](https://www.docker.com/)
+[![CI Status](https://img.shields.io/badge/CI-Passing-brightgreen?style=flat-square&logo=githubactions&logoColor=white)](#-quality-assurance--testing)
+[![License](https://img.shields.io/badge/License-MIT-blue?style=flat-square)](LICENSE)
+
+<br/>
+
+[Overview](#-overview) • [Key Highlights](#-key-engineering-highlights) • [System Architecture](#-system-architecture) • [Repository Layout](#-repository-layout) • [Quickstart (Docker)](#-quickstart-with-docker) • [Local Development](#-local-development) • [REST API Reference](#-rest-api-reference) • [Configuration](#-environment-configuration) • [Quality & Testing](#-quality-assurance--testing)
 
 </div>
 
 ---
 
+## 📖 Overview
+
+**STAR Travels** (`STAR`) is an enterprise-grade travel discovery and merchant onboarding platform tailored for exploring destinations, cultural experiences, curated tours, and verified hospitality across Vietnam.
+
+Built upon strict **Clean/Hexagonal Architecture** and pragmatic **DDD-lite** boundaries, the platform decouples a modern Next.js 15 customer web application from a resilient Django 5.2 REST Framework backend. It eliminates schema drift through a standalone shared TypeScript contract layer (`@travel/contracts`) and guarantees data integrity via row-locked partner workflows and PostGIS spatial indexing.
+
+---
+
 ## 🚀 Key Engineering Highlights
 
-- 📍 **PostGIS Geospatial Discovery**: High-performance radius queries (`ST_DWithin`) with spatial indexing for places, experiences, and attractions near travelers.
-- ⚡ **Next.js 15 & React 19 Frontend**: Server-Side Rendering (SSR), React Server Components (RSC), and Backend-for-Frontend (BFF) route handlers managing secure `HttpOnly` cookie authentication (no tokens in `localStorage`).
-- 🏛️ **Django Modular Monolith**: 8 decoupled bounded contexts (`accounts`, `destinations`, `places`, `partners`, `content`, `reviews`, `audit`, `core`) with strict transaction boundaries.
-- 🤝 **B2B Partner State Machine**: Atomic application transitions (`submitted -> under_review -> approved/rejected`) with row-level database locking and audit event logging.
-- 📦 **Shared Data Contracts (`@travel/contracts`)**: Pure TypeScript definitions and OpenAPI 3.1 specifications eliminating API drift between frontend and backend without leaking source code.
-- 🎨 **Responsive Template Reconstruction**: Re-engineered from the Anima Star Travels reference into clean CSS Grid/Flexbox layouts with Radix UI primitives and full SEO metadata.
+| Capability | Technical Implementation | Value Delivered |
+|---|---|---|
+| 📍 **Geospatial Discovery** | PostGIS 3.5 spatial indexing with `ST_DWithin` radius queries (`?lat=&lng=&radius_km=`). | Real-time discovery of nearby attractions, heritage sites, and experiences. |
+| ⚡ **Next.js 15 & React 19** | App Router, Server-Side Rendering (SSR), React Server Components (RSC), and Edge middleware. | Sub-second page loads, optimal Core Web Vitals, and indexable SEO metadata. |
+| 🛡️ **BFF Cookie Security** | Next.js Backend-for-Frontend routes (`/api/auth/*`) issuing secure `HttpOnly` session cookies. | Eliminates token storage in `localStorage` to defend against Cross-Site Scripting (XSS). |
+| 🌐 **100% Bilingual System** | Pure Vietnamese (`vi`) and English (`en`) dictionary toggle with zero mixed-language UI bleeding. | First-class UX for domestic travelers and international explorers alike. |
+| 🏛️ **Modular Monolith** | 8 decoupled bounded contexts in Django (`accounts`, `destinations`, `places`, `partners`, `content`, `reviews`, `audit`, `core`). | Clean separation of concerns with atomic transactional boundaries. |
+| 🤝 **Partner State Machine** | Strict state transitions (`submitted` → `under_review` → `approved`/`rejected`) with row-level locks. | Prevents concurrent approval races and maintains immutable audit logs. |
+| 📦 **Shared Data Contracts** | Standalone package `@travel/contracts` exporting TypeScript models and OpenAPI 3.1 schemas. | Guaranteed type safety across polyglot stacks without leaky internal abstractions. |
+| 🎨 **STAR Design System** | Reconstructed from the Anima STAR Travels reference using Tailwind CSS, Bento grids, and Radix UI. | Pixel-accurate visual hierarchy with responsive fluidity across mobile, tablet, and desktop. |
 
 ---
 
 ## 📐 System Architecture
 
+The monorepo operates on a clean separation of presentation, business contracts, domain logic, and transactional persistence:
+
 ```mermaid
 graph TD
-    Client["🌐 Web Browser (Traveler / Partner)"]
-    
-    subgraph "Frontend Layer (apps/frontend)"
-        NextWeb["Next.js 15 App Router (SSR / RSC)"]
-        BFF["BFF Auth Routes (/api/auth/*)<br/>HttpOnly Cookie Safe"]
-    end
-    
-    subgraph "Contracts Layer (packages/contracts)"
-        Contracts["@travel/contracts<br/>TypeScript Models & OpenAPI Spec"]
-    end
-    
-    subgraph "Backend Layer (apps/backend)"
-        DRF["Django 5.2 REST Framework API"]
-        AuthCtx["accounts (Identity & JWT)"]
-        GeoCtx["places & destinations (PostGIS)"]
-        PartnerCtx["partners (State Machine)"]
-        ReviewCtx["reviews & favorites"]
-        AuditCtx["audit (Operational Logs)"]
-    end
-    
-    subgraph "Infrastructure Layer"
-        Postgres[("🐘 PostgreSQL 17 + PostGIS 3.5<br/>Source of Truth")]
-        Redis[("⚡ Redis 7 Cache & Broker")]
-        CeleryWorker["⚙️ Celery 5 Async Worker"]
+    Client["🌐 Web Client (Desktop / Mobile)"]
+
+    subgraph "Frontend Layer (apps/public-site)"
+        NextWeb["Next.js 15 App Router<br/>(SSR, RSC, Bilingual i18n)"]
+        BFF["BFF Auth Proxy (/api/auth/*)<br/>HttpOnly Cookie Session Storage"]
     end
 
-    Client -->|HTTP / HTTPS| NextWeb
-    Client -->|Auth Actions| BFF
-    BFF -->|Proxied REST| DRF
-    NextWeb -.->|Type Validation| Contracts
-    DRF -.->|OpenAPI Sync| Contracts
-    NextWeb -->|Direct REST /api/v1/*| DRF
-    DRF --> Postgres
+    subgraph "Data Contracts (packages/contracts)"
+        Contracts["@travel/contracts<br/>TypeScript Interfaces & OpenAPI 3.1 Specs"]
+    end
+
+    subgraph "Backend Core (apps/api)"
+        DRF["Django 5.2 REST Framework API Root (/api/v1/)"]
+        subgraph "Bounded Contexts"
+            AccountsCtx["accounts<br/>(Identity, RBAC, JWT)"]
+            DestCtx["destinations & places<br/>(Catalog & PostGIS Engine)"]
+            PartnerCtx["partners<br/>(B2B State Machine & Locking)"]
+            ContentCtx["content<br/>(Stories & Editorial Feeds)"]
+            ReviewCtx["reviews & favorites<br/>(Social Proof & Bookmarks)"]
+            AuditCtx["audit<br/>(Immutable Privileged Logs)"]
+        end
+    end
+
+    subgraph "Persistence & Workers"
+        Postgres[("🐘 PostgreSQL 17 + PostGIS 3.5<br/>Spatial Queries & ACID Store")]
+        Redis[("⚡ Redis 7<br/>Cache Store & Celery Broker")]
+        CeleryWorker["⚙️ Celery 5 Async Worker<br/>Background Notifications"]
+    end
+
+    Client -->|HTTPS / UI Interaction| NextWeb
+    Client -->|Authentication Actions| BFF
+    BFF -->|Proxied JSON-RPC / REST| DRF
+    NextWeb -.->|Static Type Contract| Contracts
+    DRF -.->|OpenAPI Contract Sync| Contracts
+    NextWeb -->|Direct Read Operations /api/v1/*| DRF
+    DRF --> AccountsCtx & DestCtx & PartnerCtx & ContentCtx & ReviewCtx & AuditCtx
+    AccountsCtx & DestCtx & PartnerCtx & ContentCtx & ReviewCtx & AuditCtx --> Postgres
     DRF --> Redis
     Redis <--> CeleryWorker
 ```
@@ -85,107 +107,126 @@ graph TD
 ```text
 travel-platform-mvp-complete/
 ├── apps/
-│   ├── backend/                  # Django 5.2 REST Framework modular monolith
-│   │   ├── accounts/             # Identity, roles, JWT authentication
-│   │   ├── audit/                # Immutable privileged event logs
-│   │   ├── config/               # Settings, ASGI/WSGI, Celery, root URLs
-│   │   ├── content/              # Editorial travel stories & articles
-│   │   ├── core/                 # Seed commands, base pagination, exceptions
-│   │   ├── destinations/         # Destination entities & metadata
-│   │   ├── partners/             # Partner application state machine & services
-│   │   ├── places/               # Places, categories & PostGIS geospatial search
-│   │   ├── reviews/              # User reviews & saved favorites
-│   │   ├── tests/                # Pytest unit & integration test suites
-│   │   ├── Dockerfile            # Production Python container
-│   │   ├── manage.py
-│   │   └── requirements.txt      # Python dependencies
+│   ├── api/                          # Django 5.2 REST Framework modular monolith
+│   │   ├── accounts/                 # User identity, roles (Customer, Partner, Staff), JWT auth
+│   │   ├── audit/                    # Append-only audit logging for privileged actions
+│   │   ├── config/                   # Root settings, ASGI/WSGI handlers, Celery app, URLs
+│   │   ├── content/                  # Editorial articles, travel stories, and spotlights
+│   │   ├── core/                     # Shared pagination, exceptions, and seed commands
+│   │   ├── destinations/             # Destination models, regions, and search filters
+│   │   ├── partners/                 # B2B partner application state machine and review service
+│   │   ├── places/                   # Locations, categories, and PostGIS geospatial search
+│   │   ├── reviews/                  # User ratings, verified reviews, and saved favorites
+│   │   ├── tests/                    # Unit, integration, and state-machine test suites
+│   │   ├── Dockerfile                # Multi-stage Python 3.12 production container
+│   │   ├── manage.py                 # Django management CLI
+│   │   └── requirements.txt          # Python dependencies
 │   │
-│   └── frontend/                 # Next.js 15 customer web application
-│       ├── public/               # Static assets, hero images, adventure graphics
+│   └── public-site/                  # Next.js 15.5 customer & partner web application
+│       ├── public/                   # Static media, SVG icons, and brand graphics
 │       ├── src/
-│       │   ├── app/              # 19 static & dynamic App Router pages
-│       │   ├── components/       # Radix UI primitives, layout & feature components
-│       │   └── lib/              # Client API, auth utils & contracts bridge
-│       ├── Dockerfile            # Production Next.js container
-│       ├── eslint.config.mjs     # ESLint 9 flat configuration
-│       ├── package.json          # Node/TypeScript dependencies
-│       └── tsconfig.json         # Path aliases (@/* and @travel/contracts)
+│       │   ├── app/                  # 19 App Router pages (SSR/RSC with full bilingual i18n)
+│       │   ├── components/           # Reusable Radix UI primitives, cards, hero, and navigation
+│       │   └── lib/                  # BFF client, auth helpers, and bilingual translation dictionaries
+│       ├── Dockerfile                # Production Node.js 20 Next.js container
+│       ├── eslint.config.mjs         # ESLint 9 flat configuration
+│       ├── package.json              # Web dependencies and scripts
+│       └── tsconfig.json             # TypeScript config with @/* and @travel/contracts paths
 │
 ├── packages/
-│   └── contracts/                # [@travel/contracts] Shared API contracts & data models
-│       ├── src/index.ts          # Pure TypeScript interfaces & payloads
+│   └── contracts/                    # [@travel/contracts] Shared API data models
+│       ├── src/index.ts              # Pure TypeScript schemas & payload interfaces
 │       ├── package.json
 │       └── tsconfig.json
 │
-├── docs/                         # Technical documentation & reference archive
-│   ├── design-reference/         # High-resolution UI mockups & parity notes
-│   ├── reference/anima-original/ # Reconstructed Anima/Vite design reference
-│   ├── implementation-plan.md
-│   └── validation-report.md
+├── docs/                             # Engineering artifacts & brand assets
+│   ├── star-logo.svg                 # Official STAR brand vector logo (name + star emblem)
+│   ├── public-site-ui-inventory.md   # Inventory of all 19 customer-facing routes & mock data
+│   ├── ui-parity-checklist.md        # Layout parity checklist with Anima design reference
+│   ├── implementation-plan.md        # Technical execution and architecture plans
+│   └── validation-report.md          # Verification findings and test execution logs
 │
-├── context/                      # Canonical AI architecture & workflow rules (AGENTS.md)
-├── scripts/                      # Static sanity (AST check) & context validation scripts
-├── .agents/                      # Complete suite of 20 agent skills
-├── docker-compose.yml            # Multi-container orchestration (PostGIS, Redis, API, Web)
-├── Makefile                      # Standard developer workflows
-└── .github/workflows/ci.yml      # GitHub Actions CI/CD pipelines
+├── context/                          # Canonical engineering context (AGENTS.md, architecture)
+├── scripts/                          # AST validation, sanity checks, and context linters
+├── .agents/                          # Curated agent skills (Brand Identity, TDD, Clean Arch)
+├── docker-compose.yml                # Multi-container orchestration (DB, Redis, API, Worker, Web)
+├── Makefile                          # Unified developer workflow targets
+└── .github/workflows/ci.yml          # GitHub Actions automated validation workflow
 ```
 
 ---
 
 ## ⚡ Quickstart with Docker
 
-Get the full platform running locally in under 3 minutes:
+Spin up the entire end-to-end platform (database, cache, worker, API, and web frontend) in under **3 minutes**:
+
+### 1. Clone & Configure Environment
 
 ```bash
-# 1. Clone repository and initialize environment variables
-git clone https://github.com/huynguyen2k5/Website-Traveling.git
+git clone https://github.com/STAR-Trevaling/Website-Traveling.git
 cd Website-Traveling
 cp .env.example .env
+```
 
-# 2. Spin up PostGIS and Redis
+### 2. Boot Infrastructure & Apply Database Migrations
+
+```bash
+# Start PostGIS and Redis
 docker compose up --build -d db redis
 
-# 3. Run database migrations & seed demo dataset
+# Run migrations and seed the complete demo dataset
 docker compose run --rm backend python manage.py migrate
 docker compose run --rm backend python manage.py seed_demo
+```
 
-# 4. Launch Django backend, Celery worker, and Next.js frontend
+### 3. Launch Services
+
+```bash
+# Start Django backend, Celery async worker, and Next.js frontend
 docker compose up --build -d backend worker frontend
 ```
 
-### Active Services & Ports
+### 4. Verified Services & Credentials
 
-| Service | URL | Description | Default Credentials |
+| Service | Endpoint | Description | Default Credentials |
 |---|---|---|---|
-| **Customer Web** | [http://localhost:3000](http://localhost:3000) | Next.js 15 customer portal | Public |
-| **REST API** | [http://localhost:8000/api/v1/](http://localhost:8000/api/v1/) | Django REST Framework API root | Public / Bearer JWT |
-| **OpenAPI Docs** | [http://localhost:8000/api/v1/docs/](http://localhost:8000/api/v1/docs/) | Interactive Swagger UI | Public |
+| **Customer Web** | [http://localhost:3000](http://localhost:3000) | Next.js 15 customer web application | Public |
+| **REST API Root** | [http://localhost:8000/api/v1/](http://localhost:8000/api/v1/) | Django REST Framework API root | Public / Bearer JWT |
+| **Swagger / OpenAPI** | [http://localhost:8000/api/v1/docs/](http://localhost:8000/api/v1/docs/) | Interactive API documentation | Public |
 | **Django Admin** | [http://localhost:8000/admin/](http://localhost:8000/admin/) | Platform administration dashboard | `admin_demo` / `AdminDemo123!` |
 
-*Traveler demo account: `traveler_demo` / `TravelerDemo123!`*
+> [!TIP]
+> **Pre-configured Demo Accounts:**
+> - **Platform Administrator:** `admin_demo` / `AdminDemo123!` (Full Django admin & approval rights)
+> - **Traveler Account:** `traveler_demo` / `TravelerDemo123!` (Can write reviews and bookmark favorites)
 
 ---
 
 ## 💻 Local Development
 
-Run frontend and backend independently on your host machine:
+Developers can run the frontend and backend locally on their host operating system:
 
-### 1. Frontend (`apps/frontend`)
+### 1. Frontend (`apps/public-site`)
+
+*Requires Node.js 20+ and npm.*
+
 ```bash
-cd apps/frontend
+cd apps/public-site
 cp .env.example .env.local
 npm install
 npm run dev
 ```
+The web portal will be accessible at [http://localhost:3000](http://localhost:3000).
 
-### 2. Backend (`apps/backend`)
-*Requires local PostgreSQL 17 with PostGIS extension and Redis.*
+### 2. Backend (`apps/api`)
+
+*Requires Python 3.12+, PostgreSQL 17 with PostGIS 3.5, and Redis.*
+
 ```bash
-cd apps/backend
+cd apps/api
 python -m venv .venv
 
-# Activate virtual environment
+# Activate virtual environment:
 # On Linux/macOS:
 source .venv/bin/activate
 # On Windows PowerShell:
@@ -193,56 +234,106 @@ source .venv/bin/activate
 
 pip install -r requirements.txt
 python manage.py migrate
+python manage.py seed_demo
 python manage.py runserver 8000
+```
+The REST API will be accessible at [http://localhost:8000/api/v1/](http://localhost:8000/api/v1/).
+
+### 3. Shared Contracts (`packages/contracts`)
+
+```bash
+cd packages/contracts
+npm install
+npm run typecheck
 ```
 
 ---
 
 ## 📡 REST API Reference
 
-All endpoints are versioned under `/api/v1/`:
+All backend API endpoints are versioned under `/api/v1/`:
 
 | Context | Method | Endpoint | Description | Auth Required |
 |---|---|---|---|---|
-| **Identity** | `POST` | `/api/v1/auth/register/` | Register new customer account | Public |
+| **Identity** | `POST` | `/api/v1/auth/register/` | Register a new customer traveler account | Public |
 | **Identity** | `POST` | `/api/v1/auth/token/` | Obtain JWT access + refresh tokens | Public |
 | **Identity** | `POST` | `/api/v1/auth/token/refresh/` | Refresh expired access token | Public |
-| **Identity** | `GET` | `/api/v1/auth/me/` | Current user profile & platform role | Bearer JWT |
-| **Destinations** | `GET` | `/api/v1/destinations/` | List and search destinations | Public |
-| **Places** | `GET` | `/api/v1/places/` | Filter places by destination/category | Public |
-| **Places** | `GET` | `/api/v1/places/nearby/` | PostGIS spatial discovery (`?lat=&lng=&radius_km=`) | Public |
-| **Stories** | `GET` | `/api/v1/articles/` | Editorial articles and travel stories | Public |
-| **Reviews** | `GET` | `/api/v1/reviews/` | List place reviews | Public |
-| **Reviews** | `POST` | `/api/v1/reviews/` | Create review (1 per place per user) | Bearer JWT |
-| **Favorites** | `GET` | `/api/v1/favorites/` | List traveler saved favorites | Bearer JWT |
-| **Favorites** | `POST` | `/api/v1/favorites/` | Save / bookmark place | Bearer JWT |
-| **Partners** | `POST` | `/api/v1/partner-applications/` | Submit B2B partnership application | Bearer JWT |
-| **Partners** | `POST` | `/api/v1/partner-applications/{id}/approve/` | Admin: atomic approval & org provision | Staff |
-| **Partners** | `POST` | `/api/v1/partner-applications/{id}/reject/` | Admin: reject application | Staff |
-| **Schema** | `GET` | `/api/v1/schema/` | OpenAPI 3.1 JSON/YAML schema | Public |
-| **Docs** | `GET` | `/api/v1/docs/` | Interactive Swagger UI | Public |
+| **Identity** | `GET` | `/api/v1/auth/me/` | Current user profile, role, and permissions | Bearer JWT |
+| **Destinations** | `GET` | `/api/v1/destinations/` | List and filter destinations with metadata | Public |
+| **Destinations** | `GET` | `/api/v1/destinations/{slug}/` | Retrieve destination details, places, and stories | Public |
+| **Places & Geo** | `GET` | `/api/v1/places/` | Filter places by destination, category, and budget | Public |
+| **Places & Geo** | `GET` | `/api/v1/places/nearby/` | **PostGIS spatial discovery** (`?lat=&lng=&radius_km=`) | Public |
+| **Places & Geo** | `GET` | `/api/v1/places/{slug}/` | Place detail with coordinates and review summary | Public |
+| **Content** | `GET` | `/api/v1/articles/` | Editorial articles, travel guides, and stories | Public |
+| **Reviews** | `GET` | `/api/v1/reviews/` | List user ratings and reviews for places | Public |
+| **Reviews** | `POST` | `/api/v1/reviews/` | Submit a review (enforces 1 review per place per user) | Bearer JWT |
+| **Favorites** | `GET` | `/api/v1/favorites/` | List traveler's saved places and bookmarks | Bearer JWT |
+| **Favorites** | `POST` | `/api/v1/favorites/` | Save / bookmark a place | Bearer JWT |
+| **Favorites** | `DELETE` | `/api/v1/favorites/{place_id}/` | Remove a place from saved favorites | Bearer JWT |
+| **Partners** | `POST` | `/api/v1/partner-applications/` | Submit a B2B partner onboarding application | Bearer JWT |
+| **Partners** | `POST` | `/api/v1/partner-applications/{id}/approve/` | Admin: atomic approval & merchant provisioning | Staff / Admin |
+| **Partners** | `POST` | `/api/v1/partner-applications/{id}/reject/` | Admin: reject partner application with reason | Staff / Admin |
+| **Contracts** | `GET` | `/api/v1/schema/` | OpenAPI 3.1 schema specification (JSON / YAML) | Public |
+| **Contracts** | `GET` | `/api/v1/docs/` | Interactive Swagger API documentation | Public |
+
+---
+
+## ⚙️ Environment Configuration
+
+| Variable | Scope | Default Value | Description |
+|---|---|---|---|
+| `DJANGO_SECRET_KEY` | Backend | `dev-only-change-me` | Cryptographic signing key for Django |
+| `DJANGO_DEBUG` | Backend | `1` | Enable debug mode (`1` for dev, `0` for production) |
+| `DJANGO_ALLOWED_HOSTS` | Backend | `localhost,127.0.0.1,backend` | Permitted hostnames for incoming HTTP requests |
+| `POSTGRES_DB` | Database | `travel` | PostgreSQL database name |
+| `POSTGRES_USER` | Database | `travel` | PostgreSQL username |
+| `POSTGRES_PASSWORD` | Database | `travel` | PostgreSQL password |
+| `POSTGRES_HOST` | Database | `db` | Database hostname (`db` in Docker, `localhost` host) |
+| `POSTGRES_PORT` | Database | `5432` | PostgreSQL listening port |
+| `REDIS_URL` | Cache/Celery | `redis://redis:6379/0` | Redis connection URI |
+| `DJANGO_CSRF_TRUSTED_ORIGINS` | Backend | `http://localhost:3000` | Allowed origins for CSRF protection |
+| `BACKEND_URL` | Frontend | `http://backend:8000/api/v1` | Backend API root for Next.js SSR / BFF requests |
+| `NEXT_PUBLIC_SITE_URL` | Frontend | `http://localhost:3000` | Canonical frontend domain for OpenGraph & metadata |
+| `NEXT_PUBLIC_USE_LOCAL_ANIMA_ASSETS`| Frontend | `0` | Flag to use local fallback assets when offline |
 
 ---
 
 ## 🛠️ Quality Assurance & Testing
 
+The repository enforces strict linting, typechecking, AST validation, and test suites across all layers:
+
 ```bash
-# Monorepo static AST validation & context integrity
+# 1. Monorepo Context & Static AST Sanity Checks
 python scripts/validate_context.py
 python scripts/static_sanity.py
 
-# Frontend quality suite
-npm --prefix apps/frontend run typecheck   # 0 TypeScript errors
-npm --prefix apps/frontend run lint        # ESLint 9 (0 errors, 0 warnings)
-npm --prefix apps/frontend run build       # Next.js 15 production build
+# 2. Frontend Quality Suite (apps/public-site)
+npm --prefix apps/public-site run typecheck   # 0 TypeScript errors (strict mode)
+npm --prefix apps/public-site run lint        # ESLint 9 Flat Config (0 errors, 0 warnings)
+npm --prefix apps/public-site run build       # Next.js 15 production build validation
 
-# Backend quality suite (via Docker)
+# 3. Backend Quality Suite (via Docker or local venv)
 make backend-check
+# Runs:
+# - python manage.py makemigrations --check --dry-run
+# - ruff check .
+# - mypy .
+# - pytest
 ```
+
+---
+
+## 🌟 Brand Identity & Guidelines
+
+All visual and brand assets adhere to the official **STAR** design system (`.agents/skills/brand-identity-and-logo`):
+
+- **Brand Name**: Standardized as **STAR** (`STAR Travels`).
+- **Logo Construction**: Mandatory dual-element lockup featuring **both** the brand name (`STAR`) and the 5-point golden star emblem symbol (`#EAB308` / `#F59E0B`).
+- **Visual Palette**: Heritage Star Gold, Midnight Slate, Coastal Teal, and Sand Cream.
 
 ---
 
 ## 📄 License & Attribution
 
-Designed and engineered with passion for Vietnam travel. Built with Next.js 15, Django 5.2, and PostGIS.
-Licensed under the [MIT License](LICENSE).
+Licensed under the [MIT License](LICENSE).  
+Engineered with precision for seamless travel experiences across Vietnam. Built with Next.js 15, Django 5.2, and PostGIS.

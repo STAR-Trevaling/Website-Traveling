@@ -1,0 +1,138 @@
+@import url("https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Cinzel:wght@600;700;800;900&family=Alegreya+Sans:wght@300;400;700&family=Allison&family=Grape+Nuts&family=Work+Sans:wght@200;300;400;500;600&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root { --background:0 0% 100%; --foreground:222.2 47.4% 11.2%; --card:0 0% 100%; --card-foreground:222.2 47.4% 11.2%; --popover:0 0% 100%; --popover-foreground:222.2 47.4% 11.2%; --primary:185 100% 32%; --primary-foreground:210 40% 98%; --secondary:210 40% 96.1%; --secondary-foreground:222.2 47.4% 11.2%; --muted:210 40% 96.1%; --muted-foreground:215.4 16.3% 46.9%; --accent:210 40% 96.1%; --accent-foreground:222.2 47.4% 11.2%; --destructive:0 84.2% 60.2%; --destructive-foreground:210 40% 98%; --border:214.3 31.8% 91.4%; --input:214.3 31.8% 91.4%; --ring:185 100% 32%; }
+  * { @apply border-border; }
+  html { scroll-behavior:smooth; background:#edf7f6; }
+  body { @apply text-foreground; font-family:"Work Sans",Arial,sans-serif; overflow-x:hidden; width:100%; min-height:100vh; background-color:transparent; }
+  a { text-decoration:none; }
+  ::selection { background:#0098a2; color:#fff; }
+}
+
+.template-page-bg {
+  background-color: transparent;
+}
+.template-shadow-text { text-shadow:0 4px 6px rgba(0,0,0,.3); }
+.template-card { box-shadow:0 0 5px rgba(0,0,0,.25); }
+.template-canvas { width:100%; min-height:100vh; overflow-x:hidden; background:transparent; }
+.script-title { font-family:"Grape Nuts",cursive; }
+.display-title { font-family:"Abril Fatface",serif; }
+.logo-title { font-family:"Allison",cursive; }
+.brand-wordmark { font-family:"Cinzel","Playfair Display",Georgia,serif; }
+
+/* Custom Cinematic Motion & Luxury Travel Micro-animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes floatGentle {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 0.85;
+    filter: drop-shadow(0 0 6px rgba(234, 179, 8, 0.45));
+  }
+  50% {
+    opacity: 1;
+    filter: drop-shadow(0 0 16px rgba(234, 179, 8, 0.85));
+  }
+}
+
+@keyframes kenBurnsSlow {
+  0% {
+    transform: scale(1.0);
+  }
+  50% {
+    transform: scale(1.06);
+  }
+  100% {
+    transform: scale(1.0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.75s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-fade-in-scale {
+  animation: fadeInScale 0.65s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-float-gentle {
+  animation: floatGentle 4s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 3.5s ease-in-out infinite;
+}
+
+.animate-ken-burns {
+  animation: kenBurnsSlow 18s ease-in-out infinite;
+}
+
+/* Stagger delay utilities */
+.animation-delay-100 { animation-delay: 100ms; }
+.animation-delay-200 { animation-delay: 200ms; }
+.animation-delay-300 { animation-delay: 300ms; }
+.animation-delay-400 { animation-delay: 400ms; }
+.animation-delay-500 { animation-delay: 500ms; }
+
+/* Luxury card hover lift with soft ambient shadow */
+.travel-card-lift {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, box-shadow;
+}
+.travel-card-lift:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 36px -8px rgba(0, 152, 162, 0.16), 0 8px 16px -6px rgba(15, 23, 42, 0.08);
+}
+.travel-card-lift:active {
+  transform: translateY(-2px) scale(0.99);
+}
+
+/* Smooth Image Scale on Card Hover */
+.travel-img-zoom {
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+.group:hover .travel-img-zoom {
+  transform: scale(1.08);
+}
+
+/* Accessible reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

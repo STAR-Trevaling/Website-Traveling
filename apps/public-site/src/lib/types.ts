@@ -1,5 +1,5 @@
 /**
- * @travel/contracts
+ * @travel/contracts & types
  * Shared API contracts, data models, and request/response specifications.
  * Enforces clean separation between Django REST backend and Next.js frontend.
  */
@@ -58,6 +58,7 @@ export interface DestinationListParams {
 export interface PlaceCategory {
   id: string;
   name: string;
+  name_en?: string;
   slug: string;
 }
 
@@ -65,11 +66,15 @@ export interface Place {
   id: string;
   slug: string;
   name: string;
+  name_en?: string;
   short_description: string;
+  short_description_en?: string;
   description: string;
+  description_en?: string;
   image_url: string;
   overlay_image_url?: string;
   address: string;
+  address_en?: string;
   website_url?: string;
   location: GeoPoint;
   destination: Destination;
@@ -184,7 +189,7 @@ export interface TokenResponse {
   user?: CurrentUser;
 }
 
-export interface RefreshTokenPayload {
+export interface RefreshRefreshTokenPayload {
   refresh: string;
 }
 
