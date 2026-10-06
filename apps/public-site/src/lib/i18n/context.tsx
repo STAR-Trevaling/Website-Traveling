@@ -8,6 +8,7 @@ interface LanguageContextType {
   locale: Locale;
   setLocale: (locale: Locale) => void;
   confirmLanguageChoice: (locale: Locale) => void;
+  reopenLanguagePrompt: () => void;
   hasChosenLanguage: boolean;
   t: TranslationDictionary;
   isVietnamese: boolean;
@@ -22,6 +23,7 @@ const LanguageContext = createContext<LanguageContextType>({
   locale: DEFAULT_LOCALE,
   setLocale: () => {},
   confirmLanguageChoice: () => {},
+  reopenLanguagePrompt: () => {},
   hasChosenLanguage: true,
   t: DICTIONARY[DEFAULT_LOCALE],
   isVietnamese: true,
@@ -72,17 +74,22 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     [setLocale]
   );
 
+  const reopenLanguagePrompt = useCallback(() => {
+    setHasChosenLanguage(false);
+  }, []);
+
   const value = useMemo(
     () => ({
       locale,
       setLocale,
       confirmLanguageChoice,
+      reopenLanguagePrompt,
       hasChosenLanguage,
       t: DICTIONARY[locale] || DICTIONARY[DEFAULT_LOCALE],
       isVietnamese: locale === "vi",
       isEnglish: locale === "en",
     }),
-    [locale, setLocale, confirmLanguageChoice, hasChosenLanguage]
+    [locale, setLocale, confirmLanguageChoice, reopenLanguagePrompt, hasChosenLanguage]
   );
 
   return (

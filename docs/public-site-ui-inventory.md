@@ -23,7 +23,6 @@
   - **Hotline:** Icon điện thoại kèm số `+84 903 846 568` (tự ẩn linh hoạt ở màn hình nhỏ).
   - **Email:** Icon thư kèm `contact@startravels.vn`.
   - **Icon Tài khoản:** Icon người dùng `UserRound` dạng nút bấm tròn tinh gọn (không kèm chữ bên cạnh), hỗ trợ tooltip và `aria-label` đến `/account` hoặc `/login`.
-  - **Nút chuyển đổi ngôn ngữ (Language Switcher):** Dạng viên thuốc (pill button) sang trọng `VI | EN` chuyển đổi tức thì không cần tải lại trang.
   - **Nút mở Mobile Navigation:** Icon Hamburger mở thanh trượt điều hướng đầy đủ trên điện thoại/tablet.
 
 ### 1.2. Chân Trang (Site Footer)
@@ -32,11 +31,12 @@
   - **Biểu tượng Ngôi sao vàng:** Ngôi sao vector màu vàng (`#eab308`) nằm phía sau chữ *Star* với hiệu ứng xoay nhẹ và phóng to khi hover.
 - **Đường kẻ phân cách trang:** Mảnh mai, đồng điệu với nền cẩm thạch ngọc bích.
 - **Menu liên kết chân trang:** Danh sách 8 liên kết bao gồm Trang chủ, Điểm đến, Gói trải nghiệm, Tour trọn gói, Cẩm nang, Về chúng tôi, Liên hệ, Cổng đối tác.
+- **Nút tùy chọn đổi ngôn ngữ:** Nút bấm tinh tế `🌐 Ngôn ngữ: Tiếng Việt · Thay đổi` cho phép mở lại Bảng thông báo chọn ngôn ngữ khi cần.
 - **Bản quyền & Slogan:** Bản quyền Star Travels Vietnam song ngữ chuẩn mực.
 
 ### 1.3. Bảng Thông Báo Chọn Ngôn Ngữ & Lưu Cookie (Language Consent Banner)
-- **Vị trí & Trực quan:** Khung thẻ nổi góc dưới bên phải (`fixed bottom-4 sm:bottom-6 right-4 sm:right-6 sm:w-[420px] z-50`), chất liệu kính mờ bóng đêm (`bg-slate-900/95 backdrop-blur-xl border border-white/20 shadow-2xl`).
-- **Cơ chế hiển thị:** Tự động xuất hiện sau 700ms khi người dùng mới vào trang và chưa từng xác nhận ngôn ngữ mong muốn (kiểm tra qua cookie & localStorage).
+- **Vị trí & Trực quan:** Khung thẻ nổi góc dưới bên phải (`fixed bottom-4 sm:bottom-6 right-4 sm:right-6 sm:w-[420px] z-50`), chất liệu kính mờ bóng đêm (`bg-slate-900/95 backdrop-blur-xl border border-white/20 shadow-2xl`). Thay thế hoàn toàn cho nút switch trên thanh Header, mang lại trải nghiệm chuyên nghiệp chuẩn quốc tế.
+- **Cơ chế hiển thị:** Tự động xuất hiện sau 700ms khi người dùng mới vào trang và chưa từng xác nhận ngôn ngữ mong muốn (kiểm tra qua cookie & localStorage). Hoặc khi người dùng nhấn "Thay đổi" tại Footer hay Mobile Drawer.
 - **Nội dung song ngữ:** 
   - Tiêu đề kèm icon Quả địa cầu: *Chọn ngôn ngữ · Language Choice*.
   - Đoạn mô tả giải thích việc lưu ngôn ngữ qua cookie cho các lần duyệt sau.
@@ -44,7 +44,6 @@
   - Nút **🇻🇳 Tiếng Việt** và nút **🇬🇧 English** với hiệu ứng viền xanh ngọc bích và icon tích chọn (`Check`).
   - Khi nhấp chọn: Tức thì đổi giao diện, lưu cookie thời hạn 1 năm (`star_travels_locale` và `star_travels_locale_confirmed`), đồng thời đóng banner trượt êm ái.
 - **Tùy chọn đóng:** Nút đóng "✕" cho phép tiếp tục duyệt trang với ngôn ngữ hiện tại.
-- **Đồng bộ với Header Switcher:** Bất kỳ thao tác đổi ngôn ngữ nào trên thanh Header Switcher `[ VN VI | GB EN ]` cũng tự động ghi nhận tùy chọn, đảm bảo banner không làm phiền người dùng.
 
 ---
 

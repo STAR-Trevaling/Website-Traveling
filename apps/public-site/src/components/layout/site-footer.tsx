@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useLanguage } from "@/lib/i18n/context";
 
 export function SiteFooter() {
-  const { t, isVietnamese } = useLanguage();
+  const { t, isVietnamese, reopenLanguagePrompt } = useLanguage();
 
   const navLinks = [
     { label: t.footer.home, href: "/" },
@@ -64,6 +64,19 @@ export function SiteFooter() {
               </Link>
             ))}
           </nav>
+
+          {/* Language Selector trigger */}
+          <div className="mb-4">
+            <button
+              type="button"
+              onClick={reopenLanguagePrompt}
+              className="inline-flex items-center gap-1.5 text-xs text-slate-500 hover:text-slate-900 transition hover:underline cursor-pointer"
+            >
+              <span>🌐 {isVietnamese ? "Ngôn ngữ: Tiếng Việt" : "Language: English"}</span>
+              <span className="text-slate-400">·</span>
+              <span className="text-[#0098a2] font-medium">{isVietnamese ? "Thay đổi" : "Change"}</span>
+            </button>
+          </div>
 
           {/* Centered Copyright */}
           <p className="text-center text-xs sm:text-sm font-normal text-slate-600 max-w-2xl leading-relaxed">

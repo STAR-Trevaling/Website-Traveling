@@ -4,7 +4,6 @@ import Link from "next/link";
 import { Mail, Phone, Instagram, Facebook, Twitter, UserRound } from "lucide-react";
 import type { CurrentUser } from "@/lib/types";
 import { useLanguage } from "@/lib/i18n/context";
-import { LanguageSwitcher } from "./language-switcher";
 import { MobileNav } from "./mobile-nav";
 
 interface SiteHeaderClientProps {
@@ -118,9 +117,6 @@ export function SiteHeaderClient({ user, overlay = false }: SiteHeaderClientProp
             >
               <UserRound className="size-4.5 opacity-90" />
             </Link>
-
-            {/* Language Switcher Button (VI | EN) */}
-            <LanguageSwitcher overlay={overlay} />
 
             {/* Mobile Navigation Drawer Toggle */}
             <MobileNav user={user} overlay={overlay} />

@@ -141,7 +141,7 @@ export function LanguageConsentBanner() {
         <div className="mt-3.5 pt-3 border-t border-white/10 flex items-center gap-2 text-[10.5px] text-slate-400 relative z-10">
           <Cookie className="size-3.5 shrink-0 text-[#0098a2]" />
           <span className="truncate">
-            Lưu qua cookie · Có thể đổi lại bất kỳ lúc nào ở menu trên cùng.
+            Lưu tùy chọn qua cookie · Lựa chọn sẽ được ghi nhớ trên trình duyệt.
           </span>
         </div>
       </div>
