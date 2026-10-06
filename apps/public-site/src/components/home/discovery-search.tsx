@@ -230,7 +230,7 @@ export function DiscoverySearch() {
         </div>
 
         {/* Column 5: Traveller(s), Class */}
-        <div className="relative flex-[1.2] border-b md:border-b-0 border-slate-200/80">
+        <div className="relative flex-[1.2] border-b md:border-b-0 md:border-r border-slate-200/80">
           <button
             type="button"
             onClick={() => {
@@ -267,15 +267,15 @@ export function DiscoverySearch() {
           )}
         </div>
 
-        {/* 6. Luxury Circular Search Button with Soft Blur Shadow */}
-        <div className="flex items-center justify-center p-2 sm:p-2.5 shrink-0 self-center">
+        {/* 6. Clean Search Button (Icon without green background) */}
+        <div className="flex items-center justify-center px-3 sm:px-4 py-2 shrink-0 self-center">
           <button
             type="button"
             onClick={handleSearch}
             aria-label={isEn ? "Search experiences" : "Tìm kiếm chuyến đi"}
-            className="group size-10 sm:size-11 md:size-12 rounded-full bg-gradient-to-br from-[#00b2be] via-[#0098a2] to-[#007f88] flex items-center justify-center text-white shadow-[0_4px_18px_rgba(0,152,162,0.45),0_2px_8px_rgba(0,0,0,0.12)] hover:shadow-[0_6px_26px_rgba(0,152,162,0.65),0_3px_10px_rgba(0,0,0,0.18)] hover:scale-105 active:scale-95 border border-white/30 transition-all duration-300 shrink-0 cursor-pointer"
+            className="group size-10 sm:size-11 md:size-12 rounded-full flex items-center justify-center text-slate-700 hover:text-black hover:bg-slate-100 active:scale-95 transition-all duration-200 shrink-0 cursor-pointer"
           >
-            <Search className="size-4 sm:size-5 text-white transition-transform duration-300 group-hover:scale-110 drop-shadow-[0_1px_2px_rgba(0,0,0,0.2)]" />
+            <Search className="size-5 sm:size-5.5 text-slate-700 transition-transform duration-200 group-hover:scale-110 group-hover:text-black" />
           </button>
         </div>
       </div>
