@@ -111,7 +111,7 @@ export function MobileNav({ user, overlay = false }: MobileNavProps) {
               className="flex items-center"
               onClick={() => setIsOpen(false)}
             >
-              <StarLogo variant="integrated" size="sm" asLink={false} />
+              <StarLogo variant="horizontal" size="sm" asLink={false} />
             </Link>
             <button
               type="button"

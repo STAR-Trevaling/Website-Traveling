@@ -31,28 +31,28 @@ export function StarLogo({
 }: StarLogoProps) {
   const sizeClasses = {
     sm: {
-      star: "size-6",
-      text: "text-2xl sm:text-3xl",
-      desc: "text-[10px]",
-      gap: "gap-2",
+      star: "size-3.5 sm:size-4",
+      text: "text-base sm:text-lg",
+      desc: "text-[8px] sm:text-[9px]",
+      gap: "gap-1",
     },
     md: {
-      star: "size-8 sm:size-9",
-      text: "text-3xl sm:text-4xl",
-      desc: "text-xs",
-      gap: "gap-2.5",
+      star: "size-4.5 sm:size-5",
+      text: "text-xl sm:text-2xl",
+      desc: "text-[9.5px] sm:text-[10px]",
+      gap: "gap-1.5",
     },
     lg: {
-      star: "size-10 sm:size-12",
-      text: "text-4xl sm:text-5xl",
-      desc: "text-sm",
-      gap: "gap-3",
+      star: "size-6 sm:size-7",
+      text: "text-2xl sm:text-3xl",
+      desc: "text-xs sm:text-sm",
+      gap: "gap-2",
     },
     xl: {
-      star: "size-12 sm:size-16 md:size-20",
-      text: "text-5xl sm:text-6xl md:text-7xl",
-      desc: "text-base sm:text-lg",
-      gap: "gap-3.5 sm:gap-5",
+      star: "size-8 sm:size-10",
+      text: "text-4xl sm:text-5xl",
+      desc: "text-sm sm:text-base",
+      gap: "gap-2.5",
     },
   }[size];
 
@@ -65,7 +65,7 @@ export function StarLogo({
       viewBox="0 0 100 100"
       fill="#eab308"
       aria-hidden="true"
-      className={`shrink-0 text-[#eab308] drop-shadow-[0_2px_12px_rgba(234,179,8,0.55)] transition-transform duration-300 group-hover:rotate-12 group-hover:scale-110 pointer-events-none ${iconClass}`}
+      className={`shrink-0 text-[#eab308] drop-shadow-[0_2px_10px_rgba(234,179,8,0.55)] transition-transform duration-300 group-hover:rotate-12 group-hover:scale-110 pointer-events-none ${iconClass}`}
     >
       <polygon points="50,5 64,36 98,38 72,60 80,94 50,75 20,94 28,60 2,38 36,36" />
     </svg>
@@ -81,31 +81,30 @@ export function StarLogo({
     }
 
     if (variant === "integrated" || variant === "script") {
-      // Clean Signature Lockup: Standalone golden star + flowing calligraphy with proper title case (Star Travels)
-      // Eliminates ALL-CAPS font collision and prevents star/text overlap
+      // Clean Signature Lockup: Flowing script wordmark with Golden Star centered underneath
       return (
-        <div className={`inline-flex items-center ${sizeClasses.gap} select-none ${className}`}>
-          <StarIcon iconClass={sizeClasses.star} />
+        <div className={`flex flex-col items-center justify-center text-center select-none ${className}`}>
           <span
             className={`logo-title ${sizeClasses.text} leading-none ${textColor} select-none tracking-normal font-normal flex items-baseline`}
           >
             <span>Star</span>
-            {showDescriptor && <span className="ml-2 sm:ml-2.5">Travels</span>}
+            {showDescriptor && <span className="ml-1.5 sm:ml-2">Travels</span>}
           </span>
+          <StarIcon iconClass={`${sizeClasses.star} mt-1`} />
         </div>
       );
     }
 
     if (variant === "stacked") {
-      // Centered Luxury Lockup (Ideal for Footers & Splash screens)
+      // Centered Luxury Lockup: STAR wordmark on top, Golden Star emblem centered underneath, TRAVELS below
       return (
-        <div className={`flex flex-col items-center text-center select-none ${className}`}>
-          <StarIcon iconClass={sizeClasses.star} />
-          <span className={`mt-2 font-black tracking-widest uppercase ${sizeClasses.text} ${textColor}`}>
+        <div className={`flex flex-col items-center justify-center text-center select-none ${className}`}>
+          <span className={`font-black tracking-widest uppercase ${sizeClasses.text} ${textColor} leading-none`}>
             STAR
           </span>
+          <StarIcon iconClass={`${sizeClasses.star} my-1 sm:my-1.5`} />
           {showDescriptor && (
-            <span className={`tracking-[0.28em] uppercase font-semibold mt-0.5 ${sizeClasses.desc} ${descColor}`}>
+            <span className={`tracking-[0.28em] uppercase font-semibold ${sizeClasses.desc} ${descColor} leading-none`}>
               TRAVELS
             </span>
           )}
@@ -113,20 +112,18 @@ export function StarLogo({
       );
     }
 
-    // Default: Horizontal Lockup (Modern Geometric Sans)
+    // Default & Horizontal Lockup: STAR wordmark on top, Golden Star centered underneath, TRAVELS below
     return (
-      <div className={`inline-flex items-center ${sizeClasses.gap} select-none ${className}`}>
-        <StarIcon iconClass={sizeClasses.star} />
-        <div className="flex flex-col leading-none">
-          <span className={`font-black tracking-wider uppercase ${sizeClasses.text} ${textColor}`}>
-            STAR
+      <div className={`flex flex-col items-center justify-center text-center select-none ${className}`}>
+        <span className={`font-black tracking-[0.22em] uppercase ${sizeClasses.text} ${textColor} leading-none`}>
+          STAR
+        </span>
+        <StarIcon iconClass={`${sizeClasses.star} my-0.5 sm:my-1`} />
+        {showDescriptor && (
+          <span className={`tracking-[0.26em] uppercase font-semibold ${sizeClasses.desc} ${descColor} leading-none`}>
+            TRAVELS
           </span>
-          {showDescriptor && (
-            <span className={`tracking-[0.25em] uppercase font-semibold ${sizeClasses.desc} mt-0.5 ${descColor}`}>
-              TRAVELS
-            </span>
-          )}
-        </div>
+        )}
       </div>
     );
   })();
