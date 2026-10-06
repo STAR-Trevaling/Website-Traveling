@@ -129,9 +129,9 @@ export function DiscoverySearch() {
 
   return (
     <div className="w-full select-none">
-      {/* 1. Top Tabs (Responsive Grid on Mobile, Flex on Desktop) */}
-      <div className="flex w-full">
-        <div className="grid grid-cols-3 w-full sm:w-auto sm:flex bg-[#c5d2cf]/85 backdrop-blur-md rounded-t-[3px] overflow-hidden">
+      {/* 1. Top Tabs (Responsive Grid on Mobile, Flex on Desktop - Centered) */}
+      <div className="flex justify-center w-full">
+        <div className="grid grid-cols-3 w-full sm:w-auto sm:flex bg-[#c5d2cf]/85 backdrop-blur-md rounded-t-[4px] sm:rounded-t-[5px] overflow-hidden shadow-sm">
           {tabs.map((tab) => (
             <button
               key={tab.key}
@@ -142,9 +142,9 @@ export function DiscoverySearch() {
                 setOpenCol2(false);
                 setOpenTravellers(false);
               }}
-              className={`px-2.5 sm:px-6 py-2.5 sm:py-3 text-[11px] sm:text-xs font-bold tracking-wider sm:tracking-[0.2em] transition-all cursor-pointer text-center truncate ${
+              className={`px-3 sm:px-7 py-2.5 sm:py-3 text-[11px] sm:text-xs font-bold tracking-wider sm:tracking-[0.2em] transition-all cursor-pointer text-center truncate ${
                 activeTab === tab.key
-                  ? "bg-[#e5ecea]/95 text-slate-800 shadow-sm"
+                  ? "bg-[#e5ecea]/95 text-slate-900 shadow-sm"
                   : "text-slate-700 hover:text-slate-900 hover:bg-white/30"
               }`}
             >
@@ -155,7 +155,7 @@ export function DiscoverySearch() {
       </div>
 
       {/* 2. Main Search Bar (Optimized Grid/Flex for Mobile Ergonomics) */}
-      <div className="relative flex flex-col md:flex-row items-stretch bg-[#e5ecea]/95 text-slate-700 shadow-2xl backdrop-blur-md border border-white/50 rounded-b-[3px] sm:rounded-tr-[3px]">
+      <div className="relative flex flex-col md:flex-row items-stretch bg-[#e5ecea]/95 text-slate-700 shadow-2xl backdrop-blur-md border border-white/50 rounded-[4px] sm:rounded-[5px]">
         {/* Column 1: Origin / Location */}
         <div className="relative flex-1 border-b md:border-b-0 md:border-r border-[#c5d2cf]">
           <button
@@ -286,7 +286,7 @@ export function DiscoverySearch() {
         </div>
 
         {/* Column 5: Travellers */}
-        <div className="relative flex-[0.95] border-b md:border-b-0 border-[#c5d2cf]">
+        <div className="relative flex-[0.95] border-b md:border-b-0 md:border-r border-[#c5d2cf]">
           <button
             type="button"
             onClick={() => {
@@ -328,16 +328,22 @@ export function DiscoverySearch() {
           )}
         </div>
 
-        {/* Search Submit Button (With Descriptive Label on Mobile, Icon on Desktop) */}
-        <button
-          type="button"
-          onClick={handleSearch}
-          aria-label={isEn ? "Search experiences" : "Tìm kiếm chuyến đi"}
-          className="flex h-13 sm:h-14 md:h-auto items-center justify-center gap-2 bg-[#0098a2] px-6 py-3.5 text-white font-bold text-xs sm:text-sm uppercase tracking-wider transition-all duration-200 hover:bg-[#008f99] active:scale-[0.98] shrink-0 cursor-pointer"
-        >
-          <Search className="size-4 sm:size-5" />
-          <span className="md:hidden">{isEn ? "Search Journeys" : "Tìm Chuyến Đi"}</span>
-        </button>
+        {/* Search Submit Button (With Luxurious Soft Blur Shadow & Ambient Glow) */}
+        <div className="flex items-center justify-center p-2 sm:p-2.5 shrink-0 self-stretch">
+          <button
+            type="button"
+            onClick={handleSearch}
+            aria-label={isEn ? "Search experiences" : "Tìm kiếm chuyến đi"}
+            className="group relative flex h-11 sm:h-12 md:h-full min-h-[46px] w-full md:w-auto items-center justify-center gap-2 rounded-[3px] sm:rounded-[4px] bg-gradient-to-br from-[#00b2be] via-[#0098a2] to-[#007f88] px-5 sm:px-6 py-3 text-white font-bold text-xs sm:text-sm uppercase tracking-wider shadow-[0_4px_20px_rgba(0,152,162,0.45),0_2px_8px_rgba(0,0,0,0.12)] hover:shadow-[0_6px_28px_rgba(0,152,162,0.65),0_3px_10px_rgba(0,0,0,0.18)] hover:scale-[1.02] active:scale-[0.98] border border-white/30 transition-all duration-300 shrink-0 cursor-pointer overflow-hidden"
+          >
+            {/* Subtle high-end shimmer sweep on hover */}
+            <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent group-hover:translate-x-full transition-transform duration-700 pointer-events-none" />
+            <Search className="size-4 sm:size-5 shrink-0 text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.35)] transition-transform duration-300 group-hover:scale-110" />
+            <span className="md:hidden font-semibold drop-shadow-[0_1px_2px_rgba(0,0,0,0.25)]">
+              {isEn ? "Search Journeys" : "Tìm Chuyến Đi"}
+            </span>
+          </button>
+        </div>
       </div>
     </div>
   );
