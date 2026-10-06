@@ -37,10 +37,11 @@ export function SiteHeaderClient({ user, overlay = false }: SiteHeaderClientProp
           : "bg-white text-slate-900 shadow-sm border-b border-slate-100"
       }
     >
-      <div className="w-full px-6 sm:px-10 md:px-12 lg:px-16 xl:px-20">
-        <div className="relative flex h-16 sm:h-18 md:h-20 items-center justify-between">
-          {/* Left: 3 Social Media Icons (Instagram, Twitter, Facebook) */}
-          <div className="flex items-center gap-3.5 sm:gap-4 shrink-0 z-10">
+      <div className="w-full px-6 sm:px-10 md:px-14 lg:px-18 xl:px-24">
+        {/* Row 1: Top Bar with Left Social Icons and Right Contact Info */}
+        <div className="flex h-11 sm:h-12 md:h-13 items-center justify-between pt-1 sm:pt-2">
+          {/* Top Left: 3 Social Media Icons (Instagram, Twitter, Facebook) */}
+          <div className="flex items-center gap-3.5 sm:gap-4.5 shrink-0 z-10">
             <a
               href="https://instagram.com"
               target="_blank"
@@ -52,7 +53,7 @@ export function SiteHeaderClient({ user, overlay = false }: SiteHeaderClientProp
                   : "text-slate-600 hover:text-slate-900 transition-colors duration-150 p-1"
               }
             >
-              <Instagram className="size-4 sm:size-[18px]" strokeWidth={1.8} />
+              <Instagram className="size-4 sm:size-[17px]" strokeWidth={1.8} />
             </a>
             <a
               href="https://twitter.com"
@@ -65,7 +66,7 @@ export function SiteHeaderClient({ user, overlay = false }: SiteHeaderClientProp
                   : "text-slate-600 hover:text-slate-900 transition-colors duration-150 p-1"
               }
             >
-              <Twitter className="size-4 sm:size-[18px]" strokeWidth={1.8} />
+              <Twitter className="size-4 sm:size-[17px]" strokeWidth={1.8} />
             </a>
             <a
               href="https://facebook.com"
@@ -78,32 +79,12 @@ export function SiteHeaderClient({ user, overlay = false }: SiteHeaderClientProp
                   : "text-slate-600 hover:text-slate-900 transition-colors duration-150 p-1"
               }
             >
-              <Facebook className="size-4 sm:size-[18px]" strokeWidth={1.8} />
+              <Facebook className="size-4 sm:size-[17px]" strokeWidth={1.8} />
             </a>
           </div>
 
-          {/* Center: 5 Clean Navigation Links (Home, Packages, Tours, About Us, Contact) */}
-          <nav
-            aria-label="Main Navigation"
-            className="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center gap-7 md:gap-8 lg:gap-11 xl:gap-13 text-[13px] sm:text-[14px] font-normal whitespace-nowrap z-10"
-          >
-            {navLinks.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={
-                  overlay
-                    ? "text-white/90 hover:text-white transition-colors duration-150 hover:underline underline-offset-4 py-1"
-                    : "text-slate-700 hover:text-slate-950 transition-colors duration-150 hover:underline underline-offset-4 py-1"
-                }
-              >
-                {item.label}
-              </Link>
-            ))}
-          </nav>
-
-          {/* Right: Phone, Email, User & Mobile Navigation Drawer Toggle */}
-          <div className="flex items-center gap-4 sm:gap-6 lg:gap-8 shrink-0 z-10">
+          {/* Top Right: Phone, Email, User & Mobile Navigation Drawer Toggle */}
+          <div className="flex items-center gap-4 sm:gap-6 lg:gap-7 shrink-0 z-10">
             {/* Phone contact */}
             <a
               href={`tel:${t.nav.phoneLabel.replace(/\s+/g, "")}`}
@@ -147,6 +128,28 @@ export function SiteHeaderClient({ user, overlay = false }: SiteHeaderClientProp
             {/* Mobile Navigation Drawer Toggle */}
             <MobileNav user={user} overlay={overlay} />
           </div>
+        </div>
+
+        {/* Row 2: Centered Navigation Links located BELOW the top left/right icons (phía dưới icon trái phải) */}
+        <div className="hidden md:flex justify-center items-center py-2 sm:py-2.5">
+          <nav
+            aria-label="Main Navigation"
+            className="flex items-center gap-8 md:gap-9 lg:gap-11 xl:gap-13 text-[13px] sm:text-[14px] font-normal whitespace-nowrap"
+          >
+            {navLinks.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={
+                  overlay
+                    ? "text-white/95 hover:text-white transition-colors duration-150 hover:underline underline-offset-4 py-0.5 tracking-wide"
+                    : "text-slate-700 hover:text-slate-950 transition-colors duration-150 hover:underline underline-offset-4 py-0.5 tracking-wide"
+                }
+              >
+                {item.label}
+              </Link>
+            ))}
+          </nav>
         </div>
       </div>
     </header>
