@@ -168,9 +168,9 @@ export function HeroSlider() {
             </svg>
           </a>
 
-          {/* Thanh hiện số banner ở cuối banner (Màu trắng bóng mờ sang trọng) */}
-          <div className="flex items-center justify-center gap-2.5 sm:gap-3 bg-white/85 hover:bg-white/95 backdrop-blur-xl px-4 sm:px-5 py-1.5 sm:py-2 rounded-full border border-white/90 shadow-[0_8px_30px_rgba(0,0,0,0.25),0_2px_8px_rgba(0,0,0,0.12),inset_0_1px_1px_rgba(255,255,255,0.95)] transition-all duration-300">
-            <span className="text-[11px] sm:text-xs font-bold text-slate-900 tracking-widest font-mono">
+          {/* Thanh hiện số banner ở cuối banner (Bóng mờ phần nền sang trọng) */}
+          <div className="flex items-center justify-center gap-2.5 sm:gap-3 bg-white/25 hover:bg-white/35 backdrop-blur-md px-4 sm:px-5 py-1.5 sm:py-2 rounded-full border border-white/40 shadow-[0_8px_32px_rgba(0,0,0,0.25),inset_0_1px_2px_rgba(255,255,255,0.6)] transition-all duration-300">
+            <span className="text-[11px] sm:text-xs font-bold text-slate-900 tracking-widest font-mono drop-shadow-[0_1px_1px_rgba(255,255,255,0.6)]">
               {String(currentSlide + 1).padStart(2, "0")}
             </span>
             <div className="flex items-center gap-1.5">
@@ -182,13 +182,13 @@ export function HeroSlider() {
                   aria-label={`Slide ${idx + 1}`}
                   className={`h-1.5 rounded-full transition-all duration-500 cursor-pointer ${
                     idx === currentSlide
-                      ? "w-7 sm:w-8 bg-slate-700 shadow-[0_1px_4px_rgba(15,23,42,0.35)]"
-                      : "w-2 bg-slate-300 hover:bg-slate-400"
+                      ? "w-7 sm:w-8 bg-slate-800 shadow-[0_1px_4px_rgba(15,23,42,0.4)]"
+                      : "w-2 bg-slate-400/50 hover:bg-slate-500/70"
                   }`}
                 />
               ))}
             </div>
-            <span className="text-[11px] sm:text-xs font-semibold text-slate-500 tracking-widest font-mono">
+            <span className="text-[11px] sm:text-xs font-semibold text-slate-600 tracking-widest font-mono drop-shadow-[0_1px_1px_rgba(255,255,255,0.6)]">
               {String(slides.length).padStart(2, "0")}
             </span>
           </div>
