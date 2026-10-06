@@ -14,7 +14,7 @@ const AWARD_IMAGES = [
 ];
 
 export function NewsletterAwards() {
-  const { t } = useLanguage();
+  const { t, isVietnamese } = useLanguage();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
@@ -27,32 +27,42 @@ export function NewsletterAwards() {
   };
 
   return (
-    <section className="relative w-full py-12 sm:py-16 md:py-24 lg:py-32">
+    <section className="relative w-full py-12 sm:py-16 md:py-20 lg:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-12 lg:px-16">
-        <div className="grid gap-10 sm:gap-12 lg:grid-cols-[400px_1fr] xl:grid-cols-[440px_1fr] lg:gap-14 xl:gap-16 items-center">
+        <div className="grid gap-8 sm:gap-10 lg:grid-cols-[390px_1fr] xl:grid-cols-[430px_1fr] lg:gap-12 xl:gap-16 items-stretch">
           
-          {/* LEFT: NEWSLETTER CARD */}
-          <div className="mx-auto w-full max-w-[440px] bg-[#dceee9]/85 p-5 sm:p-8 md:p-12 shadow-2xl backdrop-blur-md rounded-[2px]">
-            <h2 className="display-title text-center text-2xl sm:text-3xl md:text-4xl lg:text-[42px] font-black tracking-wider text-[#1e293b]">
-              {t.newsletter.heading}
-            </h2>
-            <p className="mx-auto mt-3 sm:mt-4 max-w-[340px] text-center text-xs sm:text-sm md:text-base font-light leading-relaxed text-[#4b5563]">
-              {t.newsletter.subheading}
-            </p>
+          {/* LEFT: NEWSLETTER CARD (Balanced height, perfectly aligned with right side) */}
+          <div className="mx-auto w-full max-w-[440px] bg-[#dceee9]/85 p-6 sm:p-8 md:p-10 lg:p-9 xl:p-10 shadow-2xl backdrop-blur-md rounded-[2px] flex flex-col justify-between">
+            <div>
+              {/* Symmetrical, elegant 2-line title without single orphan words */}
+              <h2 className="display-title text-center text-2xl sm:text-3xl lg:text-[34px] font-black tracking-wider text-[#1e293b] leading-tight text-balance">
+                {isVietnamese ? (
+                  <>
+                    <span className="block">BẢN TIN</span>
+                    <span className="block mt-0.5">DU LỊCH</span>
+                  </>
+                ) : (
+                  <span className="block">NEWSLETTER</span>
+                )}
+              </h2>
+              <p className="mx-auto mt-2.5 sm:mt-3 max-w-[320px] text-center text-xs sm:text-sm font-light leading-relaxed text-[#4b5563] text-balance">
+                {t.newsletter.subheading}
+              </p>
+            </div>
 
             {subscribed ? (
-              <div className="mt-8 sm:mt-12 rounded bg-white/90 p-5 sm:p-6 text-center text-xs sm:text-sm font-bold text-emerald-800">
+              <div className="my-auto rounded bg-white/90 p-5 sm:p-6 text-center text-xs sm:text-sm font-bold text-emerald-800 shadow-sm">
                 {t.newsletter.successMessage}
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="mt-6 sm:mt-10 space-y-4 sm:space-y-6">
+              <form onSubmit={handleSubmit} className="mt-5 sm:mt-7 space-y-3.5 sm:space-y-4">
                 <div>
                   <input
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder={t.newsletter.namePlaceholder}
-                    className="h-11 sm:h-13 w-full bg-white px-4 sm:px-5 text-xs sm:text-sm md:text-base text-slate-800 placeholder:text-slate-400 outline-none shadow-sm transition focus:ring-2 focus:ring-slate-400"
+                    className="h-11 sm:h-12 w-full bg-white px-4 text-xs sm:text-sm text-slate-800 placeholder:text-slate-400 outline-none shadow-sm transition focus:ring-2 focus:ring-[#0098a2]"
                   />
                 </div>
                 <div>
@@ -62,14 +72,14 @@ export function NewsletterAwards() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder={t.newsletter.emailPlaceholder}
-                    className="h-11 sm:h-13 w-full bg-white px-4 sm:px-5 text-xs sm:text-sm md:text-base text-slate-800 placeholder:text-slate-400 outline-none shadow-sm transition focus:ring-2 focus:ring-slate-400"
+                    className="h-11 sm:h-12 w-full bg-white px-4 text-xs sm:text-sm text-slate-800 placeholder:text-slate-400 outline-none shadow-sm transition focus:ring-2 focus:ring-[#0098a2]"
                   />
                 </div>
 
-                <div className="pt-4 sm:pt-8 text-center">
+                <div className="pt-2 sm:pt-3 text-center">
                   <button
                     type="submit"
-                    className="w-full sm:w-auto inline-block px-7 sm:px-8 py-3 sm:py-3.5 bg-slate-900 text-white text-xs md:text-sm font-bold tracking-[0.2em] sm:tracking-[0.25em] transition-all duration-200 hover:bg-slate-800 hover:shadow-[0px_8px_25px_rgba(15,23,42,0.30)] hover:-translate-y-0.5 active:translate-y-0 uppercase cursor-pointer"
+                    className="w-full inline-block px-7 py-3 sm:py-3.5 bg-slate-900 text-white text-xs md:text-sm font-bold tracking-[0.2em] sm:tracking-[0.25em] transition-all duration-200 hover:bg-slate-800 hover:shadow-[0px_8px_25px_rgba(15,23,42,0.30)] hover:-translate-y-0.5 active:translate-y-0 uppercase cursor-pointer"
                   >
                     {t.newsletter.submitBtn}
                   </button>
@@ -78,24 +88,34 @@ export function NewsletterAwards() {
             )}
           </div>
 
-          {/* RIGHT: AWARD WINNING & 6 ITEMS GRID */}
-          <div>
-            <h2 className="script-title text-3xl sm:text-5xl md:text-6xl text-[#1e293b]">
-              {t.awards.heading}
-            </h2>
-            <p className="mt-2.5 sm:mt-3 max-w-lg text-xs sm:text-sm md:text-base font-light leading-relaxed text-[#4b5563]">
-              {t.awards.subheading}
-            </p>
+          {/* RIGHT: AWARD WINNING & 6 ITEMS GRID (Aligned baseline & equal stretch) */}
+          <div className="flex flex-col justify-between">
+            <div>
+              {/* Elegant title with non-breaking '& Di Sản' to prevent single-word orphan wrap */}
+              <h2 className="script-title text-3xl sm:text-4xl md:text-[46px] lg:text-[52px] xl:text-[56px] text-[#1e293b] leading-[1.2] text-balance">
+                {isVietnamese ? (
+                  <>
+                    <span className="inline">Vinh Danh Kỳ Quan</span>{" "}
+                    <span className="inline-block whitespace-nowrap">& Di Sản</span>
+                  </>
+                ) : (
+                  <span className="inline">Award Winning & Heritage</span>
+                )}
+              </h2>
+              <p className="mt-2 sm:mt-2.5 max-w-xl text-xs sm:text-sm md:text-base font-light leading-relaxed text-[#4b5563] text-balance">
+                {t.awards.subheading}
+              </p>
+            </div>
 
             {/* 2 Columns x 3 Rows Layout */}
-            <div className="mt-6 sm:mt-10 grid grid-cols-1 sm:grid-cols-2 gap-x-5 sm:gap-x-8 gap-y-4 sm:gap-y-6">
+            <div className="mt-6 sm:mt-7 grid grid-cols-1 sm:grid-cols-2 gap-x-5 sm:gap-x-6 lg:gap-x-8 gap-y-3 sm:gap-y-4">
               {t.awards.items.map((item, idx) => (
                 <div
                   key={idx}
-                  className="group flex items-center gap-3.5 sm:gap-4 p-2 sm:p-2.5 rounded-[2px] transition-all duration-300 hover:bg-white/70 hover:shadow-sm hover:-translate-y-0.5 cursor-pointer border border-transparent hover:border-slate-200/60"
+                  className="group flex items-center gap-3 sm:gap-3.5 p-2 rounded-[2px] transition-all duration-300 hover:bg-white/80 hover:shadow-sm hover:-translate-y-0.5 cursor-pointer border border-transparent hover:border-slate-200/60"
                 >
                   {/* Photo thumbnail */}
-                  <div className="relative h-[72px] w-[98px] sm:h-[88px] sm:w-[120px] md:h-[92px] md:w-[128px] shrink-0 overflow-hidden shadow-sm rounded-[2px] bg-slate-200">
+                  <div className="relative h-[68px] w-[94px] sm:h-[76px] sm:w-[106px] md:h-[80px] md:w-[114px] shrink-0 overflow-hidden shadow-sm rounded-[2px] bg-slate-200">
                     <Image
                       src={AWARD_IMAGES[idx] || AWARD_IMAGES[0]}
                       alt={item.title}
@@ -108,10 +128,10 @@ export function NewsletterAwards() {
 
                   {/* Text details */}
                   <div className="flex-1 min-w-0">
-                    <h3 className="text-xs sm:text-sm md:text-[15px] font-bold text-[#1e293b] leading-snug group-hover:text-[#0098a2] transition-colors duration-200">
+                    <h3 className="text-xs sm:text-[13px] md:text-sm font-bold text-[#1e293b] leading-snug group-hover:text-[#0098a2] transition-colors duration-200">
                       {item.title}
                     </h3>
-                    <p className="mt-1 text-[11px] sm:text-xs text-[#64748b] font-light leading-relaxed line-clamp-2">
+                    <p className="mt-0.5 text-[11px] sm:text-xs text-[#64748b] font-light leading-relaxed line-clamp-2">
                       {item.subtitle}
                     </p>
                   </div>
