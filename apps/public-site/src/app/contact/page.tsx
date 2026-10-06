@@ -110,32 +110,32 @@ export default async function ContactPage() {
                 </div>
 
                 {/* Assurance Card */}
-                <div className="bg-[#1e293b] text-white p-5 sm:p-8 rounded-[2px] shadow-md">
+                <div className="bg-white/90 p-5 sm:p-8 rounded-[2px] shadow-sm border border-slate-100">
                   <div className="flex items-center gap-3">
-                    <ShieldCheck className="size-7 sm:size-8 text-amber-400" />
-                    <h3 className="display-title text-lg sm:text-xl font-bold">
+                    <ShieldCheck className="size-6 sm:size-7 text-amber-500" />
+                    <h3 className="display-title text-lg sm:text-xl font-bold text-[#1e293b]">
                       {isEn ? "Star Travels Commitments" : "Cam Kết Từ Star Travels"}
                     </h3>
                   </div>
-                  <ul className="mt-4 sm:mt-5 space-y-2.5 sm:space-y-3 text-xs md:text-sm font-light text-white/80 leading-relaxed">
-                    <li className="flex items-start gap-2">
-                      <span className="text-amber-400 font-bold">✓</span>
+                  <ul className="mt-4 sm:mt-5 space-y-2.5 sm:space-y-3 text-xs md:text-sm font-light text-slate-600 leading-relaxed">
+                    <li className="flex items-start gap-2.5">
+                      <span className="text-amber-500 font-bold shrink-0">✓</span>
                       <span>
                         {isEn
                           ? "Absolute confidentiality of guest personal data and travel schedules."
                           : "Bảo mật tuyệt đối thông tin cá nhân và lịch trình du khách."}
                       </span>
                     </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-amber-400 font-bold">✓</span>
+                    <li className="flex items-start gap-2.5">
+                      <span className="text-amber-500 font-bold shrink-0">✓</span>
                       <span>
                         {isEn
                           ? "100% complimentary itinerary planning with no pressure to deposit."
                           : "Tư vấn hoàn toàn miễn phí, không áp đặt quyết định đặt cọc."}
                       </span>
                     </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-amber-400 font-bold">✓</span>
+                    <li className="flex items-start gap-2.5">
+                      <span className="text-amber-500 font-bold shrink-0">✓</span>
                       <span>
                         {isEn
                           ? "Comprehensive premium travel insurance included in every departure."
@@ -144,10 +144,10 @@ export default async function ContactPage() {
                     </li>
                   </ul>
 
-                  <div className="mt-5 sm:mt-6 pt-4 sm:pt-5 border-t border-white/10 text-center">
+                  <div className="mt-5 sm:mt-6 pt-4 sm:pt-5 border-t border-slate-100 text-center">
                     <Link
                       href="/partner"
-                      className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-amber-400 hover:underline"
+                      className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-[#0098a2] hover:text-[#008f99] hover:underline"
                     >
                       <span>
                         {isEn

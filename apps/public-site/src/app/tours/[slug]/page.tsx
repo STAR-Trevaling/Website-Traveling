@@ -314,22 +314,22 @@ export default async function TourDetailPage({ params }: TourDetailPageProps) {
             <TourBookingCard tour={tour} />
 
             {/* Direct Support Card */}
-            <div className="rounded-[2px] bg-[#1e293b] p-5 sm:p-6 text-white shadow-md">
-              <h4 className="display-title text-base sm:text-lg font-bold text-white">
+            <div className="rounded-[2px] bg-white/90 p-5 sm:p-6 text-slate-800 shadow-sm border border-slate-100">
+              <h4 className="display-title text-base sm:text-lg font-bold text-[#1e293b]">
                 {isEn ? "Need a Bespoke Itinerary?" : "Cần Tư Vấn Lịch Trình Riêng?"}
               </h4>
-              <p className="mt-2 text-xs font-light text-slate-300 leading-relaxed">
+              <p className="mt-2 text-xs font-light text-slate-600 leading-relaxed">
                 {isEn
                   ? "Our travel specialists are ready to tailor journeys for your family, private group, or corporate retreat."
                   : "Đội ngũ chuyên viên Star Travels sẵn sàng hỗ trợ thiết kế tour theo yêu cầu riêng cho gia đình hoặc đoàn thể."}
               </p>
-              <div className="mt-5 flex items-center gap-3 pt-4 border-t border-slate-700">
+              <div className="mt-5 flex items-center gap-3 pt-4 border-t border-slate-100">
                 <div className="flex size-10 items-center justify-center rounded-full bg-[#0098a2] text-white">
                   <PhoneCall className="size-4" />
                 </div>
                 <div>
-                  <span className="text-[11px] text-slate-400 block">{td.hotlineAssist}</span>
-                  <a href="tel:0912345678" className="text-sm font-bold text-amber-400 hover:underline">
+                  <span className="text-[11px] text-slate-500 block">{td.hotlineAssist}</span>
+                  <a href="tel:0912345678" className="text-sm font-bold text-[#0098a2] hover:underline">
                     +84 912 345 678
                   </a>
                 </div>
