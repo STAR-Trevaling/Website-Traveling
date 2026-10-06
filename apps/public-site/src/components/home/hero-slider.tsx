@@ -51,7 +51,7 @@ export function HeroSlider() {
 
   return (
     <div
-      className="relative min-h-[760px] sm:min-h-[820px] md:min-h-[860px] lg:min-h-[900px] w-full overflow-hidden select-none"
+      className="relative min-h-[680px] sm:min-h-[720px] md:min-h-[750px] lg:min-h-[780px] w-full overflow-hidden select-none"
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
@@ -103,7 +103,7 @@ export function HeroSlider() {
       </button>
 
       {/* Hero Content (Positioned with generous breathing room matching template) */}
-      <div className="relative z-10 flex min-h-[760px] sm:min-h-[820px] md:min-h-[860px] lg:min-h-[900px] w-full flex-col items-center justify-between pb-6 sm:pb-8 pt-28 sm:pt-32 md:pt-36 lg:pt-40 text-white">
+      <div className="relative z-10 flex min-h-[680px] sm:min-h-[720px] md:min-h-[750px] lg:min-h-[780px] w-full flex-col items-center justify-between pb-6 sm:pb-8 md:pb-10 pt-24 sm:pt-26 md:pt-28 lg:pt-30 text-white">
         {/* Main Center Content: Title, Subtitle, with Discovery Search below */}
         <div className="w-full max-w-5xl mx-auto px-4 text-center flex flex-col items-center my-auto">
           {/* Animated Hero Title on slide change */}
@@ -123,13 +123,13 @@ export function HeroSlider() {
           </p>
 
           {/* Search Bar immediately below text in the middle of the page */}
-          <div className="w-full max-w-[1100px] mt-8 sm:mt-10 md:mt-12 lg:mt-14 animate-fade-in-scale animation-delay-200">
+          <div className="w-full max-w-[1100px] mt-6 sm:mt-8 md:mt-9 lg:mt-10 animate-fade-in-scale animation-delay-200">
             <DiscoverySearch />
           </div>
         </div>
 
-        {/* Bottom Banner Content: View More link and Banner Slide Number Bar at the very bottom */}
-        <div className="w-full flex flex-col items-center gap-2 sm:gap-3 mt-4 sm:mt-6 pb-2 sm:pb-3">
+        {/* Bottom Banner Content: View More link and Banner Slide Number Bar */}
+        <div className="w-full flex flex-col items-center gap-2 sm:gap-2.5 mt-auto pb-6 sm:pb-8 md:pb-10 mb-2 sm:mb-3">
           {/* View More with curved downward arrow */}
           <a
             href="#popular-destinations"
