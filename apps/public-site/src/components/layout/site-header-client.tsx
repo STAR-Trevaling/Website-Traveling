@@ -9,7 +9,6 @@ import {
   Twitter,
   UserRound,
   ChevronDown,
-  ChevronRight,
   MapPin,
   Compass,
   Sparkles,
@@ -137,23 +136,21 @@ export function SiteHeaderClient({ user, overlay = false }: SiteHeaderClientProp
 
                   {/* Dropdown Menu Container with subtle hover bridge */}
                   <div className="absolute left-1/2 -translate-x-1/2 top-full pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible transition-all duration-200 pointer-events-none group-hover:pointer-events-auto group-focus-within:pointer-events-auto z-50">
-                    <div className="min-w-[220px] rounded-[2px] bg-white/98 backdrop-blur-md border border-slate-200/90 border-t-2 border-t-[#0098a2] py-1.5 px-1 shadow-[0_16px_36px_rgba(15,23,42,0.15)]">
-                      {item.subItems.map((sub) => {
-                        const Icon = sub.icon;
-                        return (
+                    <div className="min-w-[210px] rounded-[2px] bg-white border border-slate-100 p-6 shadow-xl text-left">
+                      <div className="text-[13px] font-bold uppercase tracking-wider text-black mb-4 select-none">
+                        {item.label}
+                      </div>
+                      <div className="flex flex-col space-y-3.5">
+                        {item.subItems.map((sub) => (
                           <Link
                             key={sub.href}
                             href={sub.href}
-                            className="group/sub flex items-center justify-between px-3.5 py-2.5 text-[13px] font-medium text-slate-800 hover:text-[#0098a2] hover:bg-[#0098a2]/[0.08] rounded-[2px] transition-all duration-150 cursor-pointer"
+                            className="text-sm font-normal text-slate-800 hover:text-black transition-colors leading-snug cursor-pointer"
                           >
-                            <div className="flex items-center gap-2.5">
-                              <Icon className="size-4 text-[#0098a2] transition-transform duration-200 group-hover/sub:scale-110 shrink-0" />
-                              <span className="tracking-[0.01em]">{sub.label}</span>
-                            </div>
-                            <ChevronRight className="size-3 text-[#0098a2] opacity-0 -translate-x-1 transition-all duration-200 group-hover/sub:opacity-100 group-hover/sub:translate-x-0 shrink-0" />
+                            {sub.label}
                           </Link>
-                        );
-                      })}
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </div>

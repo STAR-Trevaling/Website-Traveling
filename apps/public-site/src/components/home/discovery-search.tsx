@@ -181,7 +181,7 @@ export function DiscoverySearch() {
             <ChevronDown className="size-4 shrink-0 text-slate-400" />
           </button>
           {openCol1 && (
-            <div className="absolute left-0 right-0 sm:right-auto top-full z-50 mt-1 max-h-56 sm:w-60 overflow-auto rounded-[2px] bg-white/98 backdrop-blur-md p-1.5 shadow-[0_16px_36px_rgba(15,23,42,0.15)] border border-slate-200/90 border-t-2 border-t-[#0098a2]">
+            <div className="absolute left-0 right-0 sm:right-auto top-full z-50 mt-1 max-h-56 sm:w-60 overflow-auto rounded-[2px] bg-white p-2 shadow-2xl border border-slate-100">
               {col1Options.map((opt, idx) => (
                 <button
                   key={idx}
@@ -190,7 +190,7 @@ export function DiscoverySearch() {
                     setCol1Index(idx);
                     setOpenCol1(false);
                   }}
-                  className="w-full rounded-[2px] px-3.5 py-2 text-left text-xs sm:text-[13px] font-medium text-slate-800 hover:bg-[#0098a2]/[0.08] hover:text-[#0098a2] transition-colors cursor-pointer"
+                  className="w-full rounded-[2px] px-3.5 py-2 text-left text-xs sm:text-[13px] font-normal text-slate-800 hover:bg-slate-50 hover:text-black transition-colors cursor-pointer"
                 >
                   {isEn ? opt.en : opt.vi}
                 </button>
@@ -230,7 +230,7 @@ export function DiscoverySearch() {
             <ChevronDown className="size-4 shrink-0 text-slate-400 ml-1" />
           </button>
           {openCol2 && (
-            <div className="absolute left-0 right-0 sm:right-auto top-full z-50 mt-1 max-h-56 sm:w-64 overflow-auto rounded-[2px] bg-white/98 backdrop-blur-md p-1.5 shadow-[0_16px_36px_rgba(15,23,42,0.15)] border border-slate-200/90 border-t-2 border-t-[#0098a2]">
+            <div className="absolute left-0 right-0 sm:right-auto top-full z-50 mt-1 max-h-56 sm:w-64 overflow-auto rounded-[2px] bg-white p-2 shadow-2xl border border-slate-100">
               {col2Options.map((opt, idx) => (
                 <button
                   key={idx}
@@ -239,7 +239,7 @@ export function DiscoverySearch() {
                     setCol2Index(idx);
                     setOpenCol2(false);
                   }}
-                  className="w-full rounded-[2px] px-3.5 py-2 text-left text-xs sm:text-[13px] font-medium text-slate-800 hover:bg-[#0098a2]/[0.08] hover:text-[#0098a2] transition-colors cursor-pointer"
+                  className="w-full rounded-[2px] px-3.5 py-2 text-left text-xs sm:text-[13px] font-normal text-slate-800 hover:bg-slate-50 hover:text-black transition-colors cursor-pointer"
                 >
                   {isEn ? opt.en : opt.vi}
                 </button>
@@ -310,7 +310,7 @@ export function DiscoverySearch() {
             <ChevronDown className="size-4 shrink-0 text-slate-400 ml-1" />
           </button>
           {openTravellers && (
-            <div className="absolute left-0 right-0 sm:left-auto sm:right-0 top-full z-50 mt-1 sm:w-56 rounded-[2px] bg-white/98 backdrop-blur-md p-1.5 shadow-[0_16px_36px_rgba(15,23,42,0.15)] border border-slate-200/90 border-t-2 border-t-[#0098a2]">
+            <div className="absolute left-0 right-0 sm:left-auto sm:right-0 top-full z-50 mt-1 sm:w-56 rounded-[2px] bg-white p-2 shadow-2xl border border-slate-100">
               {TRAVELLER_OPTIONS.map((opt, idx) => (
                 <button
                   key={idx}
@@ -319,7 +319,7 @@ export function DiscoverySearch() {
                     setTravellerIndex(idx);
                     setOpenTravellers(false);
                   }}
-                  className="w-full rounded-[2px] px-3.5 py-2 text-left text-xs sm:text-[13px] font-medium text-slate-800 hover:bg-[#0098a2]/[0.08] hover:text-[#0098a2] transition-colors cursor-pointer"
+                  className="w-full rounded-[2px] px-3.5 py-2 text-left text-xs sm:text-[13px] font-normal text-slate-800 hover:bg-slate-50 hover:text-black transition-colors cursor-pointer"
                 >
                   {isEn ? opt.en : opt.vi}
                 </button>
