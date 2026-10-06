@@ -43,7 +43,7 @@
 graph TD
     Client["🌐 Web Browser (Traveler / Partner)"]
     
-    subgraph "Frontend Layer (apps/frontend)"
+    subgraph "Frontend Layer (apps/public-site)"
         NextWeb["Next.js 15 App Router (SSR / RSC)"]
         BFF["BFF Auth Routes (/api/auth/*)<br/>HttpOnly Cookie Safe"]
     end
@@ -100,7 +100,7 @@ travel-platform-mvp-complete/
 │   │   ├── manage.py
 │   │   └── requirements.txt      # Python dependencies
 │   │
-│   └── frontend/                 # Next.js 15 customer web application
+│   └── public-site/              # Next.js 15 customer web application
 │       ├── public/               # Static assets, hero images, adventure graphics
 │       ├── src/
 │       │   ├── app/              # 19 static & dynamic App Router pages
@@ -171,9 +171,9 @@ docker compose up --build -d backend worker frontend
 
 Run frontend and backend independently on your host machine:
 
-### 1. Frontend (`apps/frontend`)
+### 1. Frontend (`apps/public-site`)
 ```bash
-cd apps/frontend
+cd apps/public-site
 cp .env.example .env.local
 npm install
 npm run dev
@@ -232,9 +232,9 @@ python scripts/validate_context.py
 python scripts/static_sanity.py
 
 # Frontend quality suite
-npm --prefix apps/frontend run typecheck   # 0 TypeScript errors
-npm --prefix apps/frontend run lint        # ESLint 9 (0 errors, 0 warnings)
-npm --prefix apps/frontend run build       # Next.js 15 production build
+npm --prefix apps/public-site run typecheck   # 0 TypeScript errors
+npm --prefix apps/public-site run lint        # ESLint 9 (0 errors, 0 warnings)
+npm --prefix apps/public-site run build       # Next.js 15 production build
 
 # Backend quality suite (via Docker)
 make backend-check

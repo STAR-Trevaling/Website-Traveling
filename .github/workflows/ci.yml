@@ -66,12 +66,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
-        with: {node-version: "22", cache: npm, cache-dependency-path: apps/frontend/package.json}
-      - working-directory: apps/frontend
+        with: {node-version: "22", cache: npm, cache-dependency-path: apps/public-site/package.json}
+      - working-directory: apps/public-site
         run: npm install
-      - working-directory: apps/frontend
+      - working-directory: apps/public-site
         run: npm run typecheck
-      - working-directory: apps/frontend
+      - working-directory: apps/public-site
         env:
           BACKEND_URL: http://localhost:8000/api/v1
           NEXT_PUBLIC_SITE_URL: http://localhost:3000
@@ -94,6 +94,6 @@ jobs:
         with:
           node-version: "22"
       - name: Audit Frontend Dependencies
-        working-directory: apps/frontend
+        working-directory: apps/public-site
         run: |
           npm audit --audit-level=critical || true

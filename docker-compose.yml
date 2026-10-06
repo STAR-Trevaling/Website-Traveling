@@ -51,7 +51,7 @@ services:
         condition: service_healthy
 
   frontend:
-    build: ./apps/frontend
+    build: ./apps/public-site
     env_file: .env
     environment:
       BACKEND_URL: ${BACKEND_URL:-http://backend:8000/api/v1}
