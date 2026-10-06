@@ -5,10 +5,10 @@ import Link from "next/link";
 export interface StarLogoProps {
   /**
    * Lockup layout variant:
-   * - 'integrated': Golden star emblem cleanly positioned beside flowing script wordmark (Zero overlap, crystal-clear readability)
-   * - 'horizontal': Star icon positioned beside geometric STAR wordmark (Header/Navbar modern style)
-   * - 'stacked': Star icon centered above the STAR wordmark (Centered luxury style)
-   * - 'script': Cursive signature style with standalone golden star
+   * - 'integrated': Large 3D golden star emblem encompassing behind flowing script wordmark (Star Travels)
+   * - 'horizontal': Large 3D star emblem encompassing behind geometric STAR wordmark (Header/Navbar style)
+   * - 'stacked': Star emblem centered behind the STAR wordmark
+   * - 'script': Cursive signature style with 3D golden star backdrop
    * - 'icon-only': Standalone golden star emblem
    */
   variant?: "horizontal" | "integrated" | "stacked" | "script" | "icon-only";
@@ -31,32 +31,40 @@ export function StarLogo({
 }: StarLogoProps) {
   const sizeClasses = {
     sm: {
-      star: "size-3.5 sm:size-4",
-      text: "text-sm sm:text-[15px]",
-      desc: "text-[7.5px] sm:text-[8px]",
+      container: "min-h-[44px] sm:min-h-[48px] px-2 py-1",
+      starBg: "w-12 h-12 sm:w-14 sm:h-14",
+      iconStar: "size-4 sm:size-4.5",
+      text: "text-xs sm:text-[13px]",
+      desc: "text-[7px] sm:text-[7.5px]",
       scriptText: "text-xl sm:text-2xl",
-      gap: "gap-1",
+      padding: "py-0.5 px-2",
     },
     md: {
-      star: "size-4.5 sm:size-5",
-      text: "text-lg sm:text-xl",
-      desc: "text-[8.5px] sm:text-[9px]",
-      scriptText: "text-2xl sm:text-3xl",
-      gap: "gap-1.5",
+      container: "min-h-[100px] sm:min-h-[120px] px-3 py-2",
+      starBg: "w-28 h-28 sm:w-32 sm:h-32",
+      iconStar: "size-5 sm:size-6",
+      text: "text-sm sm:text-base",
+      desc: "text-[8px] sm:text-[8.5px]",
+      scriptText: "text-3xl sm:text-4xl",
+      padding: "py-1.5 px-3",
     },
     lg: {
-      star: "size-6 sm:size-7",
-      text: "text-2xl sm:text-3xl",
-      desc: "text-[10px] sm:text-xs",
-      scriptText: "text-4xl sm:text-5xl",
-      gap: "gap-2",
+      container: "min-h-[160px] sm:min-h-[200px] md:min-h-[220px] px-4 py-2",
+      starBg: "w-56 h-56 sm:w-72 sm:h-72 md:w-80 md:h-80",
+      iconStar: "size-7 sm:size-8",
+      text: "text-xl sm:text-2xl",
+      desc: "text-[9.5px] sm:text-[10px]",
+      scriptText: "text-4xl sm:text-5xl md:text-[50px]",
+      padding: "py-2 px-4",
     },
     xl: {
-      star: "size-8 sm:size-10",
-      text: "text-4xl sm:text-5xl",
+      container: "min-h-[220px] sm:min-h-[260px] md:min-h-[300px] px-6 py-4",
+      starBg: "w-72 h-72 sm:w-88 sm:h-88 md:w-96 md:h-96",
+      iconStar: "size-9 sm:size-10",
+      text: "text-2xl sm:text-3xl",
       desc: "text-xs sm:text-sm",
-      scriptText: "text-5xl sm:text-6xl",
-      gap: "gap-2.5",
+      scriptText: "text-5xl sm:text-6xl md:text-7xl",
+      padding: "py-3 px-6",
     },
   }[size];
 
@@ -68,7 +76,7 @@ export function StarLogo({
     <svg
       viewBox="0 0 100 100"
       aria-hidden="true"
-      className={`shrink-0 drop-shadow-[0_2px_8px_rgba(234,179,8,0.55)] transition-all duration-300 group-hover:scale-115 group-hover:rotate-12 pointer-events-none ${iconClass}`}
+      className={`shrink-0 drop-shadow-[0_4px_24px_rgba(234,179,8,0.5)] transition-all duration-500 group-hover:scale-105 pointer-events-none ${iconClass}`}
     >
       <defs>
         {/* Facet Light Gradient: High-luster 18K Radiant Gold */}
@@ -108,78 +116,63 @@ export function StarLogo({
     if (variant === "icon-only") {
       return (
         <div className={`relative inline-flex items-center justify-center ${className}`}>
-          <StarIcon iconClass={sizeClasses.star} />
+          <StarIcon iconClass={sizeClasses.iconStar} />
         </div>
       );
     }
 
     if (variant === "integrated" || variant === "script") {
-      // Clean Signature Script Lockup with 3D star and flank lines underneath
+      // Large 3D star emblem encompassing behind flowing script wordmark
       return (
-        <div className={`flex flex-col items-center justify-center text-center select-none ${className}`}>
+        <div
+          className={`relative inline-flex items-center justify-center text-center select-none ${sizeClasses.container} ${className}`}
+        >
+          {/* Large Golden Star Emblem positioned BEHIND brand name (Encompassing backdrop) */}
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
+            <StarIcon iconClass={`${sizeClasses.starBg} opacity-90 group-hover:opacity-100 transition-opacity`} />
+          </div>
+
+          {/* Brand Name Text lying directly ON TOP OF the star (Brand name nằm đè lên ngôi sao) */}
           <span
-            className={`logo-title ${sizeClasses.scriptText} leading-none ${textColor} select-none tracking-normal font-normal flex items-baseline`}
+            className={`logo-title ${sizeClasses.scriptText} leading-none ${textColor} select-none tracking-normal font-normal relative z-10 flex items-baseline drop-shadow-[0_2px_4px_rgba(255,255,255,0.95)] drop-shadow-[0_0_8px_rgba(255,255,255,0.85)] ${
+              inverted ? "drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]" : ""
+            }`}
           >
             <span>Star</span>
-            {showDescriptor && <span className="ml-1.5 sm:ml-2">Travels</span>}
+            {showDescriptor && <span className="ml-2 sm:ml-2.5">Travels</span>}
           </span>
-          <div className="flex items-center justify-center gap-1.5 mt-1">
-            <span
-              className={`h-[1px] w-3.5 sm:w-5 ${
-                inverted
-                  ? "bg-gradient-to-r from-transparent via-amber-300/60 to-transparent"
-                  : "bg-gradient-to-r from-transparent via-amber-600/40 to-transparent"
-              }`}
-            />
-            <StarIcon iconClass={sizeClasses.star} />
-            <span
-              className={`h-[1px] w-3.5 sm:w-5 ${
-                inverted
-                  ? "bg-gradient-to-r from-transparent via-amber-300/60 to-transparent"
-                  : "bg-gradient-to-r from-transparent via-amber-600/40 to-transparent"
-              }`}
-            />
-          </div>
         </div>
       );
     }
 
-    // Default & Stacked / Horizontal Lockup: Full text block on top (STAR & TRAVELS), 3D golden star emblem positioned underneath
+    // Default & Stacked / Horizontal Lockup: Large 3D star emblem behind, STAR & TRAVELS text overlaid on top
     return (
-      <div className={`flex flex-col items-center justify-center text-center select-none ${className}`}>
-        {/* Luxury Roman Serif Wordmark & Descriptor */}
-        <div className="flex flex-col items-center justify-center leading-none">
+      <div
+        className={`relative inline-flex items-center justify-center text-center select-none ${sizeClasses.container} ${className}`}
+      >
+        {/* Large 3D Faceted Golden Star positioned BEHIND text (Encompasses brand name) */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
+          <StarIcon iconClass={`${sizeClasses.starBg} opacity-90 group-hover:opacity-100 transition-opacity`} />
+        </div>
+
+        {/* Brand Name Text overlaid ON TOP OF the star */}
+        <div className={`relative z-10 flex flex-col items-center justify-center leading-none ${sizeClasses.padding}`}>
           <span
-            className={`brand-wordmark font-bold uppercase tracking-[0.28em] ${sizeClasses.text} ${textColor} leading-none transition-colors duration-200 group-hover:text-amber-400`}
+            className={`brand-wordmark font-bold uppercase tracking-[0.18em] ${sizeClasses.text} ${textColor} leading-none transition-colors duration-200 group-hover:text-amber-400 drop-shadow-[0_1px_3px_rgba(255,255,255,0.8)] ${
+              inverted ? "drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]" : ""
+            }`}
           >
             STAR
           </span>
           {showDescriptor && (
             <span
-              className={`tracking-[0.38em] uppercase font-semibold ${sizeClasses.desc} ${descColor} mt-0.5 sm:mt-1 leading-none`}
+              className={`tracking-[0.28em] uppercase font-semibold ${sizeClasses.desc} ${descColor} mt-0.5 sm:mt-1 leading-none drop-shadow-[0_1px_2px_rgba(255,255,255,0.7)] ${
+                inverted ? "drop-shadow-[0_1px_6px_rgba(0,0,0,0.85)]" : ""
+              }`}
             >
               TRAVELS
             </span>
           )}
-        </div>
-
-        {/* 3D Faceted Golden Star positioned directly UNDERNEATH the text */}
-        <div className="flex items-center justify-center gap-1.5 mt-1 sm:mt-1.5 w-full">
-          <span
-            className={`h-[1px] w-3 sm:w-4 ${
-              inverted
-                ? "bg-gradient-to-r from-transparent via-amber-300/70 to-transparent"
-                : "bg-gradient-to-r from-transparent via-amber-600/50 to-transparent"
-            }`}
-          />
-          <StarIcon iconClass={sizeClasses.star} />
-          <span
-            className={`h-[1px] w-3 sm:w-4 ${
-              inverted
-                ? "bg-gradient-to-r from-transparent via-amber-300/70 to-transparent"
-                : "bg-gradient-to-r from-transparent via-amber-600/50 to-transparent"
-            }`}
-          />
         </div>
       </div>
     );
