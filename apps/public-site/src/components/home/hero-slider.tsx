@@ -168,9 +168,9 @@ export function HeroSlider() {
             </svg>
           </a>
 
-          {/* Thanh hiện số banner ở cuối banner */}
-          <div className="flex items-center justify-center gap-2.5 sm:gap-3 bg-black/40 backdrop-blur-md px-4 sm:px-5 py-1.5 sm:py-2 rounded-full border border-white/20 shadow-xl">
-            <span className="text-[11px] sm:text-xs font-bold text-white tracking-widest font-mono">
+          {/* Thanh hiện số banner ở cuối banner (Màu trắng bóng mờ sang trọng) */}
+          <div className="flex items-center justify-center gap-2.5 sm:gap-3 bg-white/85 hover:bg-white/95 backdrop-blur-xl px-4 sm:px-5 py-1.5 sm:py-2 rounded-full border border-white/90 shadow-[0_8px_30px_rgba(0,0,0,0.25),0_2px_8px_rgba(0,0,0,0.12),inset_0_1px_1px_rgba(255,255,255,0.95)] transition-all duration-300">
+            <span className="text-[11px] sm:text-xs font-bold text-slate-900 tracking-widest font-mono">
               {String(currentSlide + 1).padStart(2, "0")}
             </span>
             <div className="flex items-center gap-1.5">
@@ -182,13 +182,13 @@ export function HeroSlider() {
                   aria-label={`Slide ${idx + 1}`}
                   className={`h-1.5 rounded-full transition-all duration-500 cursor-pointer ${
                     idx === currentSlide
-                      ? "w-7 sm:w-8 bg-[#eab308] shadow-[0_0_8px_rgba(234,179,8,0.8)]"
-                      : "w-2 bg-white/40 hover:bg-white/70"
+                      ? "w-7 sm:w-8 bg-gradient-to-r from-amber-500 to-[#eab308] shadow-[0_2px_8px_rgba(234,179,8,0.55)]"
+                      : "w-2 bg-slate-300 hover:bg-slate-400"
                   }`}
                 />
               ))}
             </div>
-            <span className="text-[11px] sm:text-xs font-semibold text-white/60 tracking-widest font-mono">
+            <span className="text-[11px] sm:text-xs font-semibold text-slate-500 tracking-widest font-mono">
               {String(slides.length).padStart(2, "0")}
             </span>
           </div>
