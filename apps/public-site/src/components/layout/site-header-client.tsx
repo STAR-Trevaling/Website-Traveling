@@ -8,17 +8,10 @@ import {
   Facebook,
   Twitter,
   UserRound,
-  ChevronDown,
-  MapPin,
-  Compass,
-  Sparkles,
-  Building2,
-  Handshake,
 } from "lucide-react";
 import type { CurrentUser } from "@/lib/types";
 import { useLanguage } from "@/lib/i18n/context";
 import { MobileNav } from "./mobile-nav";
-import { StarLogo } from "@/components/shared/star-logo";
 
 interface SiteHeaderClientProps {
   user: CurrentUser | null;
@@ -28,27 +21,12 @@ interface SiteHeaderClientProps {
 export function SiteHeaderClient({ user, overlay = false }: SiteHeaderClientProps) {
   const { t } = useLanguage();
 
-  const navItems = [
-    { type: "link" as const, label: t.nav.home, href: "/" },
-    {
-      type: "dropdown" as const,
-      label: t.nav.explore,
-      subItems: [
-        { label: t.nav.destinations, href: "/destinations", icon: MapPin },
-        { label: t.nav.packages, href: "/experiences", icon: Sparkles },
-        { label: t.nav.tours, href: "/tours", icon: Compass },
-      ],
-    },
-    { type: "link" as const, label: t.nav.stories, href: "/stories" },
-    {
-      type: "dropdown" as const,
-      label: t.nav.aboutMenu,
-      subItems: [
-        { label: t.nav.aboutUs, href: "/about", icon: Building2 },
-        { label: t.nav.partner, href: "/partner", icon: Handshake },
-      ],
-    },
-    { type: "link" as const, label: t.nav.contact, href: "/contact" },
+  const navLinks = [
+    { label: t.nav.home, href: "/" },
+    { label: t.nav.packages, href: "/experiences" },
+    { label: t.nav.tours, href: "/tours" },
+    { label: t.nav.aboutUs, href: "/about" },
+    { label: t.nav.contact, href: "/contact" },
   ];
 
   return (
@@ -56,144 +34,114 @@ export function SiteHeaderClient({ user, overlay = false }: SiteHeaderClientProp
       className={
         overlay
           ? "absolute inset-x-0 top-0 z-30 text-white"
-          : "bg-white text-slate-900 shadow-sm"
+          : "bg-white text-slate-900 shadow-sm border-b border-slate-100"
       }
     >
-      <div className="w-full px-4 sm:px-6 md:px-10 lg:px-14">
-        <div className="relative flex h-18 sm:h-20 lg:h-22 items-center justify-between text-xs md:text-sm font-normal">
-          {/* Brand Logo & Name with Social Icons (Mirrors template layout) */}
-          <div className="flex items-center gap-3 sm:gap-4 shrink-0 z-10">
-            <StarLogo variant="horizontal" size="sm" inverted={overlay} />
-            {/* Social Icons (Instagram, Twitter, Facebook) */}
-            <div
-              className={`hidden sm:flex items-center gap-2.5 pl-3 border-l ${
-                overlay ? "border-white/20 text-white/80" : "border-slate-200 text-slate-400"
-              }`}
-            >
-              <a
-                href="https://instagram.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Instagram"
-                className="hover:text-[#0098a2] transition p-0.5"
-              >
-                <Instagram className="size-3.5" />
-              </a>
-              <a
-                href="https://twitter.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Twitter"
-                className="hover:text-[#0098a2] transition p-0.5"
-              >
-                <Twitter className="size-3.5" />
-              </a>
-              <a
-                href="https://facebook.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Facebook"
-                className="hover:text-[#0098a2] transition p-0.5"
-              >
-                <Facebook className="size-3.5" />
-              </a>
-            </div>
-          </div>
-
-          {/* Center: Truly Centered Navigation Links (Dead-center in viewport like template) */}
-          <nav className="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center gap-3.5 lg:gap-5 xl:gap-6.5 text-xs md:text-[13px] lg:text-sm font-normal whitespace-nowrap z-10">
-            {navItems.map((item) => {
-              if (item.type === "link") {
-                return (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className={
-                      overlay
-                        ? "py-2 transition hover:text-white/80 hover:underline"
-                        : "py-2 text-slate-700 transition hover:text-[#0098a2] hover:underline"
-                    }
-                  >
-                    {item.label}
-                  </Link>
-                );
-              }
-
-              // Dropdown item (Khám Phá / Giới Thiệu)
-              return (
-                <div key={item.label} className="relative group py-2">
-                  <button
-                    type="button"
-                    className={
-                      overlay
-                        ? "inline-flex items-center gap-1 transition hover:text-white/80 focus:outline-none cursor-pointer"
-                        : "inline-flex items-center gap-1 text-slate-700 transition hover:text-[#0098a2] focus:outline-none cursor-pointer"
-                    }
-                  >
-                    <span>{item.label}</span>
-                    <ChevronDown className="size-3.5 transition-transform duration-200 group-hover:rotate-180 opacity-70 group-hover:opacity-100" />
-                  </button>
-
-                  {/* Dropdown Menu Container with subtle hover bridge */}
-                  <div className="absolute left-1/2 -translate-x-1/2 top-full pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible transition-all duration-200 pointer-events-none group-hover:pointer-events-auto group-focus-within:pointer-events-auto z-50">
-                    <div className="min-w-[210px] rounded-[2px] bg-white border border-slate-100 p-6 shadow-xl text-left">
-                      <div className="text-[13px] font-bold uppercase tracking-wider text-black mb-4 select-none">
-                        {item.label}
-                      </div>
-                      <div className="flex flex-col space-y-3.5">
-                        {item.subItems.map((sub) => (
-                          <Link
-                            key={sub.href}
-                            href={sub.href}
-                            className="text-sm font-normal text-slate-800 hover:text-black transition-colors leading-snug cursor-pointer"
-                          >
-                            {sub.label}
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </nav>
-
-          {/* Right: Phone, Email, Login & Mobile Navigation Toggle */}
-          <div className="flex items-center gap-2.5 sm:gap-3 lg:gap-4 text-xs lg:text-[13px] shrink-0 z-10">
-            <span
+      <div className="w-full px-6 sm:px-10 md:px-12 lg:px-16 xl:px-20">
+        <div className="relative flex h-16 sm:h-18 md:h-20 items-center justify-between">
+          {/* Left: 3 Social Media Icons (Instagram, Twitter, Facebook) */}
+          <div className="flex items-center gap-3.5 sm:gap-4 shrink-0 z-10">
+            <a
+              href="https://instagram.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
               className={
                 overlay
-                  ? "hidden xl:flex items-center gap-1.5 text-white/90"
-                  : "hidden xl:flex items-center gap-1.5 text-slate-600"
+                  ? "text-white/90 hover:text-white transition-opacity duration-150 p-1"
+                  : "text-slate-600 hover:text-slate-900 transition-colors duration-150 p-1"
               }
             >
-              <Phone className="size-3.5 opacity-80" />
-              {t.nav.phoneLabel}
-            </span>
+              <Instagram className="size-4 sm:size-[18px]" strokeWidth={1.8} />
+            </a>
+            <a
+              href="https://twitter.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Twitter"
+              className={
+                overlay
+                  ? "text-white/90 hover:text-white transition-opacity duration-150 p-1"
+                  : "text-slate-600 hover:text-slate-900 transition-colors duration-150 p-1"
+              }
+            >
+              <Twitter className="size-4 sm:size-[18px]" strokeWidth={1.8} />
+            </a>
+            <a
+              href="https://facebook.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Facebook"
+              className={
+                overlay
+                  ? "text-white/90 hover:text-white transition-opacity duration-150 p-1"
+                  : "text-slate-600 hover:text-slate-900 transition-colors duration-150 p-1"
+              }
+            >
+              <Facebook className="size-4 sm:size-[18px]" strokeWidth={1.8} />
+            </a>
+          </div>
+
+          {/* Center: 5 Clean Navigation Links (Home, Packages, Tours, About Us, Contact) */}
+          <nav
+            aria-label="Main Navigation"
+            className="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center gap-7 md:gap-8 lg:gap-11 xl:gap-13 text-[13px] sm:text-[14px] font-normal whitespace-nowrap z-10"
+          >
+            {navLinks.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={
+                  overlay
+                    ? "text-white/90 hover:text-white transition-colors duration-150 hover:underline underline-offset-4 py-1"
+                    : "text-slate-700 hover:text-slate-950 transition-colors duration-150 hover:underline underline-offset-4 py-1"
+                }
+              >
+                {item.label}
+              </Link>
+            ))}
+          </nav>
+
+          {/* Right: Phone, Email, User & Mobile Navigation Drawer Toggle */}
+          <div className="flex items-center gap-4 sm:gap-6 lg:gap-8 shrink-0 z-10">
+            {/* Phone contact */}
+            <a
+              href={`tel:${t.nav.phoneLabel.replace(/\s+/g, "")}`}
+              className={
+                overlay
+                  ? "hidden sm:flex items-center gap-2 text-xs sm:text-[13px] font-normal text-white/90 hover:text-white transition-opacity"
+                  : "hidden sm:flex items-center gap-2 text-xs sm:text-[13px] font-normal text-slate-700 hover:text-slate-950 transition-colors"
+              }
+            >
+              <Phone className="size-3.5 opacity-90" />
+              <span>{t.nav.phoneLabel}</span>
+            </a>
+
+            {/* Email contact */}
             <a
               href={`mailto:${t.nav.emailLabel}`}
               className={
                 overlay
-                  ? "hidden lg:flex items-center gap-1.5 text-white/90 hover:opacity-80 transition"
-                  : "hidden lg:flex items-center gap-1.5 text-slate-600 hover:text-[#0098a2] transition"
+                  ? "hidden lg:flex items-center gap-2 text-xs sm:text-[13px] font-normal text-white/90 hover:text-white transition-opacity"
+                  : "hidden lg:flex items-center gap-2 text-xs sm:text-[13px] font-normal text-slate-700 hover:text-slate-950 transition-colors"
               }
             >
-              <Mail className="size-3.5 opacity-80" />
-              {t.nav.emailLabel}
+              <Mail className="size-3.5 opacity-90" />
+              <span>{t.nav.emailLabel}</span>
             </a>
 
-            {/* Account Icon */}
+            {/* User Account Icon */}
             <Link
               href={user ? "/account" : "/login"}
               aria-label={user ? user.username : t.nav.login}
               title={user ? user.username : t.nav.login}
               className={
                 overlay
-                  ? "flex items-center justify-center p-2 rounded-full hover:bg-white/15 transition text-white"
-                  : "flex items-center justify-center p-2 rounded-full hover:bg-slate-100 text-slate-800 transition hover:text-[#0098a2]"
+                  ? "flex items-center justify-center p-1.5 rounded-full text-white/80 hover:text-white hover:bg-white/10 transition"
+                  : "flex items-center justify-center p-1.5 rounded-full text-slate-600 hover:text-slate-950 hover:bg-slate-100 transition"
               }
             >
-              <UserRound className="size-4.5 opacity-90" />
+              <UserRound className="size-4" />
             </Link>
 
             {/* Mobile Navigation Drawer Toggle */}
