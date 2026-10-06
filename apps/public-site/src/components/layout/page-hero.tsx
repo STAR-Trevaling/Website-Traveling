@@ -18,7 +18,7 @@ export async function PageHero({ title, titleEn, subtitle, subtitleEn, image }: 
   const displaySubtitle = isEn && subtitleEn ? subtitleEn : subtitle;
 
   return (
-    <section className="relative min-h-[260px] sm:min-h-[320px] md:min-h-[380px] overflow-hidden text-white flex items-end">
+    <section className="relative min-h-[290px] sm:min-h-[340px] md:min-h-[400px] overflow-hidden text-white flex items-end">
       <Image
         src={image}
         alt={displayTitle}
@@ -31,7 +31,7 @@ export async function PageHero({ title, titleEn, subtitle, subtitleEn, image }: 
       <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-black/40" />
       <SiteHeader overlay />
 
-      <div className="relative z-10 mx-auto w-full max-w-7xl px-4 sm:px-6 md:px-12 pb-7 sm:pb-10 pt-20 sm:pt-24">
+      <div className="relative z-10 mx-auto w-full max-w-7xl px-4 sm:px-6 md:px-12 pb-7 sm:pb-10 pt-24 sm:pt-28 md:pt-32">
         <div className="max-w-4xl">
           <div className="flex items-center gap-2 mb-2 sm:mb-3">
             <span className="inline-flex items-center gap-2 px-3 py-1 rounded-[2px] bg-black/40 backdrop-blur-md border border-white/20 text-[10.5px] sm:text-xs font-bold tracking-[0.2em] uppercase text-white shadow-sm">
