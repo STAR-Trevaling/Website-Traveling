@@ -20,6 +20,8 @@ export function FeaturedTours({ initialTours }: FeaturedToursProps) {
   const totalPages = Math.ceil(tours.length / itemsPerPage);
   const hasMultiplePages = tours.length > itemsPerPage;
   const [currentPage, setCurrentPage] = useState(0);
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
 
   const handlePrev = () => {
     setCurrentPage((prev) => (prev - 1 + totalPages) % totalPages);
@@ -27,6 +29,25 @@ export function FeaturedTours({ initialTours }: FeaturedToursProps) {
 
   const handleNext = () => {
     setCurrentPage((prev) => (prev + 1) % totalPages);
+  };
+
+  // Mobile swipe support
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > 50;
+    const isRightSwipe = distance < -50;
+    if (isLeftSwipe && hasMultiplePages) handleNext();
+    if (isRightSwipe && hasMultiplePages) handlePrev();
   };
 
   const currentTours = tours.slice(
@@ -46,15 +67,20 @@ export function FeaturedTours({ initialTours }: FeaturedToursProps) {
           </p>
         </div>
 
-        <div className="relative w-full">
-          {/* Desktop Floating Arrows (Hidden on mobile to eliminate overflow bugs) */}
+        <div
+          className="relative w-full"
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+        >
+          {/* Desktop Floating Arrows */}
           {hasMultiplePages && (
             <>
               <button
                 type="button"
                 onClick={handlePrev}
                 aria-label={isEn ? "Previous tours" : "Tour trước"}
-                className="hidden md:flex absolute -left-12 lg:-left-16 top-1/2 z-20 -translate-y-1/2 text-white/90 hover:text-white transition drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)] hover:scale-110 cursor-pointer"
+                className="hidden md:flex absolute -left-12 lg:-left-16 top-1/2 z-20 -translate-y-1/2 text-slate-800 hover:text-[#0098a2] transition drop-shadow-[0_2px_8px_rgba(0,0,0,0.15)] hover:scale-110 active:scale-95 cursor-pointer"
               >
                 <ChevronLeft className="size-12 md:size-16 stroke-[1.2]" />
               </button>
@@ -63,15 +89,18 @@ export function FeaturedTours({ initialTours }: FeaturedToursProps) {
                 type="button"
                 onClick={handleNext}
                 aria-label={isEn ? "Next tours" : "Tour tiếp theo"}
-                className="hidden md:flex absolute -right-12 lg:-right-16 top-1/2 z-20 -translate-y-1/2 text-white/90 hover:text-white transition drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)] hover:scale-110 cursor-pointer"
+                className="hidden md:flex absolute -right-12 lg:-right-16 top-1/2 z-20 -translate-y-1/2 text-slate-800 hover:text-[#0098a2] transition drop-shadow-[0_2px_8px_rgba(0,0,0,0.15)] hover:scale-110 active:scale-95 cursor-pointer"
               >
                 <ChevronRight className="size-12 md:size-16 stroke-[1.2]" />
               </button>
             </>
           )}
 
-          {/* 4 Cards Grid */}
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 transition-opacity duration-300">
+          {/* 4 Cards Grid with smooth page transition */}
+          <div
+            key={`tours-page-${currentPage}`}
+            className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 animate-fade-in-scale"
+          >
             {currentTours.map((tour) => {
               const fullDest = isEn && tour.destination_en ? tour.destination_en : tour.destination;
               const shortDest = fullDest.split(",")[0].trim();
@@ -82,7 +111,7 @@ export function FeaturedTours({ initialTours }: FeaturedToursProps) {
                 <Link
                   key={tour.id}
                   href={`/tours/${tour.slug}`}
-                  className="group flex flex-col overflow-hidden rounded-[2px] bg-white shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
+                  className="group flex flex-col overflow-hidden rounded-[2px] bg-white shadow-md travel-card-lift border border-slate-100"
                 >
                   <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-100">
                     <Image
@@ -90,9 +119,9 @@ export function FeaturedTours({ initialTours }: FeaturedToursProps) {
                       alt={displayTitle}
                       fill
                       unoptimized
-                      className="object-cover transition duration-500 group-hover:scale-105"
+                      className="object-cover travel-img-zoom"
                     />
-                    <div className="absolute top-2.5 left-2.5 bg-black/60 text-white text-[10px] sm:text-[11px] font-medium px-2 py-0.5 rounded-[2px] backdrop-blur-sm">
+                    <div className="absolute top-2.5 left-2.5 bg-black/65 text-white text-[10px] sm:text-[11px] font-medium px-2.5 py-1 rounded-[2px] backdrop-blur-sm border border-white/20">
                       {displayDuration}
                     </div>
                   </div>

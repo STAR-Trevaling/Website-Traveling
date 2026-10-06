@@ -116,7 +116,10 @@ export function ToursCatalog() {
       </div>
 
       {/* Tour Cards Grid */}
-      <div className="grid gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-3">
+      <div
+        key={`${selectedRegion}-${sortBy}`}
+        className="grid gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-3 animate-fade-in-scale"
+      >
         {filteredTours.map((tour) => {
           const displayTitle = isEnglish && tour.title_en ? tour.title_en : tour.title;
           const displayDuration = isEnglish && tour.duration_en ? tour.duration_en : tour.duration;
@@ -126,7 +129,7 @@ export function ToursCatalog() {
           return (
             <article
               key={tour.id}
-              className="group flex flex-col justify-between overflow-hidden rounded-[2px] bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg border border-slate-100"
+              className="group travel-card-lift flex flex-col justify-between overflow-hidden rounded-[2px] bg-white border border-slate-100"
             >
               <div>
                 {/* Photo & Badge */}
@@ -136,18 +139,18 @@ export function ToursCatalog() {
                     alt={displayTitle}
                     fill
                     unoptimized
-                    className="object-cover transition duration-500 group-hover:scale-105"
+                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-108"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80 group-hover:opacity-60 transition-opacity duration-300" />
 
                   {/* Duration Badge */}
-                  <div className="absolute top-3 left-3 flex items-center gap-1.5 rounded-[2px] bg-[#1e293b]/85 px-2.5 py-1 text-[11px] font-semibold text-white backdrop-blur-md uppercase tracking-wider">
+                  <div className="absolute top-3 left-3 flex items-center gap-1.5 rounded-[2px] bg-[#1e293b]/85 px-2.5 py-1 text-[11px] font-semibold text-white backdrop-blur-md uppercase tracking-wider shadow-sm">
                     <Clock className="size-3 text-white" />
                     <span>{displayDuration}</span>
                   </div>
 
                   {/* Location Badge */}
-                  <div className="absolute bottom-3 left-3 flex items-center gap-1 text-xs font-medium text-white/95">
+                  <div className="absolute bottom-3 left-3 flex items-center gap-1 text-xs font-medium text-white/95 drop-shadow-sm">
                     <MapPin className="size-3.5 text-white" />
                     <span>{displayDestination}</span>
                   </div>
@@ -165,7 +168,7 @@ export function ToursCatalog() {
                     </span>
                   </div>
 
-                  <h3 className="script-title mt-2 text-2xl font-bold leading-tight text-slate-900 group-hover:text-amber-700 transition-colors line-clamp-2">
+                  <h3 className="script-title mt-2 text-2xl font-bold leading-tight text-slate-900 group-hover:text-[#0098a2] transition-colors line-clamp-2">
                     {displayTitle}
                   </h3>
 
@@ -221,7 +224,7 @@ export function ToursCatalog() {
                     className="rounded-[2px] bg-[#0098a2] px-4 py-2 text-xs font-bold uppercase tracking-wider text-white shadow-sm transition-all duration-200 hover:bg-[#008f99] hover:shadow-[0px_6px_20px_rgba(0,152,162,0.35)] hover:-translate-y-0.5 active:translate-y-0 flex items-center gap-1"
                   >
                     <span>{t.toursPage.viewDetails}</span>
-                    <ArrowRight className="size-3" />
+                    <ArrowRight className="size-3 transition-transform duration-200 group-hover:translate-x-0.5" />
                   </Link>
                 </div>
               </div>

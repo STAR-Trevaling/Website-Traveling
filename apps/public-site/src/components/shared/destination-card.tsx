@@ -21,7 +21,7 @@ export async function DestinationCard({ destination }: DestinationCardProps) {
   return (
     <Link
       href={`/destinations/${destination.slug}`}
-      className="group block overflow-hidden rounded-[2px] bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg border border-slate-100 flex flex-col justify-between"
+      className="group travel-card-lift block overflow-hidden rounded-[2px] bg-white border border-slate-100 flex flex-col justify-between"
     >
       <div>
         <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-100">
@@ -30,18 +30,18 @@ export async function DestinationCard({ destination }: DestinationCardProps) {
             alt={displayName}
             fill
             unoptimized
-            className="object-cover transition-transform duration-500 group-hover:scale-105"
+            className="object-cover transition-transform duration-700 ease-out group-hover:scale-108"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
           
-          <div className="absolute top-3 left-3 bg-[#1e293b]/85 backdrop-blur-sm px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-white rounded-[2px] flex items-center gap-1">
+          <div className="absolute top-3 left-3 bg-[#1e293b]/85 backdrop-blur-md px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-white rounded-[2px] flex items-center gap-1 shadow-sm">
             <MapPin className="size-3 text-white" />
             <span>{displayCountry}</span>
           </div>
         </div>
 
         <div className="p-5">
-          <h3 className="script-title text-2xl font-bold text-slate-900 group-hover:text-amber-700 transition-colors leading-tight">
+          <h3 className="script-title text-2xl font-bold text-slate-900 group-hover:text-[#0098a2] transition-colors leading-tight">
             {displayName}
           </h3>
 
@@ -71,8 +71,9 @@ export async function DestinationCard({ destination }: DestinationCardProps) {
           )}
         </div>
 
-        <span className="text-xs font-semibold uppercase tracking-wider text-slate-700 group-hover:text-amber-700 flex items-center gap-1">
-          {isEn ? "Explore" : "Khám phá"} <ArrowRight className="size-3" />
+        <span className="text-xs font-semibold uppercase tracking-wider text-slate-700 group-hover:text-[#0098a2] flex items-center gap-1 transition-colors">
+          <span>{isEn ? "Explore" : "Khám phá"}</span>
+          <ArrowRight className="size-3 transition-transform duration-300 group-hover:translate-x-1" />
         </span>
       </div>
     </Link>

@@ -88,29 +88,30 @@ export function NewsletterAwards() {
             </p>
 
             {/* 2 Columns x 3 Rows Layout */}
-            <div className="mt-6 sm:mt-10 grid grid-cols-1 sm:grid-cols-2 gap-x-5 sm:gap-x-8 gap-y-4 sm:gap-y-7">
+            <div className="mt-6 sm:mt-10 grid grid-cols-1 sm:grid-cols-2 gap-x-5 sm:gap-x-8 gap-y-4 sm:gap-y-6">
               {t.awards.items.map((item, idx) => (
                 <div
                   key={idx}
-                  className="group flex items-center gap-3 sm:gap-4 transition hover:-translate-y-0.5"
+                  className="group flex items-center gap-3.5 sm:gap-4 p-2 sm:p-2.5 rounded-[2px] transition-all duration-300 hover:bg-white/70 hover:shadow-sm hover:-translate-y-0.5 cursor-pointer border border-transparent hover:border-slate-200/60"
                 >
                   {/* Photo thumbnail */}
-                  <div className="relative h-[70px] w-[95px] sm:h-[88px] sm:w-[120px] md:h-[92px] md:w-[128px] shrink-0 overflow-hidden shadow-sm rounded-[2px] bg-slate-200">
+                  <div className="relative h-[72px] w-[98px] sm:h-[88px] sm:w-[120px] md:h-[92px] md:w-[128px] shrink-0 overflow-hidden shadow-sm rounded-[2px] bg-slate-200">
                     <Image
                       src={AWARD_IMAGES[idx] || AWARD_IMAGES[0]}
                       alt={item.title}
                       fill
                       unoptimized
-                      className="object-cover transition duration-300 group-hover:scale-105"
+                      className="object-cover transition-transform duration-500 ease-out group-hover:scale-110"
                     />
+                    <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-300" />
                   </div>
 
                   {/* Text details */}
                   <div className="flex-1 min-w-0">
-                    <h3 className="text-xs sm:text-sm md:text-[15px] font-bold text-[#1e293b] leading-snug group-hover:text-amber-700 transition-colors">
+                    <h3 className="text-xs sm:text-sm md:text-[15px] font-bold text-[#1e293b] leading-snug group-hover:text-[#0098a2] transition-colors duration-200">
                       {item.title}
                     </h3>
-                    <p className="mt-0.5 sm:mt-1 text-[11px] sm:text-xs text-[#64748b] font-light leading-relaxed">
+                    <p className="mt-1 text-[11px] sm:text-xs text-[#64748b] font-light leading-relaxed line-clamp-2">
                       {item.subtitle}
                     </p>
                   </div>

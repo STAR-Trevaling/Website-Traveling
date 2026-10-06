@@ -83,14 +83,14 @@ export default async function TourDetailPage({ params }: TourDetailPageProps) {
           fill
           priority
           unoptimized
-          className="object-cover"
+          className="object-cover animate-ken-burns"
         />
         {/* Deep contrast gradient overlay so text is never washed out by background */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/65 to-black/45" />
         <SiteHeader overlay />
 
         <div className="relative z-10 mx-auto w-full max-w-7xl px-4 sm:px-6 pb-10 sm:pb-16 md:px-12 pt-24 sm:pt-32">
-          <div className="max-w-4xl bg-black/40 backdrop-blur-[3px] p-4 sm:p-7 md:p-9 rounded-[2px] border border-white/20 shadow-2xl">
+          <div className="max-w-4xl bg-black/40 backdrop-blur-[3px] p-4 sm:p-7 md:p-9 rounded-[2px] border border-white/20 shadow-2xl animate-fade-in-up">
             <div className="flex flex-wrap items-center gap-2 sm:gap-3">
               <span className="rounded-[2px] bg-[#0098a2] px-3 py-1 sm:px-3.5 sm:py-1.5 text-[11px] sm:text-xs md:text-sm font-bold uppercase tracking-wider text-white shadow-md">
                 {displayDuration}
@@ -362,7 +362,7 @@ export default async function TourDetailPage({ params }: TourDetailPageProps) {
                 <Link
                   key={rTour.id}
                   href={`/tours/${rTour.slug}`}
-                  className="group flex flex-col overflow-hidden rounded-[2px] bg-white shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
+                  className="group travel-card-lift flex flex-col overflow-hidden rounded-[2px] bg-white border border-slate-100"
                 >
                   <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-100">
                     <Image
@@ -370,9 +370,9 @@ export default async function TourDetailPage({ params }: TourDetailPageProps) {
                       alt={rTitle}
                       fill
                       unoptimized
-                      className="object-cover transition duration-500 group-hover:scale-105"
+                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-108"
                     />
-                    <div className="absolute top-3 left-3 bg-black/50 text-white text-[11px] font-medium px-2.5 py-0.5 rounded-[2px] backdrop-blur-sm">
+                    <div className="absolute top-3 left-3 bg-[#1e293b]/85 text-white text-[11px] font-medium px-2.5 py-1 rounded-[2px] backdrop-blur-md uppercase tracking-wider shadow-sm">
                       {rDuration}
                     </div>
                   </div>
@@ -382,7 +382,7 @@ export default async function TourDetailPage({ params }: TourDetailPageProps) {
                       <span className="text-[11px] font-bold text-slate-900 uppercase tracking-wider block">
                         {rDestination}
                       </span>
-                      <h3 className="display-title mt-2 text-lg font-bold text-[#1e293b] group-hover:text-amber-700 transition line-clamp-2">
+                      <h3 className="display-title mt-2 text-lg font-bold text-[#1e293b] group-hover:text-[#0098a2] transition-colors line-clamp-2">
                         {rTitle}
                       </h3>
                     </div>
@@ -398,8 +398,8 @@ export default async function TourDetailPage({ params }: TourDetailPageProps) {
                             : `${rTour.price.toLocaleString("vi-VN")}đ`}
                         </span>
                       </div>
-                      <span className="text-xs font-semibold text-black group-hover:underline transition">
-                        {isEn ? "View tour" : "Xem tour"}
+                      <span className="text-xs font-semibold text-slate-800 group-hover:text-[#0098a2] transition-colors uppercase tracking-wider">
+                        {isEn ? "View tour" : "Xem tour"} →
                       </span>
                     </div>
                   </div>

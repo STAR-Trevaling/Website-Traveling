@@ -50,15 +50,16 @@ export function WhyUsAndAdventuresSection() {
             return (
               <div
                 key={item.title}
-                className="bg-white/85 p-5 sm:p-8 md:p-10 text-center backdrop-blur-sm shadow-sm border border-white/60 transition-all hover:bg-white rounded-[2px] flex flex-col items-center justify-center min-h-[200px] sm:min-h-[260px]"
+                className="group travel-card-lift bg-white/90 p-6 sm:p-8 md:p-10 text-center backdrop-blur-sm border border-white/70 rounded-[2px] flex flex-col items-center justify-center min-h-[220px] sm:min-h-[260px] cursor-default"
               >
-                <div className="mx-auto flex size-12 items-center justify-center text-[#1e293b]">
-                  <IconComponent className="size-8 stroke-[1.5]" />
+                <div className="mx-auto flex size-14 items-center justify-center rounded-full bg-slate-50 border border-slate-100 text-[#1e293b] group-hover:bg-[#0098a2]/10 group-hover:text-[#0098a2] group-hover:border-[#0098a2]/30 group-hover:scale-110 transition-all duration-300 shadow-sm">
+                  <IconComponent className="size-7 stroke-[1.5] transition-transform duration-300 group-hover:rotate-6" />
                 </div>
-                <h3 className="display-title mt-4 sm:mt-5 text-base sm:text-lg md:text-xl font-bold tracking-wider text-[#1e293b] uppercase">
+                <h3 className="display-title mt-4 sm:mt-5 text-base sm:text-lg md:text-xl font-bold tracking-wider text-[#1e293b] uppercase group-hover:text-[#0098a2] transition-colors duration-200">
                   {item.title}
                 </h3>
-                <p className="mt-2 sm:mt-3 text-xs sm:text-sm font-light leading-relaxed text-[#555]">
+                <div className="w-8 h-[2px] bg-[#0098a2]/30 my-2.5 transition-all duration-300 group-hover:w-16 group-hover:bg-[#0098a2]" />
+                <p className="text-xs sm:text-sm font-light leading-relaxed text-[#555] max-w-xs">
                   {item.desc}
                 </p>
               </div>
@@ -77,52 +78,64 @@ export function WhyUsAndAdventuresSection() {
           {/* Column 1: Canal Cruise (Tall Card) */}
           <Link
             href="/experiences/canal-cruise"
-            className="group relative overflow-hidden shadow-md hover:shadow-xl transition-all rounded-[2px] h-[360px] sm:h-[440px] md:h-[530px]"
+            className="group travel-card-lift relative overflow-hidden rounded-[2px] h-[360px] sm:h-[440px] md:h-[530px] border border-white/40 block"
           >
-            <Image
-              src="/assets/adventures/canal-cruise.jpg"
-              alt={t.adventures.items.canalCruise.title}
-              fill
-              unoptimized
-              className="object-cover transition duration-500 group-hover:scale-105"
-            />
-            {/* Frosted white box on bottom-left */}
-            <div className="absolute bottom-0 left-0 w-[82%] sm:w-[80%] max-w-[calc(100%-48px)] bg-white/85 backdrop-blur-md p-3.5 sm:p-5 flex flex-col justify-center border-t border-r border-white/60 transition-all duration-500 ease-out group-hover:opacity-0 group-hover:translate-y-4 group-hover:pointer-events-none">
-              <h3 className="script-title text-xl sm:text-2xl font-bold text-[#1e293b] leading-tight">
+            <div className="absolute inset-0 overflow-hidden">
+              <Image
+                src="/assets/adventures/canal-cruise.jpg"
+                alt={t.adventures.items.canalCruise.title}
+                fill
+                unoptimized
+                className="object-cover transition-transform duration-700 ease-out group-hover:scale-108"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-300" />
+            </div>
+            {/* Frosted white editorial card on bottom */}
+            <div className="absolute bottom-3 left-3 sm:bottom-4 sm:left-4 right-14 sm:right-16 bg-white/92 backdrop-blur-md p-3.5 sm:p-5 rounded-[2px] border border-white/70 shadow-md transition-all duration-300 group-hover:bg-white group-hover:border-[#0098a2]/40">
+              <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-wider text-[#0098a2] block mb-0.5">
+                Experience
+              </span>
+              <h3 className="script-title text-xl sm:text-2xl font-bold text-[#1e293b] leading-tight group-hover:text-[#0098a2] transition-colors">
                 {t.adventures.items.canalCruise.title}
               </h3>
-              <p className="mt-1 text-[10px] sm:text-[11px] font-normal text-[#64748b] leading-tight line-clamp-2">
+              <p className="mt-1 text-[11px] sm:text-xs font-light text-[#64748b] leading-snug line-clamp-2">
                 {t.adventures.items.canalCruise.desc}
               </p>
             </div>
-            {/* White circular arrow button on right over uncovered photo */}
-            <div className="absolute bottom-3.5 right-3.5 sm:bottom-4 sm:right-5 flex size-8 sm:size-9 items-center justify-center rounded-full border border-white/90 text-white transition-transform duration-300 group-hover:scale-110 group-hover:bg-white/20 shadow-sm">
-              <ChevronRight className="size-4 stroke-[1.75]" />
+            {/* Circular arrow button on bottom right */}
+            <div className="absolute bottom-3.5 right-3.5 sm:bottom-4 sm:right-4 flex size-9 sm:size-10 items-center justify-center rounded-full bg-black/40 backdrop-blur-md border border-white/60 text-white transition-all duration-300 group-hover:scale-110 group-hover:bg-[#0098a2] group-hover:border-[#0098a2] shadow-md">
+              <ChevronRight className="size-4 stroke-[2] transition-transform duration-300 group-hover:translate-x-0.5" />
             </div>
           </Link>
 
           {/* Column 2: Sailing (Tall Card) */}
           <Link
             href="/experiences/sailing"
-            className="group relative overflow-hidden shadow-md hover:shadow-xl transition-all rounded-[2px] h-[360px] sm:h-[440px] md:h-[530px]"
+            className="group travel-card-lift relative overflow-hidden rounded-[2px] h-[360px] sm:h-[440px] md:h-[530px] border border-white/40 block"
           >
-            <Image
-              src="/assets/adventures/sailing.jpg"
-              alt={t.adventures.items.sailing.title}
-              fill
-              unoptimized
-              className="object-cover transition duration-500 group-hover:scale-105"
-            />
-            <div className="absolute bottom-0 left-0 w-[82%] sm:w-[80%] max-w-[calc(100%-48px)] bg-white/85 backdrop-blur-md p-3.5 sm:p-5 flex flex-col justify-center border-t border-r border-white/60 transition-all duration-500 ease-out group-hover:opacity-0 group-hover:translate-y-4 group-hover:pointer-events-none">
-              <h3 className="script-title text-xl sm:text-2xl font-bold text-[#1e293b] leading-tight">
+            <div className="absolute inset-0 overflow-hidden">
+              <Image
+                src="/assets/adventures/sailing.jpg"
+                alt={t.adventures.items.sailing.title}
+                fill
+                unoptimized
+                className="object-cover transition-transform duration-700 ease-out group-hover:scale-108"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-300" />
+            </div>
+            <div className="absolute bottom-3 left-3 sm:bottom-4 sm:left-4 right-14 sm:right-16 bg-white/92 backdrop-blur-md p-3.5 sm:p-5 rounded-[2px] border border-white/70 shadow-md transition-all duration-300 group-hover:bg-white group-hover:border-[#0098a2]/40">
+              <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-wider text-[#0098a2] block mb-0.5">
+                Adventure
+              </span>
+              <h3 className="script-title text-xl sm:text-2xl font-bold text-[#1e293b] leading-tight group-hover:text-[#0098a2] transition-colors">
                 {t.adventures.items.sailing.title}
               </h3>
-              <p className="mt-1 text-[10px] sm:text-[11px] font-normal text-[#64748b] leading-tight line-clamp-2">
+              <p className="mt-1 text-[11px] sm:text-xs font-light text-[#64748b] leading-snug line-clamp-2">
                 {t.adventures.items.sailing.desc}
               </p>
             </div>
-            <div className="absolute bottom-3.5 right-3.5 sm:bottom-4 sm:right-5 flex size-8 sm:size-9 items-center justify-center rounded-full border border-white/90 text-white transition-transform duration-300 group-hover:scale-110 group-hover:bg-white/20 shadow-sm">
-              <ChevronRight className="size-4 stroke-[1.75]" />
+            <div className="absolute bottom-3.5 right-3.5 sm:bottom-4 sm:right-4 flex size-9 sm:size-10 items-center justify-center rounded-full bg-black/40 backdrop-blur-md border border-white/60 text-white transition-all duration-300 group-hover:scale-110 group-hover:bg-[#0098a2] group-hover:border-[#0098a2] shadow-md">
+              <ChevronRight className="size-4 stroke-[2] transition-transform duration-300 group-hover:translate-x-0.5" />
             </div>
           </Link>
 
@@ -131,50 +144,62 @@ export function WhyUsAndAdventuresSection() {
             {/* Camping */}
             <Link
               href="/experiences/camping"
-              className="group relative overflow-hidden shadow-md hover:shadow-xl transition-all rounded-[2px] flex-1 min-h-[160px] sm:min-h-[200px]"
+              className="group travel-card-lift relative overflow-hidden rounded-[2px] flex-1 min-h-[160px] sm:min-h-[200px] border border-white/40 block"
             >
-              <Image
-                src="/assets/adventures/camping.jpg"
-                alt={t.adventures.items.camping.title}
-                fill
-                unoptimized
-                className="object-cover transition duration-500 group-hover:scale-105"
-              />
-              <div className="absolute bottom-0 left-0 w-[82%] sm:w-[80%] max-w-[calc(100%-48px)] bg-white/85 backdrop-blur-md p-3 sm:p-4 flex flex-col justify-center border-t border-r border-white/60 transition-all duration-500 ease-out group-hover:opacity-0 group-hover:translate-y-4 group-hover:pointer-events-none">
-                <h3 className="script-title text-lg sm:text-2xl font-bold text-[#1e293b] leading-tight">
+              <div className="absolute inset-0 overflow-hidden">
+                <Image
+                  src="/assets/adventures/camping.jpg"
+                  alt={t.adventures.items.camping.title}
+                  fill
+                  unoptimized
+                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-108"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-300" />
+              </div>
+              <div className="absolute bottom-2.5 left-2.5 sm:bottom-3 sm:left-3 right-12 sm:right-14 bg-white/92 backdrop-blur-md p-3 sm:p-4 rounded-[2px] border border-white/70 shadow-md transition-all duration-300 group-hover:bg-white group-hover:border-[#0098a2]/40">
+                <span className="text-[8px] sm:text-[9px] font-bold uppercase tracking-wider text-[#0098a2] block mb-0.5">
+                  Eco Experience
+                </span>
+                <h3 className="script-title text-base sm:text-xl font-bold text-[#1e293b] leading-tight group-hover:text-[#0098a2] transition-colors">
                   {t.adventures.items.camping.title}
                 </h3>
-                <p className="mt-0.5 text-[9px] sm:text-[11px] font-normal text-[#64748b] leading-tight line-clamp-2">
+                <p className="mt-0.5 text-[10px] sm:text-[11px] font-light text-[#64748b] leading-tight line-clamp-1 sm:line-clamp-2">
                   {t.adventures.items.camping.desc}
                 </p>
               </div>
-              <div className="absolute bottom-3 right-3 sm:bottom-4 sm:right-4 flex size-7 sm:size-8 items-center justify-center rounded-full border border-white/90 text-white transition-transform duration-300 group-hover:scale-110 group-hover:bg-white/20 shadow-sm">
-                <ChevronRight className="size-3.5 stroke-[1.75]" />
+              <div className="absolute bottom-2.5 right-2.5 sm:bottom-3 sm:right-3 flex size-8 sm:size-9 items-center justify-center rounded-full bg-black/40 backdrop-blur-md border border-white/60 text-white transition-all duration-300 group-hover:scale-110 group-hover:bg-[#0098a2] group-hover:border-[#0098a2] shadow-md">
+                <ChevronRight className="size-3.5 stroke-[2] transition-transform duration-300 group-hover:translate-x-0.5" />
               </div>
             </Link>
 
             {/* Scuba Diving */}
             <Link
               href="/experiences/scuba-diving"
-              className="group relative overflow-hidden shadow-md hover:shadow-xl transition-all rounded-[2px] flex-1 min-h-[160px] sm:min-h-[200px]"
+              className="group travel-card-lift relative overflow-hidden rounded-[2px] flex-1 min-h-[160px] sm:min-h-[200px] border border-white/40 block"
             >
-              <Image
-                src="/assets/adventures/scuba-diving.jpg"
-                alt={t.adventures.items.scubaDiving.title}
-                fill
-                unoptimized
-                className="object-cover transition duration-500 group-hover:scale-105"
-              />
-              <div className="absolute bottom-0 left-0 w-[82%] sm:w-[80%] max-w-[calc(100%-48px)] bg-white/85 backdrop-blur-md p-3 sm:p-4 flex flex-col justify-center border-t border-r border-white/60 transition-all duration-500 ease-out group-hover:opacity-0 group-hover:translate-y-4 group-hover:pointer-events-none">
-                <h3 className="script-title text-lg sm:text-2xl font-bold text-[#1e293b] leading-tight">
+              <div className="absolute inset-0 overflow-hidden">
+                <Image
+                  src="/assets/adventures/scuba-diving.jpg"
+                  alt={t.adventures.items.scubaDiving.title}
+                  fill
+                  unoptimized
+                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-108"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-300" />
+              </div>
+              <div className="absolute bottom-2.5 left-2.5 sm:bottom-3 sm:left-3 right-12 sm:right-14 bg-white/92 backdrop-blur-md p-3 sm:p-4 rounded-[2px] border border-white/70 shadow-md transition-all duration-300 group-hover:bg-white group-hover:border-[#0098a2]/40">
+                <span className="text-[8px] sm:text-[9px] font-bold uppercase tracking-wider text-[#0098a2] block mb-0.5">
+                  Marine Wildlife
+                </span>
+                <h3 className="script-title text-base sm:text-xl font-bold text-[#1e293b] leading-tight group-hover:text-[#0098a2] transition-colors">
                   {t.adventures.items.scubaDiving.title}
                 </h3>
-                <p className="mt-0.5 text-[9px] sm:text-[11px] font-normal text-[#64748b] leading-tight line-clamp-2">
+                <p className="mt-0.5 text-[10px] sm:text-[11px] font-light text-[#64748b] leading-tight line-clamp-1 sm:line-clamp-2">
                   {t.adventures.items.scubaDiving.desc}
                 </p>
               </div>
-              <div className="absolute bottom-3 right-3 sm:bottom-4 sm:right-4 flex size-7 sm:size-8 items-center justify-center rounded-full border border-white/90 text-white transition-transform duration-300 group-hover:scale-110 group-hover:bg-white/20 shadow-sm">
-                <ChevronRight className="size-3.5 stroke-[1.75]" />
+              <div className="absolute bottom-2.5 right-2.5 sm:bottom-3 sm:right-3 flex size-8 sm:size-9 items-center justify-center rounded-full bg-black/40 backdrop-blur-md border border-white/60 text-white transition-all duration-300 group-hover:scale-110 group-hover:bg-[#0098a2] group-hover:border-[#0098a2] shadow-md">
+                <ChevronRight className="size-3.5 stroke-[2] transition-transform duration-300 group-hover:translate-x-0.5" />
               </div>
             </Link>
           </div>

@@ -10,6 +10,8 @@ import { useLanguage } from "@/lib/i18n/context";
 export function HeroSlider() {
   const { t, locale } = useLanguage();
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
   const slides = VIETNAM_IMAGES.heroSlides;
 
   // Auto-advance slides every 7 seconds
@@ -28,37 +30,65 @@ export function HeroSlider() {
     setCurrentSlide((prev) => (prev + 1) % slides.length);
   };
 
+  // Mobile swipe handlers
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > 50;
+    const isRightSwipe = distance < -50;
+    if (isLeftSwipe) nextSlide();
+    if (isRightSwipe) prevSlide();
+  };
+
   return (
-    <div className="relative min-h-[680px] sm:min-h-[740px] md:h-[720px] lg:h-[740px] w-full overflow-hidden">
-      {/* Background Images with smooth fade */}
-      {slides.map((slide, index) => (
-        <div
-          key={slide.id}
-          className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-            index === currentSlide ? "opacity-100 scale-100" : "opacity-0 scale-105"
-          }`}
-          style={{ transitionProperty: "opacity, transform" }}
-        >
-          <Image
-            src={slide.image}
-            alt={slide.title}
-            fill
-            priority={index === 0}
-            unoptimized
-            className="object-cover"
-          />
-        </div>
-      ))}
+    <div
+      className="relative min-h-[680px] sm:min-h-[740px] md:h-[720px] lg:h-[740px] w-full overflow-hidden select-none"
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+    >
+      {/* Background Images with smooth cinematic motion */}
+      {slides.map((slide, index) => {
+        const isActive = index === currentSlide;
+        return (
+          <div
+            key={slide.id}
+            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+              isActive ? "opacity-100 z-0" : "opacity-0 -z-10"
+            }`}
+          >
+            <div className={`relative h-full w-full ${isActive ? "animate-ken-burns" : ""}`}>
+              <Image
+                src={slide.image}
+                alt={slide.title}
+                fill
+                priority={index === 0}
+                unoptimized
+                className="object-cover"
+              />
+            </div>
+          </div>
+        );
+      })}
 
       {/* Dark gradient overlays */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/65 via-black/35 to-black/70" />
+      <div className="absolute inset-0 bg-gradient-to-b from-black/65 via-black/35 to-black/70 pointer-events-none" />
 
-      {/* Desktop Left/Right Navigation Arrows for Hero (Hidden on Mobile to prevent overlapping content) */}
+      {/* Desktop Left/Right Navigation Arrows for Hero */}
       <button
         type="button"
         onClick={prevSlide}
         aria-label={locale === "vi" ? "Slide trước" : "Previous slide"}
-        className="hidden md:flex absolute left-4 md:left-8 top-1/2 z-20 -translate-y-1/2 size-12 items-center justify-center rounded-full bg-black/30 text-white backdrop-blur-md transition-all duration-200 hover:bg-white hover:text-slate-900 hover:shadow-[0px_8px_25px_rgba(0,0,0,0.35)] hover:scale-105 active:scale-95 cursor-pointer"
+        className="hidden md:flex absolute left-4 md:left-8 top-1/2 z-20 -translate-y-1/2 size-12 items-center justify-center rounded-full bg-black/30 text-white backdrop-blur-md transition-all duration-300 hover:bg-white hover:text-slate-900 hover:shadow-[0px_8px_25px_rgba(0,0,0,0.35)] hover:scale-110 active:scale-95 cursor-pointer"
       >
         <ChevronLeft className="size-7" />
       </button>
@@ -67,7 +97,7 @@ export function HeroSlider() {
         type="button"
         onClick={nextSlide}
         aria-label={locale === "vi" ? "Slide tiếp theo" : "Next slide"}
-        className="hidden md:flex absolute right-4 md:right-8 top-1/2 z-20 -translate-y-1/2 size-12 items-center justify-center rounded-full bg-black/30 text-white backdrop-blur-md transition-all duration-200 hover:bg-white hover:text-slate-900 hover:shadow-[0px_8px_25px_rgba(0,0,0,0.35)] hover:scale-105 active:scale-95 cursor-pointer"
+        className="hidden md:flex absolute right-4 md:right-8 top-1/2 z-20 -translate-y-1/2 size-12 items-center justify-center rounded-full bg-black/30 text-white backdrop-blur-md transition-all duration-300 hover:bg-white hover:text-slate-900 hover:shadow-[0px_8px_25px_rgba(0,0,0,0.35)] hover:scale-110 active:scale-95 cursor-pointer"
       >
         <ChevronRight className="size-7" />
       </button>
@@ -75,24 +105,32 @@ export function HeroSlider() {
       {/* Hero Content */}
       <div className="relative z-10 flex h-full flex-col items-center justify-between pb-6 sm:pb-8 md:pb-10 pt-20 sm:pt-24 text-white">
         <div className="mt-4 sm:mt-8 md:mt-12 text-center px-4 max-w-5xl mx-auto">
-          <h1 className="display-title template-shadow-text leading-tight text-3xl sm:text-5xl md:text-6xl lg:text-[72px] transition-all duration-700 text-balance">
+          {/* Animated Hero Title on slide change */}
+          <h1
+            key={`hero-title-${currentSlide}`}
+            className="display-title template-shadow-text leading-tight text-3xl sm:text-5xl md:text-6xl lg:text-[72px] animate-fade-in-up text-balance"
+          >
             {t.hero.slides[currentSlide]?.title || slides[currentSlide].title}
           </h1>
 
-          <p className="script-title mt-2 sm:mt-4 leading-tight text-white/95 [-webkit-text-stroke:.3px_#fff] text-xl sm:text-3xl md:text-4xl lg:text-5xl text-balance">
+          {/* Animated Hero Script Subtitle */}
+          <p
+            key={`hero-sub-${currentSlide}`}
+            className="script-title mt-2 sm:mt-4 leading-tight text-white/95 [-webkit-text-stroke:.3px_#fff] text-xl sm:text-3xl md:text-4xl lg:text-5xl animate-fade-in-up animation-delay-100 text-balance"
+          >
             {t.hero.slides[currentSlide]?.subtitle || slides[currentSlide].subtitle}
           </p>
 
-          {/* Mobile slide indicator dots */}
-          <div className="flex md:hidden items-center justify-center gap-1.5 mt-3">
+          {/* Slide Indicator Pills with smooth progress feel */}
+          <div className="flex items-center justify-center gap-2 mt-4 sm:mt-5">
             {slides.map((_, idx) => (
               <button
                 key={idx}
                 type="button"
                 onClick={() => setCurrentSlide(idx)}
                 aria-label={`Slide ${idx + 1}`}
-                className={`h-1.5 rounded-full transition-all duration-300 ${
-                  idx === currentSlide ? "w-5 bg-white" : "w-1.5 bg-white/40"
+                className={`h-1.5 rounded-full transition-all duration-500 cursor-pointer ${
+                  idx === currentSlide ? "w-7 sm:w-8 bg-white shadow-sm" : "w-2 bg-white/40 hover:bg-white/70"
                 }`}
               />
             ))}
