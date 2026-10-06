@@ -109,7 +109,7 @@ export function DestinationsCarousel({ initialDestinations }: DestinationsCarous
                       <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
                     </div>
 
-                    <div className="p-4 sm:p-5">
+                    <div className="p-4 sm:p-5 pb-5 sm:pb-6">
                       <h3 className="display-title text-xl sm:text-2xl font-bold tracking-wider text-[#1e293b] group-hover:text-[#0098a2] transition-colors uppercase">
                         {displayName}
                       </h3>
@@ -117,13 +117,6 @@ export function DestinationsCarousel({ initialDestinations }: DestinationsCarous
                         {displaySummary}
                       </p>
                     </div>
-                  </div>
-
-                  <div className="px-4 pb-4 sm:px-5 sm:pb-5 pt-0">
-                    <span className="inline-flex items-center gap-1 text-xs font-semibold text-[#0098a2] group-hover:translate-x-1 transition-transform duration-200">
-                      <span>{isEn ? "Explore" : "Khám phá"}</span>
-                      <ChevronRight className="size-3.5" />
-                    </span>
                   </div>
                 </article>
               </Link>
