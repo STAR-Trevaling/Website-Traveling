@@ -31,7 +31,7 @@ interface MobileNavProps {
 export function MobileNav({ user, overlay = false }: MobileNavProps) {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
-  const { t, isVietnamese, reopenLanguagePrompt } = useLanguage();
+  const { t } = useLanguage();
 
   const navItems = [
     { type: "link" as const, label: t.nav.home, href: "/" },
@@ -119,21 +119,6 @@ export function MobileNav({ user, overlay = false }: MobileNavProps) {
               className="p-1.5 text-slate-500 hover:text-slate-900 rounded hover:bg-slate-100 cursor-pointer"
             >
               <X className="size-5" />
-            </button>
-          </div>
-
-          {/* Change Language via consent prompt */}
-          <div className="pt-4 pb-2">
-            <button
-              type="button"
-              onClick={() => {
-                reopenLanguagePrompt();
-                setIsOpen(false);
-              }}
-              className="w-full flex items-center justify-between px-3.5 py-2.5 text-xs font-medium text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-[2px] transition cursor-pointer"
-            >
-              <span>{isVietnamese ? "🌐 Ngôn ngữ: Tiếng Việt" : "🌐 Language: English"}</span>
-              <span className="text-[#0098a2] text-[11px] font-bold uppercase tracking-wider">{isVietnamese ? "Thay đổi" : "Change"}</span>
             </button>
           </div>
 

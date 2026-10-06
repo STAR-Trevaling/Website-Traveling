@@ -44,19 +44,22 @@ export function LanguageProvider({
 }: LanguageProviderProps) {
   const router = useRouter();
   const [locale, setLocaleState] = useState<Locale>(initialLocale);
-  const [hasChosenLanguage, setHasChosenLanguage] = useState<boolean>(initialConfirmed);
+  const [hasChosenLanguage, setHasChosenLanguage] = useState<boolean>(true);
 
   useEffect(() => {
     try {
-      const isConfirmed = localStorage.getItem(PREFERENCE_CONFIRMED_KEY) === "true";
-      if (isConfirmed) {
-        setHasChosenLanguage(true);
-      }
-
       const saved = localStorage.getItem(STORAGE_KEY) as Locale | null;
       if (saved && (saved === "vi" || saved === "en")) {
         setLocaleState(saved);
         document.documentElement.lang = saved;
+      } else if (typeof navigator !== "undefined" && navigator.language) {
+        // Automatically adapt to the user's browser language
+        const browserPrefersEn =
+          navigator.language.toLowerCase().startsWith("en") &&
+          !navigator.language.toLowerCase().startsWith("vi");
+        const detected: Locale = browserPrefersEn ? "en" : "vi";
+        setLocaleState(detected);
+        document.documentElement.lang = detected;
       } else {
         document.documentElement.lang = initialLocale;
       }
@@ -95,7 +98,7 @@ export function LanguageProvider({
   );
 
   const reopenLanguagePrompt = useCallback(() => {
-    setHasChosenLanguage(false);
+    // No-op: Rely on browser language and translation
   }, []);
 
   const value = useMemo(

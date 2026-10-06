@@ -2,11 +2,10 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Script from "next/script";
 import "./globals.css";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import type { Locale } from "@/lib/i18n/types";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { LanguageProvider } from "@/lib/i18n/context";
-import { LanguageConsentBanner } from "@/components/layout/language-consent-banner";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://startravels.vn";
 const SITE_NAME = "Star Travels Vietnam";
@@ -135,9 +134,20 @@ const jsonLd = {
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const cookieStore = await cookies();
+  const headersList = await headers();
+  const acceptLang = headersList.get("accept-language") || "";
   const savedLocale = cookieStore.get("star_travels_locale")?.value as Locale | undefined;
-  const initialLocale: Locale = savedLocale === "en" ? "en" : "vi";
-  const isConfirmed = cookieStore.get("star_travels_locale_confirmed")?.value === "true";
+
+  // Auto-detect browser preferred language or fallback to Vietnamese
+  const browserPrefersEnglish =
+    acceptLang.toLowerCase().includes("en") && !acceptLang.toLowerCase().startsWith("vi");
+  const initialLocale: Locale = savedLocale
+    ? savedLocale === "en"
+      ? "en"
+      : "vi"
+    : browserPrefersEnglish
+    ? "en"
+    : "vi";
 
   return (
     <html lang={initialLocale}>
@@ -164,10 +174,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <div className="absolute inset-0 bg-[#eaf4f2]/30" />
         </div>
 
-        <LanguageProvider initialLocale={initialLocale} initialConfirmed={isConfirmed}>
+        <LanguageProvider initialLocale={initialLocale} initialConfirmed={true}>
           <div className="flex-1 relative z-0">{children}</div>
           <SiteFooter />
-          <LanguageConsentBanner />
         </LanguageProvider>
       </body>
     </html>

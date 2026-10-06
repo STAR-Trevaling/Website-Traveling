@@ -5,7 +5,7 @@ import { useLanguage } from "@/lib/i18n/context";
 import { StarLogo } from "@/components/shared/star-logo";
 
 export function SiteFooter() {
-  const { t, isVietnamese, reopenLanguagePrompt } = useLanguage();
+  const { t } = useLanguage();
 
   const navLinks = [
     { label: t.footer.home, href: "/" },
@@ -48,19 +48,6 @@ export function SiteFooter() {
               </Link>
             ))}
           </nav>
-
-          {/* Language Selector trigger */}
-          <div className="mb-4">
-            <button
-              type="button"
-              onClick={reopenLanguagePrompt}
-              className="inline-flex items-center gap-1.5 text-xs text-slate-500 hover:text-slate-900 transition hover:underline cursor-pointer"
-            >
-              <span>🌐 {isVietnamese ? "Ngôn ngữ: Tiếng Việt" : "Language: English"}</span>
-              <span className="text-slate-400">·</span>
-              <span className="text-[#0098a2] font-semibold">{isVietnamese ? "Thay đổi" : "Change"}</span>
-            </button>
-          </div>
 
           {/* Centered Copyright */}
           <p className="text-center text-[11px] sm:text-xs md:text-sm font-normal text-slate-600 max-w-2xl leading-relaxed">
