@@ -16,9 +16,9 @@
     "plugins": [{"name": "next"}],
     "paths": {
       "@/*": ["./src/*"],
-      "@travel/contracts": ["../../packages/contracts/src/index.ts"]
+      "@travel/contracts": ["./src/lib/types.ts"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "../../packages/contracts/src/**/*.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]
 }
