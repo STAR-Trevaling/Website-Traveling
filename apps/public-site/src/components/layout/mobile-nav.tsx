@@ -16,8 +16,10 @@ import {
   MapPin,
   Compass,
   Sparkles,
+  BookOpen,
   Building2,
   Handshake,
+  ChevronDown,
 } from "lucide-react";
 import type { CurrentUser } from "@/lib/types";
 import { useLanguage } from "@/lib/i18n/context";
@@ -33,18 +35,30 @@ export function MobileNav({ user, overlay = false }: MobileNavProps) {
   const pathname = usePathname();
   const { t } = useLanguage();
 
+  const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({
+    [t.nav.explore]: true,
+    [t.nav.aboutMenu]: true,
+  });
+
+  const toggleGroup = (heading: string) => {
+    setOpenGroups((prev) => ({
+      ...prev,
+      [heading]: !prev[heading],
+    }));
+  };
+
   const navItems = [
     { type: "link" as const, label: t.nav.home, href: "/" },
     {
       type: "group" as const,
       heading: t.nav.explore,
       items: [
-        { label: t.nav.destinations, href: "/destinations", icon: MapPin },
-        { label: t.nav.packages, href: "/experiences", icon: Sparkles },
         { label: t.nav.tours, href: "/tours", icon: Compass },
+        { label: t.nav.packages, href: "/experiences", icon: Sparkles },
+        { label: t.nav.destinations, href: "/destinations", icon: MapPin },
+        { label: t.nav.stories, href: "/stories", icon: BookOpen },
       ],
     },
-    { type: "link" as const, label: t.nav.stories, href: "/stories" },
     {
       type: "group" as const,
       heading: t.nav.aboutMenu,
@@ -143,34 +157,47 @@ export function MobileNav({ user, overlay = false }: MobileNavProps) {
                 );
               }
 
+              const isGroupOpen = !!openGroups[item.heading];
+
               return (
                 <div key={item.heading} className="pt-2">
-                  <div className="px-3 pb-1 text-[11px] font-bold uppercase tracking-wider text-slate-400">
-                    {item.heading}
-                  </div>
-                  <div className="space-y-0.5 pl-1.5 border-l-2 border-slate-100 ml-2.5">
-                    {item.items.map((sub) => {
-                      const active = pathname === sub.href;
-                      const Icon = sub.icon;
-                      return (
-                        <Link
-                          key={sub.href}
-                          href={sub.href}
-                          className={`flex items-center justify-between px-2.5 py-2 text-xs md:text-sm font-medium rounded-[2px] transition ${
-                            active
-                              ? "bg-[#0098a2]/10 text-[#0098a2] font-semibold"
-                              : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
-                          }`}
-                        >
-                          <span className="flex items-center gap-2">
-                            <Icon className="size-3.5 text-[#0098a2] opacity-75 shrink-0" />
-                            <span>{sub.label}</span>
-                          </span>
-                          <ArrowRight className="size-3 opacity-30" />
-                        </Link>
-                      );
-                    })}
-                  </div>
+                  <button
+                    type="button"
+                    onClick={() => toggleGroup(item.heading)}
+                    className="w-full flex items-center justify-between px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider text-slate-400 hover:text-slate-700 transition cursor-pointer"
+                  >
+                    <span>{item.heading}</span>
+                    <ChevronDown
+                      className={`size-3.5 transition-transform duration-200 ${
+                        isGroupOpen ? "rotate-180" : ""
+                      }`}
+                    />
+                  </button>
+                  {isGroupOpen && (
+                    <div className="space-y-0.5 pl-1.5 border-l-2 border-slate-100 ml-2.5 animate-in fade-in duration-150">
+                      {item.items.map((sub) => {
+                        const active = pathname === sub.href;
+                        const Icon = sub.icon;
+                        return (
+                          <Link
+                            key={sub.href}
+                            href={sub.href}
+                            className={`flex items-center justify-between px-2.5 py-2 text-xs md:text-sm font-medium rounded-[2px] transition ${
+                              active
+                                ? "bg-[#0098a2]/10 text-[#0098a2] font-semibold"
+                                : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
+                            }`}
+                          >
+                            <span className="flex items-center gap-2">
+                              <Icon className="size-3.5 text-[#0098a2] opacity-75 shrink-0" />
+                              <span>{sub.label}</span>
+                            </span>
+                            <ArrowRight className="size-3 opacity-30" />
+                          </Link>
+                        );
+                      })}
+                    </div>
+                  )}
                 </div>
               );
             })}

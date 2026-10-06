@@ -1,6 +1,8 @@
 "use client";
 
+import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   Mail,
   Phone,
@@ -8,6 +10,13 @@ import {
   Facebook,
   Twitter,
   UserRound,
+  ChevronDown,
+  Compass,
+  Sparkles,
+  MapPin,
+  BookOpen,
+  Building2,
+  Handshake,
 } from "lucide-react";
 import type { CurrentUser } from "@/lib/types";
 import { useLanguage } from "@/lib/i18n/context";
@@ -20,13 +29,100 @@ interface SiteHeaderClientProps {
 
 export function SiteHeaderClient({ user, overlay = false }: SiteHeaderClientProps) {
   const { t } = useLanguage();
+  const pathname = usePathname();
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  const navLinks = [
-    { label: t.nav.home, href: "/" },
-    { label: t.nav.packages, href: "/experiences" },
-    { label: t.nav.tours, href: "/tours" },
-    { label: t.nav.aboutUs, href: "/about" },
-    { label: t.nav.contact, href: "/contact" },
+  // Close dropdown on route change
+  useEffect(() => {
+    setOpenDropdown(null);
+  }, [pathname]);
+
+  // Close dropdown on Escape key
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setOpenDropdown(null);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
+  const handleMouseEnter = (label: string) => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+    }
+    setOpenDropdown(label);
+  };
+
+  const handleMouseLeave = () => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+    timeoutRef.current = setTimeout(() => {
+      setOpenDropdown(null);
+    }, 150);
+  };
+
+  const toggleDropdown = (label: string) => {
+    setOpenDropdown((prev) => (prev === label ? null : label));
+  };
+
+  const navItems = [
+    { type: "link" as const, label: t.nav.home, href: "/" },
+    {
+      type: "dropdown" as const,
+      label: t.nav.explore,
+      basePath: ["/destinations", "/tours", "/experiences", "/stories"],
+      items: [
+        {
+          label: t.nav.tours,
+          href: "/tours",
+          description: "Curated guided tours & itineraries",
+          icon: Compass,
+        },
+        {
+          label: t.nav.packages,
+          href: "/experiences",
+          description: "Exclusive vacation packages & stays",
+          icon: Sparkles,
+        },
+        {
+          label: t.nav.destinations,
+          href: "/destinations",
+          description: "Top heritage sights & coastal gems",
+          icon: MapPin,
+        },
+        {
+          label: t.nav.stories,
+          href: "/stories",
+          description: "Travel insights & insider guides",
+          icon: BookOpen,
+        },
+      ],
+    },
+    {
+      type: "dropdown" as const,
+      label: t.nav.aboutMenu,
+      basePath: ["/about", "/partner"],
+      items: [
+        {
+          label: t.nav.aboutUs,
+          href: "/about",
+          description: "Our story, values & hospitality team",
+          icon: Building2,
+        },
+        {
+          label: t.nav.partner,
+          href: "/partner",
+          description: "B2B travel collaboration & portal",
+          icon: Handshake,
+        },
+      ],
+    },
+    { type: "link" as const, label: t.nav.contact, href: "/contact" },
   ];
 
   return (
@@ -130,25 +226,122 @@ export function SiteHeaderClient({ user, overlay = false }: SiteHeaderClientProp
           </div>
         </div>
 
-        {/* Row 2: Centered Navigation Links located BELOW the top left/right icons (phía dưới icon trái phải) */}
+        {/* Row 2: Centered Navigation Links with Dropdown for Scoped Groups */}
         <div className="hidden md:flex justify-center items-center py-2 sm:py-2.5">
           <nav
             aria-label="Main Navigation"
             className="flex items-center gap-8 md:gap-9 lg:gap-11 xl:gap-13 text-[13px] sm:text-[14px] font-normal whitespace-nowrap"
           >
-            {navLinks.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={
-                  overlay
-                    ? "text-white/95 hover:text-white transition-colors duration-150 hover:underline underline-offset-4 py-0.5 tracking-wide"
-                    : "text-slate-700 hover:text-slate-950 transition-colors duration-150 hover:underline underline-offset-4 py-0.5 tracking-wide"
-                }
-              >
-                {item.label}
-              </Link>
-            ))}
+            {navItems.map((item) => {
+              if (item.type === "dropdown") {
+                const isGroupActive = item.basePath.some(
+                  (prefix) => pathname === prefix || pathname.startsWith(prefix + "/")
+                );
+                const isOpen = openDropdown === item.label;
+
+                return (
+                  <div
+                    key={item.label}
+                    className="relative"
+                    onMouseEnter={() => handleMouseEnter(item.label)}
+                    onMouseLeave={handleMouseLeave}
+                  >
+                    <button
+                      type="button"
+                      onClick={() => toggleDropdown(item.label)}
+                      aria-expanded={isOpen}
+                      className={`inline-flex items-center gap-1.5 py-0.5 tracking-wide transition-colors duration-150 cursor-pointer ${
+                        isGroupActive
+                          ? "font-medium underline underline-offset-4 " +
+                            (overlay ? "text-white" : "text-slate-950 font-semibold")
+                          : overlay
+                          ? "text-white/95 hover:text-white hover:underline underline-offset-4"
+                          : "text-slate-700 hover:text-slate-950 hover:underline underline-offset-4"
+                      }`}
+                    >
+                      <span>{item.label}</span>
+                      <ChevronDown
+                        className={`size-3.5 transition-transform duration-200 ${
+                          isOpen ? "rotate-180" : ""
+                        } opacity-75`}
+                      />
+                    </button>
+
+                    {/* Dropdown Menu Popover */}
+                    {isOpen && (
+                      <div
+                        className="absolute left-1/2 -translate-x-1/2 top-full pt-2.5 z-50 animate-in fade-in slide-in-from-top-1 duration-150"
+                        onMouseEnter={() => handleMouseEnter(item.label)}
+                        onMouseLeave={handleMouseLeave}
+                      >
+                        <div className="w-72 rounded-xl bg-white/98 backdrop-blur-md p-2 shadow-2xl ring-1 ring-black/5 border border-slate-100 text-slate-900">
+                          <div className="space-y-1">
+                            {item.items.map((sub) => {
+                              const isSubActive =
+                                pathname === sub.href || pathname.startsWith(sub.href + "/");
+                              const Icon = sub.icon;
+
+                              return (
+                                <Link
+                                  key={sub.href}
+                                  href={sub.href}
+                                  onClick={() => setOpenDropdown(null)}
+                                  className={`flex items-start gap-3 rounded-lg p-2.5 transition-colors group ${
+                                    isSubActive
+                                      ? "bg-[#0098a2]/10 text-[#0098a2]"
+                                      : "hover:bg-slate-50 text-slate-700 hover:text-slate-950"
+                                  }`}
+                                >
+                                  <div
+                                    className={`p-2 rounded-lg shrink-0 transition-colors ${
+                                      isSubActive
+                                        ? "bg-[#0098a2] text-white"
+                                        : "bg-[#0098a2]/10 text-[#0098a2] group-hover:bg-[#0098a2] group-hover:text-white"
+                                    }`}
+                                  >
+                                    <Icon className="size-4" />
+                                  </div>
+                                  <div className="flex flex-col text-left">
+                                    <span className="text-sm font-semibold leading-tight">
+                                      {sub.label}
+                                    </span>
+                                    <span className="text-[11px] text-slate-500 group-hover:text-slate-600 mt-0.5 leading-snug whitespace-normal">
+                                      {sub.description}
+                                    </span>
+                                  </div>
+                                </Link>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                );
+              }
+
+              const isActive =
+                item.href === "/"
+                  ? pathname === "/"
+                  : pathname === item.href || pathname.startsWith(item.href + "/");
+
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`py-0.5 tracking-wide transition-colors duration-150 hover:underline underline-offset-4 ${
+                    isActive
+                      ? "font-medium underline underline-offset-4 " +
+                        (overlay ? "text-white" : "text-slate-950 font-semibold")
+                      : overlay
+                      ? "text-white/95 hover:text-white"
+                      : "text-slate-700 hover:text-slate-950"
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
           </nav>
         </div>
       </div>
