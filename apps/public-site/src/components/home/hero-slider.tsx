@@ -182,7 +182,7 @@ export function HeroSlider() {
                   aria-label={`Slide ${idx + 1}`}
                   className={`h-1.5 rounded-full transition-all duration-500 cursor-pointer ${
                     idx === currentSlide
-                      ? "w-7 sm:w-8 bg-gradient-to-r from-amber-500 to-[#eab308] shadow-[0_2px_8px_rgba(234,179,8,0.55)]"
+                      ? "w-7 sm:w-8 bg-slate-700 shadow-[0_1px_4px_rgba(15,23,42,0.35)]"
                       : "w-2 bg-slate-300 hover:bg-slate-400"
                   }`}
                 />
