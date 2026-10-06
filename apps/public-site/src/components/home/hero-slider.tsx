@@ -103,9 +103,9 @@ export function HeroSlider() {
       </button>
 
       {/* Hero Content */}
-      <div className="relative z-10 flex min-h-[700px] sm:min-h-[760px] md:min-h-[800px] lg:min-h-[820px] w-full flex-col items-center justify-between pb-4 sm:pb-6 pt-20 sm:pt-24 text-white">
-        {/* Main Center Content: Title, Subtitle, and Discovery Search immediately below text */}
-        <div className="w-full max-w-5xl mx-auto px-4 text-center flex flex-col items-center my-auto pt-4 sm:pt-6">
+      <div className="relative z-10 flex min-h-[700px] sm:min-h-[760px] md:min-h-[800px] lg:min-h-[820px] w-full flex-col items-center justify-between pb-4 sm:pb-6 pt-16 sm:pt-20 text-white">
+        {/* Main Center Content: Title, Subtitle moved higher up, with Discovery Search below */}
+        <div className="w-full max-w-5xl mx-auto px-4 text-center flex flex-col items-center mt-2 sm:mt-3 md:mt-5 mb-auto">
           {/* Animated Hero Title on slide change */}
           <h1
             key={`hero-title-${currentSlide}`}
