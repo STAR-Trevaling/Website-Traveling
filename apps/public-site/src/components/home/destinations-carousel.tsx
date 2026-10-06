@@ -110,7 +110,7 @@ export function DestinationsCarousel({ initialDestinations }: DestinationsCarous
                     </div>
 
                     <div className="p-4 sm:p-5 pb-5 sm:pb-6">
-                      <h3 className="display-title text-xl sm:text-2xl font-bold tracking-wider text-[#1e293b] group-hover:text-[#0098a2] transition-colors uppercase">
+                      <h3 className="script-title text-2xl sm:text-3xl font-bold text-[#1e293b] group-hover:text-[#0098a2] transition-colors leading-tight">
                         {displayName}
                       </h3>
                       <p className="mt-2 line-clamp-2 text-xs sm:text-sm font-light text-[#555] leading-relaxed">
