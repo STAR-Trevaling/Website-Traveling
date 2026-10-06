@@ -31,28 +31,28 @@ export function StarLogo({
 }: StarLogoProps) {
   const sizeClasses = {
     sm: {
-      starBg: "w-14 h-14 sm:w-16 sm:h-16",
+      starBg: "w-8 h-8 sm:w-10 sm:h-10",
       iconStar: "size-4 sm:size-5",
       text: "text-sm sm:text-[15px]",
       desc: "text-[8px] sm:text-[9px]",
       scriptText: "text-3xl sm:text-4xl",
     },
     md: {
-      starBg: "w-20 h-20 sm:w-24 sm:h-24",
+      starBg: "w-11 h-11 sm:w-13 sm:h-13",
       iconStar: "size-5 sm:size-6",
       text: "text-lg sm:text-xl",
       desc: "text-[9.5px] sm:text-[10.5px]",
       scriptText: "text-4xl sm:text-5xl",
     },
     lg: {
-      starBg: "w-28 h-28 sm:w-36 sm:h-36 md:w-44 md:h-44 lg:w-48 lg:h-48",
+      starBg: "w-14 h-14 sm:w-18 sm:h-18 md:w-22 md:h-22 lg:w-24 lg:h-24",
       iconStar: "size-7 sm:size-8",
       text: "text-2xl sm:text-3xl",
       desc: "text-xs sm:text-sm",
       scriptText: "text-5xl sm:text-6xl md:text-7xl lg:text-[78px]",
     },
     xl: {
-      starBg: "w-36 h-36 sm:w-48 sm:h-48 md:w-56 md:h-56",
+      starBg: "w-18 h-18 sm:w-22 sm:h-22 md:w-26 md:h-26 lg:w-28 lg:h-28",
       iconStar: "size-9 sm:size-10",
       text: "text-3xl sm:text-4xl",
       desc: "text-sm sm:text-base",
