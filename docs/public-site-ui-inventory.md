@@ -2,7 +2,7 @@
 
 > **Tài liệu tổng hợp giao diện người dùng (Customer-Facing Public Site)**  
 > **Dự án:** Star Travels Vietnam — Nền tảng Du lịch & Trải nghiệm Bản địa  
-> **Ứng dụng:** `public-site` (Next.js 15 App Router, Tailwind CSS, Song ngữ Việt - Anh)  
+> **Ứng dụng:** `apps/frontend` (Next.js 15 App Router, Tailwind CSS, Song ngữ Việt - Anh)  
 > **Cập nhật:** Tháng 10/2026  
 
 ---

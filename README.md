@@ -43,7 +43,7 @@
 graph TD
     Client["🌐 Web Browser (Traveler / Partner)"]
     
-    subgraph "Frontend Layer (public-site)"
+    subgraph "Frontend Layer (apps/frontend)"
         NextWeb["Next.js 15 App Router (SSR / RSC)"]
         BFF["BFF Auth Routes (/api/auth/*)<br/>HttpOnly Cookie Safe"]
     end
@@ -52,7 +52,7 @@ graph TD
         Contracts["@travel/contracts<br/>TypeScript Models & OpenAPI Spec"]
     end
     
-    subgraph "Backend Layer (api)"
+    subgraph "Backend Layer (apps/api)"
         DRF["Django 5.2 REST Framework API"]
         AuthCtx["accounts (Identity & JWT)"]
         GeoCtx["places & destinations (PostGIS)"]
@@ -84,31 +84,32 @@ graph TD
 
 ```text
 travel-platform-mvp-complete/
-├── api/                          # Django 5.2 REST Framework modular monolith
-│   ├── accounts/                 # Identity, roles, JWT authentication
-│   ├── audit/                    # Immutable privileged event logs
-│   ├── config/                   # Settings, ASGI/WSGI, Celery, root URLs
-│   ├── content/                  # Editorial travel stories & articles
-│   ├── core/                     # Seed commands, base pagination, exceptions
-│   ├── destinations/             # Destination entities & metadata
-│   ├── partners/                 # Partner application state machine & services
-│   ├── places/                   # Places, categories & PostGIS geospatial search
-│   ├── reviews/                  # User reviews & saved favorites
-│   ├── tests/                    # Pytest unit & integration test suites
-│   ├── Dockerfile                # Production Python container
-│   ├── manage.py
-│   └── requirements.txt          # Python dependencies
-│
-├── public-site/                  # Next.js 15 customer web application
-│   ├── public/                   # Static assets, hero images, adventure graphics
-│   ├── src/
-│   │   ├── app/                  # 19 static & dynamic App Router pages
-│   │   ├── components/           # Radix UI primitives, layout & feature components
-│   │   └── lib/                  # Client API, auth utils & contracts bridge
-│   ├── Dockerfile                # Production Next.js container
-│   ├── eslint.config.mjs         # ESLint 9 flat configuration
-│   ├── package.json              # Node/TypeScript dependencies
-│   └── tsconfig.json             # Path aliases (@/* and @travel/contracts)
+├── apps/
+│   ├── api/                      # Django 5.2 REST Framework modular monolith
+│   │   ├── accounts/             # Identity, roles, JWT authentication
+│   │   ├── audit/                # Immutable privileged event logs
+│   │   ├── config/               # Settings, ASGI/WSGI, Celery, root URLs
+│   │   ├── content/              # Editorial travel stories & articles
+│   │   ├── core/                 # Seed commands, base pagination, exceptions
+│   │   ├── destinations/         # Destination entities & metadata
+│   │   ├── partners/             # Partner application state machine & services
+│   │   ├── places/               # Places, categories & PostGIS geospatial search
+│   │   ├── reviews/              # User reviews & saved favorites
+│   │   ├── tests/                # Pytest unit & integration test suites
+│   │   ├── Dockerfile            # Production Python container
+│   │   ├── manage.py
+│   │   └── requirements.txt      # Python dependencies
+│   │
+│   └── frontend/                 # Next.js 15 customer web application
+│       ├── public/               # Static assets, hero images, adventure graphics
+│       ├── src/
+│       │   ├── app/              # 19 static & dynamic App Router pages
+│       │   ├── components/       # Radix UI primitives, layout & feature components
+│       │   └── lib/              # Client API, auth utils & contracts bridge
+│       ├── Dockerfile            # Production Next.js container
+│       ├── eslint.config.mjs     # ESLint 9 flat configuration
+│       ├── package.json          # Node/TypeScript dependencies
+│       └── tsconfig.json         # Path aliases (@/* and @travel/contracts)
 │
 ├── packages/
 │   └── contracts/                # [@travel/contracts] Shared API contracts & data models
@@ -170,18 +171,18 @@ docker compose up --build -d backend worker frontend
 
 Run frontend and backend independently on your host machine:
 
-### 1. Frontend (`public-site`)
+### 1. Frontend (`apps/frontend`)
 ```bash
-cd public-site
+cd apps/frontend
 cp .env.example .env.local
 npm install
 npm run dev
 ```
 
-### 2. Backend (`api`)
+### 2. Backend (`apps/api`)
 *Requires local PostgreSQL 17 with PostGIS extension and Redis.*
 ```bash
-cd api
+cd apps/api
 python -m venv .venv
 
 # Activate virtual environment
@@ -231,9 +232,9 @@ python scripts/validate_context.py
 python scripts/static_sanity.py
 
 # Frontend quality suite
-npm --prefix public-site run typecheck   # 0 TypeScript errors
-npm --prefix public-site run lint        # ESLint 9 (0 errors, 0 warnings)
-npm --prefix public-site run build       # Next.js 15 production build
+npm --prefix apps/frontend run typecheck   # 0 TypeScript errors
+npm --prefix apps/frontend run lint        # ESLint 9 (0 errors, 0 warnings)
+npm --prefix apps/frontend run build       # Next.js 15 production build
 
 # Backend quality suite (via Docker)
 make backend-check
