@@ -21,4 +21,12 @@ Preserve:
 - Contact -> Contact
 - Flights/Hotels/Tours search tabs -> Destinations/Experiences/Nearby
 
+## Brand Identity & Logo Standard
+- **Finalized Brand Name**: **`STAR`** (Ecosystem descriptor: **STAR Travels**).
+- **Mandatory Logo Composition**: The official logo design **MUST** always include both:
+  1. The Brand Name: **`STAR`** (prominent, elegant typography).
+  2. The Star Emblem / Icon: **Hình ngôi sao** (geometric 5-pointed golden star `#EAB308` with subtle drop-shadow/glow).
+- Refer to detailed guidelines and code specifications in [SKILL.md](file:///c:/Users/msi/Downloads/travel-platform-mvp-complete/travel-platform-mvp-complete/.agents/skills/brand-identity-and-logo/SKILL.md).
+
 The design may become responsive with Grid/Flex, but desktop proportions should remain visually faithful to the template. Do not convert the site into a SaaS/dashboard visual language.
+

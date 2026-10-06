@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 import type { CurrentUser } from "@/lib/types";
 import { useLanguage } from "@/lib/i18n/context";
+import { StarLogo } from "@/components/shared/star-logo";
 
 interface MobileNavProps {
   user: CurrentUser | null;
@@ -110,20 +111,7 @@ export function MobileNav({ user, overlay = false }: MobileNavProps) {
               className="flex items-center"
               onClick={() => setIsOpen(false)}
             >
-              <span className="logo-title text-3xl font-normal text-slate-900 flex items-center">
-                <span className="relative inline-flex items-center justify-center">
-                  <svg
-                    viewBox="0 0 100 100"
-                    fill="#eab308"
-                    aria-hidden="true"
-                    className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 size-8 text-[#eab308] opacity-85 -z-10 pointer-events-none drop-shadow-[0_1px_6px_rgba(234,179,8,0.4)]"
-                  >
-                    <polygon points="50,5 64,36 98,38 72,60 80,94 50,75 20,94 28,60 2,38 36,36" />
-                  </svg>
-                  <span className="relative z-10">Star</span>
-                </span>
-                <span className="ml-1.5">Travels</span>
-              </span>
+              <StarLogo variant="integrated" size="sm" asLink={false} />
             </Link>
             <button
               type="button"

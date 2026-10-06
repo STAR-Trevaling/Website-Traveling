@@ -39,10 +39,28 @@
   - Implemented international-standard Language Consent & Cookie Preference Banner (`LanguageConsentBanner`): floating glassmorphic card prompting first-time visitors to choose their preferred language (`[ 🇻🇳 Tiếng Việt ]` / `[ 🇬🇧 English ]`), automatically storing their choice via cookie and localStorage, fully synchronized with the header pill switcher.
   - Published comprehensive Markdown UI inventory documentation: `docs/public-site-ui-inventory.md`.
 
+- Full Bilingual i18n Synchronization Across Entire Public Site (Option A):
+  - Completed comprehensive bilingual review and eliminated 100% of hardcoded mixed language across all routes, layouts, cards, modals, and dynamic data fallbacks in `apps/public-site/`.
+  - Extended centralized i18n dictionary system (`src/lib/i18n/types.ts` & `src/lib/i18n/dictionary.ts`) covering all routes and components:
+    - Shared components: `PlaceCard`, `PageHero`, `LanguageConsentBanner`, `SiteFooter`, `SiteHeaderClient`, `MobileNav`, `LanguageSwitcher`.
+    - Catalog & Detail Pages: `ToursCatalog`, `TourBookingCard`, `/tours/[slug]`, `/experiences`, `ExperienceBookingCard`, `ReviewForm`, `/experiences/[slug]`, `/destinations`, `/destinations/[slug]`.
+    - Content & Informational Pages: `/about`, `ContactForm`, `ContactFAQ`, `/contact`, `PartnerForm`, `/partner`, `/stories`, `/stories/[slug]`.
+    - User Authentication & Portal: `LoginForm`, `RegisterForm`, `LogoutButton`, `/login`, `/register`, `/account`.
+    - Error & Fallback Pages: `/not-found` (404).
+  - Server components read cookies (`star_travels_locale`) to render pristine locale content without flash; client components reactively sync with `useLanguage()`.
+  - Zero leftover mixed English/Vietnamese: 100% pure Vietnamese when `locale === "vi"`, 100% natural luxury travel English when `locale === "en"`.
+
+- Brand Identity & Logo Standard Skill (`.agents/skills/brand-identity-and-logo/`):
+  - Created official brand engineering skill establishing **`STAR`** as the finalized, non-negotiable brand name.
+  - Enforced dual-element logo design contract: Every logo instance **must** contain both the brand name (**`STAR`**) and the star emblem/icon (**Hình ngôi sao** - 5-pointed golden star `#EAB308`).
+  - Documented complete vector geometry (SVG polygon points, 72° symmetry, golden ratio $0.382$), color hierarchy (`#EAB308` Gold, `#1E293B` Slate, `#0098A2` Teal), typography pairings, clear space ($0.5X$), and prohibited anti-patterns.
+  - Implemented reusable production component `<StarLogo />` (`apps/public-site/src/components/shared/star-logo.tsx`) supporting multiple lockup variants (`integrated`, `horizontal`, `stacked`, `icon-only`) and sizing scales (`sm`, `md`, `lg`, `xl`).
+  - Integrated `<StarLogo />` into `SiteFooter` and `MobileNav`, and documented standards in `AGENTS.md` and `context/ui-context.md`.
+
 ## Validation status
 - GitHub Actions CI (Run #10) & CodeQL Analysis: **PASSED (All 3 jobs green)**.
 - Local static sanity (`validate_context.py`, `static_sanity.py`, Python AST across 3,205 files in `apps/api` and `scripts`): **PASSED**.
-- Next.js production build & typecheck (`npm run build` & `npm run typecheck` in `apps/public-site`): **VERIFIED**.
+- Next.js production build & typecheck (`npm run build` & `npm run typecheck` in `apps/public-site`): **VERIFIED (Exit code 0)**.
 - ESLint checks (`npm run lint` in `apps/public-site`): **PASSED (zero warnings/errors)**.
 
 
