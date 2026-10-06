@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Script from "next/script";
 import "./globals.css";
+import { cookies } from "next/headers";
+import type { Locale } from "@/lib/i18n/types";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { LanguageProvider } from "@/lib/i18n/context";
 import { LanguageConsentBanner } from "@/components/layout/language-consent-banner";
@@ -131,9 +133,14 @@ const jsonLd = {
   ],
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const cookieStore = await cookies();
+  const savedLocale = cookieStore.get("star_travels_locale")?.value as Locale | undefined;
+  const initialLocale: Locale = savedLocale === "en" ? "en" : "vi";
+  const isConfirmed = cookieStore.get("star_travels_locale_confirmed")?.value === "true";
+
   return (
-    <html lang="vi">
+    <html lang={initialLocale}>
       <head>
         {/* JSON-LD Structured Data */}
         <Script
@@ -157,7 +164,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <div className="absolute inset-0 bg-[#eaf4f2]/30" />
         </div>
 
-        <LanguageProvider>
+        <LanguageProvider initialLocale={initialLocale} initialConfirmed={isConfirmed}>
           <div className="flex-1 relative z-0">{children}</div>
           <SiteFooter />
           <LanguageConsentBanner />

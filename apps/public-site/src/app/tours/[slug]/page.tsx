@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { cookies } from "next/headers";
 import {
   Clock,
   MapPin,
@@ -11,12 +12,13 @@ import {
   Bus,
   Hotel,
   ShieldCheck,
-  ChevronRight,
   PhoneCall,
 } from "lucide-react";
 import { SiteHeader } from "@/components/layout/site-header";
 import { getTourBySlug, VIETNAM_TOURS } from "@/lib/tours-data";
 import { TourBookingCard } from "@/components/tours";
+import { DICTIONARY } from "@/lib/i18n/dictionary";
+import type { Locale } from "@/lib/i18n/types";
 
 interface TourDetailPageProps {
   params: Promise<{ slug: string }>;
@@ -50,12 +52,24 @@ export async function generateMetadata({ params }: TourDetailPageProps): Promise
 }
 
 export default async function TourDetailPage({ params }: TourDetailPageProps) {
+  const cookieStore = await cookies();
+  const isEn = cookieStore.get("star_travels_locale")?.value === "en";
+  const locale: Locale = isEn ? "en" : "vi";
+  const dict = DICTIONARY[locale];
+  const td = dict.tourDetailPage;
+
   const { slug } = await params;
   const tour = getTourBySlug(slug);
 
   if (!tour) {
     notFound();
   }
+
+  const displayTitle = isEn && tour.title_en ? tour.title_en : tour.title;
+  const displayOverview = isEn && tour.overview_en ? tour.overview_en : tour.overview;
+  const displayDuration = isEn && tour.duration_en ? tour.duration_en : tour.duration;
+  const displayDeparture = isEn && tour.departure_en ? tour.departure_en : tour.departure;
+  const displayDestination = isEn && tour.destination_en ? tour.destination_en : tour.destination;
 
   const relatedTours = VIETNAM_TOURS.filter((t) => t.id !== tour.id).slice(0, 3);
 
@@ -65,7 +79,7 @@ export default async function TourDetailPage({ params }: TourDetailPageProps) {
       <section className="relative min-h-[620px] md:min-h-[680px] w-full overflow-hidden text-white flex items-end">
         <Image
           src={tour.image}
-          alt={tour.title}
+          alt={displayTitle}
           fill
           priority
           unoptimized
@@ -79,24 +93,24 @@ export default async function TourDetailPage({ params }: TourDetailPageProps) {
           <div className="max-w-4xl bg-black/40 backdrop-blur-[3px] p-6 sm:p-9 rounded-[2px] border border-white/20 shadow-2xl">
             <div className="flex flex-wrap items-center gap-3">
               <span className="rounded-[2px] bg-[#0098a2] px-3.5 py-1.5 text-xs sm:text-sm font-bold uppercase tracking-wider text-white shadow-md">
-                {tour.duration}
+                {displayDuration}
               </span>
               <span className="flex items-center gap-1.5 rounded-[2px] bg-black/60 px-3.5 py-1.5 text-xs sm:text-sm font-semibold text-white backdrop-blur-md border border-white/20 shadow-sm">
                 <MapPin className="size-4 text-white" />
-                {tour.destination}
+                {displayDestination}
               </span>
               <span className="flex items-center gap-1.5 rounded-[2px] bg-amber-500/90 px-3 py-1.5 text-xs sm:text-sm font-bold text-white backdrop-blur-md shadow-sm">
                 <Star className="size-4 fill-white text-white" />
-                {tour.rating.toFixed(1)} ({tour.reviewCount} đánh giá)
+                {tour.rating.toFixed(1)} ({tour.reviewCount} {td.reviewsText})
               </span>
             </div>
 
             <h1 className="display-title mt-5 text-3xl sm:text-5xl md:text-6xl font-black leading-tight text-white drop-shadow-[0_2px_14px_rgba(0,0,0,0.95)]">
-              {tour.title}
+              {displayTitle}
             </h1>
 
             <p className="mt-4 max-w-3xl text-base sm:text-lg md:text-xl font-normal leading-relaxed text-white/95 drop-shadow-[0_1px_8px_rgba(0,0,0,0.9)]">
-              {tour.overview}
+              {displayOverview}
             </p>
           </div>
         </div>
@@ -108,40 +122,52 @@ export default async function TourDetailPage({ params }: TourDetailPageProps) {
           <div className="flex items-center gap-3 text-slate-700">
             <Clock className="size-5 text-slate-700" />
             <div>
-              <p className="text-[11px] text-slate-400 font-light">Thời lượng</p>
-              <p className="font-semibold">{tour.duration}</p>
+              <p className="text-[11px] text-slate-400 font-light">{td.durationLabel}</p>
+              <p className="font-semibold">{displayDuration}</p>
             </div>
           </div>
 
           <div className="flex items-center gap-3 text-slate-700">
             <MapPin className="size-5 text-slate-700" />
             <div>
-              <p className="text-[11px] text-slate-400 font-light">Khởi hành từ</p>
-              <p className="font-semibold">{tour.departure}</p>
+              <p className="text-[11px] text-slate-400 font-light">{td.departureLabel}</p>
+              <p className="font-semibold">{displayDeparture}</p>
             </div>
           </div>
 
           <div className="flex items-center gap-3 text-slate-700">
             <Bus className="size-5 text-slate-700" />
             <div>
-              <p className="text-[11px] text-slate-400 font-light">Phương tiện</p>
-              <p className="font-semibold">{tour.transport}</p>
+              <p className="text-[11px] text-slate-400 font-light">
+                {isEn ? "Transportation" : "Phương tiện"}
+              </p>
+              <p className="font-semibold">
+                {isEn ? "VIP Limousine / Fast Transit" : tour.transport}
+              </p>
             </div>
           </div>
 
           <div className="flex items-center gap-3 text-slate-700">
             <Hotel className="size-5 text-slate-700" />
             <div>
-              <p className="text-[11px] text-slate-400 font-light">Khách sạn / Lưu trú</p>
-              <p className="font-semibold">{tour.hotel}</p>
+              <p className="text-[11px] text-slate-400 font-light">
+                {isEn ? "Accommodation" : "Khách sạn / Lưu trú"}
+              </p>
+              <p className="font-semibold">
+                {isEn ? "4-5 Star Boutique Stay" : tour.hotel}
+              </p>
             </div>
           </div>
 
           <div className="flex items-center gap-3 text-slate-700">
             <ShieldCheck className="size-5 text-slate-700" />
             <div>
-              <p className="text-[11px] text-slate-400 font-light">Bảo hiểm</p>
-              <p className="font-semibold">Bảo hiểm trọn gói</p>
+              <p className="text-[11px] text-slate-400 font-light">
+                {isEn ? "Insurance" : "Bảo hiểm"}
+              </p>
+              <p className="font-semibold">
+                {isEn ? "Full Comprehensive Coverage" : "Bảo hiểm trọn gói"}
+              </p>
             </div>
           </div>
         </div>
@@ -155,7 +181,7 @@ export default async function TourDetailPage({ params }: TourDetailPageProps) {
             {/* Highlights */}
             <div className="rounded-[2px] bg-white p-8 shadow-sm border border-slate-100">
               <h2 className="script-title text-3xl md:text-4xl text-[#1e293b]">
-                Điểm Nhấn Hành Trình
+                {td.highlightsTitle}
               </h2>
               <div className="mt-6 grid gap-4 sm:grid-cols-2">
                 {tour.highlights.map((h, i) => (
@@ -173,7 +199,7 @@ export default async function TourDetailPage({ params }: TourDetailPageProps) {
             {tour.gallery && tour.gallery.length > 1 && (
               <div className="rounded-[2px] bg-white p-8 shadow-sm border border-slate-100">
                 <h2 className="script-title text-3xl md:text-4xl text-[#1e293b] mb-6">
-                  Hình Ảnh Trải Nghiệm
+                  {isEn ? "Tour Experience Gallery" : "Hình Ảnh Trải Nghiệm"}
                 </h2>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                   {tour.gallery.map((img, idx) => (
@@ -183,7 +209,7 @@ export default async function TourDetailPage({ params }: TourDetailPageProps) {
                     >
                       <Image
                         src={img}
-                        alt={`${tour.title} ${idx + 1}`}
+                        alt={`${displayTitle} ${idx + 1}`}
                         fill
                         unoptimized
                         className="object-cover transition duration-300 group-hover:scale-105"
@@ -197,10 +223,12 @@ export default async function TourDetailPage({ params }: TourDetailPageProps) {
             {/* Day-by-Day Itinerary */}
             <div className="rounded-[2px] bg-white p-8 shadow-sm border border-slate-100">
               <h2 className="script-title text-3xl md:text-4xl text-[#1e293b]">
-                Lịch Trình Chi Tiết
+                {td.itineraryTitle}
               </h2>
               <p className="mt-2 text-xs md:text-sm text-slate-500 font-light">
-                Hành trình được thiết kế chuẩn mực bởi chuyên gia du lịch địa phương, đảm bảo cân bằng giữa trải nghiệm và nghỉ dưỡng.
+                {isEn
+                  ? "Carefully designed by local travel concierges, ensuring a seamless balance between discovery and relaxation."
+                  : "Hành trình được thiết kế chuẩn mực bởi chuyên gia du lịch địa phương, đảm bảo cân bằng giữa trải nghiệm và nghỉ dưỡng."}
               </p>
 
               <div className="mt-8 space-y-6">
@@ -215,22 +243,28 @@ export default async function TourDetailPage({ params }: TourDetailPageProps) {
                     </div>
 
                     <h3 className="display-title text-lg md:text-xl font-bold text-[#1e293b]">
-                      Ngày {day.day}: {day.title}
+                      {td.dayLabel} {day.day}: {day.title}
                     </h3>
 
                     <div className="mt-4 space-y-3 text-xs md:text-sm text-slate-600 font-light leading-relaxed">
                       <div className="rounded-[2px] bg-slate-50 p-3.5 border border-slate-100">
-                        <span className="font-bold text-slate-900 block mb-1">Buổi Sáng:</span>
+                        <span className="font-bold text-slate-900 block mb-1">
+                          {td.morning}:
+                        </span>
                         {day.morning}
                       </div>
 
                       <div className="rounded-[2px] bg-slate-50 p-3.5 border border-slate-100">
-                        <span className="font-bold text-slate-900 block mb-1">Buổi Chiều:</span>
+                        <span className="font-bold text-slate-900 block mb-1">
+                          {td.afternoon}:
+                        </span>
                         {day.afternoon}
                       </div>
 
                       <div className="rounded-[2px] bg-slate-50 p-3.5 border border-slate-100">
-                        <span className="font-bold text-slate-900 block mb-1">Buổi Tối:</span>
+                        <span className="font-bold text-slate-900 block mb-1">
+                          {td.evening}:
+                        </span>
                         {day.evening}
                       </div>
                     </div>
@@ -245,7 +279,7 @@ export default async function TourDetailPage({ params }: TourDetailPageProps) {
               <div className="rounded-[2px] bg-white p-7 shadow-sm border border-slate-100">
                 <h3 className="display-title text-lg font-bold text-emerald-800 flex items-center gap-2 mb-4">
                   <CheckCircle2 className="size-5 text-emerald-600" />
-                  Dịch Vụ Bao Gồm
+                  {td.inclusionsTitle}
                 </h3>
                 <ul className="space-y-2.5 text-xs md:text-sm font-light text-slate-600">
                   {tour.inclusions.map((item, idx) => (
@@ -261,7 +295,7 @@ export default async function TourDetailPage({ params }: TourDetailPageProps) {
               <div className="rounded-[2px] bg-white p-7 shadow-sm border border-slate-100">
                 <h3 className="display-title text-lg font-bold text-rose-800 flex items-center gap-2 mb-4">
                   <XCircle className="size-5 text-rose-600" />
-                  Không Bao Gồm
+                  {td.exclusionsTitle}
                 </h3>
                 <ul className="space-y-2.5 text-xs md:text-sm font-light text-slate-600">
                   {tour.exclusions.map((item, idx) => (
@@ -282,17 +316,19 @@ export default async function TourDetailPage({ params }: TourDetailPageProps) {
             {/* Direct Support Card */}
             <div className="rounded-[2px] bg-[#1e293b] p-6 text-white shadow-md">
               <h4 className="display-title text-lg font-bold text-white">
-                Cần Tư Vấn Lịch Trình Riêng?
+                {isEn ? "Need a Bespoke Itinerary?" : "Cần Tư Vấn Lịch Trình Riêng?"}
               </h4>
               <p className="mt-2 text-xs font-light text-slate-300 leading-relaxed">
-                Đội ngũ chuyên viên Star Travels sẵn sàng hỗ trợ thiết kế tour theo yêu cầu riêng cho gia đình hoặc đoàn thể.
+                {isEn
+                  ? "Our travel specialists are ready to tailor journeys for your family, private group, or corporate retreat."
+                  : "Đội ngũ chuyên viên Star Travels sẵn sàng hỗ trợ thiết kế tour theo yêu cầu riêng cho gia đình hoặc đoàn thể."}
               </p>
               <div className="mt-5 flex items-center gap-3 pt-4 border-t border-slate-700">
                 <div className="flex size-10 items-center justify-center rounded-full bg-[#0098a2] text-white">
                   <PhoneCall className="size-4" />
                 </div>
                 <div>
-                  <span className="text-[11px] text-slate-400 block">Hotline tư vấn 24/7</span>
+                  <span className="text-[11px] text-slate-400 block">{td.hotlineAssist}</span>
                   <a href="tel:0912345678" className="text-sm font-bold text-amber-400 hover:underline">
                     +84 912 345 678
                   </a>
@@ -306,57 +342,70 @@ export default async function TourDetailPage({ params }: TourDetailPageProps) {
         <section className="mx-auto max-w-7xl mt-24">
           <div className="text-center mb-10">
             <h2 className="script-title text-4xl md:text-5xl text-[#1e293b]">
-              Tour Du Lịch Tương Tự
+              {td.relatedToursTitle}
             </h2>
             <p className="mt-2 text-sm text-[#64748b] font-light">
-              Khám phá thêm những cung đường di sản tuyệt đẹp khác tại Việt Nam
+              {isEn
+                ? "Explore more handcrafted heritage routes across beautiful Vietnam"
+                : "Khám phá thêm những cung đường di sản tuyệt đẹp khác tại Việt Nam"}
             </p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {relatedTours.map((rTour) => (
-              <Link
-                key={rTour.id}
-                href={`/tours/${rTour.slug}`}
-                className="group flex flex-col overflow-hidden rounded-[2px] bg-white shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
-              >
-                <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-100">
-                  <Image
-                    src={rTour.image}
-                    alt={rTour.title}
-                    fill
-                    unoptimized
-                    className="object-cover transition duration-500 group-hover:scale-105"
-                  />
-                  <div className="absolute top-3 left-3 bg-black/50 text-white text-[11px] font-medium px-2.5 py-0.5 rounded-[2px] backdrop-blur-sm">
-                    {rTour.duration}
-                  </div>
-                </div>
+            {relatedTours.map((rTour) => {
+              const rTitle = isEn && rTour.title_en ? rTour.title_en : rTour.title;
+              const rDuration = isEn && rTour.duration_en ? rTour.duration_en : rTour.duration;
+              const rDestination =
+                isEn && rTour.destination_en ? rTour.destination_en : rTour.destination;
 
-                <div className="p-6 flex flex-col justify-between flex-1">
-                  <div>
-                    <span className="text-[11px] font-bold text-slate-900 uppercase tracking-wider block">
-                      {rTour.destination}
-                    </span>
-                    <h3 className="display-title mt-2 text-lg font-bold text-[#1e293b] group-hover:text-amber-700 transition line-clamp-2">
-                      {rTour.title}
-                    </h3>
+              return (
+                <Link
+                  key={rTour.id}
+                  href={`/tours/${rTour.slug}`}
+                  className="group flex flex-col overflow-hidden rounded-[2px] bg-white shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
+                >
+                  <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-100">
+                    <Image
+                      src={rTour.image}
+                      alt={rTitle}
+                      fill
+                      unoptimized
+                      className="object-cover transition duration-500 group-hover:scale-105"
+                    />
+                    <div className="absolute top-3 left-3 bg-black/50 text-white text-[11px] font-medium px-2.5 py-0.5 rounded-[2px] backdrop-blur-sm">
+                      {rDuration}
+                    </div>
                   </div>
 
-                  <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
+                  <div className="p-6 flex flex-col justify-between flex-1">
                     <div>
-                      <span className="text-xs text-slate-400 block font-light">Giá trọn gói</span>
-                      <span className="text-lg font-black text-slate-900">
-                        {rTour.price.toLocaleString("vi-VN")}đ
+                      <span className="text-[11px] font-bold text-slate-900 uppercase tracking-wider block">
+                        {rDestination}
+                      </span>
+                      <h3 className="display-title mt-2 text-lg font-bold text-[#1e293b] group-hover:text-amber-700 transition line-clamp-2">
+                        {rTitle}
+                      </h3>
+                    </div>
+
+                    <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
+                      <div>
+                        <span className="text-xs text-slate-400 block font-light">
+                          {isEn ? "All-inclusive" : "Giá trọn gói"}
+                        </span>
+                        <span className="text-lg font-black text-slate-900">
+                          {isEn
+                            ? `${rTour.price.toLocaleString("en-US")} VND`
+                            : `${rTour.price.toLocaleString("vi-VN")}đ`}
+                        </span>
+                      </div>
+                      <span className="text-xs font-semibold text-black group-hover:underline transition">
+                        {isEn ? "View tour" : "Xem tour"}
                       </span>
                     </div>
-                    <span className="text-xs font-semibold text-black group-hover:underline transition">
-                      Xem tour
-                    </span>
                   </div>
-                </div>
-              </Link>
-            ))}
+                </Link>
+              );
+            })}
           </div>
         </section>
       </main>

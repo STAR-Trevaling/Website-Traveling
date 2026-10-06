@@ -13,7 +13,9 @@ export default function ToursPage() {
     <>
       <PageHero
         title="Tour Du Lịch Trọn Gói"
+        titleEn="Curated Vietnam Tours"
         subtitle="Hành trình tuyển chọn đặc sắc với dịch vụ cao cấp, lịch trình minh bạch và giá trọn gói tốt nhất."
+        subtitleEn="Handcrafted all-inclusive journeys featuring premium services, transparent itineraries, and best value."
         image={VIETNAM_IMAGES.hero}
       />
 

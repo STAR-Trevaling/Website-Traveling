@@ -107,7 +107,7 @@ export function FeaturedTours({ initialTours }: FeaturedToursProps) {
                         </h3>
                         <div className="text-right shrink-0">
                           <span className="script-title text-xl font-bold text-[#1e293b] leading-tight block">
-                            {tour.price.toLocaleString("vi-VN")}đ
+                            {isEn ? `${tour.price.toLocaleString("en-US")} VND` : `${tour.price.toLocaleString("vi-VN")}đ`}
                           </span>
                         </div>
                       </div>

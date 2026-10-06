@@ -2,8 +2,12 @@
 
 import { useState } from "react";
 import { Send, CheckCircle2 } from "lucide-react";
+import { useLanguage } from "@/lib/i18n/context";
 
 export function ContactForm() {
+  const { t, isEnglish } = useLanguage();
+  const f = t.contactPage.form;
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -20,7 +24,6 @@ export function ContactForm() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    // Simulate API call
     setTimeout(() => {
       setLoading(false);
       setSubmitted(true);
@@ -34,10 +37,10 @@ export function ContactForm() {
           <CheckCircle2 className="size-8" />
         </div>
         <h3 className="display-title mt-6 text-2xl font-bold text-[#1e293b]">
-          Yêu Cầu Đã Được Tiếp Nhận
+          {f.successTitle}
         </h3>
         <p className="mx-auto mt-3 max-w-md text-sm md:text-base font-light text-slate-600 leading-relaxed">
-          Cảm ơn bạn, <strong>{formData.name}</strong>! Chuyên viên tư vấn điểm đến của Star Travels sẽ liên hệ qua điện thoại ({formData.phone}) hoặc email ({formData.email}) trong vòng 2 giờ làm việc để gửi lịch trình chi tiết và báo giá ưu đãi.
+          {f.successDesc}
         </p>
         <button
           onClick={() => {
@@ -54,7 +57,7 @@ export function ContactForm() {
           }}
           className="mt-8 bg-[#0098a2] text-white px-8 py-3 text-xs md:text-sm font-semibold tracking-widest uppercase rounded-[2px] shadow-sm transition-all duration-200 hover:bg-[#008f99] hover:shadow-[0px_8px_25px_rgba(0,152,162,0.35)] hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
         >
-          Gửi Yêu Cầu Khác
+          {isEnglish ? "Submit Another Request" : "Gửi Yêu Cầu Khác"}
         </button>
       </div>
     );
@@ -65,12 +68,12 @@ export function ContactForm() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-2">
-            Họ và tên *
+            {f.fullName} *
           </label>
           <input
             type="text"
             required
-            placeholder="Ví dụ: Nguyễn Văn An"
+            placeholder={f.fullNamePlaceholder}
             value={formData.name}
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
             className="w-full bg-slate-50 border border-slate-200 px-4 py-3 text-sm text-slate-800 placeholder:text-slate-400 outline-none transition focus:bg-white focus:border-[#0098a2] focus:ring-1 focus:ring-[#0098a2] rounded-[2px]"
@@ -79,12 +82,12 @@ export function ContactForm() {
 
         <div>
           <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-2">
-            Số điện thoại / Zalo *
+            {f.phone} *
           </label>
           <input
             type="tel"
             required
-            placeholder="Ví dụ: 0912 345 678"
+            placeholder={f.phonePlaceholder}
             value={formData.phone}
             onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
             className="w-full bg-slate-50 border border-slate-200 px-4 py-3 text-sm text-slate-800 placeholder:text-slate-400 outline-none transition focus:bg-white focus:border-[#0098a2] focus:ring-1 focus:ring-[#0098a2] rounded-[2px]"
@@ -95,12 +98,12 @@ export function ContactForm() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-2">
-            Địa chỉ Email *
+            {f.email} *
           </label>
           <input
             type="email"
             required
-            placeholder="Ví dụ: vanan@example.com"
+            placeholder={f.emailPlaceholder}
             value={formData.email}
             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
             className="w-full bg-slate-50 border border-slate-200 px-4 py-3 text-sm text-slate-800 placeholder:text-slate-400 outline-none transition focus:bg-white focus:border-[#0098a2] focus:ring-1 focus:ring-[#0098a2] rounded-[2px]"
@@ -109,19 +112,31 @@ export function ContactForm() {
 
         <div>
           <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-2">
-            Điểm đến quan tâm *
+            {f.destination} *
           </label>
           <select
             value={formData.destination}
             onChange={(e) => setFormData({ ...formData, destination: e.target.value })}
             className="w-full bg-slate-50 border border-slate-200 px-4 py-3 text-sm text-slate-800 outline-none transition focus:bg-white focus:border-[#0098a2] focus:ring-1 focus:ring-[#0098a2] rounded-[2px]"
           >
-            <option value="ha-long">Vịnh Hạ Long (Du thuyền di sản)</option>
-            <option value="sapa">Sa Pa - Fansipan (Săn mây & Trekking)</option>
-            <option value="da-nang">Đà Nẵng - Hội An (Phố cổ & Bãi biển)</option>
-            <option value="phu-quoc">Đảo Ngọc Phú Quốc (Lặn san hô & Resort)</option>
-            <option value="mekong">Miền Tây Sông Nước (Chợ nổi & Sinh thái)</option>
-            <option value="other">Tư vấn hành trình xuyên Việt riêng biệt</option>
+            <option value="ha-long">
+              {isEnglish ? "Ha Long Bay (Heritage Cruise)" : "Vịnh Hạ Long (Du thuyền di sản)"}
+            </option>
+            <option value="sapa">
+              {isEnglish ? "Sa Pa & Fansipan (Cloud Hunting & Trekking)" : "Sa Pa - Fansipan (Săn mây & Trekking)"}
+            </option>
+            <option value="da-nang">
+              {isEnglish ? "Da Nang & Hoi An (Ancient Town & Beaches)" : "Đà Nẵng - Hội An (Phố cổ & Bãi biển)"}
+            </option>
+            <option value="phu-quoc">
+              {isEnglish ? "Phu Quoc Pearl Island (Coral Reef & Resorts)" : "Đảo Ngọc Phú Quốc (Lặn san hô & Resort)"}
+            </option>
+            <option value="mekong">
+              {isEnglish ? "Mekong Riverways (Floating Market & Orchards)" : "Miền Tây Sông Nước (Chợ nổi & Sinh thái)"}
+            </option>
+            <option value="other">
+              {isEnglish ? "Custom Grand Vietnam Journey" : "Tư vấn hành trình xuyên Việt riêng biệt"}
+            </option>
           </select>
         </div>
       </div>
@@ -129,7 +144,7 @@ export function ContactForm() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-2">
-            Ngày dự kiến khởi hành
+            {isEnglish ? "Estimated Departure Date" : "Ngày dự kiến khởi hành"}
           </label>
           <input
             type="date"
@@ -141,7 +156,7 @@ export function ContactForm() {
 
         <div>
           <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-2">
-            Số lượng khách (Người lớn & Trẻ em)
+            {f.guests}
           </label>
           <input
             type="number"
@@ -156,11 +171,11 @@ export function ContactForm() {
 
       <div>
         <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-2">
-          Ghi chú yêu cầu riêng (Sở thích, phòng nghỉ, ăn uống,...)
+          {f.message}
         </label>
         <textarea
           rows={4}
-          placeholder="Hãy chia sẻ mong muốn đặc biệt của bạn cho chuyến đi này (ví dụ: tour riêng tư, phòng view biển, ăn chay, kỷ niệm ngày cưới...)"
+          placeholder={f.messagePlaceholder}
           value={formData.message}
           onChange={(e) => setFormData({ ...formData, message: e.target.value })}
           className="w-full bg-slate-50 border border-slate-200 px-4 py-3 text-sm text-slate-800 placeholder:text-slate-400 outline-none transition focus:bg-white focus:border-[#0098a2] focus:ring-1 focus:ring-[#0098a2] rounded-[2px]"
@@ -173,7 +188,13 @@ export function ContactForm() {
         className="w-full bg-[#0098a2] text-white py-4 text-xs md:text-sm font-semibold tracking-widest uppercase rounded-[2px] shadow-sm transition-all duration-200 hover:bg-[#008f99] hover:shadow-[0px_8px_25px_rgba(0,152,162,0.35)] hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-70 flex items-center justify-center gap-2 cursor-pointer"
       >
         <Send className="size-4" />
-        <span>{loading ? "Đang gửi yêu cầu..." : "Gửi Yêu Cầu Tư Vấn Ngay"}</span>
+        <span>
+          {loading
+            ? isEnglish
+              ? "Submitting request..."
+              : "Đang gửi yêu cầu..."
+            : f.submitBtn}
+        </span>
       </button>
     </form>
   );

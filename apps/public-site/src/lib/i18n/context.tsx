@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import React, { createContext, useContext, useEffect, useState, useMemo, useCallback } from "react";
 import { Locale, TranslationDictionary } from "./types";
 import { DICTIONARY } from "./dictionary";
@@ -30,42 +31,61 @@ const LanguageContext = createContext<LanguageContextType>({
   isEnglish: false,
 });
 
-export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const [locale, setLocaleState] = useState<Locale>(DEFAULT_LOCALE);
-  const [hasChosenLanguage, setHasChosenLanguage] = useState<boolean>(true); // default true until client checks
-  const [mounted, setMounted] = useState(false);
+interface LanguageProviderProps {
+  children: React.ReactNode;
+  initialLocale?: Locale;
+  initialConfirmed?: boolean;
+}
+
+export function LanguageProvider({
+  children,
+  initialLocale = DEFAULT_LOCALE,
+  initialConfirmed = false,
+}: LanguageProviderProps) {
+  const router = useRouter();
+  const [locale, setLocaleState] = useState<Locale>(initialLocale);
+  const [hasChosenLanguage, setHasChosenLanguage] = useState<boolean>(initialConfirmed);
 
   useEffect(() => {
-    setMounted(true);
     try {
       const isConfirmed = localStorage.getItem(PREFERENCE_CONFIRMED_KEY) === "true";
-      setHasChosenLanguage(isConfirmed);
+      if (isConfirmed) {
+        setHasChosenLanguage(true);
+      }
 
       const saved = localStorage.getItem(STORAGE_KEY) as Locale | null;
       if (saved && (saved === "vi" || saved === "en")) {
         setLocaleState(saved);
         document.documentElement.lang = saved;
       } else {
-        document.documentElement.lang = DEFAULT_LOCALE;
+        document.documentElement.lang = initialLocale;
       }
     } catch {
       // Fallback in case of SSR or storage restriction
     }
-  }, []);
+  }, [initialLocale]);
 
-  const setLocale = useCallback((newLocale: Locale) => {
-    setLocaleState(newLocale);
-    setHasChosenLanguage(true);
-    try {
-      localStorage.setItem(STORAGE_KEY, newLocale);
-      localStorage.setItem(PREFERENCE_CONFIRMED_KEY, "true");
-      document.cookie = `${STORAGE_KEY}=${newLocale}; path=/; max-age=31536000; SameSite=Lax`;
-      document.cookie = `${PREFERENCE_CONFIRMED_KEY}=true; path=/; max-age=31536000; SameSite=Lax`;
-      document.documentElement.lang = newLocale;
-    } catch {
-      // Ignore storage errors
-    }
-  }, []);
+  const setLocale = useCallback(
+    (newLocale: Locale) => {
+      setLocaleState(newLocale);
+      setHasChosenLanguage(true);
+      try {
+        localStorage.setItem(STORAGE_KEY, newLocale);
+        localStorage.setItem(PREFERENCE_CONFIRMED_KEY, "true");
+        document.cookie = `${STORAGE_KEY}=${newLocale}; path=/; max-age=31536000; SameSite=Lax`;
+        document.cookie = `${PREFERENCE_CONFIRMED_KEY}=true; path=/; max-age=31536000; SameSite=Lax`;
+        document.documentElement.lang = newLocale;
+      } catch {
+        // Ignore storage errors
+      }
+      try {
+        router.refresh();
+      } catch {
+        // Ignore router errors
+      }
+    },
+    [router]
+  );
 
   const confirmLanguageChoice = useCallback(
     (newLocale: Locale) => {

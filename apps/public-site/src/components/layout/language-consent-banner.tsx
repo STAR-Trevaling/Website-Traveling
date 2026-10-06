@@ -63,7 +63,7 @@ export function LanguageConsentBanner() {
                 id="language-prompt-title"
                 className="text-sm font-semibold text-slate-900 tracking-tight leading-snug"
               >
-                Chọn ngôn ngữ · Select Language
+                {locale === "en" ? "Select Language" : "Chọn ngôn ngữ"}
               </h2>
               <span className="text-[11.5px] text-slate-500 font-normal">
                 Star Travels Vietnam
@@ -74,7 +74,7 @@ export function LanguageConsentBanner() {
           <button
             type="button"
             onClick={handleDismiss}
-            aria-label="Đóng bảng thông báo / Close prompt"
+            aria-label={locale === "en" ? "Close prompt" : "Đóng bảng thông báo"}
             className="flex size-7 items-center justify-center rounded-full text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition cursor-pointer"
           >
             <X className="size-4" />
@@ -84,10 +84,9 @@ export function LanguageConsentBanner() {
         {/* Description */}
         <div id="language-prompt-desc" className="mt-3 text-xs text-slate-600 leading-relaxed">
           <p>
-            Vui lòng chọn ngôn ngữ hiển thị bạn muốn trải nghiệm cùng Star Travels.
-          </p>
-          <p className="text-slate-400 text-[11px] mt-0.5">
-            Please choose your preferred browsing language.
+            {locale === "en"
+              ? "Please choose your preferred browsing language for Star Travels."
+              : "Vui lòng chọn ngôn ngữ bạn muốn sử dụng khi trải nghiệm Star Travels."}
           </p>
         </div>
 
@@ -118,7 +117,7 @@ export function LanguageConsentBanner() {
                     locale === "vi" ? "text-slate-300" : "text-slate-400"
                   }`}
                 >
-                  Vietnamese
+                  {locale === "en" ? "Vietnamese" : "Đang chọn"}
                 </span>
               </div>
             </div>
@@ -152,7 +151,7 @@ export function LanguageConsentBanner() {
                     locale === "en" ? "text-slate-300" : "text-slate-400"
                   }`}
                 >
-                  Tiếng Anh
+                  {locale === "en" ? "Selected" : "Tiếng Anh"}
                 </span>
               </div>
             </div>
@@ -164,9 +163,7 @@ export function LanguageConsentBanner() {
 
         {/* Subtle footer */}
         <div className="mt-3.5 pt-2.5 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-400">
-          <span>Lưu tự động vào trình duyệt</span>
-          <span className="text-[10px] text-slate-300">·</span>
-          <span>Saved automatically</span>
+          <span>{locale === "en" ? "Saved automatically in your browser" : "Lựa chọn được lưu tự động trên trình duyệt"}</span>
         </div>
       </div>
     </aside>

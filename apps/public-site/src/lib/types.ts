@@ -58,6 +58,7 @@ export interface DestinationListParams {
 export interface PlaceCategory {
   id: string;
   name: string;
+  name_en?: string;
   slug: string;
 }
 
@@ -65,11 +66,15 @@ export interface Place {
   id: string;
   slug: string;
   name: string;
+  name_en?: string;
   short_description: string;
+  short_description_en?: string;
   description: string;
+  description_en?: string;
   image_url: string;
   overlay_image_url?: string;
   address: string;
+  address_en?: string;
   website_url?: string;
   location: GeoPoint;
   destination: Destination;

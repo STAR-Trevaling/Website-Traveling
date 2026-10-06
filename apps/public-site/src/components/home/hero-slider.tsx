@@ -98,10 +98,10 @@ export function HeroSlider() {
               document.getElementById("popular-destinations")?.scrollIntoView({ behavior: "smooth" });
             }}
             className="group mt-3 sm:mt-4 flex flex-col items-center gap-0.5 text-white/95 hover:text-white transition-all cursor-pointer select-none"
-            aria-label="View more"
+            aria-label={locale === "en" ? "View more" : "Xem thêm"}
           >
             <span className="script-title text-2xl sm:text-3xl md:text-4xl text-white tracking-wider drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)] group-hover:scale-105 group-hover:text-amber-200 transition-all">
-              view more
+              {locale === "en" ? "view more" : "xem thêm"}
             </span>
             <svg
               width="34"

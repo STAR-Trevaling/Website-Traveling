@@ -1,10 +1,12 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
 import { User, Shield, Compass, Heart, ArrowRight } from "lucide-react";
 import { getCurrentUser } from "@/lib/auth";
 import { PageHero } from "@/components/layout/page-hero";
 import { LogoutButton } from "@/components/auth/logout-button";
 import { VIETNAM_IMAGES } from "@/lib/assets";
+import { DICTIONARY } from "@/lib/i18n/dictionary";
 
 export default async function Account() {
   const user = await getCurrentUser();
@@ -12,18 +14,23 @@ export default async function Account() {
     redirect("/login");
   }
 
+  const cookieStore = await cookies();
+  const isEn = cookieStore.get("star_travels_locale")?.value === "en";
+  const dict = DICTIONARY[isEn ? "en" : "vi"];
+  const a = dict.authPages;
+
   const roleLabel =
     user.role === "partner"
-      ? "Đối Tác Lữ Hành Chính Thức"
+      ? a.roles.partner
       : user.role === "admin"
-      ? "Quản Trị Viên Hệ Thống"
-      : "Du Khách Tinh Hoa";
+      ? a.roles.admin
+      : a.roles.traveler;
 
   return (
     <>
       <PageHero
-        title={`Chào Mừng, ${user.username}`}
-        subtitle={`Tài khoản Star Travels · ${roleLabel}`}
+        title={`${a.accountWelcome}, ${user.username}`}
+        subtitle={`${a.accountRolePrefix} ${roleLabel}`}
         image={VIETNAM_IMAGES.ctaBanner}
       />
       <main className="template-page-bg min-h-screen text-[#282828] px-6 py-16 md:px-12 lg:px-16 overflow-x-hidden">
@@ -56,14 +63,14 @@ export default async function Account() {
                 <div>
                   <Compass className="size-6 text-slate-700 mb-3" />
                   <h3 className="display-title text-base font-bold text-slate-900 group-hover:text-amber-700 transition-colors">
-                    Khám Phá Tour
+                    {a.exploreToursCard}
                   </h3>
                   <p className="mt-1 text-xs text-slate-500 font-light">
-                    Tuyển tập hành trình trọn gói tại Hạ Long, Sa Pa, Đà Nẵng.
+                    {a.exploreToursDesc}
                   </p>
                 </div>
                 <span className="mt-4 text-xs font-semibold text-slate-900 flex items-center gap-1">
-                  Xem ngay <ArrowRight className="size-3" />
+                  {isEn ? "View tours" : "Xem ngay"} <ArrowRight className="size-3" />
                 </span>
               </Link>
 
@@ -74,14 +81,14 @@ export default async function Account() {
                 <div>
                   <Heart className="size-6 text-slate-700 mb-3" />
                   <h3 className="display-title text-base font-bold text-slate-900 group-hover:text-amber-700 transition-colors">
-                    Gói Trải Nghiệm
+                    {a.savedExperiencesCard}
                   </h3>
                   <p className="mt-1 text-xs text-slate-500 font-light">
-                    Chèo thuyền, lặn san hô, cắm trại và khám phá bản địa.
+                    {a.savedExperiencesDesc}
                   </p>
                 </div>
                 <span className="mt-4 text-xs font-semibold text-slate-900 flex items-center gap-1">
-                  Khám phá <ArrowRight className="size-3" />
+                  {isEn ? "Explore" : "Khám phá"} <ArrowRight className="size-3" />
                 </span>
               </Link>
 
@@ -92,14 +99,16 @@ export default async function Account() {
                 <div>
                   <Shield className="size-6 text-slate-700 mb-3" />
                   <h3 className="display-title text-base font-bold text-slate-900 group-hover:text-amber-700 transition-colors">
-                    Cổng Đối Tác
+                    {isEn ? "Partner Portal" : "Cổng Đối Tác"}
                   </h3>
                   <p className="mt-1 text-xs text-slate-500 font-light">
-                    Đăng ký hồ sơ cung cấp dịch vụ và tour du lịch bản địa.
+                    {isEn
+                      ? "Register and manage local travel service offerings."
+                      : "Đăng ký hồ sơ cung cấp dịch vụ và tour du lịch bản địa."}
                   </p>
                 </div>
                 <span className="mt-4 text-xs font-semibold text-slate-900 flex items-center gap-1">
-                  Đăng ký <ArrowRight className="size-3" />
+                  {isEn ? "Register" : "Đăng ký"} <ArrowRight className="size-3" />
                 </span>
               </Link>
             </div>

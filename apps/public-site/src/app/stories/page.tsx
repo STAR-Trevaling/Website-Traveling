@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { Clock, User, ChevronRight, Bookmark, ArrowUpRight } from "lucide-react";
+import { cookies } from "next/headers";
+import { Clock, User, ChevronRight, ArrowUpRight } from "lucide-react";
 import { PageHero } from "@/components/layout/page-hero";
 import { publicApi, safe } from "@/lib/api";
 import { VIETNAM_IMAGES } from "@/lib/assets";
 import { VIETNAM_STORIES } from "@/lib/stories-data";
+import { DICTIONARY } from "@/lib/i18n/dictionary";
 
 export const metadata: Metadata = {
   title: "Góc Nhìn Du Lịch & Cẩm Nang Khám Phá | Star Travels Vietnam",
@@ -13,16 +15,27 @@ export const metadata: Metadata = {
 };
 
 export default async function StoriesPage() {
+  const cookieStore = await cookies();
+  const isEn = cookieStore.get("star_travels_locale")?.value === "en";
+  const dict = DICTIONARY[isEn ? "en" : "vi"];
+  const t = dict.storiesPage;
+  const nl = dict.newsletter;
+
   const backendArticles = await safe(publicApi.articles(), []);
   const allStories = backendArticles.length > 0 ? backendArticles : VIETNAM_STORIES;
   const featuredStory = VIETNAM_STORIES[0];
   const remainingStories = VIETNAM_STORIES.slice(1);
 
+  const formatReadTime = (rt: string) =>
+    isEn ? rt.replace(/phút đọc/gi, "min read") : rt;
+
   return (
     <>
       <PageHero
         title="Góc Nhìn Du Lịch"
+        titleEn="Stories & Travel Insights"
         subtitle="Những câu chuyện truyền cảm hứng, cẩm nang trải nghiệm và chiều sâu văn hóa bản địa."
+        subtitleEn="Inspiring narratives, insider guides, and authentic cultural journeys across Vietnam."
         image={VIETNAM_IMAGES.hero}
       />
 
@@ -58,7 +71,7 @@ export default async function StoriesPage() {
                     <span>•</span>
                     <span className="flex items-center gap-1">
                       <Clock className="size-3 text-slate-500" />
-                      {featuredStory.readTime}
+                      {formatReadTime(featuredStory.readTime)}
                     </span>
                   </div>
 
@@ -73,7 +86,7 @@ export default async function StoriesPage() {
 
                 <div className="mt-8 pt-6 border-t border-slate-100 flex items-center justify-between">
                   <span className="text-xs font-bold uppercase tracking-wider text-slate-900 flex items-center gap-1.5 group-hover:translate-x-1 transition">
-                    ĐỌC TIẾP CÂU CHUYỆN <ArrowUpRight className="size-4" />
+                    {isEn ? "READ FULL STORY" : "ĐỌC TIẾP CÂU CHUYỆN"} <ArrowUpRight className="size-4" />
                   </span>
                   <span className="text-xs text-slate-400 font-light">
                     {featuredStory.destination?.name}
@@ -86,10 +99,12 @@ export default async function StoriesPage() {
           {/* 2. STORIES MAGAZINE GRID */}
           <div className="mb-10 text-center">
             <h2 className="script-title text-4xl md:text-5xl text-[#1e293b]">
-              Bài Viết Mới Nhất
+              {isEn ? "Latest Articles" : "Bài Viết Mới Nhất"}
             </h2>
             <p className="mt-2 text-xs md:text-sm text-[#64748b] font-light">
-              Tuyển tập những bài viết chất lượng cao về trải nghiệm, ẩm thực và văn hóa
+              {isEn
+                ? "A curated collection of insightful articles on travel experiences, cuisine, and local culture."
+                : "Tuyển tập những bài viết chất lượng cao về trải nghiệm, ẩm thực và văn hóa"}
             </p>
           </div>
 
@@ -118,7 +133,7 @@ export default async function StoriesPage() {
                     <div className="flex items-center gap-2 text-[11px] text-slate-400 font-light">
                       <span>{story.authorName}</span>
                       <span>•</span>
-                      <span>{story.readTime}</span>
+                      <span>{formatReadTime(story.readTime)}</span>
                     </div>
 
                     <h3 className="display-title mt-2 text-xl font-bold leading-snug text-[#1e293b] group-hover:text-amber-700 transition-colors line-clamp-2">
@@ -133,7 +148,7 @@ export default async function StoriesPage() {
 
                 <div className="p-6 pt-0 border-t border-slate-50 flex items-center justify-between text-xs">
                   <span className="font-semibold text-slate-900 flex items-center gap-1 group-hover:translate-x-1 transition">
-                    Khám phá <ChevronRight className="size-3.5" />
+                    {isEn ? "Discover" : "Khám phá"} <ChevronRight className="size-3.5" />
                   </span>
                   <span className="text-[11px] text-slate-400 font-light">
                     {story.destination?.name}
@@ -147,26 +162,26 @@ export default async function StoriesPage() {
           <div className="mt-20 rounded-[2px] bg-[#1e293b] p-8 md:p-14 text-center text-white shadow-xl relative overflow-hidden">
             <div className="relative z-10 max-w-2xl mx-auto">
               <span className="text-xs font-bold uppercase tracking-[0.25em] text-amber-400">
-                ĐĂNG KÝ BẢN TIN DI SẢN
+                {isEn ? "HERITAGE NEWSLETTER" : "ĐĂNG KÝ BẢN TIN DI SẢN"}
               </span>
               <h3 className="script-title text-4xl md:text-5xl mt-3 text-white">
-                Khám Phá Việt Nam Trong Hộp Thư Của Bạn
+                {nl.heading}
               </h3>
               <p className="mt-4 text-xs md:text-sm text-slate-300 font-light leading-relaxed">
-                Nhận những câu chuyện truyền cảm hứng, cẩm nang du lịch độc quyền và ưu đãi tour mới nhất hàng tuần.
+                {nl.subheading}
               </p>
 
               <form className="mt-8 flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
                 <input
                   type="email"
-                  placeholder="Nhập địa chỉ email của bạn..."
+                  placeholder={nl.emailPlaceholder}
                   className="flex-1 rounded-[2px] bg-white/10 border border-white/20 px-4 py-3 text-xs md:text-sm text-white placeholder-slate-400 focus:outline-none focus:border-[#00c2cb]"
                 />
                 <button
                   type="button"
                   className="rounded-[2px] bg-[#0098a2] text-white px-6 py-3 text-xs md:text-sm font-bold uppercase tracking-wider shadow-sm transition-all duration-200 hover:bg-[#008f99] hover:shadow-[0px_8px_25px_rgba(0,152,162,0.35)] hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
                 >
-                  ĐĂNG KÝ
+                  {nl.submitBtn}
                 </button>
               </form>
             </div>

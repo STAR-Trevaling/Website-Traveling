@@ -1,56 +1,33 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Mail, Phone, MapPin, Clock, MessageSquare, ShieldCheck, ArrowRight } from "lucide-react";
+import { cookies } from "next/headers";
+import { Mail, Phone, MapPin, Clock, ShieldCheck, ArrowRight } from "lucide-react";
 import { PageHero } from "@/components/layout/page-hero";
 import { ContactForm } from "@/components/contact/contact-form";
 import { ContactFAQ } from "@/components/contact/contact-faq";
 import { VIETNAM_IMAGES } from "@/lib/assets";
+import { DICTIONARY } from "@/lib/i18n/dictionary";
 
 export const metadata: Metadata = {
   title: "Liên Hệ & Tư Vấn Tour | Star Travels Vietnam",
   description: "Liên hệ trực tiếp với các chuyên gia du lịch Star Travels để được tư vấn hành trình độc bản và hỗ trợ dịch vụ 24/7.",
 };
 
-const CHANNELS = [
-  {
-    icon: Phone,
-    title: "Hotline 24/7",
-    primary: "+84 (0) 912 345 678",
-    secondary: "Miễn phí cước gọi nội địa & quốc tế",
-  },
-  {
-    icon: Mail,
-    title: "Email Tư Vấn",
-    primary: "concierge@startravels.vn",
-    secondary: "Phản hồi trong vòng 2 giờ làm việc",
-  },
-  {
-    icon: Clock,
-    title: "Thời Gian Làm Việc",
-    primary: "07:30 - 22:00 Hàng Ngày",
-    secondary: "Kể cả thứ Bảy, Chủ nhật & Ngày lễ",
-  },
-];
+const CHANNEL_ICONS = [Phone, Mail, Clock];
 
-const OFFICES = [
-  {
-    city: "Hà Nội (Trụ sở chính)",
-    address: "Tòa nhà Heritage, 18 Phố Tràng Tiền, Quận Hoàn Kiếm, Hà Nội",
-    phone: "+84 24 3987 6543",
-  },
-  {
-    city: "TP. Hồ Chí Minh (Văn phòng miền Nam)",
-    address: "Tòa nhà Landmark, 65 Đường Lê Lợi, Phường Bến Nghé, Quận 1, TP. HCM",
-    phone: "+84 28 3876 5432",
-  },
-];
+export default async function ContactPage() {
+  const cookieStore = await cookies();
+  const isEn = cookieStore.get("star_travels_locale")?.value === "en";
+  const dict = DICTIONARY[isEn ? "en" : "vi"];
+  const t = dict.contactPage;
 
-export default function ContactPage() {
   return (
     <>
       <PageHero
         title="Liên Hệ Với Star Travels"
+        titleEn="Contact & Concierge Support"
         subtitle="Mọi câu hỏi về điểm đến, trải nghiệm bản địa hay thiết kế lịch trình riêng, đội ngũ chuyên gia luôn sẵn sàng hỗ trợ bạn."
+        subtitleEn="Have questions about destinations, experiences, or bespoke journeys? Our team is always here for you."
         image={VIETNAM_IMAGES.ctaBanner}
       />
 
@@ -59,8 +36,8 @@ export default function ContactPage() {
         <section className="relative w-full px-6 py-16 md:px-12 lg:px-16">
           <div className="mx-auto max-w-7xl">
             <div className="grid gap-6 md:grid-cols-3">
-              {CHANNELS.map((item) => {
-                const Icon = item.icon;
+              {t.channels.map((item, idx) => {
+                const Icon = CHANNEL_ICONS[idx] || Phone;
                 return (
                   <div
                     key={item.title}
@@ -92,13 +69,13 @@ export default function ContactPage() {
               {/* Left Column: Form */}
               <div className="bg-white/90 p-8 md:p-12 rounded-[2px] shadow-sm border border-slate-100">
                 <span className="text-xs font-bold uppercase tracking-[0.25em] text-slate-900">
-                  Lên Kế Hoạch Chuyến Đi
+                  {t.formBadge}
                 </span>
                 <h2 className="script-title mt-2 text-4xl md:text-5xl text-[#1e293b]">
-                  Gửi Yêu Cầu Tư Vấn Tour
+                  {t.formTitle}
                 </h2>
                 <p className="mt-3 text-sm md:text-base font-light text-slate-600 leading-relaxed mb-8">
-                  Điền thông tin hành trình bạn mong muốn. Chuyên viên Star Travels sẽ kết nối và gửi lịch trình gợi ý cùng ưu đãi tốt nhất trong vòng 2 giờ.
+                  {t.formDesc}
                 </p>
 
                 <ContactForm />
@@ -110,10 +87,10 @@ export default function ContactPage() {
                 <div className="bg-white/90 p-8 rounded-[2px] shadow-sm border border-slate-100">
                   <h3 className="display-title text-xl font-bold text-[#1e293b] flex items-center gap-2">
                     <MapPin className="size-5 text-slate-700" />
-                    <span>Hệ Thống Văn Phòng</span>
+                    <span>{t.officesHeading}</span>
                   </h3>
                   <div className="mt-6 space-y-6">
-                    {OFFICES.map((off, idx) => (
+                    {t.offices.map((off, idx) => (
                       <div key={idx} className="border-b border-slate-100 pb-5 last:border-0 last:pb-0">
                         <strong className="text-sm font-semibold text-slate-900 block">
                           {off.city}
@@ -122,7 +99,7 @@ export default function ContactPage() {
                           {off.address}
                         </p>
                         <p className="mt-1.5 text-xs font-semibold text-slate-900">
-                          Điện thoại: {off.phone}
+                          {isEn ? "Phone: " : "Điện thoại: "}{off.phone}
                         </p>
                       </div>
                     ))}
@@ -134,21 +111,33 @@ export default function ContactPage() {
                   <div className="flex items-center gap-3">
                     <ShieldCheck className="size-8 text-amber-400" />
                     <h3 className="display-title text-xl font-bold">
-                      Cam Kết Từ Star Travels
+                      {isEn ? "Star Travels Commitments" : "Cam Kết Từ Star Travels"}
                     </h3>
                   </div>
                   <ul className="mt-5 space-y-3 text-xs md:text-sm font-light text-white/80 leading-relaxed">
                     <li className="flex items-start gap-2">
                       <span className="text-amber-400 font-bold">✓</span>
-                      <span>Bảo mật tuyệt đối thông tin cá nhân và lịch trình du khách.</span>
+                      <span>
+                        {isEn
+                          ? "Absolute confidentiality of guest personal data and travel schedules."
+                          : "Bảo mật tuyệt đối thông tin cá nhân và lịch trình du khách."}
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-amber-400 font-bold">✓</span>
-                      <span>Tư vấn hoàn toàn miễn phí, không áp đặt quyết định đặt cọc.</span>
+                      <span>
+                        {isEn
+                          ? "100% complimentary itinerary planning with no pressure to deposit."
+                          : "Tư vấn hoàn toàn miễn phí, không áp đặt quyết định đặt cọc."}
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-amber-400 font-bold">✓</span>
-                      <span>Bảo hiểm du lịch trọn gói cho mọi tour khởi hành.</span>
+                      <span>
+                        {isEn
+                          ? "Comprehensive premium travel insurance included in every departure."
+                          : "Bảo hiểm du lịch trọn gói cho mọi tour khởi hành."}
+                      </span>
                     </li>
                   </ul>
 
@@ -157,7 +146,11 @@ export default function ContactPage() {
                       href="/partner"
                       className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-amber-400 hover:underline"
                     >
-                      <span>Bạn là nhà cung cấp du lịch? Đăng ký đối tác</span>
+                      <span>
+                        {isEn
+                          ? "Are you a travel supplier? Join our partner network"
+                          : "Bạn là nhà cung cấp du lịch? Đăng ký đối tác"}
+                      </span>
                       <ArrowRight className="size-3.5" />
                     </Link>
                   </div>
@@ -172,13 +165,15 @@ export default function ContactPage() {
           <div className="mx-auto max-w-4xl px-6 md:px-12">
             <div className="text-center mb-12">
               <span className="text-xs font-bold uppercase tracking-[0.25em] text-slate-900">
-                Giải Đáp Thắc Mắc
+                {t.faqBadge}
               </span>
               <h2 className="script-title mt-2 text-5xl md:text-6xl text-[#1e293b]">
-                Câu Hỏi Thường Gặp
+                {t.faqHeading}
               </h2>
               <p className="mt-3 text-sm md:text-base text-[#4b5563] font-light max-w-xl mx-auto">
-                Những thông tin quan trọng về quy trình đặt tour, thanh toán và các chính sách hỗ trợ của Star Travels.
+                {isEn
+                  ? "Key information regarding booking procedures, payments, and Star Travels support policies."
+                  : "Những thông tin quan trọng về quy trình đặt tour, thanh toán và các chính sách hỗ trợ của Star Travels."}
               </p>
             </div>
 

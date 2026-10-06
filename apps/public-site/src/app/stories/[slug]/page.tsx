@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
-import { Clock, User, ArrowLeft, Bookmark, Share2, MapPin, ChevronRight } from "lucide-react";
+import { Clock, ArrowLeft, ChevronRight } from "lucide-react";
 import { SiteHeader } from "@/components/layout/site-header";
 import { publicApi } from "@/lib/api";
 import { VIETNAM_IMAGES } from "@/lib/assets";
 import { getStoryBySlug, VIETNAM_STORIES } from "@/lib/stories-data";
+import { DICTIONARY } from "@/lib/i18n/dictionary";
 
 interface StoryDetailPageProps {
   params: Promise<{ slug: string }>;
@@ -21,7 +23,7 @@ export async function generateMetadata({ params }: StoryDetailPageProps): Promis
   }
 
   return {
-    title: `${story.title} | Góc Nhìn Du Lịch Star Travels`,
+    title: `${story.title} | Star Travels`,
     description: story.excerpt,
     openGraph: {
       title: story.title,
@@ -33,6 +35,10 @@ export async function generateMetadata({ params }: StoryDetailPageProps): Promis
 
 export default async function StoryDetailPage({ params }: StoryDetailPageProps) {
   const { slug } = await params;
+  const cookieStore = await cookies();
+  const isEn = cookieStore.get("star_travels_locale")?.value === "en";
+  const dict = DICTIONARY[isEn ? "en" : "vi"];
+  const t = dict.storiesPage;
 
   let story = getStoryBySlug(slug);
 
@@ -41,11 +47,11 @@ export default async function StoryDetailPage({ params }: StoryDetailPageProps) 
       const backendArticle = await publicApi.article(slug);
       story = {
         ...backendArticle,
-        readTime: "5 phút đọc",
-        category: "Góc Nhìn Khám Phá",
-        authorName: "Ban Biên Tập Star Travels",
-        authorRole: "Đội ngũ chuyên gia du lịch bản địa",
-        tags: ["Du lịch Việt Nam", "Khám phá", "Văn hóa"],
+        readTime: isEn ? "5 min read" : "5 phút đọc",
+        category: isEn ? "Curated Perspective" : "Góc Nhìn Khám Phá",
+        authorName: isEn ? "Star Travels Editorial" : "Ban Biên Tập Star Travels",
+        authorRole: isEn ? "Local Destination Experts" : "Đội ngũ chuyên gia du lịch bản địa",
+        tags: isEn ? ["Vietnam Travel", "Exploration", "Culture"] : ["Du lịch Việt Nam", "Khám phá", "Văn hóa"],
       };
     } catch {
       notFound();
@@ -55,6 +61,9 @@ export default async function StoryDetailPage({ params }: StoryDetailPageProps) 
   if (!story) {
     notFound();
   }
+
+  const formatReadTime = (rt: string) =>
+    isEn ? rt.replace(/phút đọc/gi, "min read") : rt;
 
   const relatedStories = VIETNAM_STORIES.filter((s) => s.slug !== slug).slice(0, 3);
 
@@ -81,7 +90,7 @@ export default async function StoryDetailPage({ params }: StoryDetailPageProps) 
               </span>
               <span className="flex items-center gap-1.5 text-xs sm:text-sm font-medium text-white/90 bg-black/50 px-3 py-1 rounded-[2px] backdrop-blur-sm border border-white/20">
                 <Clock className="size-3.5 text-white" />
-                {story.readTime}
+                {formatReadTime(story.readTime)}
               </span>
             </div>
 
@@ -117,7 +126,7 @@ export default async function StoryDetailPage({ params }: StoryDetailPageProps) 
                 href="/stories"
                 className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-slate-900 hover:underline"
               >
-                <ArrowLeft className="size-3.5" /> Quay lại danh sách câu chuyện
+                <ArrowLeft className="size-3.5" /> {t.backToStories}
               </Link>
             </div>
 
@@ -157,14 +166,14 @@ export default async function StoryDetailPage({ params }: StoryDetailPageProps) 
             {story.tags && story.tags.length > 0 && (
               <div className="mt-12 pt-8 border-t border-slate-100 flex flex-wrap items-center gap-2">
                 <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider mr-2">
-                  Chủ đề:
+                  {isEn ? "Tags:" : "Chủ đề:"}
                 </span>
-                {story.tags.map((t) => (
+                {story.tags.map((tg) => (
                   <span
-                    key={t}
+                    key={tg}
                     className="rounded-[2px] bg-slate-100 px-3 py-1 text-xs font-medium text-slate-600"
                   >
-                    #{t}
+                    #{tg}
                   </span>
                 ))}
               </div>
@@ -185,7 +194,9 @@ export default async function StoryDetailPage({ params }: StoryDetailPageProps) 
                 {story.authorRole}
               </p>
               <p className="mt-3 text-xs font-light text-slate-500 leading-relaxed">
-                Đam mê xê dịch, ghi lại những thước phim và câu chuyện sâu sắc nhất về con người và văn hóa Việt Nam.
+                {isEn
+                  ? "Passionate traveler capturing the most heartfelt footage and stories of Vietnam's people and cultural heritage."
+                  : "Đam mê xê dịch, ghi lại những thước phim và câu chuyện sâu sắc nhất về con người và văn hóa Việt Nam."}
               </p>
             </div>
 
@@ -193,7 +204,7 @@ export default async function StoryDetailPage({ params }: StoryDetailPageProps) 
             {story.destination && (
               <div className="rounded-[2px] bg-white p-7 shadow-sm border border-slate-100">
                 <span className="text-[11px] font-bold text-slate-900 uppercase tracking-wider block mb-2">
-                  Điểm Đến Trong Bài
+                  {isEn ? "Featured Destination" : "Điểm Đến Trong Bài"}
                 </span>
                 <h4 className="display-title text-xl font-bold text-slate-900">
                   {story.destination.name}
@@ -205,7 +216,7 @@ export default async function StoryDetailPage({ params }: StoryDetailPageProps) 
                   href={`/destinations/${story.destination.slug}`}
                   className="mt-4 inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-slate-900 hover:underline"
                 >
-                  Xem hướng dẫn điểm đến <ChevronRight className="size-3.5" />
+                  {isEn ? "Explore destination guide" : "Xem hướng dẫn điểm đến"} <ChevronRight className="size-3.5" />
                 </Link>
               </div>
             )}
@@ -216,10 +227,12 @@ export default async function StoryDetailPage({ params }: StoryDetailPageProps) 
         <section className="mx-auto max-w-7xl mt-24">
           <div className="text-center mb-10">
             <h2 className="script-title text-4xl md:text-5xl text-[#1e293b]">
-              Câu Chuyện Liên Quan
+              {t.relatedHeading}
             </h2>
             <p className="mt-2 text-sm text-[#64748b] font-light">
-              Tiếp tục hành trình khám phá những góc nhìn độc bản khác
+              {isEn
+                ? "Continue your journey through other handpicked cultural insights"
+                : "Tiếp tục hành trình khám phá những góc nhìn độc bản khác"}
             </p>
           </div>
 
@@ -256,10 +269,10 @@ export default async function StoryDetailPage({ params }: StoryDetailPageProps) 
 
                 <div className="p-6 pt-0 border-t border-slate-50 flex items-center justify-between text-xs">
                   <span className="font-semibold text-slate-900 flex items-center gap-1 group-hover:translate-x-1 transition">
-                    Đọc tiếp <ChevronRight className="size-3.5" />
+                    {isEn ? "Read more" : "Đọc tiếp"} <ChevronRight className="size-3.5" />
                   </span>
                   <span className="text-[11px] text-slate-400 font-light">
-                    {rStory.readTime}
+                    {formatReadTime(rStory.readTime)}
                   </span>
                 </div>
               </Link>

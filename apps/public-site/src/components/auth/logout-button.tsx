@@ -2,9 +2,11 @@
 
 import { useRouter } from "next/navigation";
 import { LogOut } from "lucide-react";
+import { useLanguage } from "@/lib/i18n/context";
 
 export function LogoutButton() {
   const router = useRouter();
+  const { t } = useLanguage();
 
   return (
     <button
@@ -16,7 +18,7 @@ export function LogoutButton() {
       }}
     >
       <LogOut className="size-3.5" />
-      <span>ĐĂNG XUẤT</span>
+      <span>{t.authPages.logoutBtn.toUpperCase()}</span>
     </button>
   );
 }
