@@ -2,10 +2,10 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { MapPin, BookOpen, Compass, ChevronDown, Search, Users, Calendar } from "lucide-react";
+import { MapPin, ChevronDown, Search, Users, Calendar } from "lucide-react";
 import { useLanguage } from "@/lib/i18n/context";
 
-type TabType = "destinations" | "experiences" | "stories";
+type TabType = "flights" | "hotels" | "tours";
 
 interface BilingualOption {
   vi: string;
@@ -27,34 +27,12 @@ const VIETNAM_DESTINATIONS: BilingualOption[] = [
   { vi: "Mũi Né", en: "Mui Ne" },
 ];
 
-const EXPERIENCE_TYPES: BilingualOption[] = [
-  { vi: "Văn hóa & Lịch sử", en: "Culture & History" },
-  { vi: "Phiêu lưu & Thiên nhiên", en: "Adventure & Nature" },
-  { vi: "Ẩm thực & Khám phá", en: "Cuisine & Exploration" },
-  { vi: "Nghỉ dưỡng & Biển", en: "Resorts & Beaches" },
-  { vi: "Trekking & Leo núi", en: "Trekking & Mountains" },
-  { vi: "Làng nghề & Thủ công", en: "Craft Villages" },
-  { vi: "Lễ hội & Sự kiện", en: "Festivals & Events" },
-  { vi: "Chụp ảnh & Sáng tạo", en: "Photography & Scenery" },
-];
-
-const STORY_TOPICS: BilingualOption[] = [
-  { vi: "Bí quyết du lịch tiết kiệm", en: "Budget Travel Tips" },
-  { vi: "Hành trình một mình", en: "Solo Expeditions" },
-  { vi: "Du lịch cùng gia đình", en: "Family Holidays" },
-  { vi: "Ẩm thực đường phố Việt Nam", en: "Vietnamese Street Food" },
-  { vi: "Khám phá làng bản miền núi", en: "Highland Village Trails" },
-  { vi: "Biển đảo hoang sơ", en: "Untouched Tropical Islands" },
-  { vi: "Di sản văn hóa UNESCO", en: "UNESCO World Heritage" },
-  { vi: "Mùa lúa chín Tây Bắc", en: "Northwest Golden Harvest" },
-];
-
 const TRAVELLER_OPTIONS: BilingualOption[] = [
-  { vi: "1 Du khách", en: "1 Traveller" },
-  { vi: "2 Du khách", en: "2 Travellers" },
-  { vi: "Cặp đôi", en: "Couple" },
-  { vi: "Gia đình (2+2)", en: "Family (2+2)" },
-  { vi: "Nhóm (5+)", en: "Group (5+)" },
+  { vi: "1 Du khách, Phổ thông", en: "1 Traveller, Economy" },
+  { vi: "2 Du khách, Phổ thông", en: "2 Travellers, Economy" },
+  { vi: "2 Du khách, Thương gia", en: "2 Travellers, Business" },
+  { vi: "Gia đình (2+2), Phổ thông", en: "Family (2+2), Economy" },
+  { vi: "Nhóm (5+), Phổ thông", en: "Group (5+), Economy" },
 ];
 
 export function DiscoverySearch() {
@@ -62,76 +40,55 @@ export function DiscoverySearch() {
   const { locale } = useLanguage();
   const isEn = locale === "en";
 
-  const [activeTab, setActiveTab] = useState<TabType>("destinations");
+  const [activeTab, setActiveTab] = useState<TabType>("flights");
   const [col1Index, setCol1Index] = useState(0); // Hanoi
   const [col2Index, setCol2Index] = useState(6); // Nha Trang
-  const [travellerIndex, setTravellerIndex] = useState(0); // 1 Du khach
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [travellerIndex, setTravellerIndex] = useState(0);
 
   const [openCol1, setOpenCol1] = useState(false);
   const [openCol2, setOpenCol2] = useState(false);
   const [openTravellers, setOpenTravellers] = useState(false);
 
-  // Tab definitions
+  // Template-exact 3 tabs
   const tabs = [
-    { key: "destinations" as TabType, labelVi: "ĐIỂM ĐẾN", labelEn: "DESTINATIONS", route: "/destinations" },
-    { key: "experiences" as TabType, labelVi: "TRẢI NGHIỆM", labelEn: "EXPERIENCES", route: "/experiences" },
-    { key: "stories" as TabType, labelVi: "CÂU CHUYỆN", labelEn: "STORIES", route: "/stories" },
+    { key: "flights" as TabType, labelVi: "CHUYẾN BAY", labelEn: "FLIGHTS", route: "/destinations" },
+    { key: "hotels" as TabType, labelVi: "KHÁCH SẠN", labelEn: "HOTELS", route: "/experiences" },
+    { key: "tours" as TabType, labelVi: "GÓI TOUR", labelEn: "TOURS", route: "/tours" },
   ];
 
-  // Column options per tab
-  const getCol2Options = (): BilingualOption[] => {
-    if (activeTab === "destinations") return VIETNAM_DESTINATIONS;
-    if (activeTab === "experiences") return EXPERIENCE_TYPES;
-    return STORY_TOPICS;
+  const formatDateDisplay = (dateStr: string) => {
+    if (!dateStr) return "";
+    try {
+      const [year, month, day] = dateStr.split("-");
+      return `${day}/${month}/${year}`;
+    } catch {
+      return dateStr;
+    }
   };
 
-  const col1Label = isEn
-    ? activeTab === "destinations"
-      ? "Origin"
-      : "Location"
-    : activeTab === "destinations"
-    ? "Xuất phát"
-    : "Địa điểm";
-
-  const col2Label = isEn
-    ? activeTab === "destinations"
-      ? "Destination"
-      : activeTab === "experiences"
-      ? "Experience"
-      : "Topic"
-    : activeTab === "destinations"
-    ? "Điểm đến"
-    : activeTab === "experiences"
-    ? "Trải nghiệm"
-    : "Chủ đề";
-
-  const col1Options = VIETNAM_DESTINATIONS;
-  const col2Options = getCol2Options();
-
   const handleSearch = () => {
-    const selectedTab = tabs.find((t) => t.key === activeTab);
-    if (!selectedTab) return;
-
-    if (activeTab === "destinations") {
-      const dest = col2Options[col2Index];
+    if (activeTab === "tours") {
+      const dest = VIETNAM_DESTINATIONS[col2Index];
+      const query = isEn ? dest?.en : dest?.vi;
+      router.push(`/tours?q=${encodeURIComponent(query || "")}`);
+    } else if (activeTab === "hotels") {
+      const dest = VIETNAM_DESTINATIONS[col2Index];
+      const query = isEn ? dest?.en : dest?.vi;
+      router.push(`/experiences?q=${encodeURIComponent(query || "")}`);
+    } else {
+      const dest = VIETNAM_DESTINATIONS[col2Index];
       const query = isEn ? dest?.en : dest?.vi;
       router.push(`/destinations?q=${encodeURIComponent(query || "")}`);
-    } else if (activeTab === "experiences") {
-      const exp = col2Options[col2Index];
-      const query = isEn ? exp?.en : exp?.vi;
-      router.push(`/experiences?category=${encodeURIComponent(query || "")}`);
-    } else {
-      const story = col2Options[col2Index];
-      const query = isEn ? story?.en : story?.vi;
-      router.push(`/stories?topic=${encodeURIComponent(query || "")}`);
     }
   };
 
   return (
     <div className="w-full select-none">
-      {/* 1. Top Tabs (Responsive Grid on Mobile, Flex on Desktop - Brand Teal Bar like Template) */}
+      {/* 1. Top Tabs (Centered, Compact Teal Pill - Exactly like Template) */}
       <div className="flex justify-center w-full">
-        <div className="grid grid-cols-3 w-full sm:w-auto sm:flex bg-[#0098a2] rounded-t-[4px] sm:rounded-t-[6px] overflow-hidden shadow-md">
+        <div className="inline-flex bg-[#0098a2] rounded-t-[6px] sm:rounded-t-[8px] overflow-hidden shadow-md">
           {tabs.map((tab) => (
             <button
               key={tab.key}
@@ -142,9 +99,9 @@ export function DiscoverySearch() {
                 setOpenCol2(false);
                 setOpenTravellers(false);
               }}
-              className={`relative px-3.5 sm:px-8 py-2.5 sm:py-3 text-[11px] sm:text-xs font-bold tracking-wider sm:tracking-[0.2em] transition-all cursor-pointer text-center truncate ${
+              className={`relative px-5 sm:px-7 md:px-9 py-2.5 sm:py-3 text-[11px] sm:text-xs font-bold tracking-[0.14em] sm:tracking-[0.18em] transition-all cursor-pointer text-center whitespace-nowrap ${
                 activeTab === tab.key
-                  ? "text-white font-black after:absolute after:bottom-0 after:inset-x-2 sm:after:inset-x-4 after:h-[2.5px] after:bg-white"
+                  ? "text-white font-black after:absolute after:bottom-0 after:inset-x-3 sm:after:inset-x-5 after:h-[2.5px] after:bg-white"
                   : "text-white/80 hover:text-white hover:bg-white/10"
               }`}
             >
@@ -154,10 +111,10 @@ export function DiscoverySearch() {
         </div>
       </div>
 
-      {/* 2. Main Search Bar (Crisp White Glass Backdrop & Fine Slate Dividers like Template) */}
-      <div className="relative flex flex-col md:flex-row items-stretch bg-white/95 backdrop-blur-md text-slate-700 shadow-2xl border border-white/80 rounded-[4px] sm:rounded-[6px]">
-        {/* Column 1: Origin / Location */}
-        <div className="relative flex-1 border-b md:border-b-0 md:border-r border-slate-200">
+      {/* 2. Main Search Bar (Translucent White Frosted Glass with 5 Clean Columns matching Template) */}
+      <div className="relative flex flex-col md:flex-row items-stretch bg-white/90 backdrop-blur-md text-slate-700 shadow-2xl border border-white/70 rounded-[6px] sm:rounded-[8px] md:h-16 w-full max-w-[1100px] mx-auto">
+        {/* Column 1: From (Origin) */}
+        <div className="relative flex-1 border-b md:border-b-0 md:border-r border-slate-200/80">
           <button
             type="button"
             onClick={() => {
@@ -165,24 +122,22 @@ export function DiscoverySearch() {
               setOpenCol2(false);
               setOpenTravellers(false);
             }}
-            className="flex h-13 sm:h-14 md:h-full w-full items-center justify-between px-4 sm:px-5 transition hover:bg-slate-50/70 text-left cursor-pointer"
+            className="flex h-13 sm:h-14 md:h-full w-full items-center justify-between px-3.5 sm:px-4.5 transition hover:bg-slate-50/60 text-left cursor-pointer"
           >
-            <div className="flex items-center gap-2.5 min-w-0">
-              <MapPin className="size-4 shrink-0 text-[#0098a2]" />
-              <div className="truncate">
-                <span className="block text-[10px] sm:text-[11px] text-slate-500 font-normal leading-none mb-0.5">
-                  {col1Label}
-                </span>
-                <span className="text-xs sm:text-sm font-semibold text-slate-800 truncate">
-                  {isEn ? col1Options[col1Index]?.en : col1Options[col1Index]?.vi}
+            <div className="flex items-center gap-2 min-w-0 truncate">
+              <MapPin className="size-4 shrink-0 text-slate-500" />
+              <div className="flex items-center gap-1 min-w-0 truncate text-xs sm:text-[13px] text-slate-700">
+                <span className="text-slate-400 font-normal">{isEn ? "From" : "Từ"}</span>
+                <span className="font-semibold text-slate-800 truncate">
+                  {isEn ? VIETNAM_DESTINATIONS[col1Index]?.en : VIETNAM_DESTINATIONS[col1Index]?.vi}
                 </span>
               </div>
             </div>
-            <ChevronDown className="size-4 shrink-0 text-slate-400" />
+            <ChevronDown className="size-3.5 shrink-0 text-slate-400 ml-1" />
           </button>
           {openCol1 && (
-            <div className="absolute left-0 right-0 sm:right-auto top-full z-50 mt-1 max-h-56 sm:w-60 overflow-auto rounded-[2px] bg-white p-2 shadow-2xl border border-slate-100">
-              {col1Options.map((opt, idx) => (
+            <div className="absolute left-0 right-0 sm:right-auto top-full z-50 mt-1 max-h-56 sm:w-60 overflow-auto rounded-[3px] bg-white p-1.5 shadow-2xl border border-slate-100">
+              {VIETNAM_DESTINATIONS.map((opt, idx) => (
                 <button
                   key={idx}
                   type="button"
@@ -199,8 +154,8 @@ export function DiscoverySearch() {
           )}
         </div>
 
-        {/* Column 2: Destination / Experience / Topic */}
-        <div className="relative flex-[1.2] border-b md:border-b-0 md:border-r border-slate-200">
+        {/* Column 2: To (Destination) */}
+        <div className="relative flex-1 border-b md:border-b-0 md:border-r border-slate-200/80">
           <button
             type="button"
             onClick={() => {
@@ -208,30 +163,22 @@ export function DiscoverySearch() {
               setOpenCol1(false);
               setOpenTravellers(false);
             }}
-            className="flex h-13 sm:h-14 md:h-full w-full items-center justify-between px-4 sm:px-5 transition hover:bg-slate-50/70 text-left cursor-pointer"
+            className="flex h-13 sm:h-14 md:h-full w-full items-center justify-between px-3.5 sm:px-4.5 transition hover:bg-slate-50/60 text-left cursor-pointer"
           >
-            <div className="flex items-center gap-2.5 min-w-0">
-              {activeTab === "stories" ? (
-                <BookOpen className="size-4 shrink-0 text-[#0098a2]" />
-              ) : activeTab === "experiences" ? (
-                <Compass className="size-4 shrink-0 text-[#0098a2]" />
-              ) : (
-                <MapPin className="size-4 shrink-0 text-[#0098a2]" />
-              )}
-              <div className="truncate">
-                <span className="block text-[10px] sm:text-[11px] text-slate-500 font-normal leading-none mb-0.5 whitespace-nowrap">
-                  {col2Label}
-                </span>
-                <span className="text-xs sm:text-sm font-semibold text-slate-800 truncate block">
-                  {isEn ? col2Options[col2Index]?.en : col2Options[col2Index]?.vi}
+            <div className="flex items-center gap-2 min-w-0 truncate">
+              <MapPin className="size-4 shrink-0 text-slate-500" />
+              <div className="flex items-center gap-1 min-w-0 truncate text-xs sm:text-[13px] text-slate-700">
+                <span className="text-slate-400 font-normal">{isEn ? "To" : "Đến"}</span>
+                <span className="font-semibold text-slate-800 truncate">
+                  {isEn ? VIETNAM_DESTINATIONS[col2Index]?.en : VIETNAM_DESTINATIONS[col2Index]?.vi}
                 </span>
               </div>
             </div>
-            <ChevronDown className="size-4 shrink-0 text-slate-400 ml-1" />
+            <ChevronDown className="size-3.5 shrink-0 text-slate-400 ml-1" />
           </button>
           {openCol2 && (
-            <div className="absolute left-0 right-0 sm:right-auto top-full z-50 mt-1 max-h-56 sm:w-64 overflow-auto rounded-[2px] bg-white p-2 shadow-2xl border border-slate-100">
-              {col2Options.map((opt, idx) => (
+            <div className="absolute left-0 right-0 sm:right-auto top-full z-50 mt-1 max-h-56 sm:w-60 overflow-auto rounded-[3px] bg-white p-1.5 shadow-2xl border border-slate-100">
+              {VIETNAM_DESTINATIONS.map((opt, idx) => (
                 <button
                   key={idx}
                   type="button"
@@ -248,45 +195,42 @@ export function DiscoverySearch() {
           )}
         </div>
 
-        {/* Column 3 & 4: Date Range (2-Column Grid on Mobile to save vertical space) */}
-        <div className="grid grid-cols-2 flex-1 md:flex border-b md:border-b-0 md:border-r border-slate-200">
-          {/* Start Date */}
-          <div className="relative border-r border-slate-200">
-            <label className="flex h-13 sm:h-14 md:h-full w-full items-center justify-between px-3 sm:px-4 transition hover:bg-slate-50/70 cursor-pointer">
-              <div className="min-w-0 flex-1">
-                <span className="flex items-center gap-1 text-[10px] sm:text-[11px] text-slate-500 font-normal leading-none mb-0.5 whitespace-nowrap">
-                  <Calendar className="size-3 text-[#0098a2]" />
-                  <span>{isEn ? "Start date" : "Ngày đi"}</span>
-                </span>
-                <input
-                  type="date"
-                  className="w-full bg-transparent text-[11px] sm:text-xs md:text-sm font-semibold text-slate-800 outline-none cursor-pointer"
-                  aria-label={isEn ? "Trip start date" : "Ngày bắt đầu chuyến đi"}
-                />
-              </div>
-            </label>
-          </div>
-
-          {/* End Date */}
-          <div className="relative">
-            <label className="flex h-13 sm:h-14 md:h-full w-full items-center justify-between px-3 sm:px-4 transition hover:bg-slate-50/70 cursor-pointer">
-              <div className="min-w-0 flex-1">
-                <span className="flex items-center gap-1 text-[10px] sm:text-[11px] text-slate-500 font-normal leading-none mb-0.5 whitespace-nowrap">
-                  <Calendar className="size-3 text-[#0098a2]" />
-                  <span>{isEn ? "End date" : "Ngày về"}</span>
-                </span>
-                <input
-                  type="date"
-                  className="w-full bg-transparent text-[11px] sm:text-xs md:text-sm font-semibold text-slate-800 outline-none cursor-pointer"
-                  aria-label={isEn ? "Trip end date" : "Ngày kết thúc chuyến đi"}
-                />
-              </div>
-            </label>
-          </div>
+        {/* Column 3: Departure Date */}
+        <div className="relative flex-1 border-b md:border-b-0 md:border-r border-slate-200/80">
+          <label className="relative flex h-13 sm:h-14 md:h-full w-full items-center px-3.5 sm:px-4.5 transition hover:bg-slate-50/60 cursor-pointer">
+            <Calendar className="size-4 shrink-0 text-slate-500 mr-2" />
+            <span className="text-xs sm:text-[13px] text-slate-700 font-medium truncate">
+              {startDate ? formatDateDisplay(startDate) : (isEn ? "Departure Date" : "Ngày đi")}
+            </span>
+            <input
+              type="date"
+              value={startDate}
+              onChange={(e) => setStartDate(e.target.value)}
+              className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
+              aria-label={isEn ? "Departure Date" : "Ngày khởi hành"}
+            />
+          </label>
         </div>
 
-        {/* Column 5: Travellers */}
-        <div className="relative flex-[0.95] border-b md:border-b-0 md:border-r border-slate-200">
+        {/* Column 4: Return Date */}
+        <div className="relative flex-1 border-b md:border-b-0 md:border-r border-slate-200/80">
+          <label className="relative flex h-13 sm:h-14 md:h-full w-full items-center px-3.5 sm:px-4.5 transition hover:bg-slate-50/60 cursor-pointer">
+            <Calendar className="size-4 shrink-0 text-slate-500 mr-2" />
+            <span className="text-xs sm:text-[13px] text-slate-700 font-medium truncate">
+              {endDate ? formatDateDisplay(endDate) : (isEn ? "Return Date" : "Ngày về")}
+            </span>
+            <input
+              type="date"
+              value={endDate}
+              onChange={(e) => setEndDate(e.target.value)}
+              className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
+              aria-label={isEn ? "Return Date" : "Ngày về"}
+            />
+          </label>
+        </div>
+
+        {/* Column 5: Traveller(s), Class */}
+        <div className="relative flex-[1.2] border-b md:border-b-0 border-slate-200/80">
           <button
             type="button"
             onClick={() => {
@@ -294,23 +238,18 @@ export function DiscoverySearch() {
               setOpenCol1(false);
               setOpenCol2(false);
             }}
-            className="flex h-13 sm:h-14 md:h-full w-full items-center justify-between px-4 sm:px-5 transition hover:bg-slate-50/70 text-left cursor-pointer"
+            className="flex h-13 sm:h-14 md:h-full w-full items-center justify-between px-3.5 sm:px-4.5 transition hover:bg-slate-50/60 text-left cursor-pointer"
           >
-            <div className="flex items-center gap-2.5 min-w-0 truncate">
-              <Users className="size-4 shrink-0 text-[#0098a2]" />
-              <div className="min-w-0 truncate">
-                <span className="block text-[10px] sm:text-[11px] text-slate-500 font-normal leading-none mb-0.5 whitespace-nowrap">
-                  {isEn ? "Travellers" : "Du khách"}
-                </span>
-                <span className="text-xs sm:text-sm font-semibold text-slate-800 truncate block">
-                  {isEn ? TRAVELLER_OPTIONS[travellerIndex]?.en : TRAVELLER_OPTIONS[travellerIndex]?.vi}
-                </span>
-              </div>
+            <div className="flex items-center gap-2 min-w-0 truncate">
+              <Users className="size-4 shrink-0 text-slate-500" />
+              <span className="text-xs sm:text-[13px] font-medium text-slate-700 truncate">
+                {isEn ? TRAVELLER_OPTIONS[travellerIndex]?.en : TRAVELLER_OPTIONS[travellerIndex]?.vi}
+              </span>
             </div>
-            <ChevronDown className="size-4 shrink-0 text-slate-400 ml-1" />
+            <ChevronDown className="size-3.5 shrink-0 text-slate-400 ml-1" />
           </button>
           {openTravellers && (
-            <div className="absolute left-0 right-0 sm:left-auto sm:right-0 top-full z-50 mt-1 sm:w-56 rounded-[2px] bg-white p-2 shadow-2xl border border-slate-100">
+            <div className="absolute left-0 right-0 sm:left-auto sm:right-0 top-full z-50 mt-1 sm:w-60 rounded-[3px] bg-white p-1.5 shadow-2xl border border-slate-100">
               {TRAVELLER_OPTIONS.map((opt, idx) => (
                 <button
                   key={idx}
@@ -328,20 +267,15 @@ export function DiscoverySearch() {
           )}
         </div>
 
-        {/* Search Submit Button (With Luxurious Soft Blur Shadow & Ambient Glow) */}
-        <div className="flex items-center justify-center p-2 sm:p-2.5 shrink-0 self-stretch">
+        {/* 6. Luxury Circular Search Button with Soft Blur Shadow */}
+        <div className="flex items-center justify-center p-2 sm:p-2.5 shrink-0 self-center">
           <button
             type="button"
             onClick={handleSearch}
             aria-label={isEn ? "Search experiences" : "Tìm kiếm chuyến đi"}
-            className="group relative flex h-11 sm:h-12 md:h-full min-h-[46px] w-full md:w-auto items-center justify-center gap-2 rounded-[3px] sm:rounded-[4px] bg-gradient-to-br from-[#00b2be] via-[#0098a2] to-[#007f88] px-5 sm:px-6 py-3 text-white font-bold text-xs sm:text-sm uppercase tracking-wider shadow-[0_4px_20px_rgba(0,152,162,0.45),0_2px_8px_rgba(0,0,0,0.12)] hover:shadow-[0_6px_28px_rgba(0,152,162,0.65),0_3px_10px_rgba(0,0,0,0.18)] hover:scale-[1.02] active:scale-[0.98] border border-white/30 transition-all duration-300 shrink-0 cursor-pointer overflow-hidden"
+            className="group size-10 sm:size-11 md:size-12 rounded-full bg-gradient-to-br from-[#00b2be] via-[#0098a2] to-[#007f88] flex items-center justify-center text-white shadow-[0_4px_18px_rgba(0,152,162,0.45),0_2px_8px_rgba(0,0,0,0.12)] hover:shadow-[0_6px_26px_rgba(0,152,162,0.65),0_3px_10px_rgba(0,0,0,0.18)] hover:scale-105 active:scale-95 border border-white/30 transition-all duration-300 shrink-0 cursor-pointer"
           >
-            {/* Subtle high-end shimmer sweep on hover */}
-            <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent group-hover:translate-x-full transition-transform duration-700 pointer-events-none" />
-            <Search className="size-4 sm:size-5 shrink-0 text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.35)] transition-transform duration-300 group-hover:scale-110" />
-            <span className="md:hidden font-semibold drop-shadow-[0_1px_2px_rgba(0,0,0,0.25)]">
-              {isEn ? "Search Journeys" : "Tìm Chuyến Đi"}
-            </span>
+            <Search className="size-4 sm:size-5 text-white transition-transform duration-300 group-hover:scale-110 drop-shadow-[0_1px_2px_rgba(0,0,0,0.2)]" />
           </button>
         </div>
       </div>

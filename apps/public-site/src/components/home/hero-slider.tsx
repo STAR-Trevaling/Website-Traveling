@@ -51,7 +51,7 @@ export function HeroSlider() {
 
   return (
     <div
-      className="relative min-h-[700px] sm:min-h-[760px] md:min-h-[800px] lg:min-h-[820px] w-full overflow-hidden select-none"
+      className="relative min-h-[760px] sm:min-h-[820px] md:min-h-[860px] lg:min-h-[900px] w-full overflow-hidden select-none"
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
@@ -102,14 +102,14 @@ export function HeroSlider() {
         <ChevronRight className="size-7" />
       </button>
 
-      {/* Hero Content */}
-      <div className="relative z-10 flex min-h-[700px] sm:min-h-[760px] md:min-h-[800px] lg:min-h-[820px] w-full flex-col items-center justify-between pb-4 sm:pb-6 pt-16 sm:pt-20 text-white">
-        {/* Main Center Content: Title, Subtitle moved higher up, with Discovery Search below */}
-        <div className="w-full max-w-5xl mx-auto px-4 text-center flex flex-col items-center mt-2 sm:mt-3 md:mt-5 mb-auto">
+      {/* Hero Content (Positioned with generous breathing room matching template) */}
+      <div className="relative z-10 flex min-h-[760px] sm:min-h-[820px] md:min-h-[860px] lg:min-h-[900px] w-full flex-col items-center justify-between pb-6 sm:pb-8 pt-28 sm:pt-32 md:pt-36 lg:pt-40 text-white">
+        {/* Main Center Content: Title, Subtitle, with Discovery Search below */}
+        <div className="w-full max-w-5xl mx-auto px-4 text-center flex flex-col items-center my-auto">
           {/* Animated Hero Title on slide change */}
           <h1
             key={`hero-title-${currentSlide}`}
-            className="display-title template-shadow-text leading-tight text-3xl sm:text-5xl md:text-6xl lg:text-[70px] animate-fade-in-up text-balance"
+            className="display-title template-shadow-text leading-tight text-4xl sm:text-5xl md:text-6xl lg:text-[68px] xl:text-[72px] animate-fade-in-up text-balance drop-shadow-[0_4px_16px_rgba(0,0,0,0.65)]"
           >
             {t.hero.slides[currentSlide]?.title || slides[currentSlide].title}
           </h1>
@@ -117,13 +117,13 @@ export function HeroSlider() {
           {/* Animated Hero Script Subtitle */}
           <p
             key={`hero-sub-${currentSlide}`}
-            className="script-title mt-2 sm:mt-3 leading-tight text-white/95 [-webkit-text-stroke:.3px_#fff] text-xl sm:text-3xl md:text-4xl lg:text-5xl animate-fade-in-up animation-delay-100 text-balance"
+            className="script-title mt-2 sm:mt-3 leading-normal text-white/95 [-webkit-text-stroke:.3px_#fff] text-2xl sm:text-3xl md:text-4xl lg:text-5xl animate-fade-in-up animation-delay-100 text-balance drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)]"
           >
             {t.hero.slides[currentSlide]?.subtitle || slides[currentSlide].subtitle}
           </p>
 
           {/* Search Bar immediately below text in the middle of the page */}
-          <div className="w-full max-w-[1060px] mt-6 sm:mt-8 md:mt-10 animate-fade-in-scale animation-delay-200">
+          <div className="w-full max-w-[1100px] mt-8 sm:mt-10 md:mt-12 lg:mt-14 animate-fade-in-scale animation-delay-200">
             <DiscoverySearch />
           </div>
         </div>

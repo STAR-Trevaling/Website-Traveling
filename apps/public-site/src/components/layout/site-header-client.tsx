@@ -59,8 +59,8 @@ export function SiteHeaderClient({ user, overlay = false }: SiteHeaderClientProp
           : "bg-white text-slate-900 shadow-sm"
       }
     >
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-12">
-        <div className="relative flex h-16 sm:h-20 items-center justify-between text-xs md:text-sm font-normal">
+      <div className="w-full px-4 sm:px-6 md:px-10 lg:px-14">
+        <div className="relative flex h-18 sm:h-20 lg:h-22 items-center justify-between text-xs md:text-sm font-normal">
           {/* Brand Logo & Name with Social Icons (Mirrors template layout) */}
           <div className="flex items-center gap-3 sm:gap-4 shrink-0 z-10">
             <StarLogo variant="horizontal" size="sm" inverted={overlay} />
