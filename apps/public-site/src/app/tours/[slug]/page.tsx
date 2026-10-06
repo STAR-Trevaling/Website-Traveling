@@ -350,8 +350,8 @@ export default async function TourDetailPage({ params }: TourDetailPageProps) {
                         {rTour.price.toLocaleString("vi-VN")}đ
                       </span>
                     </div>
-                    <span className="text-xs font-semibold text-slate-900 flex items-center gap-1 group-hover:translate-x-1 transition">
-                      Xem tour <ChevronRight className="size-3.5" />
+                    <span className="text-xs font-semibold text-black group-hover:underline transition">
+                      Xem tour
                     </span>
                   </div>
                 </div>

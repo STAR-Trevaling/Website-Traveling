@@ -118,8 +118,8 @@ export function FeaturedTours({ initialTours }: FeaturedToursProps) {
 
                     <div className="mt-3 pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] text-[#94a3b8]">
                       <span className="font-light">{t.featured.pricePerPerson}</span>
-                      <span className="text-[#0098a2] font-semibold group-hover:underline">
-                        {isEn ? "View tour →" : "Xem tour →"}
+                      <span className="text-black font-semibold group-hover:underline transition-colors">
+                        {isEn ? "View tour" : "Xem tour"}
                       </span>
                     </div>
                   </div>
