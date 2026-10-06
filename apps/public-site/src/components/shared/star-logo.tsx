@@ -144,18 +144,27 @@ export function StarLogo({
       );
     }
 
-    // Default & Horizontal / Stacked Lockup: STAR wordmark on top, 3D golden star centered underneath, TRAVELS below
+    // Default & Stacked / Horizontal Lockup: Full text block on top (STAR & TRAVELS), 3D golden star emblem positioned underneath
     return (
       <div className={`flex flex-col items-center justify-center text-center select-none ${className}`}>
-        {/* Luxury Roman Serif Wordmark */}
-        <span
-          className={`brand-wordmark font-bold uppercase tracking-[0.26em] ${sizeClasses.text} ${textColor} leading-none transition-colors duration-200 group-hover:text-amber-400`}
-        >
-          STAR
-        </span>
+        {/* Luxury Roman Serif Wordmark & Descriptor */}
+        <div className="flex flex-col items-center justify-center leading-none">
+          <span
+            className={`brand-wordmark font-bold uppercase tracking-[0.28em] ${sizeClasses.text} ${textColor} leading-none transition-colors duration-200 group-hover:text-amber-400`}
+          >
+            STAR
+          </span>
+          {showDescriptor && (
+            <span
+              className={`tracking-[0.38em] uppercase font-semibold ${sizeClasses.desc} ${descColor} mt-0.5 sm:mt-1 leading-none`}
+            >
+              TRAVELS
+            </span>
+          )}
+        </div>
 
-        {/* 3D Faceted Golden Star positioned directly underneath the word Star with subtle flank lines */}
-        <div className="flex items-center justify-center gap-1.5 my-1 w-full">
+        {/* 3D Faceted Golden Star positioned directly UNDERNEATH the text */}
+        <div className="flex items-center justify-center gap-1.5 mt-1 sm:mt-1.5 w-full">
           <span
             className={`h-[1px] w-3 sm:w-4 ${
               inverted
@@ -172,15 +181,6 @@ export function StarLogo({
             }`}
           />
         </div>
-
-        {/* Descriptor TRAVELS in refined letter-spaced typography */}
-        {showDescriptor && (
-          <span
-            className={`tracking-[0.35em] uppercase font-semibold ${sizeClasses.desc} ${descColor} leading-none`}
-          >
-            TRAVELS
-          </span>
-        )}
       </div>
     );
   })();
