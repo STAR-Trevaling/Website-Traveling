@@ -9,6 +9,7 @@ import {
   Twitter,
   UserRound,
   ChevronDown,
+  ChevronRight,
   MapPin,
   Compass,
   Sparkles,
@@ -132,28 +133,21 @@ export function SiteHeaderClient({ user, overlay = false }: SiteHeaderClientProp
                   </button>
 
                   {/* Dropdown Menu Container with subtle hover bridge */}
-                  <div className="absolute left-1/2 -translate-x-1/2 top-full pt-1.5 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible transition-all duration-200 pointer-events-none group-hover:pointer-events-auto group-focus-within:pointer-events-auto z-50">
-                    <div
-                      className={
-                        overlay
-                          ? "min-w-[210px] rounded-xl bg-slate-900/95 backdrop-blur-xl border border-white/20 p-2 shadow-2xl"
-                          : "min-w-[210px] rounded-xl bg-white border border-slate-100 p-2 shadow-xl"
-                      }
-                    >
+                  <div className="absolute left-1/2 -translate-x-1/2 top-full pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible transition-all duration-200 pointer-events-none group-hover:pointer-events-auto group-focus-within:pointer-events-auto z-50">
+                    <div className="min-w-[220px] rounded-[2px] bg-white/98 backdrop-blur-md border border-slate-200/90 border-t-2 border-t-[#0098a2] py-1.5 px-1 shadow-[0_16px_36px_rgba(15,23,42,0.15)]">
                       {item.subItems.map((sub) => {
                         const Icon = sub.icon;
                         return (
                           <Link
                             key={sub.href}
                             href={sub.href}
-                            className={
-                              overlay
-                                ? "flex items-center gap-2.5 px-3 py-2 text-xs lg:text-[13px] rounded-lg text-white/90 hover:text-white hover:bg-white/10 transition font-normal"
-                                : "flex items-center gap-2.5 px-3 py-2 text-xs lg:text-[13px] rounded-lg text-slate-700 hover:text-[#0098a2] hover:bg-slate-50 transition font-normal"
-                            }
+                            className="group/sub flex items-center justify-between px-3.5 py-2.5 text-[13px] font-medium text-slate-800 hover:text-[#0098a2] hover:bg-[#0098a2]/[0.08] rounded-[2px] transition-all duration-150 cursor-pointer"
                           >
-                            <Icon className="size-3.5 opacity-75 shrink-0" />
-                            <span>{sub.label}</span>
+                            <div className="flex items-center gap-2.5">
+                              <Icon className="size-4 text-[#0098a2] transition-transform duration-200 group-hover/sub:scale-110 shrink-0" />
+                              <span className="tracking-[0.01em]">{sub.label}</span>
+                            </div>
+                            <ChevronRight className="size-3 text-[#0098a2] opacity-0 -translate-x-1 transition-all duration-200 group-hover/sub:opacity-100 group-hover/sub:translate-x-0 shrink-0" />
                           </Link>
                         );
                       })}

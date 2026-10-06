@@ -51,11 +51,11 @@ export function LanguageConsentBanner() {
           : "translate-y-6 opacity-0 scale-95 pointer-events-none"
       }`}
     >
-      <div className="relative overflow-hidden rounded-2xl border border-slate-200/90 bg-white p-5 text-slate-900 shadow-[0_20px_50px_-12px_rgba(15,23,42,0.22),0_0_1px_1px_rgba(15,23,42,0.06)]">
+      <div className="relative overflow-hidden rounded-[2px] border border-slate-200/90 border-t-2 border-t-[#0098a2] bg-white p-5 text-slate-900 shadow-[0_20px_50px_-12px_rgba(15,23,42,0.22),0_0_1px_1px_rgba(15,23,42,0.06)]">
         {/* Top Header Row */}
         <div className="flex items-start justify-between gap-3">
           <div className="flex items-center gap-3">
-            <div className="flex size-9 items-center justify-center rounded-xl bg-slate-50 border border-slate-200/70 text-slate-700 shrink-0">
+            <div className="flex size-9 items-center justify-center rounded-[2px] bg-[#0098a2]/10 border border-[#0098a2]/20 text-[#0098a2] shrink-0">
               <Globe className="size-4.5" />
             </div>
             <div>
@@ -96,9 +96,9 @@ export function LanguageConsentBanner() {
           <button
             type="button"
             onClick={() => handleSelectLanguage("vi")}
-            className={`group relative flex items-center justify-between px-3.5 py-2.5 rounded-xl border text-left transition-all duration-200 cursor-pointer ${
+            className={`group relative flex items-center justify-between px-3.5 py-2.5 rounded-[2px] border text-left transition-all duration-200 cursor-pointer ${
               locale === "vi"
-                ? "bg-slate-900 border-slate-900 text-white shadow-sm"
+                ? "bg-[#0098a2] border-[#0098a2] text-white shadow-sm"
                 : "bg-slate-50/70 border-slate-200 text-slate-800 hover:bg-white hover:border-slate-300 hover:shadow-xs"
             }`}
           >
@@ -114,7 +114,7 @@ export function LanguageConsentBanner() {
                 <span className="block text-xs font-semibold leading-tight">Tiếng Việt</span>
                 <span
                   className={`block text-[10px] mt-0.5 leading-tight ${
-                    locale === "vi" ? "text-slate-300" : "text-slate-400"
+                    locale === "vi" ? "text-slate-100" : "text-slate-400"
                   }`}
                 >
                   {locale === "en" ? "Vietnamese" : "Đang chọn"}
@@ -130,9 +130,9 @@ export function LanguageConsentBanner() {
           <button
             type="button"
             onClick={() => handleSelectLanguage("en")}
-            className={`group relative flex items-center justify-between px-3.5 py-2.5 rounded-xl border text-left transition-all duration-200 cursor-pointer ${
+            className={`group relative flex items-center justify-between px-3.5 py-2.5 rounded-[2px] border text-left transition-all duration-200 cursor-pointer ${
               locale === "en"
-                ? "bg-slate-900 border-slate-900 text-white shadow-sm"
+                ? "bg-[#0098a2] border-[#0098a2] text-white shadow-sm"
                 : "bg-slate-50/70 border-slate-200 text-slate-800 hover:bg-white hover:border-slate-300 hover:shadow-xs"
             }`}
           >
@@ -148,7 +148,7 @@ export function LanguageConsentBanner() {
                 <span className="block text-xs font-semibold leading-tight">English</span>
                 <span
                   className={`block text-[10px] mt-0.5 leading-tight ${
-                    locale === "en" ? "text-slate-300" : "text-slate-400"
+                    locale === "en" ? "text-slate-100" : "text-slate-400"
                   }`}
                 >
                   {locale === "en" ? "Selected" : "Tiếng Anh"}
