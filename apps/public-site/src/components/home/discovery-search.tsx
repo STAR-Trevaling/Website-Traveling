@@ -1,8 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { MapPin, ChevronDown, Search, Users, Calendar } from "lucide-react";
+import {
+  MapPin,
+  ChevronDown,
+  ChevronLeft,
+  ChevronRight,
+  Search,
+  Users,
+  Calendar,
+  X,
+} from "lucide-react";
 import { useLanguage } from "@/lib/i18n/context";
 
 type TabType = "flights" | "hotels" | "tours";
@@ -35,6 +44,174 @@ const TRAVELLER_OPTIONS: BilingualOption[] = [
   { vi: "Nhóm (5+), Phổ thông", en: "Group (5+), Economy" },
 ];
 
+interface CalendarPopoverProps {
+  selectedDate: string;
+  minDate?: string;
+  onSelectDate: (dateStr: string) => void;
+  onClose: () => void;
+  isEn: boolean;
+  title: string;
+}
+
+function CalendarPopover({
+  selectedDate,
+  minDate,
+  onSelectDate,
+  onClose,
+  isEn,
+  title,
+}: CalendarPopoverProps) {
+  const initial = selectedDate ? new Date(selectedDate) : new Date();
+  const [viewYear, setViewYear] = useState(initial.getFullYear());
+  const [viewMonth, setViewMonth] = useState(initial.getMonth());
+
+  const prevMonth = () => {
+    if (viewMonth === 0) {
+      setViewYear(viewYear - 1);
+      setViewMonth(11);
+    } else {
+      setViewMonth(viewMonth - 1);
+    }
+  };
+
+  const nextMonth = () => {
+    if (viewMonth === 11) {
+      setViewYear(viewYear + 1);
+      setViewMonth(0);
+    } else {
+      setViewMonth(viewMonth + 1);
+    }
+  };
+
+  const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
+  const firstDayOfWeek = (new Date(viewYear, viewMonth, 1).getDay() + 6) % 7; // Monday = 0
+
+  const today = new Date();
+  const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
+
+  const monthNamesVi = [
+    "Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6",
+    "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"
+  ];
+  const monthNamesEn = [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+  ];
+
+  const weekHeadersVi = ["T2", "T3", "T4", "T5", "T6", "T7", "CN"];
+  const weekHeadersEn = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"];
+
+  return (
+    <div
+      onClick={(e) => e.stopPropagation()}
+      className="absolute left-0 sm:left-auto sm:right-0 md:left-0 top-full z-50 mt-1.5 w-[295px] sm:w-[315px] rounded-[6px] bg-white p-3.5 shadow-2xl border border-slate-200 text-slate-800"
+    >
+      {/* Header: Title and Month navigation */}
+      <div className="flex items-center justify-between pb-2.5 mb-2 border-b border-slate-100">
+        <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
+          {title}
+        </span>
+        <div className="flex items-center gap-1">
+          <button
+            type="button"
+            onClick={prevMonth}
+            aria-label="Previous month"
+            className="p-1 rounded hover:bg-slate-100 text-slate-600 transition cursor-pointer"
+          >
+            <ChevronLeft className="size-4" />
+          </button>
+          <span className="text-xs font-bold text-slate-800 min-w-[105px] text-center">
+            {isEn ? `${monthNamesEn[viewMonth]} ${viewYear}` : `${monthNamesVi[viewMonth]}, ${viewYear}`}
+          </span>
+          <button
+            type="button"
+            onClick={nextMonth}
+            aria-label="Next month"
+            className="p-1 rounded hover:bg-slate-100 text-slate-600 transition cursor-pointer"
+          >
+            <ChevronRight className="size-4" />
+          </button>
+        </div>
+      </div>
+
+      {/* Weekday headers */}
+      <div className="grid grid-cols-7 gap-1 text-center mb-1">
+        {(isEn ? weekHeadersEn : weekHeadersVi).map((day, i) => (
+          <span key={i} className="text-[11px] font-semibold text-slate-400 py-1">
+            {day}
+          </span>
+        ))}
+      </div>
+
+      {/* Days grid */}
+      <div className="grid grid-cols-7 gap-1 text-center">
+        {/* Leading empty days */}
+        {Array.from({ length: firstDayOfWeek }).map((_, i) => (
+          <div key={`empty-${i}`} className="size-8" />
+        ))}
+
+        {/* Days in month */}
+        {Array.from({ length: daysInMonth }).map((_, i) => {
+          const dayNum = i + 1;
+          const dateStr = `${viewYear}-${String(viewMonth + 1).padStart(2, "0")}-${String(dayNum).padStart(2, "0")}`;
+          const isSelected = selectedDate === dateStr;
+          const isToday = todayStr === dateStr;
+          const isPast = minDate ? dateStr < minDate : dateStr < todayStr;
+
+          return (
+            <button
+              key={dateStr}
+              type="button"
+              disabled={isPast}
+              onClick={() => onSelectDate(dateStr)}
+              className={`size-8 text-xs font-medium rounded-full flex items-center justify-center transition cursor-pointer ${
+                isSelected
+                  ? "bg-[#0098a2] text-white font-bold shadow-sm"
+                  : isPast
+                  ? "text-slate-300 cursor-not-allowed"
+                  : isToday
+                  ? "border border-[#0098a2] text-[#0098a2] font-semibold hover:bg-slate-100"
+                  : "text-slate-700 hover:bg-slate-100"
+              }`}
+            >
+              {dayNum}
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Quick actions footer */}
+      <div className="flex items-center justify-between pt-2.5 mt-2 border-t border-slate-100 text-xs">
+        <button
+          type="button"
+          onClick={() => onSelectDate(todayStr)}
+          className="text-[#0098a2] hover:underline font-semibold cursor-pointer"
+        >
+          {isEn ? "Today" : "Hôm nay"}
+        </button>
+        <div className="flex items-center gap-3">
+          {selectedDate && (
+            <button
+              type="button"
+              onClick={() => onSelectDate("")}
+              className="text-slate-400 hover:text-slate-700 transition cursor-pointer"
+            >
+              {isEn ? "Clear" : "Xoá"}
+            </button>
+          )}
+          <button
+            type="button"
+            onClick={onClose}
+            className="text-slate-700 hover:text-black font-semibold cursor-pointer"
+          >
+            {isEn ? "Done" : "Xong"}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function DiscoverySearch() {
   const router = useRouter();
   const { locale } = useLanguage();
@@ -50,6 +227,22 @@ export function DiscoverySearch() {
   const [openCol1, setOpenCol1] = useState(false);
   const [openCol2, setOpenCol2] = useState(false);
   const [openTravellers, setOpenTravellers] = useState(false);
+  const [openDate, setOpenDate] = useState<"start" | "end" | null>(null);
+
+  // Click outside to close dropdowns
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (!target.closest("#discovery-search-container")) {
+        setOpenCol1(false);
+        setOpenCol2(false);
+        setOpenTravellers(false);
+        setOpenDate(null);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   // Template-exact 3 tabs
   const tabs = [
@@ -85,7 +278,7 @@ export function DiscoverySearch() {
   };
 
   return (
-    <div className="w-full select-none">
+    <div id="discovery-search-container" className="w-full select-none">
       {/* 1. Top Tabs (Centered, Compact Teal Pill - Exactly like Template) */}
       <div className="flex justify-center w-full">
         <div className="inline-flex bg-[#0098a2] rounded-t-[6px] sm:rounded-t-[8px] overflow-hidden shadow-md">
@@ -195,38 +388,129 @@ export function DiscoverySearch() {
           )}
         </div>
 
-        {/* Column 3: Departure Date */}
+        {/* Column 3: Departure Date (Chọn ngày đi) */}
         <div className="relative flex-1 border-b md:border-b-0 md:border-r border-slate-200/80">
-          <label className="relative flex h-13 sm:h-14 md:h-full w-full items-center px-3.5 sm:px-4.5 transition hover:bg-slate-50/60 cursor-pointer">
-            <Calendar className="size-4 shrink-0 text-slate-500 mr-2" />
-            <span className="text-xs sm:text-[13px] text-slate-700 font-medium truncate">
-              {startDate ? formatDateDisplay(startDate) : (isEn ? "Departure Date" : "Ngày đi")}
-            </span>
-            <input
-              type="date"
-              value={startDate}
-              onChange={(e) => setStartDate(e.target.value)}
-              className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
-              aria-label={isEn ? "Departure Date" : "Ngày khởi hành"}
+          <button
+            type="button"
+            onClick={() => {
+              setOpenDate(openDate === "start" ? null : "start");
+              setOpenCol1(false);
+              setOpenCol2(false);
+              setOpenTravellers(false);
+            }}
+            className="flex h-13 sm:h-14 md:h-full w-full items-center justify-between px-3.5 sm:px-4.5 transition hover:bg-slate-50/60 text-left cursor-pointer"
+          >
+            <div className="flex items-center gap-2 min-w-0 truncate">
+              <Calendar className="size-4 shrink-0 text-slate-500" />
+              <div className="flex items-center gap-1 min-w-0 truncate text-xs sm:text-[13px]">
+                <span className={`truncate ${startDate ? "font-semibold text-slate-800" : "font-normal text-slate-700"}`}>
+                  {startDate ? formatDateDisplay(startDate) : (isEn ? "Departure Date" : "Ngày đi")}
+                </span>
+              </div>
+            </div>
+            {startDate ? (
+              <span
+                role="button"
+                tabIndex={0}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setStartDate("");
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.stopPropagation();
+                    setStartDate("");
+                  }
+                }}
+                className="text-slate-400 hover:text-slate-700 p-0.5 rounded cursor-pointer"
+                title={isEn ? "Clear date" : "Xoá ngày"}
+              >
+                <X className="size-3" />
+              </span>
+            ) : (
+              <ChevronDown className="size-3.5 shrink-0 text-slate-400 ml-1" />
+            )}
+          </button>
+
+          {openDate === "start" && (
+            <CalendarPopover
+              selectedDate={startDate}
+              onSelectDate={(date) => {
+                setStartDate(date);
+                if (endDate && date && date > endDate) {
+                  setEndDate("");
+                }
+                // Automatically suggest selecting return date if not yet chosen
+                if (!endDate && date) {
+                  setOpenDate("end");
+                } else {
+                  setOpenDate(null);
+                }
+              }}
+              onClose={() => setOpenDate(null)}
+              isEn={isEn}
+              title={isEn ? "Departure Date" : "Chọn Ngày Đi"}
             />
-          </label>
+          )}
         </div>
 
-        {/* Column 4: Return Date */}
+        {/* Column 4: Return Date (Chọn ngày về) */}
         <div className="relative flex-1 border-b md:border-b-0 md:border-r border-slate-200/80">
-          <label className="relative flex h-13 sm:h-14 md:h-full w-full items-center px-3.5 sm:px-4.5 transition hover:bg-slate-50/60 cursor-pointer">
-            <Calendar className="size-4 shrink-0 text-slate-500 mr-2" />
-            <span className="text-xs sm:text-[13px] text-slate-700 font-medium truncate">
-              {endDate ? formatDateDisplay(endDate) : (isEn ? "Return Date" : "Ngày về")}
-            </span>
-            <input
-              type="date"
-              value={endDate}
-              onChange={(e) => setEndDate(e.target.value)}
-              className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
-              aria-label={isEn ? "Return Date" : "Ngày về"}
+          <button
+            type="button"
+            onClick={() => {
+              setOpenDate(openDate === "end" ? null : "end");
+              setOpenCol1(false);
+              setOpenCol2(false);
+              setOpenTravellers(false);
+            }}
+            className="flex h-13 sm:h-14 md:h-full w-full items-center justify-between px-3.5 sm:px-4.5 transition hover:bg-slate-50/60 text-left cursor-pointer"
+          >
+            <div className="flex items-center gap-2 min-w-0 truncate">
+              <Calendar className="size-4 shrink-0 text-slate-500" />
+              <div className="flex items-center gap-1 min-w-0 truncate text-xs sm:text-[13px]">
+                <span className={`truncate ${endDate ? "font-semibold text-slate-800" : "font-normal text-slate-700"}`}>
+                  {endDate ? formatDateDisplay(endDate) : (isEn ? "Return Date" : "Ngày về")}
+                </span>
+              </div>
+            </div>
+            {endDate ? (
+              <span
+                role="button"
+                tabIndex={0}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setEndDate("");
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.stopPropagation();
+                    setEndDate("");
+                  }
+                }}
+                className="text-slate-400 hover:text-slate-700 p-0.5 rounded cursor-pointer"
+                title={isEn ? "Clear date" : "Xoá ngày"}
+              >
+                <X className="size-3" />
+              </span>
+            ) : (
+              <ChevronDown className="size-3.5 shrink-0 text-slate-400 ml-1" />
+            )}
+          </button>
+
+          {openDate === "end" && (
+            <CalendarPopover
+              selectedDate={endDate}
+              minDate={startDate}
+              onSelectDate={(date) => {
+                setEndDate(date);
+                setOpenDate(null);
+              }}
+              onClose={() => setOpenDate(null)}
+              isEn={isEn}
+              title={isEn ? "Return Date" : "Chọn Ngày Về"}
             />
-          </label>
+          )}
         </div>
 
         {/* Column 5: Traveller(s), Class */}
