@@ -51,7 +51,7 @@ export function HeroSlider() {
 
   return (
     <div
-      className="relative min-h-[680px] sm:min-h-[740px] md:h-[720px] lg:h-[740px] w-full overflow-hidden select-none"
+      className="relative min-h-[700px] sm:min-h-[760px] md:min-h-[800px] lg:min-h-[820px] w-full overflow-hidden select-none"
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
@@ -103,12 +103,13 @@ export function HeroSlider() {
       </button>
 
       {/* Hero Content */}
-      <div className="relative z-10 flex h-full flex-col items-center justify-between pb-6 sm:pb-8 md:pb-10 pt-20 sm:pt-24 text-white">
-        <div className="mt-4 sm:mt-8 md:mt-12 text-center px-4 max-w-5xl mx-auto">
+      <div className="relative z-10 flex min-h-[700px] sm:min-h-[760px] md:min-h-[800px] lg:min-h-[820px] w-full flex-col items-center justify-between pb-4 sm:pb-6 pt-20 sm:pt-24 text-white">
+        {/* Main Center Content: Title, Subtitle, and Discovery Search immediately below text */}
+        <div className="w-full max-w-5xl mx-auto px-4 text-center flex flex-col items-center my-auto pt-4 sm:pt-6">
           {/* Animated Hero Title on slide change */}
           <h1
             key={`hero-title-${currentSlide}`}
-            className="display-title template-shadow-text leading-tight text-3xl sm:text-5xl md:text-6xl lg:text-[72px] animate-fade-in-up text-balance"
+            className="display-title template-shadow-text leading-tight text-3xl sm:text-5xl md:text-6xl lg:text-[70px] animate-fade-in-up text-balance"
           >
             {t.hero.slides[currentSlide]?.title || slides[currentSlide].title}
           </h1>
@@ -116,33 +117,19 @@ export function HeroSlider() {
           {/* Animated Hero Script Subtitle */}
           <p
             key={`hero-sub-${currentSlide}`}
-            className="script-title mt-2 sm:mt-4 leading-tight text-white/95 [-webkit-text-stroke:.3px_#fff] text-xl sm:text-3xl md:text-4xl lg:text-5xl animate-fade-in-up animation-delay-100 text-balance"
+            className="script-title mt-2 sm:mt-3 leading-tight text-white/95 [-webkit-text-stroke:.3px_#fff] text-xl sm:text-3xl md:text-4xl lg:text-5xl animate-fade-in-up animation-delay-100 text-balance"
           >
             {t.hero.slides[currentSlide]?.subtitle || slides[currentSlide].subtitle}
           </p>
 
-          {/* Slide Indicator Pills with smooth progress feel */}
-          <div className="flex items-center justify-center gap-2 mt-4 sm:mt-5">
-            {slides.map((_, idx) => (
-              <button
-                key={idx}
-                type="button"
-                onClick={() => setCurrentSlide(idx)}
-                aria-label={`Slide ${idx + 1}`}
-                className={`h-1.5 rounded-full transition-all duration-500 cursor-pointer ${
-                  idx === currentSlide ? "w-7 sm:w-8 bg-white shadow-sm" : "w-2 bg-white/40 hover:bg-white/70"
-                }`}
-              />
-            ))}
+          {/* Search Bar immediately below text in the middle of the page */}
+          <div className="w-full max-w-[1060px] mt-6 sm:mt-8 md:mt-10 animate-fade-in-scale animation-delay-200">
+            <DiscoverySearch />
           </div>
         </div>
 
-        {/* Search Bar & View More Indicator */}
-        <div className="w-full flex flex-col items-center px-4 mt-6 sm:mt-8 mb-2 sm:mb-4">
-          <div className="w-full max-w-[1060px]">
-            <DiscoverySearch />
-          </div>
-
+        {/* Bottom Banner Content: View More link and Banner Slide Number Bar at the very bottom */}
+        <div className="w-full flex flex-col items-center gap-2 sm:gap-3 mt-4 sm:mt-6 pb-2 sm:pb-3">
           {/* View More with curved downward arrow */}
           <a
             href="#popular-destinations"
@@ -150,15 +137,15 @@ export function HeroSlider() {
               e.preventDefault();
               document.getElementById("popular-destinations")?.scrollIntoView({ behavior: "smooth" });
             }}
-            className="group mt-3 sm:mt-4 flex flex-col items-center gap-0.5 text-white/95 hover:text-white transition-all cursor-pointer select-none"
+            className="group flex flex-col items-center gap-0.5 text-white/90 hover:text-white transition-all cursor-pointer select-none"
             aria-label={locale === "en" ? "View more" : "Xem thêm"}
           >
-            <span className="script-title text-xl sm:text-3xl md:text-4xl text-white tracking-wider drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)] group-hover:scale-105 group-hover:text-amber-200 transition-all">
+            <span className="script-title text-base sm:text-2xl text-white tracking-wider drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)] group-hover:scale-105 group-hover:text-amber-200 transition-all">
               {locale === "en" ? "view more" : "xem thêm"}
             </span>
             <svg
-              width="28"
-              height="36"
+              width="20"
+              height="26"
               viewBox="0 0 34 42"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -180,6 +167,31 @@ export function HeroSlider() {
               />
             </svg>
           </a>
+
+          {/* Thanh hiện số banner ở cuối banner */}
+          <div className="flex items-center justify-center gap-2.5 sm:gap-3 bg-black/40 backdrop-blur-md px-4 sm:px-5 py-1.5 sm:py-2 rounded-full border border-white/20 shadow-xl">
+            <span className="text-[11px] sm:text-xs font-bold text-white tracking-widest font-mono">
+              {String(currentSlide + 1).padStart(2, "0")}
+            </span>
+            <div className="flex items-center gap-1.5">
+              {slides.map((_, idx) => (
+                <button
+                  key={idx}
+                  type="button"
+                  onClick={() => setCurrentSlide(idx)}
+                  aria-label={`Slide ${idx + 1}`}
+                  className={`h-1.5 rounded-full transition-all duration-500 cursor-pointer ${
+                    idx === currentSlide
+                      ? "w-7 sm:w-8 bg-[#eab308] shadow-[0_0_8px_rgba(234,179,8,0.8)]"
+                      : "w-2 bg-white/40 hover:bg-white/70"
+                  }`}
+                />
+              ))}
+            </div>
+            <span className="text-[11px] sm:text-xs font-semibold text-white/60 tracking-widest font-mono">
+              {String(slides.length).padStart(2, "0")}
+            </span>
+          </div>
         </div>
       </div>
     </div>
