@@ -11,12 +11,6 @@ import {
   Twitter,
   UserRound,
   ChevronDown,
-  Compass,
-  Sparkles,
-  MapPin,
-  BookOpen,
-  Building2,
-  Handshake,
 } from "lucide-react";
 import type { CurrentUser } from "@/lib/types";
 import { useLanguage } from "@/lib/i18n/context";
@@ -33,6 +27,7 @@ export function SiteHeaderClient({ user, overlay = false }: SiteHeaderClientProp
   const pathname = usePathname();
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const navRef = useRef<HTMLElement | null>(null);
 
   // Close dropdown on route change
   useEffect(() => {
@@ -48,6 +43,17 @@ export function SiteHeaderClient({ user, overlay = false }: SiteHeaderClientProp
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
+  // Close dropdown on click outside
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (navRef.current && !navRef.current.contains(e.target as Node)) {
+        setOpenDropdown(null);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   const handleMouseEnter = (label: string) => {
@@ -76,63 +82,23 @@ export function SiteHeaderClient({ user, overlay = false }: SiteHeaderClientProp
     {
       type: "dropdown" as const,
       label: t.nav.explore,
+      categoryTitle: isEn ? "EXPLORE" : "KHÁM PHÁ",
       basePath: ["/destinations", "/tours", "/experiences", "/stories"],
       items: [
-        {
-          label: t.nav.tours,
-          href: "/tours",
-          description: isEn
-            ? "Curated guided tours & itineraries"
-            : "Lịch trình trọn gói & hướng dẫn viên tận tâm",
-          icon: Compass,
-        },
-        {
-          label: t.nav.packages,
-          href: "/experiences",
-          description: isEn
-            ? "Exclusive vacation packages & stays"
-            : "Nghỉ dưỡng đẳng cấp & trải nghiệm độc bản",
-          icon: Sparkles,
-        },
-        {
-          label: t.nav.destinations,
-          href: "/destinations",
-          description: isEn
-            ? "Top heritage sights & coastal gems"
-            : "Danh lam thắng cảnh & kỳ quan di sản",
-          icon: MapPin,
-        },
-        {
-          label: t.nav.stories,
-          href: "/stories",
-          description: isEn
-            ? "Travel insights & insider guides"
-            : "Cẩm nang du lịch & góc chia sẻ hữu ích",
-          icon: BookOpen,
-        },
+        { label: t.nav.destinations, href: "/destinations" },
+        { label: t.nav.packages, href: "/experiences" },
+        { label: t.nav.tours, href: "/tours" },
+        { label: t.nav.stories, href: "/stories" },
       ],
     },
     {
       type: "dropdown" as const,
       label: t.nav.aboutMenu,
+      categoryTitle: isEn ? "ABOUT STAR" : "GIỚI THIỆU",
       basePath: ["/about", "/partner"],
       items: [
-        {
-          label: t.nav.aboutUs,
-          href: "/about",
-          description: isEn
-            ? "Our story, values & hospitality team"
-            : "Câu chuyện thương hiệu & sứ mệnh Star Travels",
-          icon: Building2,
-        },
-        {
-          label: t.nav.partner,
-          href: "/partner",
-          description: isEn
-            ? "B2B travel collaboration & portal"
-            : "Hợp tác đối tác lữ hành & dịch vụ du lịch",
-          icon: Handshake,
-        },
+        { label: t.nav.aboutUs, href: "/about" },
+        { label: t.nav.partner, href: "/partner" },
       ],
     },
     { type: "link" as const, label: t.nav.contact, href: "/contact" },
@@ -242,6 +208,7 @@ export function SiteHeaderClient({ user, overlay = false }: SiteHeaderClientProp
         {/* Row 2: Centered Navigation Links with Dropdown for Scoped Groups */}
         <div className="hidden md:flex justify-center items-center py-2 sm:py-2.5">
           <nav
+            ref={navRef}
             aria-label="Main Navigation"
             className="flex items-center gap-8 md:gap-9 lg:gap-11 xl:gap-13 text-[13px] sm:text-[14px] font-normal whitespace-nowrap"
           >
@@ -280,48 +247,34 @@ export function SiteHeaderClient({ user, overlay = false }: SiteHeaderClientProp
                       />
                     </button>
 
-                    {/* Dropdown Menu Popover */}
+                    {/* Dropdown Menu Popover matching template media_1791280764148.png */}
                     {isOpen && (
                       <div
-                        className="absolute left-1/2 -translate-x-1/2 top-full pt-2.5 z-50 animate-in fade-in slide-in-from-top-1 duration-150"
+                        className="absolute left-0 top-full pt-2 z-50 animate-in fade-in duration-150"
                         onMouseEnter={() => handleMouseEnter(item.label)}
                         onMouseLeave={handleMouseLeave}
                       >
-                        <div className="w-72 rounded-xl bg-white/98 backdrop-blur-md p-2 shadow-2xl ring-1 ring-black/5 border border-slate-100 text-slate-900">
-                          <div className="space-y-1">
+                        <div className="min-w-[210px] w-max rounded-[2px] bg-white px-6 py-5 shadow-2xl border border-slate-100 text-slate-900">
+                          <div className="text-[12px] font-bold uppercase tracking-wider text-black mb-3.5 select-none">
+                            {item.categoryTitle}
+                          </div>
+                          <div className="space-y-3">
                             {item.items.map((sub) => {
                               const isSubActive =
                                 pathname === sub.href || pathname.startsWith(sub.href + "/");
-                              const Icon = sub.icon;
 
                               return (
                                 <Link
                                   key={sub.href}
                                   href={sub.href}
                                   onClick={() => setOpenDropdown(null)}
-                                  className={`flex items-start gap-3 rounded-lg p-2.5 transition-colors group ${
+                                  className={`block text-[13px] sm:text-[14px] leading-normal transition-colors ${
                                     isSubActive
-                                      ? "bg-[#0098a2]/10 text-[#0098a2]"
-                                      : "hover:bg-slate-50 text-slate-700 hover:text-slate-950"
+                                      ? "text-[#0098a2] font-semibold"
+                                      : "text-slate-800 hover:text-[#0098a2]"
                                   }`}
                                 >
-                                  <div
-                                    className={`p-2 rounded-lg shrink-0 transition-colors ${
-                                      isSubActive
-                                        ? "bg-[#0098a2] text-white"
-                                        : "bg-[#0098a2]/10 text-[#0098a2] group-hover:bg-[#0098a2] group-hover:text-white"
-                                    }`}
-                                  >
-                                    <Icon className="size-4" />
-                                  </div>
-                                  <div className="flex flex-col text-left">
-                                    <span className="text-sm font-semibold leading-tight">
-                                      {sub.label}
-                                    </span>
-                                    <span className="text-[11px] text-slate-500 group-hover:text-slate-600 mt-0.5 leading-snug whitespace-normal">
-                                      {sub.description}
-                                    </span>
-                                  </div>
+                                  {sub.label}
                                 </Link>
                               );
                             })}
