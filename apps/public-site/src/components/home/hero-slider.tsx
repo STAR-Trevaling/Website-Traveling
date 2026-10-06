@@ -29,7 +29,7 @@ export function HeroSlider() {
   };
 
   return (
-    <div className="relative h-[860px] sm:h-[800px] md:h-[720px] lg:h-[740px] w-full overflow-hidden">
+    <div className="relative min-h-[680px] sm:min-h-[740px] md:h-[720px] lg:h-[740px] w-full overflow-hidden">
       {/* Background Images with smooth fade */}
       {slides.map((slide, index) => (
         <div
@@ -51,14 +51,14 @@ export function HeroSlider() {
       ))}
 
       {/* Dark gradient overlays */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-black/65" />
+      <div className="absolute inset-0 bg-gradient-to-b from-black/65 via-black/35 to-black/70" />
 
-      {/* Left/Right Navigation Arrows for Hero */}
+      {/* Desktop Left/Right Navigation Arrows for Hero (Hidden on Mobile to prevent overlapping content) */}
       <button
         type="button"
         onClick={prevSlide}
         aria-label={locale === "vi" ? "Slide trước" : "Previous slide"}
-        className="absolute left-4 md:left-8 top-1/2 z-20 -translate-y-1/2 flex size-12 items-center justify-center rounded-full bg-black/30 text-white backdrop-blur-md transition-all duration-200 hover:bg-white hover:text-slate-900 hover:shadow-[0px_8px_25px_rgba(0,0,0,0.35)] hover:scale-105 active:scale-95 cursor-pointer"
+        className="hidden md:flex absolute left-4 md:left-8 top-1/2 z-20 -translate-y-1/2 size-12 items-center justify-center rounded-full bg-black/30 text-white backdrop-blur-md transition-all duration-200 hover:bg-white hover:text-slate-900 hover:shadow-[0px_8px_25px_rgba(0,0,0,0.35)] hover:scale-105 active:scale-95 cursor-pointer"
       >
         <ChevronLeft className="size-7" />
       </button>
@@ -67,25 +67,40 @@ export function HeroSlider() {
         type="button"
         onClick={nextSlide}
         aria-label={locale === "vi" ? "Slide tiếp theo" : "Next slide"}
-        className="absolute right-4 md:right-8 top-1/2 z-20 -translate-y-1/2 flex size-12 items-center justify-center rounded-full bg-black/30 text-white backdrop-blur-md transition-all duration-200 hover:bg-white hover:text-slate-900 hover:shadow-[0px_8px_25px_rgba(0,0,0,0.35)] hover:scale-105 active:scale-95 cursor-pointer"
+        className="hidden md:flex absolute right-4 md:right-8 top-1/2 z-20 -translate-y-1/2 size-12 items-center justify-center rounded-full bg-black/30 text-white backdrop-blur-md transition-all duration-200 hover:bg-white hover:text-slate-900 hover:shadow-[0px_8px_25px_rgba(0,0,0,0.35)] hover:scale-105 active:scale-95 cursor-pointer"
       >
         <ChevronRight className="size-7" />
       </button>
 
       {/* Hero Content */}
       <div className="relative z-10 flex h-full flex-col items-center justify-between pb-6 sm:pb-8 md:pb-10 pt-20 sm:pt-24 text-white">
-        <div className="mt-8 sm:mt-12 md:mt-14 text-center px-4 max-w-5xl mx-auto">
-          <h1 className="display-title template-shadow-text leading-tight text-4xl sm:text-5xl md:text-6xl lg:text-[72px] transition-all duration-700 text-balance">
+        <div className="mt-4 sm:mt-8 md:mt-12 text-center px-4 max-w-5xl mx-auto">
+          <h1 className="display-title template-shadow-text leading-tight text-3xl sm:text-5xl md:text-6xl lg:text-[72px] transition-all duration-700 text-balance">
             {t.hero.slides[currentSlide]?.title || slides[currentSlide].title}
           </h1>
 
-          <p className="script-title mt-4 leading-tight text-white/95 [-webkit-text-stroke:.4px_#fff] text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-balance">
+          <p className="script-title mt-2 sm:mt-4 leading-tight text-white/95 [-webkit-text-stroke:.3px_#fff] text-xl sm:text-3xl md:text-4xl lg:text-5xl text-balance">
             {t.hero.slides[currentSlide]?.subtitle || slides[currentSlide].subtitle}
           </p>
+
+          {/* Mobile slide indicator dots */}
+          <div className="flex md:hidden items-center justify-center gap-1.5 mt-3">
+            {slides.map((_, idx) => (
+              <button
+                key={idx}
+                type="button"
+                onClick={() => setCurrentSlide(idx)}
+                aria-label={`Slide ${idx + 1}`}
+                className={`h-1.5 rounded-full transition-all duration-300 ${
+                  idx === currentSlide ? "w-5 bg-white" : "w-1.5 bg-white/40"
+                }`}
+              />
+            ))}
+          </div>
         </div>
 
         {/* Search Bar & View More Indicator */}
-        <div className="w-full flex flex-col items-center px-4 mb-2 sm:mb-4">
+        <div className="w-full flex flex-col items-center px-4 mt-6 sm:mt-8 mb-2 sm:mb-4">
           <div className="w-full max-w-[1060px]">
             <DiscoverySearch />
           </div>
@@ -100,12 +115,12 @@ export function HeroSlider() {
             className="group mt-3 sm:mt-4 flex flex-col items-center gap-0.5 text-white/95 hover:text-white transition-all cursor-pointer select-none"
             aria-label={locale === "en" ? "View more" : "Xem thêm"}
           >
-            <span className="script-title text-2xl sm:text-3xl md:text-4xl text-white tracking-wider drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)] group-hover:scale-105 group-hover:text-amber-200 transition-all">
+            <span className="script-title text-xl sm:text-3xl md:text-4xl text-white tracking-wider drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)] group-hover:scale-105 group-hover:text-amber-200 transition-all">
               {locale === "en" ? "view more" : "xem thêm"}
             </span>
             <svg
-              width="34"
-              height="42"
+              width="28"
+              height="36"
               viewBox="0 0 34 42"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"

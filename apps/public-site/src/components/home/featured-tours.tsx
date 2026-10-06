@@ -35,37 +35,35 @@ export function FeaturedTours({ initialTours }: FeaturedToursProps) {
   );
 
   return (
-    <section className="w-full px-6 py-16 md:px-12 lg:px-16">
+    <section className="w-full px-4 sm:px-6 md:px-12 lg:px-16 py-10 sm:py-14 md:py-20">
       <div className="mx-auto max-w-7xl">
-        <div className="text-center mb-10">
-          <h2 className="script-title text-5xl md:text-6xl text-[#1e293b]">
+        <div className="text-center mb-6 sm:mb-10 md:mb-12">
+          <h2 className="script-title text-3xl sm:text-5xl md:text-6xl text-[#1e293b]">
             {t.featured.heading}
           </h2>
-          <p className="mt-2 text-sm md:text-base text-[#64748b] font-light max-w-xl mx-auto">
+          <p className="mt-2 text-xs sm:text-sm md:text-base text-[#64748b] font-light max-w-xl mx-auto">
             {t.featured.subheading}
           </p>
         </div>
 
         <div className="relative w-full">
-          {/* Floating navigation chevrons matching DestinationsCarousel if > 4 cards */}
+          {/* Desktop Floating Arrows (Hidden on mobile to eliminate overflow bugs) */}
           {hasMultiplePages && (
             <>
-              {/* Floating Left Arrow */}
               <button
                 type="button"
                 onClick={handlePrev}
                 aria-label={isEn ? "Previous tours" : "Tour trước"}
-                className="absolute -left-6 md:-left-12 top-1/2 z-20 -translate-y-1/2 text-white/90 hover:text-white transition drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)] hover:scale-110 cursor-pointer"
+                className="hidden md:flex absolute -left-12 lg:-left-16 top-1/2 z-20 -translate-y-1/2 text-white/90 hover:text-white transition drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)] hover:scale-110 cursor-pointer"
               >
                 <ChevronLeft className="size-12 md:size-16 stroke-[1.2]" />
               </button>
 
-              {/* Floating Right Arrow */}
               <button
                 type="button"
                 onClick={handleNext}
                 aria-label={isEn ? "Next tours" : "Tour tiếp theo"}
-                className="absolute -right-6 md:-right-12 top-1/2 z-20 -translate-y-1/2 text-white/90 hover:text-white transition drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)] hover:scale-110 cursor-pointer"
+                className="hidden md:flex absolute -right-12 lg:-right-16 top-1/2 z-20 -translate-y-1/2 text-white/90 hover:text-white transition drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)] hover:scale-110 cursor-pointer"
               >
                 <ChevronRight className="size-12 md:size-16 stroke-[1.2]" />
               </button>
@@ -73,7 +71,7 @@ export function FeaturedTours({ initialTours }: FeaturedToursProps) {
           )}
 
           {/* 4 Cards Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 transition-opacity duration-300">
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 transition-opacity duration-300">
             {currentTours.map((tour) => {
               const fullDest = isEn && tour.destination_en ? tour.destination_en : tour.destination;
               const shortDest = fullDest.split(",")[0].trim();
@@ -94,7 +92,7 @@ export function FeaturedTours({ initialTours }: FeaturedToursProps) {
                       unoptimized
                       className="object-cover transition duration-500 group-hover:scale-105"
                     />
-                    <div className="absolute top-3 left-3 bg-black/50 text-white text-[11px] font-medium px-2 py-0.5 rounded-[2px] backdrop-blur-sm">
+                    <div className="absolute top-2.5 left-2.5 bg-black/60 text-white text-[10px] sm:text-[11px] font-medium px-2 py-0.5 rounded-[2px] backdrop-blur-sm">
                       {displayDuration}
                     </div>
                   </div>
@@ -111,7 +109,7 @@ export function FeaturedTours({ initialTours }: FeaturedToursProps) {
                           </span>
                         </div>
                       </div>
-                      <p className="mt-1.5 text-[11px] font-light text-[#64748b] leading-snug line-clamp-2 min-h-[30px]">
+                      <p className="mt-1 text-[11px] font-light text-[#64748b] leading-snug line-clamp-2 min-h-[30px]">
                         {displayTitle}
                       </p>
                     </div>
@@ -127,12 +125,49 @@ export function FeaturedTours({ initialTours }: FeaturedToursProps) {
               );
             })}
           </div>
+
+          {/* Mobile Navigation Controls if has multiple pages */}
+          {hasMultiplePages && (
+            <div className="flex md:hidden items-center justify-between mt-6 px-1">
+              <button
+                type="button"
+                onClick={handlePrev}
+                className="flex items-center gap-1 px-3 py-2 text-xs font-semibold text-slate-700 bg-white/95 rounded-[2px] border border-slate-200 shadow-sm active:scale-95"
+                aria-label={isEn ? "Previous tours" : "Tour trước"}
+              >
+                <ChevronLeft className="size-4" />
+                <span>{isEn ? "Previous" : "Trước"}</span>
+              </button>
+              <div className="flex items-center gap-1.5">
+                {Array.from({ length: totalPages }).map((_, idx) => (
+                  <button
+                    key={idx}
+                    type="button"
+                    onClick={() => setCurrentPage(idx)}
+                    aria-label={`Page ${idx + 1}`}
+                    className={`h-1.5 rounded-full transition-all duration-300 ${
+                      idx === currentPage ? "w-5 bg-[#0098a2]" : "w-1.5 bg-slate-300"
+                    }`}
+                  />
+                ))}
+              </div>
+              <button
+                type="button"
+                onClick={handleNext}
+                className="flex items-center gap-1 px-3 py-2 text-xs font-semibold text-slate-700 bg-white/95 rounded-[2px] border border-slate-200 shadow-sm active:scale-95"
+                aria-label={isEn ? "Next tours" : "Tour sau"}
+              >
+                <span>{isEn ? "Next" : "Sau"}</span>
+                <ChevronRight className="size-4" />
+              </button>
+            </div>
+          )}
         </div>
 
-        <div className="mt-10 text-center">
+        <div className="mt-8 sm:mt-12 text-center">
           <Link
             href="/tours"
-            className="inline-block border border-slate-700/70 bg-white px-8 py-3 text-xs md:text-sm font-bold tracking-[0.2em] uppercase text-[#1e293b] rounded-[2px] template-shadow-text shadow-sm transition-all duration-200 hover:border-black hover:text-black hover:bg-slate-50 hover:shadow-[0px_8px_25px_rgba(0,0,0,0.15)] hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
+            className="inline-block border border-slate-700/70 bg-white px-7 sm:px-8 py-3 text-xs md:text-sm font-bold tracking-[0.2em] uppercase text-[#1e293b] rounded-[2px] template-shadow-text shadow-sm transition-all duration-200 hover:border-black hover:text-black hover:bg-slate-50 hover:shadow-[0px_8px_25px_rgba(0,0,0,0.15)] hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
           >
             {t.featured.viewAllBtn}
           </Link>

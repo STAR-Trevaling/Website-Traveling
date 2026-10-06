@@ -19,7 +19,7 @@ export default function ToursPage() {
         image={VIETNAM_IMAGES.hero}
       />
 
-      <main className="template-page-bg min-h-screen px-6 py-16 md:px-12 lg:px-16">
+      <main className="template-page-bg min-h-screen px-4 sm:px-6 py-10 sm:py-16 md:px-12 lg:px-16">
         <div className="mx-auto max-w-7xl">
           <ToursCatalog />
         </div>

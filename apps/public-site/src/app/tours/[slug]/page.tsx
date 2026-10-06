@@ -76,7 +76,7 @@ export default async function TourDetailPage({ params }: TourDetailPageProps) {
   return (
     <>
       {/* 1. HERO HEADER WITH TEMPLATE VIBE */}
-      <section className="relative min-h-[620px] md:min-h-[680px] w-full overflow-hidden text-white flex items-end">
+      <section className="relative min-h-[480px] sm:min-h-[560px] md:min-h-[680px] w-full overflow-hidden text-white flex items-end">
         <Image
           src={tour.image}
           alt={displayTitle}
@@ -89,27 +89,27 @@ export default async function TourDetailPage({ params }: TourDetailPageProps) {
         <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/65 to-black/45" />
         <SiteHeader overlay />
 
-        <div className="relative z-10 mx-auto w-full max-w-7xl px-6 pb-16 md:px-12 pt-32">
-          <div className="max-w-4xl bg-black/40 backdrop-blur-[3px] p-6 sm:p-9 rounded-[2px] border border-white/20 shadow-2xl">
-            <div className="flex flex-wrap items-center gap-3">
-              <span className="rounded-[2px] bg-[#0098a2] px-3.5 py-1.5 text-xs sm:text-sm font-bold uppercase tracking-wider text-white shadow-md">
+        <div className="relative z-10 mx-auto w-full max-w-7xl px-4 sm:px-6 pb-10 sm:pb-16 md:px-12 pt-24 sm:pt-32">
+          <div className="max-w-4xl bg-black/40 backdrop-blur-[3px] p-4 sm:p-7 md:p-9 rounded-[2px] border border-white/20 shadow-2xl">
+            <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+              <span className="rounded-[2px] bg-[#0098a2] px-3 py-1 sm:px-3.5 sm:py-1.5 text-[11px] sm:text-xs md:text-sm font-bold uppercase tracking-wider text-white shadow-md">
                 {displayDuration}
               </span>
-              <span className="flex items-center gap-1.5 rounded-[2px] bg-black/60 px-3.5 py-1.5 text-xs sm:text-sm font-semibold text-white backdrop-blur-md border border-white/20 shadow-sm">
-                <MapPin className="size-4 text-white" />
+              <span className="flex items-center gap-1.5 rounded-[2px] bg-black/60 px-3 py-1 sm:px-3.5 sm:py-1.5 text-[11px] sm:text-xs md:text-sm font-semibold text-white backdrop-blur-md border border-white/20 shadow-sm">
+                <MapPin className="size-3.5 sm:size-4 text-white" />
                 {displayDestination}
               </span>
-              <span className="flex items-center gap-1.5 rounded-[2px] bg-amber-500/90 px-3 py-1.5 text-xs sm:text-sm font-bold text-white backdrop-blur-md shadow-sm">
-                <Star className="size-4 fill-white text-white" />
+              <span className="flex items-center gap-1.5 rounded-[2px] bg-amber-500/90 px-2.5 py-1 sm:px-3 sm:py-1.5 text-[11px] sm:text-xs md:text-sm font-bold text-white backdrop-blur-md shadow-sm">
+                <Star className="size-3.5 sm:size-4 fill-white text-white" />
                 {tour.rating.toFixed(1)} ({tour.reviewCount} {td.reviewsText})
               </span>
             </div>
 
-            <h1 className="display-title mt-5 text-3xl sm:text-5xl md:text-6xl font-black leading-tight text-white drop-shadow-[0_2px_14px_rgba(0,0,0,0.95)]">
+            <h1 className="display-title mt-3 sm:mt-5 text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-tight text-white drop-shadow-[0_2px_14px_rgba(0,0,0,0.95)]">
               {displayTitle}
             </h1>
 
-            <p className="mt-4 max-w-3xl text-base sm:text-lg md:text-xl font-normal leading-relaxed text-white/95 drop-shadow-[0_1px_8px_rgba(0,0,0,0.9)]">
+            <p className="mt-2.5 sm:mt-4 max-w-3xl text-xs sm:text-base md:text-lg lg:text-xl font-normal leading-relaxed text-white/95 drop-shadow-[0_1px_8px_rgba(0,0,0,0.9)]">
               {displayOverview}
             </p>
           </div>
@@ -118,7 +118,7 @@ export default async function TourDetailPage({ params }: TourDetailPageProps) {
 
       {/* 2. SPECIFICATION BAR */}
       <section className="border-b border-slate-200 bg-white py-4 shadow-sm">
-        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-6 px-6 md:px-12 text-xs md:text-sm">
+        <div className="mx-auto grid grid-cols-2 sm:grid-cols-3 md:flex md:flex-wrap items-center justify-between gap-4 sm:gap-6 px-4 sm:px-6 md:px-12 text-xs md:text-sm">
           <div className="flex items-center gap-3 text-slate-700">
             <Clock className="size-5 text-slate-700" />
             <div>
@@ -159,7 +159,7 @@ export default async function TourDetailPage({ params }: TourDetailPageProps) {
             </div>
           </div>
 
-          <div className="flex items-center gap-3 text-slate-700">
+          <div className="flex items-center gap-3 text-slate-700 col-span-2 sm:col-span-1">
             <ShieldCheck className="size-5 text-slate-700" />
             <div>
               <p className="text-[11px] text-slate-400 font-light">
@@ -174,13 +174,13 @@ export default async function TourDetailPage({ params }: TourDetailPageProps) {
       </section>
 
       {/* 3. MAIN CONTENT & BOOKING SIDEBAR */}
-      <main className="template-page-bg min-h-screen px-6 py-16 md:px-12">
-        <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[1fr_380px]">
+      <main className="template-page-bg min-h-screen px-4 sm:px-6 py-10 sm:py-16 md:px-12">
+        <div className="mx-auto grid max-w-7xl gap-8 sm:gap-12 lg:grid-cols-[1fr_380px]">
           {/* LEFT: Detailed Info */}
-          <div className="space-y-12">
+          <div className="space-y-8 sm:space-y-12">
             {/* Highlights */}
-            <div className="rounded-[2px] bg-white p-8 shadow-sm border border-slate-100">
-              <h2 className="script-title text-3xl md:text-4xl text-[#1e293b]">
+            <div className="rounded-[2px] bg-white p-5 sm:p-8 shadow-sm border border-slate-100">
+              <h2 className="script-title text-2xl sm:text-3xl md:text-4xl text-[#1e293b]">
                 {td.highlightsTitle}
               </h2>
               <div className="mt-6 grid gap-4 sm:grid-cols-2">
@@ -197,11 +197,11 @@ export default async function TourDetailPage({ params }: TourDetailPageProps) {
 
             {/* Photo Gallery if available */}
             {tour.gallery && tour.gallery.length > 1 && (
-              <div className="rounded-[2px] bg-white p-8 shadow-sm border border-slate-100">
-                <h2 className="script-title text-3xl md:text-4xl text-[#1e293b] mb-6">
+              <div className="rounded-[2px] bg-white p-5 sm:p-8 shadow-sm border border-slate-100">
+                <h2 className="script-title text-2xl sm:text-3xl md:text-4xl text-[#1e293b] mb-4 sm:mb-6">
                   {isEn ? "Tour Experience Gallery" : "Hình Ảnh Trải Nghiệm"}
                 </h2>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3">
                   {tour.gallery.map((img, idx) => (
                     <div
                       key={idx}
@@ -221,8 +221,8 @@ export default async function TourDetailPage({ params }: TourDetailPageProps) {
             )}
 
             {/* Day-by-Day Itinerary */}
-            <div className="rounded-[2px] bg-white p-8 shadow-sm border border-slate-100">
-              <h2 className="script-title text-3xl md:text-4xl text-[#1e293b]">
+            <div className="rounded-[2px] bg-white p-5 sm:p-8 shadow-sm border border-slate-100">
+              <h2 className="script-title text-2xl sm:text-3xl md:text-4xl text-[#1e293b]">
                 {td.itineraryTitle}
               </h2>
               <p className="mt-2 text-xs md:text-sm text-slate-500 font-light">
@@ -231,37 +231,37 @@ export default async function TourDetailPage({ params }: TourDetailPageProps) {
                   : "Hành trình được thiết kế chuẩn mực bởi chuyên gia du lịch địa phương, đảm bảo cân bằng giữa trải nghiệm và nghỉ dưỡng."}
               </p>
 
-              <div className="mt-8 space-y-6">
+              <div className="mt-6 sm:mt-8 space-y-4 sm:space-y-6">
                 {tour.itinerary.map((day) => (
                   <div
                     key={day.day}
-                    className="relative border-l-2 border-[#0098a2]/30 pl-6 pb-6 last:pb-0"
+                    className="relative border-l-2 border-[#0098a2]/30 pl-5 sm:pl-6 pb-5 sm:pb-6 last:pb-0"
                   >
                     {/* Day Marker */}
                     <div className="absolute -left-[11px] top-0 flex size-5 items-center justify-center rounded-full bg-[#0098a2] text-[10px] font-bold text-white shadow-sm">
                       {day.day}
                     </div>
 
-                    <h3 className="display-title text-lg md:text-xl font-bold text-[#1e293b]">
+                    <h3 className="display-title text-base sm:text-lg md:text-xl font-bold text-[#1e293b]">
                       {td.dayLabel} {day.day}: {day.title}
                     </h3>
 
-                    <div className="mt-4 space-y-3 text-xs md:text-sm text-slate-600 font-light leading-relaxed">
-                      <div className="rounded-[2px] bg-slate-50 p-3.5 border border-slate-100">
+                    <div className="mt-3 sm:mt-4 space-y-2.5 sm:space-y-3 text-xs md:text-sm text-slate-600 font-light leading-relaxed">
+                      <div className="rounded-[2px] bg-slate-50 p-3 sm:p-3.5 border border-slate-100">
                         <span className="font-bold text-slate-900 block mb-1">
                           {td.morning}:
                         </span>
                         {day.morning}
                       </div>
 
-                      <div className="rounded-[2px] bg-slate-50 p-3.5 border border-slate-100">
+                      <div className="rounded-[2px] bg-slate-50 p-3 sm:p-3.5 border border-slate-100">
                         <span className="font-bold text-slate-900 block mb-1">
                           {td.afternoon}:
                         </span>
                         {day.afternoon}
                       </div>
 
-                      <div className="rounded-[2px] bg-slate-50 p-3.5 border border-slate-100">
+                      <div className="rounded-[2px] bg-slate-50 p-3 sm:p-3.5 border border-slate-100">
                         <span className="font-bold text-slate-900 block mb-1">
                           {td.evening}:
                         </span>
@@ -274,14 +274,14 @@ export default async function TourDetailPage({ params }: TourDetailPageProps) {
             </div>
 
             {/* Inclusions & Exclusions */}
-            <div className="grid gap-6 md:grid-cols-2">
+            <div className="grid gap-4 sm:gap-6 md:grid-cols-2">
               {/* Inclusions */}
-              <div className="rounded-[2px] bg-white p-7 shadow-sm border border-slate-100">
-                <h3 className="display-title text-lg font-bold text-emerald-800 flex items-center gap-2 mb-4">
-                  <CheckCircle2 className="size-5 text-emerald-600" />
+              <div className="rounded-[2px] bg-white p-5 sm:p-7 shadow-sm border border-slate-100">
+                <h3 className="display-title text-base sm:text-lg font-bold text-emerald-800 flex items-center gap-2 mb-3 sm:mb-4">
+                  <CheckCircle2 className="size-4 sm:size-5 text-emerald-600" />
                   {td.inclusionsTitle}
                 </h3>
-                <ul className="space-y-2.5 text-xs md:text-sm font-light text-slate-600">
+                <ul className="space-y-2 sm:space-y-2.5 text-xs md:text-sm font-light text-slate-600">
                   {tour.inclusions.map((item, idx) => (
                     <li key={idx} className="flex items-start gap-2">
                       <span className="text-emerald-500 font-bold">✓</span>
@@ -292,12 +292,12 @@ export default async function TourDetailPage({ params }: TourDetailPageProps) {
               </div>
 
               {/* Exclusions */}
-              <div className="rounded-[2px] bg-white p-7 shadow-sm border border-slate-100">
-                <h3 className="display-title text-lg font-bold text-rose-800 flex items-center gap-2 mb-4">
-                  <XCircle className="size-5 text-rose-600" />
+              <div className="rounded-[2px] bg-white p-5 sm:p-7 shadow-sm border border-slate-100">
+                <h3 className="display-title text-base sm:text-lg font-bold text-rose-800 flex items-center gap-2 mb-3 sm:mb-4">
+                  <XCircle className="size-4 sm:size-5 text-rose-600" />
                   {td.exclusionsTitle}
                 </h3>
-                <ul className="space-y-2.5 text-xs md:text-sm font-light text-slate-600">
+                <ul className="space-y-2 sm:space-y-2.5 text-xs md:text-sm font-light text-slate-600">
                   {tour.exclusions.map((item, idx) => (
                     <li key={idx} className="flex items-start gap-2">
                       <span className="text-rose-500 font-bold">✕</span>
@@ -314,8 +314,8 @@ export default async function TourDetailPage({ params }: TourDetailPageProps) {
             <TourBookingCard tour={tour} />
 
             {/* Direct Support Card */}
-            <div className="rounded-[2px] bg-[#1e293b] p-6 text-white shadow-md">
-              <h4 className="display-title text-lg font-bold text-white">
+            <div className="rounded-[2px] bg-[#1e293b] p-5 sm:p-6 text-white shadow-md">
+              <h4 className="display-title text-base sm:text-lg font-bold text-white">
                 {isEn ? "Need a Bespoke Itinerary?" : "Cần Tư Vấn Lịch Trình Riêng?"}
               </h4>
               <p className="mt-2 text-xs font-light text-slate-300 leading-relaxed">

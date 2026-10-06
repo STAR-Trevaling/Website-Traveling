@@ -37,8 +37,8 @@ export function TourBookingCard({ tour }: TourBookingCardProps) {
 
   return (
     <>
-      <div className="rounded-[2px] bg-white p-7 shadow-md border border-slate-100">
-        <div className="flex items-baseline justify-between border-b border-slate-100 pb-5">
+      <div className="rounded-[2px] bg-white p-5 sm:p-7 shadow-md border border-slate-100">
+        <div className="flex items-baseline justify-between border-b border-slate-100 pb-4 sm:pb-5">
           <div>
             <span className="text-[11px] text-slate-400 font-light block">{b.priceFrom}</span>
             <div className="flex items-baseline gap-2">
@@ -168,7 +168,7 @@ export function TourBookingCard({ tour }: TourBookingCardProps) {
       {/* BOOKING MODAL */}
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm">
-          <div className="relative w-full max-w-lg rounded-[2px] bg-white p-8 shadow-2xl">
+          <div className="relative w-full max-w-lg rounded-[2px] bg-white p-5 sm:p-8 shadow-2xl">
             {isBooked ? (
               <div className="py-8 text-center">
                 <div className="mx-auto flex size-14 items-center justify-center rounded-full bg-emerald-100 text-emerald-600">

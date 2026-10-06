@@ -86,21 +86,21 @@ export default async function ExperiencesPage({ searchParams }: ExperiencesPageP
         image={VIETNAM_IMAGES.oceanBanner}
       />
 
-      <main className="template-page-bg min-h-screen text-[#282828] px-6 py-16 md:px-12 lg:px-16 overflow-x-hidden">
+      <main className="template-page-bg min-h-screen text-[#282828] px-4 sm:px-6 py-10 sm:py-16 md:px-12 lg:px-16 overflow-x-hidden">
         <div className="mx-auto max-w-7xl">
           {/* HEADER & FILTER BAR */}
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 pb-10 border-b border-slate-200">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 sm:gap-6 pb-6 sm:pb-10 border-b border-slate-200">
             <div>
               <span className="text-xs font-bold uppercase tracking-[0.25em] text-slate-900">
                 {ep.badge}
               </span>
-              <h2 className="script-title mt-1 text-4xl md:text-5xl text-[#1e293b]">
+              <h2 className="script-title mt-1 text-3xl sm:text-4xl md:text-5xl text-[#1e293b]">
                 {ep.heading}
               </h2>
             </div>
 
             {/* Category Filter Pills */}
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-1.5 sm:gap-2">
               {categories.map((cat) => {
                 const isActive = currentCategory === cat.slug;
                 const href = cat.slug ? `/experiences?category=${cat.slug}` : "/experiences";
@@ -108,7 +108,7 @@ export default async function ExperiencesPage({ searchParams }: ExperiencesPageP
                   <Link
                     key={cat.slug || "all"}
                     href={href}
-                    className={`px-4 py-2 text-xs font-semibold uppercase tracking-wider rounded-[2px] transition-all duration-200 cursor-pointer ${
+                    className={`px-3 sm:px-4 py-1.5 sm:py-2 text-[11px] sm:text-xs font-semibold uppercase tracking-wider rounded-[2px] transition-all duration-200 cursor-pointer ${
                       isActive
                         ? "bg-[#0098a2] text-white shadow-[0px_4px_14px_rgba(0,152,162,0.35)]"
                         : "bg-white text-slate-700 hover:bg-white hover:border-slate-400 hover:shadow-[0px_4px_16px_rgba(0,0,0,0.08)] hover:-translate-y-0.5 border border-slate-200"
@@ -122,16 +122,16 @@ export default async function ExperiencesPage({ searchParams }: ExperiencesPageP
           </div>
 
           {/* MAIN EXPERIENCES GRID */}
-          <div className="mt-12">
+          <div className="mt-8 sm:mt-12">
             {items.length > 0 ? (
-              <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+              <div className="grid gap-6 sm:gap-8 sm:grid-cols-2 lg:grid-cols-3">
                 {items.map((place) => (
                   <PlaceCard key={place.id} place={place} />
                 ))}
               </div>
             ) : (
-              <div className="py-24 text-center rounded-[2px] bg-white/70 p-12 border border-slate-100">
-                <p className="text-lg text-slate-500 font-light">
+              <div className="py-16 sm:py-24 text-center rounded-[2px] bg-white/70 p-6 sm:p-12 border border-slate-100">
+                <p className="text-sm sm:text-lg text-slate-500 font-light">
                   {params.search
                     ? ep.noResultsSearch.replace("{search}", params.search)
                     : ep.noResults}
@@ -149,24 +149,24 @@ export default async function ExperiencesPage({ searchParams }: ExperiencesPageP
           </div>
 
           {/* CALL TO ACTION SECTION */}
-          <section className="mt-24 w-full bg-white/85 backdrop-blur-md py-16 text-center rounded-[2px] border border-white/60 shadow-sm">
-            <div className="mx-auto max-w-3xl px-6">
-              <h2 className="script-title text-4xl sm:text-5xl text-[#1e293b]">
+          <section className="mt-14 sm:mt-24 w-full bg-white/85 backdrop-blur-md py-10 sm:py-16 text-center rounded-[2px] border border-white/60 shadow-sm">
+            <div className="mx-auto max-w-3xl px-4 sm:px-6">
+              <h2 className="script-title text-3xl sm:text-4xl md:text-5xl text-[#1e293b]">
                 {ep.ctaHeading}
               </h2>
-              <p className="mt-3 text-sm md:text-base text-[#4b5563] font-light max-w-xl mx-auto leading-relaxed">
+              <p className="mt-2.5 sm:mt-3 text-xs sm:text-sm md:text-base text-[#4b5563] font-light max-w-xl mx-auto leading-relaxed">
                 {ep.ctaDesc}
               </p>
-              <div className="mt-6 flex flex-wrap items-center justify-center gap-4">
+              <div className="mt-6 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
                 <Link
                   href="/tours"
-                  className="border border-slate-700/70 bg-white text-[#1e293b] px-8 py-3 text-xs md:text-sm font-bold tracking-[0.2em] uppercase rounded-[2px] template-shadow-text shadow-sm transition-all duration-200 hover:border-black hover:text-black hover:bg-slate-50 hover:shadow-[0px_8px_25px_rgba(0,0,0,0.15)] hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
+                  className="border border-slate-700/70 bg-white text-[#1e293b] px-6 sm:px-8 py-2.5 sm:py-3 text-xs md:text-sm font-bold tracking-[0.18em] sm:tracking-[0.2em] uppercase rounded-[2px] template-shadow-text shadow-sm transition-all duration-200 hover:border-black hover:text-black hover:bg-slate-50 hover:shadow-[0px_8px_25px_rgba(0,0,0,0.15)] hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
                 >
                   {ep.ctaToursBtn}
                 </Link>
                 <Link
                   href="/contact"
-                  className="bg-white text-[#1e293b] border border-slate-300 px-8 py-3 text-xs md:text-sm font-semibold tracking-widest uppercase rounded-[2px] shadow-sm transition-all duration-200 hover:bg-white hover:border-slate-400 hover:shadow-[0px_6px_20px_rgba(0,0,0,0.10)] hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
+                  className="bg-white text-[#1e293b] border border-slate-300 px-6 sm:px-8 py-2.5 sm:py-3 text-xs md:text-sm font-semibold tracking-widest uppercase rounded-[2px] shadow-sm transition-all duration-200 hover:bg-white hover:border-slate-400 hover:shadow-[0px_6px_20px_rgba(0,0,0,0.10)] hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
                 >
                   {ep.ctaConsultBtn}
                 </Link>

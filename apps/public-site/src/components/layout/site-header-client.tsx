@@ -18,6 +18,7 @@ import {
 import type { CurrentUser } from "@/lib/types";
 import { useLanguage } from "@/lib/i18n/context";
 import { MobileNav } from "./mobile-nav";
+import { StarLogo } from "@/components/shared/star-logo";
 
 interface SiteHeaderClientProps {
   user: CurrentUser | null;
@@ -60,8 +61,13 @@ export function SiteHeaderClient({ user, overlay = false }: SiteHeaderClientProp
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-12">
         <div className="flex h-16 items-center justify-between text-xs md:text-sm font-normal">
-          {/* Left: Social Icons (Instagram, Twitter, Facebook) */}
-          <div className="flex items-center gap-3 sm:gap-4">
+          {/* Mobile Brand Logo (< md screen) */}
+          <div className="flex md:hidden items-center">
+            <StarLogo variant="horizontal" size="sm" inverted={overlay} />
+          </div>
+
+          {/* Desktop Left: Social Icons (hidden on mobile to make room for brand logo) */}
+          <div className="hidden md:flex items-center gap-3 sm:gap-4">
             <a
               href="https://instagram.com"
               target="_blank"
@@ -91,7 +97,7 @@ export function SiteHeaderClient({ user, overlay = false }: SiteHeaderClientProp
             </a>
           </div>
 
-          {/* Center: Bilingual Goal-Based Navigation Links with Dropdowns */}
+          {/* Center: Bilingual Goal-Based Navigation Links with Dropdowns (Desktop Only) */}
           <nav className="hidden md:flex items-center gap-5 lg:gap-7 xl:gap-8 text-xs md:text-sm lg:text-[14px] font-normal whitespace-nowrap">
             {navItems.map((item) => {
               if (item.type === "link") {
@@ -158,7 +164,7 @@ export function SiteHeaderClient({ user, overlay = false }: SiteHeaderClientProp
             })}
           </nav>
 
-          {/* Right: Phone, Email, Login & Language Switcher */}
+          {/* Right: Phone, Email, Login & Mobile Navigation Toggle */}
           <div className="flex items-center gap-2.5 sm:gap-3.5 lg:gap-4 text-xs lg:text-sm">
             <span
               className={
@@ -182,15 +188,15 @@ export function SiteHeaderClient({ user, overlay = false }: SiteHeaderClientProp
               {t.nav.emailLabel}
             </a>
 
-            {/* Account Icon (No text label as requested) */}
+            {/* Account Icon */}
             <Link
               href={user ? "/account" : "/login"}
               aria-label={user ? user.username : t.nav.login}
               title={user ? user.username : t.nav.login}
               className={
                 overlay
-                  ? "hidden sm:flex items-center justify-center p-1.5 rounded-full hover:bg-white/15 transition text-white"
-                  : "hidden sm:flex items-center justify-center p-1.5 rounded-full hover:bg-slate-100 text-slate-800 transition hover:text-[#0098a2]"
+                  ? "flex items-center justify-center p-2 rounded-full hover:bg-white/15 transition text-white"
+                  : "flex items-center justify-center p-2 rounded-full hover:bg-slate-100 text-slate-800 transition hover:text-[#0098a2]"
               }
             >
               <UserRound className="size-4.5 opacity-90" />

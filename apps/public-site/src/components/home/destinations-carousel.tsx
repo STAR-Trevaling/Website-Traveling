@@ -34,22 +34,22 @@ export function DestinationsCarousel({ initialDestinations }: DestinationsCarous
     <div className="relative w-full">
       {/* Cards Grid with Navigation Buttons */}
       <div className="relative">
-        {/* Floating Left Arrow: pure white chevron with drop shadow */}
+        {/* Desktop Floating Left Arrow (Hidden on mobile to eliminate overflow bugs) */}
         <button
           type="button"
           onClick={handlePrev}
           aria-label={isEn ? "Previous destinations" : "Điểm đến trước"}
-          className="absolute -left-6 md:-left-12 top-1/2 z-20 -translate-y-1/2 text-white/90 hover:text-white transition drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)] hover:scale-110 cursor-pointer"
+          className="hidden md:flex absolute -left-12 lg:-left-16 top-1/2 z-20 -translate-y-1/2 text-white/90 hover:text-white transition drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)] hover:scale-110 cursor-pointer"
         >
           <ChevronLeft className="size-12 md:size-16 stroke-[1.2]" />
         </button>
 
-        {/* Floating Right Arrow: pure white chevron with drop shadow */}
+        {/* Desktop Floating Right Arrow (Hidden on mobile to eliminate overflow bugs) */}
         <button
           type="button"
           onClick={handleNext}
           aria-label={isEn ? "Next destinations" : "Điểm đến tiếp theo"}
-          className="absolute -right-6 md:-right-12 top-1/2 z-20 -translate-y-1/2 text-white/90 hover:text-white transition drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)] hover:scale-110 cursor-pointer"
+          className="hidden md:flex absolute -right-12 lg:-right-16 top-1/2 z-20 -translate-y-1/2 text-white/90 hover:text-white transition drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)] hover:scale-110 cursor-pointer"
         >
           <ChevronRight className="size-12 md:size-16 stroke-[1.2]" />
         </button>
@@ -68,7 +68,7 @@ export function DestinationsCarousel({ initialDestinations }: DestinationsCarous
                 title={displayName}
               >
                 <article className="overflow-hidden bg-white shadow-md transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl rounded-[2px]">
-                  <div className="relative h-[230px] md:h-[240px] w-full overflow-hidden bg-slate-100">
+                  <div className="relative h-[220px] sm:h-[230px] md:h-[240px] w-full overflow-hidden bg-slate-100">
                     <Image
                       src={d.image_url}
                       alt={displayName}
@@ -78,12 +78,11 @@ export function DestinationsCarousel({ initialDestinations }: DestinationsCarous
                     />
                   </div>
 
-                  {/* White strip on bottom with script title */}
-                  <div className="p-4 pt-3.5 pb-4 min-h-[92px] flex flex-col justify-center">
-                    <h3 className="script-title text-2xl font-bold leading-none text-[#222] group-hover:text-amber-700 transition-colors truncate">
+                  <div className="p-4 sm:p-5">
+                    <h3 className="display-title text-xl sm:text-2xl font-bold tracking-wider text-[#1e293b] uppercase">
                       {displayName}
                     </h3>
-                    <p className="mt-2 line-clamp-2 text-[11px] font-normal leading-relaxed text-[#777]">
+                    <p className="mt-2 line-clamp-2 text-xs sm:text-sm font-light text-[#555] leading-relaxed">
                       {displaySummary}
                     </p>
                   </div>
@@ -91,6 +90,41 @@ export function DestinationsCarousel({ initialDestinations }: DestinationsCarous
               </Link>
             );
           })}
+        </div>
+
+        {/* Mobile Navigation Controls: Clean Buttons & Dots */}
+        <div className="flex md:hidden items-center justify-between mt-6 px-1">
+          <button
+            type="button"
+            onClick={handlePrev}
+            className="flex items-center gap-1 px-3 py-2 text-xs font-semibold text-slate-700 bg-white/95 rounded-[2px] border border-slate-200 shadow-sm active:scale-95"
+            aria-label={isEn ? "Previous" : "Trước"}
+          >
+            <ChevronLeft className="size-4" />
+            <span>{isEn ? "Previous" : "Trước"}</span>
+          </button>
+          <div className="flex items-center gap-1.5">
+            {Array.from({ length: totalPages }).map((_, idx) => (
+              <button
+                key={idx}
+                type="button"
+                onClick={() => setCurrentPage(idx)}
+                aria-label={`Page ${idx + 1}`}
+                className={`h-1.5 rounded-full transition-all duration-300 ${
+                  idx === currentPage ? "w-5 bg-[#0098a2]" : "w-1.5 bg-slate-300"
+                }`}
+              />
+            ))}
+          </div>
+          <button
+            type="button"
+            onClick={handleNext}
+            className="flex items-center gap-1 px-3 py-2 text-xs font-semibold text-slate-700 bg-white/95 rounded-[2px] border border-slate-200 shadow-sm active:scale-95"
+            aria-label={isEn ? "Next" : "Sau"}
+          >
+            <span>{isEn ? "Next" : "Sau"}</span>
+            <ChevronRight className="size-4" />
+          </button>
         </div>
       </div>
     </div>

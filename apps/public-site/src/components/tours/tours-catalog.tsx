@@ -51,11 +51,11 @@ export function ToursCatalog() {
   return (
     <div className="w-full">
       {/* Search & Filter Bar */}
-      <div className="mb-12 rounded-[2px] bg-white/90 p-6 md:p-8 shadow-sm border border-slate-100">
-        <div className="grid gap-6 md:grid-cols-[1fr_auto_auto]">
+      <div className="mb-8 sm:mb-12 rounded-[2px] bg-white/90 p-4 sm:p-6 md:p-8 shadow-sm border border-slate-100">
+        <div className="grid gap-4 sm:gap-6 md:grid-cols-[1fr_auto_auto]">
           {/* Search Input */}
           <div>
-            <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-2">
+            <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-1.5 sm:mb-2">
               {t.toursPage.searchLabel}
             </label>
             <input
@@ -63,22 +63,22 @@ export function ToursCatalog() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder={t.toursPage.searchPlaceholder}
-              className="w-full rounded-[2px] border border-slate-200 bg-slate-50 px-4 py-3 text-sm focus:border-[#0098a2] focus:bg-white focus:outline-none focus:ring-1 focus:ring-[#0098a2]"
+              className="w-full rounded-[2px] border border-slate-200 bg-slate-50 px-3.5 sm:px-4 py-2.5 sm:py-3 text-xs sm:text-sm focus:border-[#0098a2] focus:bg-white focus:outline-none focus:ring-1 focus:ring-[#0098a2]"
             />
           </div>
 
           {/* Region Tabs */}
           <div>
-            <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-2">
+            <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-1.5 sm:mb-2">
               {t.toursPage.regionLabel}
             </label>
-            <div className="flex flex-wrap gap-2">
+            <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-1.5 sm:gap-2">
               {regionTabs.map((r) => (
                 <button
                   key={r.key}
                   type="button"
                   onClick={() => setSelectedRegion(r.key)}
-                  className={`rounded-[2px] px-4 py-3 text-xs md:text-sm font-semibold transition-all duration-200 uppercase tracking-wider cursor-pointer ${
+                  className={`rounded-[2px] px-3 sm:px-4 py-2.5 sm:py-3 text-xs md:text-sm font-semibold transition-all duration-200 uppercase tracking-wider text-center cursor-pointer ${
                     selectedRegion === r.key
                       ? "bg-[#0098a2] text-white shadow-[0px_4px_14px_rgba(0,152,162,0.35)]"
                       : "bg-slate-100 text-slate-600 hover:bg-white hover:shadow-[0px_4px_16px_rgba(0,0,0,0.08)] hover:-translate-y-0.5"
@@ -92,13 +92,13 @@ export function ToursCatalog() {
 
           {/* Sort By */}
           <div>
-            <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-2">
+            <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-1.5 sm:mb-2">
               {t.toursPage.sortLabel}
             </label>
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as any)}
-              className="h-[46px] rounded-[2px] border border-slate-200 bg-white px-4 text-xs md:text-sm font-medium text-slate-700 focus:border-[#0098a2] focus:outline-none"
+              className="w-full md:w-auto h-[42px] sm:h-[46px] rounded-[2px] border border-slate-200 bg-white px-3 sm:px-4 text-xs md:text-sm font-medium text-slate-700 focus:border-[#0098a2] focus:outline-none"
             >
               <option value="featured">{t.toursPage.sortOptions.featured}</option>
               <option value="price-asc">{t.toursPage.sortOptions.priceAsc}</option>
@@ -109,14 +109,14 @@ export function ToursCatalog() {
       </div>
 
       {/* Results Count */}
-      <div className="mb-6 flex items-center justify-between">
+      <div className="mb-4 sm:mb-6 flex items-center justify-between">
         <p className="text-xs md:text-sm font-medium text-slate-600">
           {t.toursPage.resultsFoundText.replace("{count}", String(filteredTours.length))}
         </p>
       </div>
 
       {/* Tour Cards Grid */}
-      <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-3">
         {filteredTours.map((tour) => {
           const displayTitle = isEnglish && tour.title_en ? tour.title_en : tour.title;
           const displayDuration = isEnglish && tour.duration_en ? tour.duration_en : tour.duration;
