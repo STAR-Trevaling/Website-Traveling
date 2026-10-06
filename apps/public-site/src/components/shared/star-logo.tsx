@@ -68,28 +68,28 @@ export function StarLogo({
     },
   }[size];
 
-  const textColor = inverted ? "text-white" : "text-slate-900";
-  const descColor = inverted ? "text-white/85" : "text-slate-500";
+  const textColor = inverted ? "text-white" : "text-slate-950";
+  const descColor = inverted ? "text-white/90" : "text-slate-600";
 
-  // Luxury 3D Faceted Golden Star Jewel with metallic light/shadow facets
+  // Luxury 3D Faceted Golden Star Emblem with radiant, luminous 18K gold tones (No muddy browns)
   const StarIcon = ({ iconClass = "" }: { iconClass?: string }) => (
     <svg
       viewBox="0 0 100 100"
       aria-hidden="true"
-      className={`shrink-0 drop-shadow-[0_4px_24px_rgba(234,179,8,0.5)] transition-all duration-500 group-hover:scale-105 pointer-events-none ${iconClass}`}
+      className={`shrink-0 drop-shadow-[0_4px_20px_rgba(234,179,8,0.4)] transition-all duration-500 group-hover:scale-105 pointer-events-none ${iconClass}`}
     >
       <defs>
-        {/* Facet Light Gradient: High-luster 18K Radiant Gold */}
+        {/* Facet Light Gradient: High-luster Radiant 18K Champagne Gold */}
         <linearGradient id="starLightGold" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#FFF9D2" />
-          <stop offset="45%" stopColor="#FACC15" />
-          <stop offset="100%" stopColor="#EAB308" />
+          <stop offset="0%" stopColor="#FFFBEB" />
+          <stop offset="45%" stopColor="#FEF08A" />
+          <stop offset="100%" stopColor="#FBBF24" />
         </linearGradient>
-        {/* Facet Shadow Gradient: Antique Burnished Bronze Gold */}
+        {/* Facet Shadow Gradient: Warm Luminous Golden Amber (Crisp, clean, no dark brown) */}
         <linearGradient id="starDarkGold" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#CA8A04" />
-          <stop offset="60%" stopColor="#A16207" />
-          <stop offset="100%" stopColor="#713F12" />
+          <stop offset="0%" stopColor="#FDE047" />
+          <stop offset="55%" stopColor="#F59E0B" />
+          <stop offset="100%" stopColor="#D97706" />
         </linearGradient>
       </defs>
 
@@ -108,7 +108,7 @@ export function StarLogo({
       <polygon points="50,50 7.2,36.1 33.6,55.3" fill="url(#starDarkGold)" />
 
       {/* Center Core Jewel Sparkle */}
-      <circle cx="50" cy="50" r="2.4" fill="#FEF9C3" stroke="#92400E" strokeWidth="0.6" />
+      <circle cx="50" cy="50" r="2" fill="#FEF9C3" stroke="#F59E0B" strokeWidth="0.5" opacity="0.85" />
     </svg>
   );
 
@@ -122,20 +122,20 @@ export function StarLogo({
     }
 
     if (variant === "integrated" || variant === "script") {
-      // Large 3D star emblem encompassing behind flowing script wordmark
+      // Large 3D golden star emblem watermark behind brand name - never drowns out or overpowers text
       return (
         <div
           className={`relative inline-flex items-center justify-center text-center select-none ${sizeClasses.container} ${className}`}
         >
-          {/* Large Golden Star Emblem positioned BEHIND brand name (Encompassing backdrop) */}
+          {/* Luminous Golden Star Backdrop (Crisp 5-point faceted star, warm gold without dark brown) */}
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
-            <StarIcon iconClass={`${sizeClasses.starBg} opacity-90 group-hover:opacity-100 transition-opacity`} />
+            <StarIcon iconClass={`${sizeClasses.starBg} opacity-70 sm:opacity-75 group-hover:opacity-90 transition-opacity`} />
           </div>
 
-          {/* Brand Name Text lying directly ON TOP OF the star (Brand name nằm đè lên ngôi sao) */}
+          {/* Brand Name Text lying directly ON TOP OF the star with bold calligraphy stroke and radiant light halo */}
           <span
-            className={`logo-title ${sizeClasses.scriptText} leading-none ${textColor} select-none tracking-normal font-normal relative z-10 flex items-baseline drop-shadow-[0_2px_4px_rgba(255,255,255,0.95)] drop-shadow-[0_0_8px_rgba(255,255,255,0.85)] ${
-              inverted ? "drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]" : ""
+            className={`logo-title ${sizeClasses.scriptText} leading-none ${textColor} select-none tracking-normal font-bold relative z-10 flex items-baseline [-webkit-text-stroke:0.6px_currentColor] drop-shadow-[0_2px_4px_rgba(255,255,255,1)] drop-shadow-[0_0_10px_rgba(255,255,255,0.95)] drop-shadow-[0_0_22px_rgba(255,255,255,0.9)] ${
+              inverted ? "drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)]" : ""
             }`}
           >
             <span>Star</span>
@@ -145,20 +145,20 @@ export function StarLogo({
       );
     }
 
-    // Default & Stacked / Horizontal Lockup: Large 3D star emblem behind, STAR & TRAVELS text overlaid on top
+    // Default & Stacked / Horizontal Lockup: Luminous golden star backdrop, STAR & TRAVELS text overlaid on top
     return (
       <div
         className={`relative inline-flex items-center justify-center text-center select-none ${sizeClasses.container} ${className}`}
       >
-        {/* Large 3D Faceted Golden Star positioned BEHIND text (Encompasses brand name) */}
+        {/* Luminous Golden Star Backdrop */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
-          <StarIcon iconClass={`${sizeClasses.starBg} opacity-90 group-hover:opacity-100 transition-opacity`} />
+          <StarIcon iconClass={`${sizeClasses.starBg} opacity-70 sm:opacity-75 group-hover:opacity-90 transition-opacity`} />
         </div>
 
         {/* Brand Name Text overlaid ON TOP OF the star */}
         <div className={`relative z-10 flex flex-col items-center justify-center leading-none ${sizeClasses.padding}`}>
           <span
-            className={`brand-wordmark font-bold uppercase tracking-[0.18em] ${sizeClasses.text} ${textColor} leading-none transition-colors duration-200 group-hover:text-amber-400 drop-shadow-[0_1px_3px_rgba(255,255,255,0.8)] ${
+            className={`brand-wordmark font-bold uppercase tracking-[0.18em] ${sizeClasses.text} ${textColor} leading-none transition-colors duration-200 group-hover:text-amber-500 drop-shadow-[0_1px_4px_rgba(255,255,255,1)] drop-shadow-[0_0_10px_rgba(255,255,255,0.95)] ${
               inverted ? "drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]" : ""
             }`}
           >
@@ -166,7 +166,7 @@ export function StarLogo({
           </span>
           {showDescriptor && (
             <span
-              className={`tracking-[0.28em] uppercase font-semibold ${sizeClasses.desc} ${descColor} mt-0.5 sm:mt-1 leading-none drop-shadow-[0_1px_2px_rgba(255,255,255,0.7)] ${
+              className={`tracking-[0.28em] uppercase font-semibold ${sizeClasses.desc} ${descColor} mt-0.5 sm:mt-1 leading-none drop-shadow-[0_1px_2px_rgba(255,255,255,1)] drop-shadow-[0_0_8px_rgba(255,255,255,0.9)] ${
                 inverted ? "drop-shadow-[0_1px_6px_rgba(0,0,0,0.85)]" : ""
               }`}
             >
