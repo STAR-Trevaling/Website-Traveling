@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Alegreya+Sans:wght@300;400;700&family=Allison&family=Grape+Nuts&family=Work+Sans:wght@200;300;400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Cinzel:wght@600;700;800;900&family=Alegreya+Sans:wght@300;400;700&family=Allison&family=Grape+Nuts&family=Work+Sans:wght@200;300;400;500;600&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -21,6 +21,7 @@
 .script-title { font-family:"Grape Nuts",cursive; }
 .display-title { font-family:"Abril Fatface",serif; }
 .logo-title { font-family:"Allison",cursive; }
+.brand-wordmark { font-family:"Cinzel","Playfair Display",Georgia,serif; }
 
 /* Custom Cinematic Motion & Luxury Travel Micro-animations */
 @keyframes fadeInUp {
