@@ -55,7 +55,13 @@
   - Enforced dual-element logo design contract: Every logo instance **must** contain both the brand name (**`STAR`**) and the star emblem/icon (**Hình ngôi sao** - 5-pointed golden star `#EAB308`).
   - Documented complete vector geometry (SVG polygon points, 72° symmetry, golden ratio $0.382$), color hierarchy (`#EAB308` Gold, `#1E293B` Slate, `#0098A2` Teal), typography pairings, clear space ($0.5X$), and prohibited anti-patterns.
   - Implemented reusable production component `<StarLogo />` (`apps/public-site/src/components/shared/star-logo.tsx`) supporting multiple lockup variants (`integrated`, `horizontal`, `stacked`, `icon-only`) and sizing scales (`sm`, `md`, `lg`, `xl`).
-  - Integrated `<StarLogo />` into `SiteFooter` and `MobileNav`, and documented standards in `AGENTS.md` and `context/ui-context.md`.
+- Centralized Seed Data Architecture (`apps/public-site/src/data/seed/`):
+  - Consolidated all decoupled frontend seed and mock datasets (destinations, curated tours, adventures/experiences, editorial stories) into a single, dedicated data repository (`apps/public-site/src/data/seed/`).
+  - Implemented modular datasets: `destinations.ts`, `tours.ts`, `experiences.ts`, `stories.ts`, and master index `index.ts` exporting unified `SEED_DATA` object and `seedFinder` lookup helpers.
+  - Provided root export at `@/data` and `@/data/seed` for clean, ergonomic import ergonomics across customer components and routes.
+  - Maintained 100% backward compatibility via deprecation re-export shims in `src/lib/*-data.ts`.
+  - Migrated sitemap, catalog, detail pages, and home components to direct `@/data/seed` imports.
+  - Created comprehensive documentation and maintenance guide (`src/data/seed/README.md`).
 
 ## Validation status
 - GitHub Actions CI (Run #10) & CodeQL Analysis: **PASSED (All 3 jobs green)**.

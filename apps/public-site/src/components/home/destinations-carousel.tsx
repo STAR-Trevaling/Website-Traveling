@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import type { Destination } from "@/lib/types";
-import { VIETNAM_DESTINATIONS_PAGES } from "@/lib/destinations-data";
+import { VIETNAM_DESTINATIONS_PAGES } from "@/data/seed";
 import { useLanguage } from "@/lib/i18n/context";
 
 interface DestinationsCarouselProps {

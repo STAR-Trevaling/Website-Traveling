@@ -4,7 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { VIETNAM_TOURS, type TourItem } from "@/lib/tours-data";
+import { VIETNAM_TOURS, type TourItem } from "@/data/seed";
 import { useLanguage } from "@/lib/i18n/context";
 
 interface FeaturedToursProps {

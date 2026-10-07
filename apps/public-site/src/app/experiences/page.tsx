@@ -6,7 +6,7 @@ import { SiteHeader } from "@/components/layout/site-header";
 import { PlaceCard } from "@/components/shared/place-card";
 import { publicApi, safe } from "@/lib/api";
 import { VIETNAM_IMAGES } from "@/lib/assets";
-import { VIETNAM_EXPERIENCES } from "@/lib/experiences-data";
+import { VIETNAM_EXPERIENCES } from "@/data/seed";
 import { DICTIONARY } from "@/lib/i18n/dictionary";
 import type { Locale } from "@/lib/i18n/types";
 

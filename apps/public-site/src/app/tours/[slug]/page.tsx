@@ -15,7 +15,7 @@ import {
   PhoneCall,
 } from "lucide-react";
 import { SiteHeader } from "@/components/layout/site-header";
-import { getTourBySlug, VIETNAM_TOURS } from "@/lib/tours-data";
+import { getTourBySlug, VIETNAM_TOURS } from "@/data/seed";
 import { TourBookingCard } from "@/components/tours";
 import { DICTIONARY } from "@/lib/i18n/dictionary";
 import type { Locale } from "@/lib/i18n/types";

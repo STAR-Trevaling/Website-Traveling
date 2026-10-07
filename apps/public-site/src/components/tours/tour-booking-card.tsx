@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Users, Calendar, ShieldCheck, Check } from "lucide-react";
-import type { TourItem } from "@/lib/tours-data";
+import type { TourItem } from "@/data/seed";
 import { useLanguage } from "@/lib/i18n/context";
 
 interface TourBookingCardProps {

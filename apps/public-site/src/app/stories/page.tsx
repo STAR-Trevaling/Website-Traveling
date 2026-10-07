@@ -6,7 +6,7 @@ import { Clock, User, ChevronRight, ArrowUpRight } from "lucide-react";
 import { PageHero } from "@/components/layout/page-hero";
 import { publicApi, safe } from "@/lib/api";
 import { VIETNAM_IMAGES } from "@/lib/assets";
-import { VIETNAM_STORIES } from "@/lib/stories-data";
+import { VIETNAM_STORIES } from "@/data/seed";
 import { DICTIONARY } from "@/lib/i18n/dictionary";
 
 export const metadata: Metadata = {

@@ -4,7 +4,7 @@ import { useState, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Clock, MapPin, Star, CheckCircle2, Bus, Hotel, ArrowRight } from "lucide-react";
-import { VIETNAM_TOURS } from "@/lib/tours-data";
+import { VIETNAM_TOURS } from "@/data/seed";
 import { useLanguage } from "@/lib/i18n/context";
 
 export function ToursCatalog() {
