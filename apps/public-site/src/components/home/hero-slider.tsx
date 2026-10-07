@@ -174,9 +174,9 @@ export function HeroSlider() {
             </svg>
           </a>
 
-          {/* Thanh hiện số banner ở cuối banner (Bóng mờ phần nền sang trọng, chữ sắc nét) */}
-          <div className="flex items-center justify-center gap-2.5 sm:gap-3 bg-white/50 hover:bg-white/60 backdrop-blur-xl px-4 sm:px-5 py-1.5 sm:py-2 rounded-full border border-white/70 shadow-[0_8px_32px_rgba(0,0,0,0.22),inset_0_1px_2px_rgba(255,255,255,0.8)] transition-all duration-300">
-            <span className="text-xs sm:text-[13px] font-black text-black tracking-wider font-mono select-none">
+          {/* Thanh hiện số banner ở cuối banner (Mờ ảo sang trọng, sâu lắng, không làm nổi bật chói mắt) */}
+          <div className="flex items-center justify-center gap-2.5 sm:gap-3 bg-black/35 hover:bg-black/50 backdrop-blur-md px-3.5 sm:px-4.5 py-1.5 rounded-full border border-white/15 shadow-[0_4px_24px_rgba(0,0,0,0.35)] transition-all duration-300">
+            <span className="text-[11px] sm:text-xs font-semibold text-white/80 tracking-wider font-mono select-none">
               {String(currentSlide + 1).padStart(2, "0")}
             </span>
             <div className="flex items-center gap-1.5">
@@ -186,15 +186,15 @@ export function HeroSlider() {
                   type="button"
                   onClick={() => setCurrentSlide(idx)}
                   aria-label={`Slide ${idx + 1}`}
-                  className={`h-1.5 rounded-full transition-all duration-500 cursor-pointer ${
+                  className={`h-1 sm:h-1.5 rounded-full transition-all duration-500 cursor-pointer ${
                     idx === currentSlide
-                      ? "w-7 sm:w-8 bg-slate-900 shadow-[0_1px_3px_rgba(15,23,42,0.4)]"
-                      : "w-2 bg-slate-400 hover:bg-slate-600"
+                      ? "w-6 sm:w-7 bg-white/95 shadow-[0_0_8px_rgba(255,255,255,0.7)]"
+                      : "w-1.5 bg-white/30 hover:bg-white/60"
                   }`}
                 />
               ))}
             </div>
-            <span className="text-xs sm:text-[13px] font-bold text-slate-800 tracking-wider font-mono select-none">
+            <span className="text-[11px] sm:text-xs font-normal text-white/45 tracking-wider font-mono select-none">
               {String(slides.length).padStart(2, "0")}
             </span>
           </div>

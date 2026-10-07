@@ -98,16 +98,24 @@ Trang chủ là trung tâm thị giác của toàn bộ nền tảng, gồm 6 ph
 
 1. **Hero Slider Banner (Trình Chiếu Kỳ Quan):**
    - Trình chiếu 3 danh lam thắng cảnh biểu tượng độ phân giải cao (Hạ Long, Đà Lạt, Tràng An).
-   - Tự động chuyển slide mỗi 7 giây, hỗ trợ vuốt chạm cảm ứng (swipe gesture) trên thiết bị di động.
+   - Tự động chuyển slide mỗi 7 giây (tự tạm dừng khi chuột rê vào hoặc đang thao tác tìm kiếm), hỗ trợ vuốt chạm cảm ứng (swipe gesture) trên thiết bị di động.
    - Tiêu đề nghệ thuật 4 chữ đối xứng (*"Non Sông Gấm Vóc"*, *"Xứ Sở Ngàn Hoa"*, *"Non Nước Hữu Tình"*), áp dụng `text-balance` chống rớt chữ.
-2. **Thanh Tìm Kiếm & Khám Phá Đa Năng (Discovery Search Bar):**
-   - 3 Tab chủ đề màu xanh Teal: `ĐIỂM ĐẾN` (Destinations) | `TRẢI NGHIỆM` (Experiences) | `CÂU CHUYỆN` (Stories).
-   - Khung tìm kiếm 5 cột kính mờ liền mạch:
-     - *Cột 1:* Dropdown chọn điểm xuất phát (Hà Nội, TP.HCM, Đà Nẵng, v.v.).
-     - *Cột 2:* Dropdown danh thắng / chủ đề trải nghiệm tùy biến theo Tab.
-     - *Cột 3 & 4:* Popover lịch chọn ngày khởi hành và ngày về song ngữ thông minh.
-     - *Cột 5:* Lựa chọn số lượng du khách (1 khách, 2 khách, Cặp đôi, Gia đình, Nhóm).
-     - *Nút Search:* Nút bấm xanh ngọc bích với icon kính lúp, tự động chuyển hướng tìm kiếm kèm tham số URL.
+   - **Thanh đếm số lượng slide siêu mờ sang trọng:** Thiết kế kính mờ đen sâu lắng (`bg-black/35 backdrop-blur-md border border-white/15 shadow-lg`), số trang màu trắng bạc dịu mắt (`text-white/80`), không còn khung trắng đục thô cứng gây phân tâm khỏi ảnh phong cảnh.
+2. **Thanh Tìm Kiếm & Khám Phá Đa Năng (Discovery Search Bar) — Chế Độ On/Off Thông Minh:**
+   - **Chế độ BẬT (Mode ON — Đầy đủ):**
+     - 3 Tab chủ đề màu xanh Teal: `CHUYẾN BAY` (Flights) | `KHÁCH SẠN` (Hotels) | `GÓI TOUR` (Tours).
+     - Nút chuyển đổi nhanh góc phải: `[ ✕ Tắt tìm kiếm ]` (`Hide Search`) thu gọn thanh tìm kiếm tức thì để ngắm cảnh.
+     - Khung tìm kiếm 5 cột kính mờ liền mạch:
+       - *Cột 1:* Dropdown chọn điểm xuất phát (Hà Nội, TP.HCM, Đà Nẵng, v.v.).
+       - *Cột 2:* Dropdown danh thắng / chủ đề trải nghiệm tùy biến theo Tab.
+       - *Cột 3 & 4:* Popover lịch chọn ngày khởi hành và ngày về song ngữ thông minh.
+       - *Cột 5:* Lựa chọn số lượng du khách (1 khách, 2 khách, Cặp đôi, Gia đình, Nhóm).
+       - *Nút Search:* Nút bấm tinh gọn với icon kính lúp, tự động chuyển hướng tìm kiếm kèm tham số URL.
+   - **Chế độ TẮT (Mode OFF — Thu gọn ngắm cảnh):**
+     - Tự động thu gọn thanh tìm kiếm thành một viên capsule kính mờ sang trọng (`bg-black/45 backdrop-blur-xl border border-white/25`), giải phóng hơn 200px chiều cao khung hình để du khách chiêm ngưỡng trọn vẹn cảnh sắc thiên nhiên.
+     - Hiển thị tóm tắt hành trình và nút bấm `[ Bật thanh tìm kiếm hành trình · Nhấn để mở ▾ ]`.
+     - Kèm thông điệp nhỏ tinh tế: `✦ Đang bật chế độ thu gọn để ngắm trọn vẹn cảnh sắc kỳ quan`.
+     - Tự động ghi nhớ trạng thái ưa thích của người dùng qua `localStorage` (`star_travels_search_open`).
 3. **Danh Thắng Tuyển Chọn (Popular Destinations Carousel):**
    - Tiêu đề uốn lượn *"Điểm Đến Nổi Tiếng"* và đoạn dẫn giải di sản.
    - Thanh trượt hiển thị 4 thẻ danh thắng hàng đầu (Hạ Long, Hội An, Sa Pa, Phú Quốc) với hiệu ứng phóng to ảnh khi hover và dải tóm tắt chân thẻ.
