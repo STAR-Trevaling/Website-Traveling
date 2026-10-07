@@ -78,6 +78,15 @@ const story = seedFinder.story("cam-nang-am-thuc-hoi-an");
 
 ---
 
-## 4. Tương Thích Ngược (Backward Compatibility)
+## 4. Danh Mục Danh Lam Thắng Cảnh 100% Thuần Việt Nam
+
+Toàn bộ dữ liệu seed tuân thủ nghiêm ngặt tiêu chí: **100% danh lam thắng cảnh, di sản và trải nghiệm tại Việt Nam**, hoàn toàn không chứa dữ liệu mock nước ngoài:
+- **Miền Bắc**: Vịnh Hạ Long & Vịnh Lan Hạ (Quảng Ninh / Hải Phòng), Sa Pa & Fansipan 3.143m (Lào Cai), Tràng An & Hang Múa (Ninh Bình), Đèo Mã Pí Lèng & Sông Nho Quế (Hà Giang), Biển mây Tà Xùa (Sơn La).
+- **Miền Trung**: Phố cổ Hội An (Quảng Nam), Cố đô Huế (Thừa Thiên Huế), Cầu Vàng & Bán đảo Sơn Trà (Đà Nẵng), Động Thiên Đường Phong Nha — Kẻ Bàng (Quảng Bình).
+- **Miền Nam & Duyên Hải / Tây Nguyên**: Đồi thông & Hồ Tuyền Lâm Đà Lạt (Lâm Đồng), Đồi cát bay Mũi Né (Bình Thuận), Đảo Ngọc Phú Quốc & Vịnh An Thới (Kiên Giang), Côn Đảo huyền thoại (Bà Rịa - Vũng Tàu), Chợ nổi Cái Răng & Xứ dừa Bến Tre (Đồng bằng Sông Cửu Long).
+
+---
+
+## 5. Tương Thích Ngược (Backward Compatibility)
 
 Các đường dẫn import cũ (`@/lib/destinations-data`, `@/lib/tours-data`, `@/lib/experiences-data`, `@/lib/stories-data`) đã được cấu hình re-export tự động từ `@/data/seed`, đảm bảo không làm gián đoạn bất kỳ component hay code kiểm thử hiện có nào.
