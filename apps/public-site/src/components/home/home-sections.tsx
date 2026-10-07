@@ -16,10 +16,10 @@ export function PopularDestinationsSection() {
       <div className="mx-auto max-w-7xl">
         <ScrollReveal direction="up" distance={32} duration={1150} threshold={0.08}>
           <div className="text-center mb-6 sm:mb-10 md:mb-12">
-            <h2 className="script-title text-3xl sm:text-5xl md:text-6xl text-[#1e293b]">
+            <h2 className="script-title text-3xl sm:text-5xl md:text-6xl text-[#0f172a]">
               {t.destinations.heading}
             </h2>
-            <p className="mt-2 text-xs sm:text-sm md:text-base text-[#64748b] font-light max-w-xl mx-auto">
+            <p className="mt-2 text-xs sm:text-sm md:text-base text-slate-800 font-medium max-w-xl mx-auto">
               {t.destinations.subheading}
             </p>
           </div>
@@ -213,10 +213,10 @@ export function LookingForSection() {
   return (
     <section className="w-full bg-white/95 py-12 sm:py-16 md:py-20 text-center border-y border-slate-200/60 shadow-[0_4px_24px_rgba(0,152,162,0.05)] px-4 sm:px-6">
       <div className="mx-auto max-w-4xl">
-        <h2 className="script-title text-3xl sm:text-5xl md:text-6xl text-[#1e293b] text-balance">
+        <h2 className="script-title text-3xl sm:text-5xl md:text-6xl text-[#0f172a] text-balance">
           {t.lookingFor.heading}
         </h2>
-        <p className="mt-2.5 sm:mt-3 text-xs sm:text-sm md:text-base text-[#4b5563] font-light max-w-xl mx-auto text-balance">
+        <p className="mt-2.5 sm:mt-3 text-xs sm:text-sm md:text-base text-slate-800 font-medium max-w-xl mx-auto text-balance">
           {t.lookingFor.subheading}
         </p>
         <div className="mt-6">

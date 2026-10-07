@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { cookies } from "next/headers";
-import { MapPin, Star, Clock, Users, ShieldCheck, Compass, CheckCircle2, ChevronRight } from "lucide-react";
+import { MapPin, Star, Clock, Users, ShieldCheck, Compass, CheckCircle2 } from "lucide-react";
 import { PageHero } from "@/components/layout/page-hero";
+import { Breadcrumb } from "@/components/shared/breadcrumb";
 import { FavoriteButton } from "@/components/experience/favorite-button";
 import { ReviewForm } from "@/components/experience/review-form";
 import { ExperienceBookingCard } from "@/components/experience/experience-booking-card";
@@ -65,17 +66,15 @@ export default async function ExperienceDetail({ params }: ExperienceDetailProps
       <main className="template-page-bg min-h-screen text-[#282828] px-6 py-16 md:px-12 lg:px-16">
         <div className="mx-auto max-w-7xl">
           {/* Breadcrumb Bar */}
-          <nav className="flex items-center gap-2 text-xs text-slate-500 mb-8 font-light">
-            <Link href="/" className="hover:text-slate-900 transition">
-              {ed.breadcrumbHome}
-            </Link>
-            <ChevronRight className="size-3 text-slate-400" />
-            <Link href="/experiences" className="hover:text-slate-900 transition">
-              {ed.breadcrumbExp}
-            </Link>
-            <ChevronRight className="size-3 text-slate-400" />
-            <span className="text-slate-800 font-medium truncate max-w-xs">{displayName}</span>
-          </nav>
+          <div className="mb-8">
+            <Breadcrumb
+              items={[
+                { label: ed.breadcrumbHome, href: "/" },
+                { label: ed.breadcrumbExp, href: "/experiences" },
+                { label: displayName },
+              ]}
+            />
+          </div>
 
           <div className="grid gap-12 lg:grid-cols-[1fr_380px] items-start">
             {/* LEFT COLUMN: MAIN CONTENT */}

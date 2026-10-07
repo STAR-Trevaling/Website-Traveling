@@ -171,7 +171,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             unoptimized
             className="object-cover object-center"
           />
-          <div className="absolute inset-0 bg-[#eaf4f2]/30" />
+          <div className="absolute inset-0 bg-[#edf7f6]/55 backdrop-blur-[1.5px]" />
         </div>
 
         <LanguageProvider initialLocale={initialLocale} initialConfirmed={true}>

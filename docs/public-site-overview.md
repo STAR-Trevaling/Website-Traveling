@@ -89,6 +89,11 @@ Toàn bộ dữ liệu mẫu được gom về một thư mục duy nhất `apps
 - **Nút tùy chọn đổi ngôn ngữ:** Nút bấm `🌐 Ngôn ngữ: Tiếng Việt · Thay đổi` cho phép mở lại Bảng thông báo chọn ngôn ngữ bất cứ lúc nào.
 - **Bản quyền sở hữu trí tuệ:** Bản quyền Star Travels Vietnam song ngữ chuẩn mực.
 
+### 3.3. Thanh Điều Hướng Phân Cấp (Luxury Frosted Breadcrumb Pill)
+- **Component dùng chung:** `<Breadcrumb />` (`src/components/shared/breadcrumb.tsx`).
+- **Thiết kế & Tương phản:** Định dạng viên capsule kính mờ nổi (`bg-white/85 backdrop-blur-md border border-white/90 shadow-sm`) với văn bản tương phản cao (`text-slate-700 font-semibold`, trang hiện tại `text-slate-900 font-bold`).
+- **Khắc phục triệt để:** Loại bỏ hoàn toàn tình trạng chữ mờ/chìm màu trên nền ảnh biển xanh Nha Trang, đảm bảo chuẩn WCAG 2.1 AA trên mọi độ phân giải.
+
 ---
 
 ## 4. Danh Mục Chi Tiết Toàn Bộ Tuyến Đường & Trang Web (Page Inventory)
@@ -139,8 +144,8 @@ Trang chủ là trung tâm thị giác của toàn bộ nền tảng, gồm 6 ph
 - **Tuyến đường:** `apps/public-site/src/app/destinations/page.tsx`
 - **Mục tiêu:** Cung cấp cái nhìn toàn cảnh về 12 danh thắng và kỳ quan hàng đầu Việt Nam.
 - **Các thành phần giao diện chính:**
-  - *Thanh điều hướng phân cấp (Breadcrumbs):* `Trang Chủ > Điểm Đến`.
-  - *Tiêu đề phân đoạn:* Huy hiệu chữ hoa, tiêu đề viết tay lớn và lời dẫn du lịch.
+  - *Thanh điều hướng phân cấp (Breadcrumb Pill):* Thẻ nổi kính mờ sang trọng `Trang Chủ > Điểm Đến`.
+  - *Thẻ tiêu đề & Tìm kiếm kính mờ:* Hộp thẻ kính mờ trắng ngọc bích (`bg-white/85 backdrop-blur-md border border-white/90 shadow-sm`) chứa huy hiệu danh thắng, tiêu đề viết tay lớn và lời tựa di sản với độ tương phản cao sắc nét (`text-slate-800 font-medium`).
   - *Thanh tìm kiếm tức thời:* Tìm kiếm địa danh theo tên tiếng Việt, tên tiếng Anh hoặc vùng miền.
   - *Lưới thẻ danh thắng (`DestinationCard`):* Lưới 3 cột hiển thị hình ảnh chất lượng cao, tên địa phương, giá tour khởi điểm và đường dẫn xem chi tiết.
 

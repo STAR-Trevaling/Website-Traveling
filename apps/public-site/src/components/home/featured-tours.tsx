@@ -59,10 +59,10 @@ export function FeaturedTours({ initialTours }: FeaturedToursProps) {
     <section className="w-full px-4 sm:px-6 md:px-12 lg:px-16 py-10 sm:py-14 md:py-20">
       <div className="mx-auto max-w-7xl">
         <div className="text-center mb-6 sm:mb-10 md:mb-12">
-          <h2 className="script-title text-3xl sm:text-5xl md:text-6xl text-[#1e293b]">
+          <h2 className="script-title text-3xl sm:text-5xl md:text-6xl text-[#0f172a]">
             {t.featured.heading}
           </h2>
-          <p className="mt-2 text-xs sm:text-sm md:text-base text-[#64748b] font-light max-w-xl mx-auto">
+          <p className="mt-2 text-xs sm:text-sm md:text-base text-slate-800 font-medium max-w-xl mx-auto">
             {t.featured.subheading}
           </p>
         </div>
