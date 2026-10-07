@@ -134,8 +134,8 @@ export function HeroSlider() {
           </div>
         </div>
 
-        {/* Bottom Banner Content: View More link and Banner Slide Number Bar */}
-        <div className="w-full flex flex-col items-center gap-2 sm:gap-2.5 mt-auto pb-6 sm:pb-8 md:pb-10 mb-2 sm:mb-3">
+        {/* Bottom Banner Content: View More link matching template media_1791283133599.png */}
+        <div className="w-full flex flex-col items-center mt-auto pb-6 sm:pb-8 md:pb-10 mb-2 sm:mb-3">
           {/* View More with curved downward arrow */}
           <a
             href="#popular-destinations"
@@ -173,31 +173,6 @@ export function HeroSlider() {
               />
             </svg>
           </a>
-
-          {/* Thanh hiện số banner ở cuối banner (Mờ ảo sang trọng, sâu lắng, không làm nổi bật chói mắt) */}
-          <div className="flex items-center justify-center gap-2.5 sm:gap-3 bg-black/35 hover:bg-black/50 backdrop-blur-md px-3.5 sm:px-4.5 py-1.5 rounded-full border border-white/15 shadow-[0_4px_24px_rgba(0,0,0,0.35)] transition-all duration-300">
-            <span className="text-[11px] sm:text-xs font-semibold text-white/80 tracking-wider font-mono select-none">
-              {String(currentSlide + 1).padStart(2, "0")}
-            </span>
-            <div className="flex items-center gap-1.5">
-              {slides.map((_, idx) => (
-                <button
-                  key={idx}
-                  type="button"
-                  onClick={() => setCurrentSlide(idx)}
-                  aria-label={`Slide ${idx + 1}`}
-                  className={`h-1 sm:h-1.5 rounded-full transition-all duration-500 cursor-pointer ${
-                    idx === currentSlide
-                      ? "w-6 sm:w-7 bg-white/95 shadow-[0_0_8px_rgba(255,255,255,0.7)]"
-                      : "w-1.5 bg-white/30 hover:bg-white/60"
-                  }`}
-                />
-              ))}
-            </div>
-            <span className="text-[11px] sm:text-xs font-normal text-white/45 tracking-wider font-mono select-none">
-              {String(slides.length).padStart(2, "0")}
-            </span>
-          </div>
         </div>
       </div>
     </div>
