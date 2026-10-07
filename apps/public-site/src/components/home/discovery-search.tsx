@@ -322,47 +322,27 @@ export function DiscoverySearch() {
     }
   };
 
-  // Collapsed Mode (Mode OFF): Sleek compact floating glassmorphic pill
+  // Collapsed Mode (Mode OFF): Ultra-sleek, luxury minimal pill
   if (!isSearchOpen) {
     return (
-      <div id="discovery-search-container" className="w-full select-none flex flex-col items-center animate-fade-in-scale">
+      <div id="discovery-search-container" className="w-full select-none flex justify-center animate-fade-in-scale">
         <button
           type="button"
           onClick={() => toggleSearch(true)}
-          className="group relative flex items-center justify-between gap-3 sm:gap-6 bg-black/45 hover:bg-black/65 backdrop-blur-xl border border-white/25 hover:border-[#0098a2]/70 shadow-[0_12px_40px_rgba(0,0,0,0.45)] rounded-full px-4 sm:px-6 py-2.5 sm:py-3 text-white transition-all duration-300 hover:scale-[1.02] cursor-pointer"
+          className="group relative flex items-center gap-2.5 sm:gap-3.5 bg-black/40 hover:bg-black/60 backdrop-blur-2xl border border-white/20 hover:border-white/40 shadow-[0_8px_32px_rgba(0,0,0,0.35)] rounded-full px-4 sm:px-5 py-2 sm:py-2.5 text-white transition-all duration-300 hover:scale-[1.02] cursor-pointer"
         >
-          {/* Left: Search badge + text */}
-          <div className="flex items-center gap-2.5 sm:gap-3">
-            <span className="flex size-7 sm:size-8 items-center justify-center rounded-full bg-[#0098a2] text-white shadow-sm transition-transform duration-300 group-hover:scale-110 group-hover:shadow-[0_0_12px_rgba(0,152,162,0.8)]">
-              <Search className="size-3.5 sm:size-4" />
-            </span>
-            <div className="text-left">
-              <span className="block text-xs sm:text-sm font-bold text-white tracking-wide">
-                {isEn ? "Open Search & Filters" : "Bật thanh tìm kiếm hành trình"}
-              </span>
-              <span className="hidden sm:block text-[11px] text-white/70 font-light">
-                {isEn
-                  ? `${VIETNAM_DESTINATIONS[col1Index]?.en} → ${VIETNAM_DESTINATIONS[col2Index]?.en} · Click to customize`
-                  : `${VIETNAM_DESTINATIONS[col1Index]?.vi} → ${VIETNAM_DESTINATIONS[col2Index]?.vi} · Nhấn để tùy chọn`}
-              </span>
-            </div>
-          </div>
-
-          {/* Right: Mode badge + chevron */}
-          <div className="flex items-center gap-2 pl-3 border-l border-white/20">
-            <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-amber-300 bg-amber-400/20 border border-amber-400/30 px-2 py-0.5 rounded-full">
-              {isEn ? "Click to open" : "Nhấn để mở"}
-            </span>
-            <ChevronDown className="size-4 text-white/70 group-hover:text-white transition-transform duration-300 group-hover:translate-y-0.5" />
-          </div>
+          <Search className="size-3.5 sm:size-4 text-white/90 group-hover:text-white transition-transform duration-300 group-hover:scale-110" />
+          <span className="text-xs sm:text-sm font-medium tracking-wide text-white/95">
+            {isEn ? "Search journeys" : "Tìm kiếm hành trình"}
+          </span>
+          <span className="text-white/25 text-xs select-none">|</span>
+          <span className="text-xs text-white/70 font-light truncate max-w-[150px] sm:max-w-none">
+            {isEn
+              ? `${VIETNAM_DESTINATIONS[col1Index]?.en} → ${VIETNAM_DESTINATIONS[col2Index]?.en}`
+              : `${VIETNAM_DESTINATIONS[col1Index]?.vi} → ${VIETNAM_DESTINATIONS[col2Index]?.vi}`}
+          </span>
+          <ChevronDown className="size-3.5 text-white/60 transition-transform duration-300 group-hover:text-white group-hover:translate-y-0.5" />
         </button>
-
-        {/* Scenic mode hint */}
-        <p className="mt-2 text-[11px] text-white/70 font-light tracking-wide drop-shadow-[0_1px_4px_rgba(0,0,0,0.9)] select-none">
-          {isEn
-            ? "✦ Search bar is minimized to give you a full view of the landscape"
-            : "✦ Đang bật chế độ thu gọn để ngắm trọn vẹn cảnh sắc kỳ quan"}
-        </p>
       </div>
     );
   }
@@ -398,18 +378,16 @@ export function DiscoverySearch() {
           ))}
         </div>
 
-        {/* Right: Smart Mode Toggle Button (Tắt / Thu gọn để ngắm cảnh) */}
+        {/* Right: Smart Mode Toggle Button (Thu gọn) */}
         <div className="flex items-center justify-end md:w-36">
           <button
             type="button"
             onClick={() => toggleSearch(false)}
-            className="group flex items-center gap-1.5 px-3 py-1.5 sm:py-2 rounded-full bg-black/45 hover:bg-black/65 text-white/90 hover:text-white backdrop-blur-md border border-white/20 hover:border-white/40 text-[11px] font-medium transition-all shadow-md cursor-pointer select-none"
-            title={isEn ? "Hide search bar to enjoy scenic view" : "Tắt thanh tìm kiếm để ngắm cảnh"}
+            className="group flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/40 hover:bg-black/60 text-white/80 hover:text-white backdrop-blur-md border border-white/15 hover:border-white/35 text-[11px] font-medium transition-all shadow-sm cursor-pointer select-none"
+            title={isEn ? "Collapse search" : "Thu gọn"}
           >
-            <EyeOff className="size-3.5 text-white/75 group-hover:text-white" />
-            <span className="hidden sm:inline whitespace-nowrap">{isEn ? "Hide Search" : "Tắt tìm kiếm"}</span>
-            <span className="sm:hidden whitespace-nowrap">{isEn ? "Hide" : "Tắt"}</span>
-            <ChevronUp className="size-3 text-white/60 group-hover:translate-y-[-1px] transition-transform" />
+            <EyeOff className="size-3 text-white/70 group-hover:text-white" />
+            <span className="whitespace-nowrap">{isEn ? "Collapse" : "Thu gọn"}</span>
           </button>
         </div>
       </div>

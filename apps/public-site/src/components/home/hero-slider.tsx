@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 import { DiscoverySearch } from "./discovery-search";
 import { VIETNAM_IMAGES } from "@/lib/assets";
 import { useLanguage } from "@/lib/i18n/context";
@@ -15,12 +14,12 @@ export function HeroSlider() {
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
   const slides = VIETNAM_IMAGES.heroSlides;
 
-  // Auto-advance slides every 7 seconds, pausing on hover or interaction
+  // Auto-advance slides every 5 seconds, pausing on hover or interaction
   useEffect(() => {
     if (isPaused) return;
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
-    }, 7000);
+    }, 5000);
     return () => clearInterval(timer);
   }, [slides.length, isPaused]);
 
@@ -89,29 +88,10 @@ export function HeroSlider() {
       {/* Dark gradient overlays */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/65 via-black/35 to-black/70 pointer-events-none" />
 
-      {/* Desktop Left/Right Navigation Arrows for Hero */}
-      <button
-        type="button"
-        onClick={prevSlide}
-        aria-label={locale === "vi" ? "Slide trước" : "Previous slide"}
-        className="hidden md:flex absolute left-4 md:left-8 top-1/2 z-20 -translate-y-1/2 size-12 items-center justify-center rounded-full bg-black/30 text-white backdrop-blur-md transition-all duration-300 hover:bg-white hover:text-slate-900 hover:shadow-[0px_8px_25px_rgba(0,0,0,0.35)] hover:scale-110 active:scale-95 cursor-pointer"
-      >
-        <ChevronLeft className="size-7" />
-      </button>
-
-      <button
-        type="button"
-        onClick={nextSlide}
-        aria-label={locale === "vi" ? "Slide tiếp theo" : "Next slide"}
-        className="hidden md:flex absolute right-4 md:right-8 top-1/2 z-20 -translate-y-1/2 size-12 items-center justify-center rounded-full bg-black/30 text-white backdrop-blur-md transition-all duration-300 hover:bg-white hover:text-slate-900 hover:shadow-[0px_8px_25px_rgba(0,0,0,0.35)] hover:scale-110 active:scale-95 cursor-pointer"
-      >
-        <ChevronRight className="size-7" />
-      </button>
-
-      {/* Hero Content (Positioned with generous breathing room matching template) */}
-      <div className="relative z-10 flex min-h-[680px] sm:min-h-[720px] md:min-h-[750px] lg:min-h-[780px] w-full flex-col items-center justify-between pb-6 sm:pb-8 md:pb-10 pt-24 sm:pt-26 md:pt-28 lg:pt-30 text-white">
+      {/* Hero Content (Positioned with generous breathing room and optical centering) */}
+      <div className="relative z-10 flex min-h-[680px] sm:min-h-[720px] md:min-h-[750px] lg:min-h-[780px] w-full flex-col items-center justify-center px-4 pt-24 sm:pt-26 md:pt-28 pb-12 sm:pb-16 text-white">
         {/* Main Center Content: Title, Subtitle, with Discovery Search below */}
-        <div className="w-full max-w-5xl mx-auto px-4 text-center flex flex-col items-center my-auto">
+        <div className="w-full max-w-5xl mx-auto text-center flex flex-col items-center">
           {/* Animated Hero Title on slide change */}
           <h1
             key={`hero-title-${currentSlide}`}
@@ -132,47 +112,6 @@ export function HeroSlider() {
           <div className="w-full max-w-[1100px] mt-6 sm:mt-8 md:mt-9 lg:mt-10 animate-fade-in-scale animation-delay-200">
             <DiscoverySearch />
           </div>
-        </div>
-
-        {/* Bottom Banner Content: View More link matching template media_1791283133599.png */}
-        <div className="w-full flex flex-col items-center mt-auto pb-6 sm:pb-8 md:pb-10 mb-2 sm:mb-3">
-          {/* View More with curved downward arrow */}
-          <a
-            href="#popular-destinations"
-            onClick={(e) => {
-              e.preventDefault();
-              document.getElementById("popular-destinations")?.scrollIntoView({ behavior: "smooth" });
-            }}
-            className="group flex flex-col items-center gap-0.5 text-white/90 hover:text-white transition-all cursor-pointer select-none"
-            aria-label={locale === "en" ? "View more" : "Xem thêm"}
-          >
-            <span className="script-title text-base sm:text-2xl text-white tracking-wider drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)] group-hover:scale-105 group-hover:text-amber-200 transition-all">
-              {locale === "en" ? "view more" : "xem thêm"}
-            </span>
-            <svg
-              width="20"
-              height="26"
-              viewBox="0 0 34 42"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className="text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)] animate-bounce group-hover:text-amber-200 transition-colors"
-              aria-hidden="true"
-            >
-              <path
-                d="M14 2 C 27 7, 30 22, 17 34"
-                stroke="currentColor"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-              />
-              <path
-                d="M11 27 L 17 35 L 23 28"
-                stroke="currentColor"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </a>
         </div>
       </div>
     </div>
