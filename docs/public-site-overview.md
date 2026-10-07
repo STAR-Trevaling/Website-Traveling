@@ -298,16 +298,17 @@ Trang chủ là trung tâm thị giác của toàn bộ nền tảng, gồm 6 ph
 
 ## 6. Tiêu Chuẩn Trải Nghiệm Người Dùng & Tối Ưu Hóa (UX & Performance)
 
-1. **Hiệu Ứng Xuất Hiện Giữa Các Phân Đoạn (Scroll Reveal & Section Transitions):**
-   - Tích hợp bộ giải pháp `ScrollReveal` và `StaggerRevealGroup` dựa trên native `IntersectionObserver` tối ưu hiệu năng.
-   - Khi du khách cuộn trang, từng phân đoạn lướt nhẹ nhàng từ dưới lên (`translate3d(0, 28px, 0)` -> `translate3d(0, 0, 0)`) với đường cong gia tốc chuẩn lữ hành cao cấp (`cubic-bezier(0.16, 1, 0.3, 1)`).
+1. **Hiệu Ứng Xuất Hiện Điện Ảnh Giữa Các Phân Đoạn (Cinematic Scroll Reveal & Stagger Transitions):**
+   - Thiết lập thời gian chuyển động kéo dài chậm rãi và quý phái: **1.15 giây (1150ms)** với đường cong gia tốc mượt mà chuẩn lữ hành cao cấp (`cubic-bezier(0.16, 1, 0.3, 1)`), giúp du khách cảm nhận rõ nét từng phân đoạn và thẻ dịch vụ lướt nhẹ nhàng vào tầm mắt thay vì chớp nhoáng quá nhanh.
+   - Cơ chế **Direct DOM Class Toggling** (`classList.add("reveal-active")`) qua native `IntersectionObserver`: Kích hoạt trực tiếp lớp CSS phần cứng GPU mà không tạo bất kỳ đợt re-render React nào trong lúc cuộn trang. Triệt tiêu hoàn toàn VDOM reconciliation overhead, đạt 60fps/120fps siêu mượt.
+   - **Xóa bỏ xung đột chuyển động lồng ghép (Zero Nested Transform Conflict):** Loại bỏ hoàn toàn các lớp wrapper `ScrollReveal` cha - con bị trùng lặp thời gian và khoảng cách di chuyển. Các mục danh thắng và hoạt động thám hiểm lướt vào theo chuỗi so le (Stagger Delay: 160ms) tự nhiên, độc lập và thanh thoát.
    - Tự động ngắt quan sát (`unobserve`) ngay sau khi phần tử hiển thị, giảm tải 100% tài nguyên CPU khi tiếp tục cuộn trang.
-   - Thêm dải phân cách chuyển tiếp mềm mại (`.section-divider`) giữa các section với ánh sáng ngọc bích tỏa dần 2 bên.
+   - Dải phân cách chuyển tiếp mềm mại (`.section-divider`) giữa các section với ánh sáng ngọc bích tỏa dần 2 bên.
 2. **Khử Giật Khung Hình & Tăng Tốc Phần Cứng (Eliminating Lag & 60fps GPU Acceleration):**
    - Tối ưu `animate-ken-burns` với `transform: translate3d(0, 0, 0)` và `backface-visibility: hidden` chống tính toán lại layout liên tục.
    - Tự động tạm dừng timer trình chiếu (`isPaused`) khi chuột rê vào Hero Banner hoặc khi du khách đang tương tác, chọn lịch tìm kiếm.
    - Thay thế các khối `backdrop-blur` kích thước lớn trên toàn trang bằng các lớp màu phẳng có độ mờ tối ưu, loại bỏ triệt để hiện tượng giật lag khung hình khi cuộn nhanh.
-   - Hiệu ứng xuất hiện so le (Staggered Delay: 100ms, 200ms, 300ms) trên các thẻ Điểm đến, Tour tuyển chọn, Vì sao chọn Star Travels và Danh sách giải thưởng.
+   - Hiệu ứng xuất hiện so le (Staggered Delay: 160ms) trên các thẻ Điểm đến, Tour tuyển chọn, Vì sao chọn Star Travels và Danh sách trải nghiệm.
 3. **Thiết Kế Cân Bằng Thị Giác (Text Balance & Typographic Harmony):**
    - Áp dụng triệt để `text-balance` trên toàn bộ tiêu đề lớn để loại bỏ hoàn toàn hiện tượng rớt chữ mồ côi (orphan words) ở cả tiếng Việt lẫn tiếng Anh.
    - Thẻ điểm đến, thẻ tour và thẻ bài viết được cố định chiều cao hợp lý, giữ cho các lưới hiển thị luôn thẳng hàng và đồng đều.

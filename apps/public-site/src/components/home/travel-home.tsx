@@ -21,37 +21,33 @@ export function TravelHome() {
       {/* TRANSITION DIVIDER 1 */}
       <div className="section-divider opacity-75" />
 
-      {/* 2. POPULAR DESTINATIONS */}
-      <ScrollReveal direction="up" distance={28} duration={750} threshold={0.06}>
-        <PopularDestinationsSection />
-      </ScrollReveal>
+      {/* 2. POPULAR DESTINATIONS (Internal stagger & heading reveals) */}
+      <PopularDestinationsSection />
 
       {/* TRANSITION DIVIDER 2 */}
       <div className="section-divider opacity-75" />
 
       {/* 3. FEATURED TOURS */}
-      <ScrollReveal direction="up" distance={28} duration={750} threshold={0.06}>
+      <ScrollReveal direction="up" distance={32} duration={1150} threshold={0.06}>
         <FeaturedTours />
       </ScrollReveal>
 
       {/* TRANSITION DIVIDER 3 */}
       <div className="section-divider opacity-75" />
 
-      {/* 4. WHY US & ADVENTURES */}
-      <ScrollReveal direction="up" distance={28} duration={750} threshold={0.05}>
-        <WhyUsAndAdventuresSection />
-      </ScrollReveal>
+      {/* 4. WHY US & ADVENTURES (Internal stagger & heading reveals) */}
+      <WhyUsAndAdventuresSection />
 
       {/* TRANSITION DIVIDER 4 */}
       <div className="section-divider opacity-75" />
 
       {/* 5. NEWSLETTER & AWARD WINNING */}
-      <ScrollReveal direction="up" distance={28} duration={750} threshold={0.06}>
+      <ScrollReveal direction="up" distance={32} duration={1150} threshold={0.06}>
         <NewsletterAwards />
       </ScrollReveal>
 
       {/* 6. LOOKING FOR AN EXPERIENCE? */}
-      <ScrollReveal direction="fade" duration={650} threshold={0.08}>
+      <ScrollReveal direction="up" distance={32} duration={1150} threshold={0.06}>
         <LookingForSection />
       </ScrollReveal>
     </main>

@@ -14,7 +14,7 @@ export function PopularDestinationsSection() {
   return (
     <section id="popular-destinations" className="relative w-full px-4 sm:px-6 md:px-12 lg:px-16 py-10 sm:py-14 md:py-20 scroll-mt-6">
       <div className="mx-auto max-w-7xl">
-        <ScrollReveal direction="up" distance={20} duration={600}>
+        <ScrollReveal direction="up" distance={32} duration={1150} threshold={0.08}>
           <div className="text-center mb-6 sm:mb-10 md:mb-12">
             <h2 className="script-title text-3xl sm:text-5xl md:text-6xl text-[#1e293b]">
               {t.destinations.heading}
@@ -25,7 +25,9 @@ export function PopularDestinationsSection() {
           </div>
         </ScrollReveal>
 
-        <DestinationsCarousel />
+        <ScrollReveal direction="up" distance={32} duration={1150} delay={180} threshold={0.06}>
+          <DestinationsCarousel />
+        </ScrollReveal>
       </div>
     </section>
   );
@@ -41,7 +43,7 @@ export function WhyUsAndAdventuresSection() {
     <section className="w-full px-4 sm:px-6 md:px-12 lg:px-16 py-10 sm:py-14 md:py-20">
       <div className="mx-auto max-w-7xl">
         {/* Why Us? */}
-        <ScrollReveal direction="up" distance={20} duration={600}>
+        <ScrollReveal direction="up" distance={32} duration={1150} threshold={0.08}>
           <div className="text-center">
             <h2 className="script-title text-3xl sm:text-5xl md:text-6xl text-[#1e293b]">
               {t.whyUs.heading}
@@ -50,8 +52,9 @@ export function WhyUsAndAdventuresSection() {
         </ScrollReveal>
 
         <StaggerRevealGroup
-          staggerDelay={120}
-          distance={24}
+          staggerDelay={160}
+          distance={32}
+          duration={1150}
           direction="up"
           className="mt-6 sm:mt-10 md:mt-12 grid gap-4 sm:gap-6 md:gap-8 grid-cols-1 md:grid-cols-3"
         >
@@ -78,7 +81,7 @@ export function WhyUsAndAdventuresSection() {
         </StaggerRevealGroup>
 
         {/* Have an Adventure Today — Tuyển tập thám hiểm bản địa Việt Nam */}
-        <ScrollReveal direction="up" distance={20} duration={600}>
+        <ScrollReveal direction="up" distance={32} duration={1150} threshold={0.08}>
           <div className="mt-12 sm:mt-16 md:mt-24 text-center">
             <h2 className="script-title text-3xl sm:text-5xl md:text-6xl text-[#1e293b]">
               {t.adventures.heading}
@@ -87,8 +90,9 @@ export function WhyUsAndAdventuresSection() {
         </ScrollReveal>
 
         <StaggerRevealGroup
-          staggerDelay={140}
-          distance={28}
+          staggerDelay={160}
+          distance={32}
+          duration={1150}
           direction="up"
           className="mt-8 sm:mt-12 grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6 md:gap-7"
         >
@@ -209,22 +213,20 @@ export function LookingForSection() {
   return (
     <section className="w-full bg-white/95 py-12 sm:py-16 md:py-20 text-center border-y border-slate-200/60 shadow-[0_4px_24px_rgba(0,152,162,0.05)] px-4 sm:px-6">
       <div className="mx-auto max-w-4xl">
-        <ScrollReveal direction="up" distance={18} duration={600}>
-          <h2 className="script-title text-3xl sm:text-5xl md:text-6xl text-[#1e293b] text-balance">
-            {t.lookingFor.heading}
-          </h2>
-          <p className="mt-2.5 sm:mt-3 text-xs sm:text-sm md:text-base text-[#4b5563] font-light max-w-xl mx-auto text-balance">
-            {t.lookingFor.subheading}
-          </p>
-          <div className="mt-6">
-            <Link
-              href="/experiences"
-              className="inline-block border border-slate-700/70 bg-white px-7 sm:px-8 py-3 text-xs md:text-sm font-bold tracking-[0.18em] uppercase text-[#1e293b] rounded-[2px] template-shadow-text shadow-sm transition-all duration-200 hover:border-black hover:text-black hover:bg-slate-50 hover:shadow-[0px_8px_25px_rgba(0,0,0,0.15)] hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
-            >
-              {t.lookingFor.button}
-            </Link>
-          </div>
-        </ScrollReveal>
+        <h2 className="script-title text-3xl sm:text-5xl md:text-6xl text-[#1e293b] text-balance">
+          {t.lookingFor.heading}
+        </h2>
+        <p className="mt-2.5 sm:mt-3 text-xs sm:text-sm md:text-base text-[#4b5563] font-light max-w-xl mx-auto text-balance">
+          {t.lookingFor.subheading}
+        </p>
+        <div className="mt-6">
+          <Link
+            href="/experiences"
+            className="inline-block border border-slate-700/70 bg-white px-7 sm:px-8 py-3 text-xs md:text-sm font-bold tracking-[0.18em] uppercase text-[#1e293b] rounded-[2px] template-shadow-text shadow-sm transition-all duration-200 hover:border-black hover:text-black hover:bg-slate-50 hover:shadow-[0px_8px_25px_rgba(0,0,0,0.15)] hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
+          >
+            {t.lookingFor.button}
+          </Link>
+        </div>
       </div>
     </section>
   );

@@ -151,6 +151,72 @@
   transform: scale(1.08);
 }
 
+/* ==========================================================================
+   Smooth GPU Scroll Reveal & Stagger Animation System
+   Hardware-accelerated transforms & opacity with slow, cinematic cubic-bezier.
+   Default duration 1.15s (1150ms) for noticeable, graceful entrance.
+   ========================================================================== */
+
+:root {
+  --reveal-distance: 32px;
+}
+
+.reveal-init {
+  opacity: 0;
+  transform: translate3d(0, var(--reveal-distance, 32px), 0);
+  transition-property: opacity, transform;
+  transition-duration: 1.15s;
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+  backface-visibility: hidden;
+}
+
+.reveal-init.reveal-down {
+  transform: translate3d(0, calc(-1 * var(--reveal-distance, 32px)), 0);
+}
+
+.reveal-init.reveal-scale {
+  transform: translate3d(0, 18px, 0) scale(0.95);
+}
+
+.reveal-init.reveal-fade {
+  transform: translate3d(0, 0, 0);
+}
+
+/* Active State (Triggered when element scrolls into view) */
+.reveal-init.reveal-active {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
+/* Stagger Children */
+.reveal-child {
+  opacity: 0;
+  transform: translate3d(0, var(--reveal-distance, 28px), 0);
+  transition-property: opacity, transform;
+  transition-duration: 1.15s;
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+  backface-visibility: hidden;
+}
+
+.reveal-child.reveal-down {
+  transform: translate3d(0, calc(-1 * var(--reveal-distance, 28px)), 0);
+}
+
+.reveal-child.reveal-scale {
+  transform: translate3d(0, 16px, 0) scale(0.95);
+}
+
+.reveal-child.reveal-fade {
+  transform: translate3d(0, 0, 0);
+}
+
+.reveal-child.reveal-active {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
 /* Accessible reduced motion support */
 @media (prefers-reduced-motion: reduce) {
   *, ::before, ::after {
@@ -158,5 +224,10 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+  .reveal-init, .reveal-child {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
   }
 }
