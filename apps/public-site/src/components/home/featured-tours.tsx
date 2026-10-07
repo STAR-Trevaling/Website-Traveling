@@ -101,17 +101,18 @@ export function FeaturedTours({ initialTours }: FeaturedToursProps) {
             key={`tours-page-${currentPage}`}
             className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 animate-fade-in-scale"
           >
-            {currentTours.map((tour) => {
+            {currentTours.map((tour, idx) => {
               const fullDest = isEn && tour.destination_en ? tour.destination_en : tour.destination;
               const shortDest = fullDest.split(",")[0].trim();
               const displayTitle = isEn && tour.title_en ? tour.title_en : tour.title;
               const displayDuration = isEn && tour.duration_en ? tour.duration_en : tour.duration;
+              const delayClass = idx === 0 ? "" : idx === 1 ? "animation-delay-100" : idx === 2 ? "animation-delay-200" : "animation-delay-300";
 
               return (
                 <Link
                   key={tour.id}
                   href={`/tours/${tour.slug}`}
-                  className="group flex flex-col overflow-hidden rounded-[2px] bg-white shadow-md travel-card-lift border border-slate-100"
+                  className={`group flex flex-col overflow-hidden rounded-[2px] bg-white shadow-md travel-card-lift border border-slate-100 transform-gpu ${delayClass}`}
                 >
                   <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-100">
                     <Image

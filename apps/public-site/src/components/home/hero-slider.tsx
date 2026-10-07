@@ -10,17 +10,19 @@ import { useLanguage } from "@/lib/i18n/context";
 export function HeroSlider() {
   const { t, locale } = useLanguage();
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
   const slides = VIETNAM_IMAGES.heroSlides;
 
-  // Auto-advance slides every 7 seconds
+  // Auto-advance slides every 7 seconds, pausing on hover or interaction
   useEffect(() => {
+    if (isPaused) return;
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
     }, 7000);
     return () => clearInterval(timer);
-  }, [slides.length]);
+  }, [slides.length, isPaused]);
 
   const prevSlide = () => {
     setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
@@ -55,6 +57,10 @@ export function HeroSlider() {
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+      onFocus={() => setIsPaused(true)}
+      onBlur={() => setIsPaused(false)}
     >
       {/* Background Images with smooth cinematic motion */}
       {slides.map((slide, index) => {
@@ -62,11 +68,11 @@ export function HeroSlider() {
         return (
           <div
             key={slide.id}
-            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-              isActive ? "opacity-100 z-0" : "opacity-0 -z-10"
+            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out transform-gpu ${
+              isActive ? "opacity-100 z-0" : "opacity-0 -z-10 pointer-events-none"
             }`}
           >
-            <div className={`relative h-full w-full ${isActive ? "animate-ken-burns" : ""}`}>
+            <div className={`relative h-full w-full transform-gpu ${isActive ? "animate-ken-burns" : ""}`}>
               <Image
                 src={slide.image}
                 alt={slide.title}

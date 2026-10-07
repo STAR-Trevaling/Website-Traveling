@@ -7,6 +7,7 @@ import {
   WhyUsAndAdventuresSection,
   LookingForSection,
 } from "./home-sections";
+import { ScrollReveal } from "@/components/shared/scroll-reveal";
 
 export function TravelHome() {
   return (
@@ -17,20 +18,42 @@ export function TravelHome() {
         <HeroSlider />
       </section>
 
+      {/* TRANSITION DIVIDER 1 */}
+      <div className="section-divider opacity-75" />
+
       {/* 2. POPULAR DESTINATIONS */}
-      <PopularDestinationsSection />
+      <ScrollReveal direction="up" distance={28} duration={750} threshold={0.06}>
+        <PopularDestinationsSection />
+      </ScrollReveal>
+
+      {/* TRANSITION DIVIDER 2 */}
+      <div className="section-divider opacity-75" />
 
       {/* 3. FEATURED TOURS */}
-      <FeaturedTours />
+      <ScrollReveal direction="up" distance={28} duration={750} threshold={0.06}>
+        <FeaturedTours />
+      </ScrollReveal>
+
+      {/* TRANSITION DIVIDER 3 */}
+      <div className="section-divider opacity-75" />
 
       {/* 4. WHY US & ADVENTURES */}
-      <WhyUsAndAdventuresSection />
+      <ScrollReveal direction="up" distance={28} duration={750} threshold={0.05}>
+        <WhyUsAndAdventuresSection />
+      </ScrollReveal>
+
+      {/* TRANSITION DIVIDER 4 */}
+      <div className="section-divider opacity-75" />
 
       {/* 5. NEWSLETTER & AWARD WINNING */}
-      <NewsletterAwards />
+      <ScrollReveal direction="up" distance={28} duration={750} threshold={0.06}>
+        <NewsletterAwards />
+      </ScrollReveal>
 
       {/* 6. LOOKING FOR AN EXPERIENCE? */}
-      <LookingForSection />
+      <ScrollReveal direction="fade" duration={650} threshold={0.08}>
+        <LookingForSection />
+      </ScrollReveal>
     </main>
   );
 }

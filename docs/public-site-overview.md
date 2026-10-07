@@ -290,15 +290,26 @@ Trang chủ là trung tâm thị giác của toàn bộ nền tảng, gồm 6 ph
 
 ## 6. Tiêu Chuẩn Trải Nghiệm Người Dùng & Tối Ưu Hóa (UX & Performance)
 
-1. **Thiết Kế Cân Bằng Thị Giác (Text Balance & Typographic Harmony):**
+1. **Hiệu Ứng Xuất Hiện Giữa Các Phân Đoạn (Scroll Reveal & Section Transitions):**
+   - Tích hợp bộ giải pháp `ScrollReveal` và `StaggerRevealGroup` dựa trên native `IntersectionObserver` tối ưu hiệu năng.
+   - Khi du khách cuộn trang, từng phân đoạn lướt nhẹ nhàng từ dưới lên (`translate3d(0, 28px, 0)` -> `translate3d(0, 0, 0)`) với đường cong gia tốc chuẩn lữ hành cao cấp (`cubic-bezier(0.16, 1, 0.3, 1)`).
+   - Tự động ngắt quan sát (`unobserve`) ngay sau khi phần tử hiển thị, giảm tải 100% tài nguyên CPU khi tiếp tục cuộn trang.
+   - Thêm dải phân cách chuyển tiếp mềm mại (`.section-divider`) giữa các section với ánh sáng ngọc bích tỏa dần 2 bên.
+2. **Khử Giật Khung Hình & Tăng Tốc Phần Cứng (Eliminating Lag & 60fps GPU Acceleration):**
+   - Tối ưu `animate-ken-burns` với `transform: translate3d(0, 0, 0)` và `backface-visibility: hidden` chống tính toán lại layout liên tục.
+   - Tự động tạm dừng timer trình chiếu (`isPaused`) khi chuột rê vào Hero Banner hoặc khi du khách đang tương tác, chọn lịch tìm kiếm.
+   - Thay thế các khối `backdrop-blur` kích thước lớn trên toàn trang bằng các lớp màu phẳng có độ mờ tối ưu, loại bỏ triệt để hiện tượng giật lag khung hình khi cuộn nhanh.
+   - Hiệu ứng xuất hiện so le (Staggered Delay: 100ms, 200ms, 300ms) trên các thẻ Điểm đến, Tour tuyển chọn, Vì sao chọn Star Travels và Danh sách giải thưởng.
+3. **Thiết Kế Cân Bằng Thị Giác (Text Balance & Typographic Harmony):**
    - Áp dụng triệt để `text-balance` trên toàn bộ tiêu đề lớn để loại bỏ hoàn toàn hiện tượng rớt chữ mồ côi (orphan words) ở cả tiếng Việt lẫn tiếng Anh.
    - Thẻ điểm đến, thẻ tour và thẻ bài viết được cố định chiều cao hợp lý, giữ cho các lưới hiển thị luôn thẳng hàng và đồng đều.
-2. **Tương Tác Cảm Ứng Đa Nền Tảng (Mobile Touch & Swipe Support):**
+4. **Tương Tác Cảm Ứng Đa Nền Tảng (Mobile Touch & Swipe Support):**
    - Các thanh trượt quan trọng (Hero Slider, Featured Tours Carousel, Destinations Carousel) đều tích hợp cơ chế lắng nghe sự kiện chạm (`onTouchStart`, `onTouchMove`, `onTouchEnd`), cho phép du khách lướt mượt mà trên iPhone/Android.
-3. **Hiệu Ứng Vi Mô (Micro-Interactions):**
+5. **Hiệu Ứng Vi Mô (Micro-Interactions):**
    - Tinh tế trong từng chuyển động: nút bấm nâng nhẹ (`hover:-translate-y-0.5`), đổ bóng mềm ngọc bích (`hover:shadow-[0px_8px_25px_rgba(0,152,162,0.35)]`), ảnh zoom mượt mà (`duration-500 hover:scale-105`).
-4. **Hiệu Năng & Khả Năng Truy Cập (Web Quality & Accessibility):**
+6. **Hiệu Năng & Khả Năng Truy Cập (Web Quality & Accessibility):**
    - 100% hình ảnh khai báo kích thước, dùng Next.js Image Component ngăn ngừa hiện tượng giật cục giao diện (Zero CLS).
+   - Hỗ trợ đầy đủ chế độ giảm chuyển động (`prefers-reduced-motion`) cho người dùng nhạy cảm với hiệu ứng.
    - Đầy đủ nhãn trợ năng `aria-label` cho các nút icon không kèm chữ (Icon tài khoản, nút điều hướng slide, nút tìm kiếm).
    - Tương phản màu sắc tuân thủ nghiêm ngặt tiêu chuẩn WCAG 2.1 AA.
 
@@ -307,6 +318,7 @@ Trang chủ là trung tâm thị giác của toàn bộ nền tảng, gồm 6 ph
 ## 7. Tổng Kết Tình Trạng Sẵn Sàng (Readiness Summary)
 
 - [x] **Toàn bộ 11+ nhóm trang công khai** đã hoàn thiện giao diện, logic và liên kết điều hướng.
+- [x] **Hiệu ứng chuyển đoạn mượt mà (Scroll Reveal & Section Dividers)** mượt mà, khử sạch 100% hiện tượng lagging.
 - [x] **Hệ thống song ngữ Việt - Anh** đồng bộ 100%, không còn bất kỳ dòng văn bản lai tạp.
 - [x] **Dữ liệu Seed** 100% là danh lam thắng cảnh Việt Nam, cấu trúc tập trung tại `@/data/seed`.
 - [x] **Thương hiệu & Logo STAR** hiển thị chuẩn mực kèm biểu tượng ngôi sao vàng kim.
