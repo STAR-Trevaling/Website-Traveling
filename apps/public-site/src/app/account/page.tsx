@@ -28,7 +28,7 @@ export default async function Account() {
   return (
     <>
       <SiteHeader overlay={false} />
-      <main className="template-page-bg min-h-screen text-[#282828] px-4 sm:px-6 py-8 sm:py-12 md:px-12 lg:px-16 overflow-x-hidden">
+      <main className="template-page-bg min-h-screen text-[#282828] px-4 sm:px-6 py-8 sm:py-12 md:px-12 lg:px-16">
         <div className="mx-auto max-w-4xl space-y-8">
           {/* USER PROFILE CARD */}
           <div className="bg-white/90 p-8 md:p-10 rounded-[2px] shadow-sm border border-slate-100 backdrop-blur-md">

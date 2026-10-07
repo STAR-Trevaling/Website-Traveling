@@ -6,8 +6,8 @@
 @layer base {
   :root { --background:0 0% 100%; --foreground:222.2 47.4% 11.2%; --card:0 0% 100%; --card-foreground:222.2 47.4% 11.2%; --popover:0 0% 100%; --popover-foreground:222.2 47.4% 11.2%; --primary:185 100% 32%; --primary-foreground:210 40% 98%; --secondary:210 40% 96.1%; --secondary-foreground:222.2 47.4% 11.2%; --muted:210 40% 96.1%; --muted-foreground:215.4 16.3% 46.9%; --accent:210 40% 96.1%; --accent-foreground:222.2 47.4% 11.2%; --destructive:0 84.2% 60.2%; --destructive-foreground:210 40% 98%; --border:214.3 31.8% 91.4%; --input:214.3 31.8% 91.4%; --ring:185 100% 32%; }
   * { @apply border-border; }
-  html { scroll-behavior:smooth; background:#edf7f6; }
-  body { @apply text-foreground; font-family:"Work Sans",Arial,sans-serif; overflow-x:hidden; width:100%; min-height:100vh; background-color:transparent; }
+  html { scroll-behavior:smooth; background:#edf7f6; overflow-x:hidden; }
+  body { @apply text-foreground; font-family:"Work Sans",Arial,sans-serif; width:100%; min-height:100vh; background-color:transparent; }
   a { text-decoration:none; }
   ::selection { background:#0098a2; color:#fff; }
 }

@@ -11,7 +11,7 @@ import { ScrollReveal } from "@/components/shared/scroll-reveal";
 
 export function TravelHome() {
   return (
-    <main className="w-full template-page-bg text-[#282828] overflow-x-hidden">
+    <main className="w-full template-page-bg text-[#282828]">
       {/* 1. HERO SLIDER BANNER */}
       <section className="relative w-full overflow-hidden">
         <SiteHeader overlay />

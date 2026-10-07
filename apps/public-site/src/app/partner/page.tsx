@@ -30,7 +30,7 @@ export default async function PartnerPage() {
         image={VIETNAM_IMAGES.hero}
       />
 
-      <main className="template-page-bg min-h-screen text-[#282828] overflow-x-hidden">
+      <main className="template-page-bg min-h-screen text-[#282828]">
         {/* SECTION 1: VALUE PROPOSITION */}
         <section className="relative w-full px-4 sm:px-6 py-10 sm:py-16 md:py-20 md:px-12 lg:px-16">
           <div className="mx-auto max-w-7xl">

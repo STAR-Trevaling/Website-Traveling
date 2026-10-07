@@ -104,7 +104,7 @@ export default async function DestinationDetail({ params }: DestinationDetailPro
         </div>
       </section>
 
-      <main className="template-page-bg min-h-screen text-[#282828] px-6 py-12 md:py-16 md:px-12 lg:px-16 overflow-x-hidden">
+      <main className="template-page-bg min-h-screen text-[#282828] px-6 py-12 md:py-16 md:px-12 lg:px-16">
         <div className="mx-auto max-w-7xl space-y-12 sm:space-y-16">
           {/* Breadcrumb Navigation */}
           <div>

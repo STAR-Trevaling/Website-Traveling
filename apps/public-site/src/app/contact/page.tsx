@@ -25,7 +25,7 @@ export default async function ContactPage() {
     <>
       <SiteHeader overlay={false} />
 
-      <main className="template-page-bg min-h-screen text-[#282828] overflow-x-hidden">
+      <main className="template-page-bg min-h-screen text-[#282828]">
         {/* SECTION 1: QUICK CHANNELS */}
         <section className="relative w-full px-4 sm:px-6 py-8 sm:py-12 md:px-12 lg:px-16">
           <div className="mx-auto max-w-7xl">
