@@ -58,15 +58,16 @@
 - Centralized Seed Data Architecture (`apps/public-site/src/data/seed/`):
   - Consolidated all decoupled frontend seed and mock datasets (destinations, curated tours, adventures/experiences, editorial stories) into a single, dedicated data repository (`apps/public-site/src/data/seed/`).
   - Implemented modular datasets: `destinations.ts`, `tours.ts`, `experiences.ts`, `stories.ts`, and master index `index.ts` exporting unified `SEED_DATA` object and `seedFinder` lookup helpers.
+  - Provided root export at `@/data` and `@/data/seed` for clean, ergonomic import ergonomics across customer components and routes.
+  - Maintained 100% backward compatibility via deprecation re-export shims in `src/lib/*-data.ts`.
+  - Migrated sitemap, catalog, detail pages, and home components to direct `@/data/seed` imports.
+  - Created comprehensive documentation and maintenance guide (`src/data/seed/README.md`).
+
 - Bright Iconic Vietnam Landmark Banner Imagery & Sunlight Overlay Optimization (`apps/public-site`):
   - Replaced dim and overcast hero slides with 4 bright, sunny, world-renowned Vietnam landmark photos: Vịnh Hạ Long (UNESCO natural wonder in golden sun), Cầu Vàng Bà Nà Hills - Đà Nẵng (striking gold hands in sunny sky), Ruộng bậc thang Mùa Vàng Sa Pa (sunlit cascading golden rice terraces), and Non nước Tràng An Ninh Bình (crystal emerald waterways under blue sky).
   - Softened heavy dark CSS gradient overlays across `HeroSlider`, `PageHero`, `/destinations/[slug]`, and `/tours/[slug]` from ~65%-95% black down to 10%-35% cinematic tint, allowing natural daylight and landscape beauty to shine through vividly.
   - Reinforced typography readability with `drop-shadow-[0_4px_20px_rgba(0,0,0,0.85)]` and landmark badges (`✦ UNESCO / Biểu tượng du lịch`).
   - Added desktop slide prev/next arrow controls and golden indicator navigation dots with smooth Ken Burns animation.
-  - Provided root export at `@/data` and `@/data/seed` for clean, ergonomic import ergonomics across customer components and routes.
-  - Maintained 100% backward compatibility via deprecation re-export shims in `src/lib/*-data.ts`.
-  - Migrated sitemap, catalog, detail pages, and home components to direct `@/data/seed` imports.
-  - Created comprehensive documentation and maintenance guide (`src/data/seed/README.md`).
 
 - Full ERP Sync Specification & Public Site Dynamic Data Integration:
   - Authored comprehensive specification: `docs/erp-sync-spec-and-implementation-plan.md` defining Odoo 18 module blueprint (`star_travels_connector`), data contracts, HMAC-SHA256 webhooks, and transactional Outbox event lifecycle.

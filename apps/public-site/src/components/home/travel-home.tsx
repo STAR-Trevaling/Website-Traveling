@@ -38,7 +38,6 @@ export function TravelHome({ destinations, tours }: TravelHomeProps = {}) {
       <ScrollReveal direction="up" distance={32} duration={1150} threshold={0.06}>
         <FeaturedTours initialTours={tours} />
       </ScrollReveal>
-
       {/* TRANSITION DIVIDER 3 */}
       <div className="section-divider opacity-75" />
 

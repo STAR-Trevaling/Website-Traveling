@@ -32,7 +32,7 @@ export function NewsletterAwards() {
         <div className="grid gap-8 sm:gap-10 lg:grid-cols-[390px_1fr] xl:grid-cols-[430px_1fr] lg:gap-12 xl:gap-16 items-stretch">
           
           {/* LEFT: NEWSLETTER CARD (Balanced height, perfectly aligned with right side) */}
-          <div className="mx-auto w-full max-w-[440px] bg-[#fdf2f2]/95 p-6 sm:p-8 md:p-10 lg:p-9 xl:p-10 shadow-xl border border-white/70 rounded-[2px] flex flex-col justify-between">
+          <div className="mx-auto w-full max-w-[440px] bg-[#dceee9]/95 p-6 sm:p-8 md:p-10 lg:p-9 xl:p-10 shadow-xl border border-white/70 rounded-[2px] flex flex-col justify-between">
             <div>
               {/* Symmetrical, elegant 2-line title without single orphan words */}
               <h2 className="display-title text-center text-2xl sm:text-3xl lg:text-[34px] font-black tracking-wider text-[#1e293b] leading-tight text-balance">
@@ -130,7 +130,7 @@ export function NewsletterAwards() {
 
                     {/* Text details */}
                     <div className="flex-1 min-w-0">
-                      <h3 className="text-xs sm:text-[13px] md:text-sm font-bold text-[#1e293b] leading-snug group-hover:text-[#da251d] transition-colors duration-200">
+                      <h3 className="text-xs sm:text-[13px] md:text-sm font-bold text-[#1e293b] leading-snug group-hover:text-[#0098a2] transition-colors duration-200">
                         {item.title}
                       </h3>
                       <p className="mt-0.5 text-[11px] sm:text-xs text-[#64748b] font-light leading-relaxed line-clamp-2">

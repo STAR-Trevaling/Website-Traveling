@@ -88,31 +88,28 @@ export function HeroSlider() {
       {/* Subtle modern cinematic overlay keeping landmark photos bright, sunny and vibrant while text remains crystal-clear */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-black/10 to-black/55 pointer-events-none" />
 
-      {/* Hero Content (Positioned higher with generous breathing room and optical balance) */}
-      <div className="relative z-10 flex min-h-[680px] sm:min-h-[720px] md:min-h-[760px] lg:min-h-[800px] w-full flex-col items-center justify-center px-4 pt-16 sm:pt-18 md:pt-20 pb-12 text-white">
-        {/* Main Center Content: Title & Desc shifted up, Discovery Search distinctly moved down */}
+      {/* Hero Content (Positioned with generous breathing room and optical centering) */}
+      <div className="relative z-10 flex min-h-[680px] sm:min-h-[720px] md:min-h-[750px] lg:min-h-[780px] w-full flex-col items-center justify-center px-4 pt-24 sm:pt-26 md:pt-28 pb-12 sm:pb-16 text-white">
+        {/* Main Center Content: Title, Subtitle, with Discovery Search below */}
         <div className="w-full max-w-5xl mx-auto text-center flex flex-col items-center">
-          {/* Text Cluster (Dời lên trên) */}
-          <div className="flex flex-col items-center -translate-y-6 sm:-translate-y-10 md:-translate-y-14">
-            {/* Animated Hero Title on slide change (Concise single line) */}
-            <h1
-              key={`hero-title-${currentSlide}`}
-              className="display-title template-shadow-text leading-tight text-3xl sm:text-4xl md:text-5xl lg:text-6xl animate-fade-in-up whitespace-nowrap truncate max-w-5xl drop-shadow-[0_4px_24px_rgba(0,0,0,0.9)] tracking-wide"
-            >
-              {t.hero.slides[currentSlide]?.title || slides[currentSlide]?.title}
-            </h1>
+          {/* Animated Hero Title on slide change */}
+          <h1
+            key={`hero-title-${currentSlide}`}
+            className="display-title template-shadow-text leading-tight text-4xl sm:text-5xl md:text-6xl lg:text-[68px] xl:text-[72px] animate-fade-in-up text-balance drop-shadow-[0_4px_16px_rgba(0,0,0,0.65)]"
+          >
+            {t.hero.slides[currentSlide]?.title || slides[currentSlide]?.title}
+          </h1>
 
-            {/* Animated Hero Script Description (Kiểu chữ template, đúng 1 dòng ngắn gọn) */}
-            <p
-              key={`hero-sub-${currentSlide}`}
-              className="script-title mt-2 sm:mt-3 leading-normal text-white/95 [-webkit-text-stroke:.3px_#fff] text-2xl sm:text-3xl md:text-4xl lg:text-[44px] animate-fade-in-up animation-delay-100 drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)] whitespace-nowrap truncate max-w-4xl"
-            >
-              {t.hero.slides[currentSlide]?.subtitle || slides[currentSlide]?.subtitle}
-            </p>
-          </div>
+          {/* Animated Hero Script Subtitle */}
+          <p
+            key={`hero-sub-${currentSlide}`}
+            className="script-title mt-2 sm:mt-3 leading-normal text-white/95 [-webkit-text-stroke:.3px_#fff] text-2xl sm:text-3xl md:text-4xl lg:text-5xl animate-fade-in-up animation-delay-100 text-balance drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)]"
+          >
+            {t.hero.slides[currentSlide]?.subtitle || slides[currentSlide]?.subtitle}
+          </p>
 
-          {/* Search Bar (Dời xích xuống dưới rõ ràng, cân đối và thoáng đãng) */}
-          <div className="w-full max-w-[1100px] mt-4 sm:mt-6 md:mt-8 translate-y-3 sm:translate-y-6 md:translate-y-8 animate-fade-in-scale animation-delay-200">
+          {/* Search Bar immediately below text in the middle of the page */}
+          <div className="w-full max-w-[1100px] mt-6 sm:mt-8 md:mt-9 lg:mt-10 animate-fade-in-scale animation-delay-200">
             <DiscoverySearch />
           </div>
         </div>

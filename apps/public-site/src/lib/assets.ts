@@ -43,19 +43,19 @@ export const VIETNAM_IMAGES = {
     },
   ],
 
-  // Destinations (Verified Bright High-Quality Vietnam Photos)
+  // Destinations (Verified High-Quality Vietnam Photos & Authenticated Landmarks)
   haLong: "/images/hero/ha-long-bay.jpg",
   hoiAn: "/images/hero/hoi-an.jpg",
   phuQuoc: "/images/hero/phu-quoc.jpg",
   saPa: "/images/hero/sapa-terraces.jpg",
-  daLat: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=85",
+  daLat: "https://upload.wikimedia.org/wikipedia/commons/e/e2/Da_Lat_-_Viet_Nam.jpg",
   ninhBinh: "/images/hero/trang-an.jpg",
-  hue: "https://images.unsplash.com/photo-1583417319070-4a69db38a482?auto=format&fit=crop&w=1200&q=85",
-  haGiang: "https://images.unsplash.com/photo-1570366583862-f91883984fde?auto=format&fit=crop&w=1200&q=85",
+  hue: "https://upload.wikimedia.org/wikipedia/commons/0/0e/Ngo_Mon.jpg",
+  haGiang: "https://upload.wikimedia.org/wikipedia/commons/0/0f/Mountain_road_at_M%C3%A3_P%C3%AD_L%C3%A8ng_Pass%2C_H%C3%A0_Giang_Province%2C_Vietnam.jpg",
   daNang: "/images/hero/golden-bridge.jpg",
-  conDao: "/images/hero/phu-quoc.jpg",
-  phongNha: "/images/hero/trang-an.jpg",
-  muiNe: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=85",
+  conDao: "https://upload.wikimedia.org/wikipedia/commons/d/d5/Phu_quoc_plage_sao.jpg",
+  phongNha: "https://upload.wikimedia.org/wikipedia/commons/e/e0/Paradise_Cave%2C_Phong_Nha-Ke_Bang_National_Park%2C_Vietnam.jpg",
+  muiNe: "https://upload.wikimedia.org/wikipedia/commons/b/b3/Dune_de_Mui_Ne.jpg",
   nhaTrang: "/assets/nha-trang-beach-bg.jpg",
   canTho: "https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?auto=format&fit=crop&w=1200&q=85",
 

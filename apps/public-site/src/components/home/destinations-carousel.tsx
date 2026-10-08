@@ -77,7 +77,7 @@ export function DestinationsCarousel({ initialDestinations }: DestinationsCarous
           type="button"
           onClick={handlePrev}
           aria-label={isEn ? "Previous destinations" : "Điểm đến trước"}
-          className="hidden md:flex absolute -left-12 lg:-left-16 top-1/2 z-20 -translate-y-1/2 text-slate-800 hover:text-[#da251d] transition drop-shadow-[0_2px_8px_rgba(0,0,0,0.15)] hover:scale-110 active:scale-95 cursor-pointer"
+          className="hidden md:flex absolute -left-12 lg:-left-16 top-1/2 z-20 -translate-y-1/2 text-slate-800 hover:text-[#0098a2] transition drop-shadow-[0_2px_8px_rgba(0,0,0,0.15)] hover:scale-110 active:scale-95 cursor-pointer"
         >
           <ChevronLeft className="size-12 md:size-16 stroke-[1.2]" />
         </button>
@@ -87,7 +87,7 @@ export function DestinationsCarousel({ initialDestinations }: DestinationsCarous
           type="button"
           onClick={handleNext}
           aria-label={isEn ? "Next destinations" : "Điểm đến tiếp theo"}
-          className="hidden md:flex absolute -right-12 lg:-right-16 top-1/2 z-20 -translate-y-1/2 text-slate-800 hover:text-[#da251d] transition drop-shadow-[0_2px_8px_rgba(0,0,0,0.15)] hover:scale-110 active:scale-95 cursor-pointer"
+          className="hidden md:flex absolute -right-12 lg:-right-16 top-1/2 z-20 -translate-y-1/2 text-slate-800 hover:text-[#0098a2] transition drop-shadow-[0_2px_8px_rgba(0,0,0,0.15)] hover:scale-110 active:scale-95 cursor-pointer"
         >
           <ChevronRight className="size-12 md:size-16 stroke-[1.2]" />
         </button>
@@ -124,7 +124,7 @@ export function DestinationsCarousel({ initialDestinations }: DestinationsCarous
                     </div>
 
                     <div className="p-4 sm:p-5 pb-5 sm:pb-6">
-                      <h3 className="script-title text-2xl sm:text-3xl font-bold text-[#1e293b] group-hover:text-[#da251d] transition-colors leading-tight">
+                      <h3 className="script-title text-2xl sm:text-3xl font-bold text-[#1e293b] group-hover:text-[#0098a2] transition-colors leading-tight">
                         {displayName}
                       </h3>
                       <p className="mt-2 line-clamp-2 text-xs sm:text-sm font-light text-[#555] leading-relaxed">

@@ -95,40 +95,41 @@ export default async function ExperiencesPage({ searchParams }: ExperiencesPageP
 
           {/* HEADER & FILTER BAR */}
           <div className="rounded-[2px] bg-white/85 backdrop-blur-md p-6 sm:p-8 md:p-10 shadow-[0_4px_24px_rgba(0,152,162,0.06)] border border-white/90 mb-8 sm:mb-12">
-            <div>
-              <span className="inline-block px-3 py-1 rounded-[2px] bg-[#0098a2]/15 text-[#007a82] border border-[#0098a2]/25 text-[11px] font-bold uppercase tracking-[0.2em] mb-2">
-                {ep.badge}
-              </span>
-              <h1 className="script-title mt-1 text-4xl sm:text-5xl md:text-6xl text-[#0f172a] leading-tight">
-                {ep.heading}
-              </h1>
-              <p className="mt-2 text-sm sm:text-base md:text-[17px] text-slate-800 font-medium max-w-2xl leading-relaxed">
-                {locale === "en"
-                  ? "Curated collection of authentic local adventures, expeditions and cultural experiences across Vietnam."
-                  : "Tuyển tập những hoạt động thám hiểm bản địa, du thuyền và trải nghiệm văn hóa đặc sắc khắp Việt Nam."}
-              </p>
-            </div>
+            <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+              <div>
+                <span className="inline-block px-3 py-1 rounded-[2px] bg-[#0098a2]/15 text-[#007a82] border border-[#0098a2]/25 text-[11px] font-bold uppercase tracking-[0.2em] mb-2">
+                  {ep.badge}
+                </span>
+                <h1 className="script-title mt-1 text-4xl sm:text-5xl md:text-6xl text-[#0f172a] leading-tight">
+                  {ep.heading}
+                </h1>
+                <p className="mt-2 text-sm sm:text-base md:text-[17px] text-slate-800 font-medium max-w-2xl leading-relaxed">
+                  {locale === "en"
+                    ? "Curated collection of authentic local adventures, expeditions and cultural experiences across Vietnam."
+                    : "Tuyển tập những hoạt động thám hiểm bản địa, du thuyền và trải nghiệm văn hóa đặc sắc khắp Việt Nam."}
+                </p>
+              </div>
 
-            {/* Category Filter Pills */}
-            <div className="mt-6 pt-5 border-t border-slate-200/60 flex flex-wrap gap-1.5 sm:gap-2">
-              {categories.map((cat) => {
-                const isActive = currentCategory === cat.slug;
-                const href = cat.slug ? `/experiences?category=${cat.slug}` : "/experiences";
-
-                return (
-                  <Link
-                    key={cat.slug || "all"}
-                    href={href}
-                    className={`px-3.5 sm:px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-[2px] transition-all duration-200 cursor-pointer ${
-                      isActive
-                        ? "bg-[#0098a2] text-white shadow-[0px_4px_14px_rgba(0,152,162,0.35)]"
-                        : "bg-white text-slate-800 hover:bg-slate-50 hover:border-slate-400 hover:shadow-sm border border-slate-200"
-                    }`}
-                  >
-                    {cat.label}
-                  </Link>
-                );
-              })}
+              {/* Category Filter Pills */}
+              <div className="flex flex-wrap gap-1.5 sm:gap-2 shrink-0">
+                {categories.map((cat) => {
+                  const isActive = currentCategory === cat.slug;
+                  const href = cat.slug ? `/experiences?category=${cat.slug}` : "/experiences";
+                  return (
+                    <Link
+                      key={cat.slug || "all"}
+                      href={href}
+                      className={`px-3.5 sm:px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-[2px] transition-all duration-200 cursor-pointer ${
+                        isActive
+                          ? "bg-[#0098a2] text-white shadow-[0px_4px_14px_rgba(0,152,162,0.35)]"
+                          : "bg-white text-slate-800 hover:bg-slate-50 hover:border-slate-400 hover:shadow-sm border border-slate-200"
+                      }`}
+                    >
+                      {cat.label}
+                    </Link>
+                  );
+                })}
+              </div>
             </div>
           </div>
 

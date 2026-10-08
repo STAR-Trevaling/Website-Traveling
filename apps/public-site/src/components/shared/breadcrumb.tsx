@@ -19,7 +19,7 @@ export function Breadcrumb({ items, className = "" }: BreadcrumbProps) {
   return (
     <nav
       aria-label="Breadcrumb"
-      className={`inline-flex items-center gap-1.5 sm:gap-2 px-3.5 py-1.5 rounded-full bg-white/85 hover:bg-white/95 backdrop-blur-md border border-white/90 shadow-[0_2px_12px_rgba(218,37,29,0.06)] text-xs transition-all duration-200 select-none ${className}`}
+      className={`inline-flex items-center gap-1.5 sm:gap-2 px-3.5 py-1.5 rounded-full bg-white/85 hover:bg-white/95 backdrop-blur-md border border-white/90 shadow-[0_2px_12px_rgba(0,152,162,0.06)] text-xs transition-all duration-200 select-none ${className}`}
     >
       {items.map((item, index) => {
         const isLast = index === items.length - 1;
@@ -28,7 +28,7 @@ export function Breadcrumb({ items, className = "" }: BreadcrumbProps) {
             {item.href && !isLast ? (
               <Link
                 href={item.href}
-                className="text-slate-700 hover:text-[#da251d] font-semibold transition-colors truncate max-w-[140px] sm:max-w-none"
+                className="text-slate-700 hover:text-[#0098a2] font-semibold transition-colors truncate max-w-[140px] sm:max-w-none"
               >
                 {item.label}
               </Link>
