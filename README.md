@@ -141,10 +141,10 @@ travel-platform-mvp-complete/
 │
 ├── docs/                             # Engineering artifacts & brand assets
 │   ├── star-logo.svg                 # Official STAR brand vector logo (name + star emblem)
-│   ├── public-site-ui-inventory.md   # Inventory of all 19 customer-facing routes & mock data
-│   ├── ui-parity-checklist.md        # Layout parity checklist with Anima design reference
-│   ├── implementation-plan.md        # Technical execution and architecture plans
-│   └── validation-report.md          # Verification findings and test execution logs
+│   ├── public-site-specification.md  # Master spec: UI inventory, 19 routes, Anima parity & UX
+│   ├── backend-database-and-erp-spec.md # Master spec: PostgreSQL ERD, 6 bounded contexts & Odoo 18 sync
+│   ├── ai-assistant-and-rag-spec.md  # Master spec: AI Concierge, RAG vector engine & CRM dispatch
+│   └── project-delivery-and-verification.md # Master report: Phases 0-9 plan & quality gate validation
 │
 ├── context/                          # Canonical engineering context (AGENTS.md, architecture)
 ├── scripts/                          # AST validation, sanity checks, and context linters
