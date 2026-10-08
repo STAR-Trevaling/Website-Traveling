@@ -189,18 +189,48 @@ export interface RefreshTokenPayload {
 }
 
 // ─── Tours Specification ────────────────────────────────────
+// ─── Tours Specification ────────────────────────────────────
+export type TourRegion = "north" | "central" | "south";
+
+export interface TourItineraryDay {
+  day: number;
+  title: string;
+  morning?: string;
+  afternoon?: string;
+  evening?: string;
+  desc?: string;
+}
+
 export interface TourItem {
   id: string;
-  title: string;
   slug: string;
-  location: string;
+  aliases?: string[];
+  title: string;
+  title_en?: string;
+  destination: string;
+  destination_en?: string;
+  region: TourRegion;
   duration: string;
-  groupSize: string;
+  duration_en?: string;
+  departure: string;
+  departure_en?: string;
+  groupSize?: string;
   price: number;
   originalPrice?: number;
   rating: number;
   reviewCount: number;
-  imageUrl: string;
-  tags: string[];
+  image: string;
+  imageUrl?: string;
+  gallery?: string[];
+  overview: string;
+  overview_en?: string;
+  highlights: string[];
+  itinerary: TourItineraryDay[];
+  inclusions?: string[];
+  exclusions?: string[];
+  included?: string[];
+  excluded?: string[];
+  transport?: string;
+  hotel?: string;
   featured?: boolean;
 }
