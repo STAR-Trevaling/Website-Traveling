@@ -46,6 +46,9 @@ export const VIETNAM_IMAGES = {
   haGiang: "https://upload.wikimedia.org/wikipedia/commons/0/0f/Mountain_road_at_M%C3%A3_P%C3%AD_L%C3%A8ng_Pass%2C_H%C3%A0_Giang_Province%2C_Vietnam.jpg",
   daNang: "https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?auto=format&fit=crop&w=800&q=80",
   conDao: "https://upload.wikimedia.org/wikipedia/commons/d/d5/Phu_quoc_plage_sao.jpg",
+  phongNha: "https://upload.wikimedia.org/wikipedia/commons/e/e0/Paradise_Cave%2C_Phong_Nha-Ke_Bang_National_Park%2C_Vietnam.jpg",
+  muiNe: "https://upload.wikimedia.org/wikipedia/commons/b/b3/Dune_de_Mui_Ne.jpg",
+  nhaTrang: "https://upload.wikimedia.org/wikipedia/commons/4/47/Nha_Trang_Bay_view.jpg",
 
   // Experiences & Adventures
   cruise: "https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?auto=format&fit=crop&w=800&q=80",

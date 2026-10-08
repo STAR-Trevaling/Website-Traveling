@@ -7,7 +7,7 @@ import { Clock, ArrowLeft, ChevronRight } from "lucide-react";
 import { SiteHeader } from "@/components/layout/site-header";
 import { publicApi } from "@/lib/api";
 import { VIETNAM_IMAGES } from "@/lib/assets";
-import { getStoryBySlug, VIETNAM_STORIES } from "@/lib/stories-data";
+import { getStoryBySlug, VIETNAM_STORIES } from "@/data/seed";
 import { DICTIONARY } from "@/lib/i18n/dictionary";
 
 interface StoryDetailPageProps {

@@ -5,11 +5,14 @@ import { cookies } from "next/headers";
 import { ArrowRight } from "lucide-react";
 import { SiteHeader } from "@/components/layout/site-header";
 import { PlaceCard } from "@/components/shared/place-card";
+import { Breadcrumb } from "@/components/shared/breadcrumb";
 import { publicApi, safe } from "@/lib/api";
 import { VIETNAM_IMAGES } from "@/lib/assets";
-import { ALL_VIETNAM_DESTINATIONS } from "@/lib/destinations-data";
-import { VIETNAM_EXPERIENCES } from "@/lib/experiences-data";
-import { VIETNAM_TOURS } from "@/lib/tours-data";
+import {
+  ALL_VIETNAM_DESTINATIONS,
+  VIETNAM_EXPERIENCES,
+  VIETNAM_TOURS,
+} from "@/data/seed";
 import type { Destination } from "@/lib/types";
 import { DICTIONARY } from "@/lib/i18n/dictionary";
 import type { Locale } from "@/lib/i18n/types";
@@ -101,17 +104,28 @@ export default async function DestinationDetail({ params }: DestinationDetailPro
         </div>
       </section>
 
-      <main className="template-page-bg min-h-screen text-[#282828] px-6 py-20 md:px-12 lg:px-16 overflow-x-hidden">
-        <div className="mx-auto max-w-7xl space-y-20">
+      <main className="template-page-bg min-h-screen text-[#282828] px-6 py-12 md:py-16 md:px-12 lg:px-16">
+        <div className="mx-auto max-w-7xl space-y-12 sm:space-y-16">
+          {/* Breadcrumb Navigation */}
+          <div>
+            <Breadcrumb
+              items={[
+                { label: isEn ? "Home" : "Trang Chủ", href: "/" },
+                { label: isEn ? "Destinations" : "Điểm Đến", href: "/destinations" },
+                { label: displayName },
+              ]}
+            />
+          </div>
+
           {/* DESTINATION OVERVIEW CARD */}
           <div className="bg-white/90 p-8 md:p-12 rounded-[2px] shadow-sm border border-slate-100 max-w-4xl">
             <span className="text-xs font-bold uppercase tracking-[0.25em] text-slate-900">
               {dd.overviewBadge}
             </span>
-            <h2 className="script-title mt-2 text-4xl md:text-5xl text-[#1e293b]">
+            <h2 className="script-title mt-2 text-4xl md:text-5xl text-[#0f172a]">
               {dd.overviewHeading}
             </h2>
-            <p className="mt-4 text-base md:text-lg font-light leading-relaxed text-[#4b5563]">
+            <p className="mt-4 text-base md:text-lg font-normal leading-relaxed text-slate-700">
               {displayDesc}
             </p>
           </div>

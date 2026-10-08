@@ -1,8 +1,10 @@
 import type { MetadataRoute } from "next";
-import { ALL_VIETNAM_DESTINATIONS } from "@/lib/destinations-data";
-import { VIETNAM_TOURS } from "@/lib/tours-data";
-import { VIETNAM_EXPERIENCES } from "@/lib/experiences-data";
-import { VIETNAM_STORIES } from "@/lib/stories-data";
+import {
+  ALL_VIETNAM_DESTINATIONS,
+  VIETNAM_TOURS,
+  VIETNAM_EXPERIENCES,
+  VIETNAM_STORIES,
+} from "@/data/seed";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://startravels.vn";
 

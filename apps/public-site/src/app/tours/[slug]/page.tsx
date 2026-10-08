@@ -15,7 +15,8 @@ import {
   PhoneCall,
 } from "lucide-react";
 import { SiteHeader } from "@/components/layout/site-header";
-import { getTourBySlug, VIETNAM_TOURS } from "@/lib/tours-data";
+import { Breadcrumb } from "@/components/shared/breadcrumb";
+import { getTourBySlug, VIETNAM_TOURS } from "@/data/seed";
 import { TourBookingCard } from "@/components/tours";
 import { DICTIONARY } from "@/lib/i18n/dictionary";
 import type { Locale } from "@/lib/i18n/types";
@@ -174,8 +175,19 @@ export default async function TourDetailPage({ params }: TourDetailPageProps) {
       </section>
 
       {/* 3. MAIN CONTENT & BOOKING SIDEBAR */}
-      <main className="template-page-bg min-h-screen px-4 sm:px-6 py-10 sm:py-16 md:px-12">
-        <div className="mx-auto grid max-w-7xl gap-8 sm:gap-12 lg:grid-cols-[1fr_380px]">
+      <main className="template-page-bg min-h-screen px-4 sm:px-6 py-8 sm:py-12 md:px-12">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-6 sm:mb-8">
+            <Breadcrumb
+              items={[
+                { label: isEn ? "Home" : "Trang Chủ", href: "/" },
+                { label: isEn ? "Tours" : "Tour Tuyển Chọn", href: "/tours" },
+                { label: displayTitle },
+              ]}
+            />
+          </div>
+
+          <div className="grid gap-8 sm:gap-12 lg:grid-cols-[1fr_380px]">
           {/* LEFT: Detailed Info */}
           <div className="space-y-8 sm:space-y-12">
             {/* Highlights */}
@@ -337,14 +349,15 @@ export default async function TourDetailPage({ params }: TourDetailPageProps) {
             </div>
           </aside>
         </div>
+      </div>
 
         {/* RELATED TOURS */}
         <section className="mx-auto max-w-7xl mt-24">
           <div className="text-center mb-10">
-            <h2 className="script-title text-4xl md:text-5xl text-[#1e293b]">
+            <h2 className="script-title text-4xl md:text-5xl text-[#0f172a]">
               {td.relatedToursTitle}
             </h2>
-            <p className="mt-2 text-sm text-[#64748b] font-light">
+            <p className="mt-2 text-sm sm:text-base text-slate-800 font-medium">
               {isEn
                 ? "Explore more handcrafted heritage routes across beautiful Vietnam"
                 : "Khám phá thêm những cung đường di sản tuyệt đẹp khác tại Việt Nam"}

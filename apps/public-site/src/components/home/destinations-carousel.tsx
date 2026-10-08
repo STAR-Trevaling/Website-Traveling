@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import type { Destination } from "@/lib/types";
-import { VIETNAM_DESTINATIONS_PAGES } from "@/lib/destinations-data";
+import { VIETNAM_DESTINATIONS_PAGES } from "@/data/seed";
 import { useLanguage } from "@/lib/i18n/context";
 
 interface DestinationsCarouselProps {
@@ -88,12 +88,13 @@ export function DestinationsCarousel({ initialDestinations }: DestinationsCarous
           {currentItems.map((d, idx) => {
             const displayName = isEn && d.name_en ? d.name_en : d.name;
             const displaySummary = isEn && d.summary_en ? d.summary_en : d.summary;
+            const delayClass = idx === 0 ? "" : idx === 1 ? "animation-delay-100" : idx === 2 ? "animation-delay-200" : "animation-delay-300";
 
             return (
               <Link
                 href={`/destinations/${d.slug}`}
                 key={d.id}
-                className="group block w-full"
+                className={`group block w-full transform-gpu ${delayClass}`}
                 title={displayName}
               >
                 <article className="overflow-hidden bg-white shadow-md travel-card-lift rounded-[2px] h-full flex flex-col justify-between border border-slate-100/80">

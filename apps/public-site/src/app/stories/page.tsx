@@ -6,7 +6,7 @@ import { Clock, User, ChevronRight, ArrowUpRight } from "lucide-react";
 import { PageHero } from "@/components/layout/page-hero";
 import { publicApi, safe } from "@/lib/api";
 import { VIETNAM_IMAGES } from "@/lib/assets";
-import { VIETNAM_STORIES } from "@/lib/stories-data";
+import { VIETNAM_STORIES } from "@/data/seed";
 import { DICTIONARY } from "@/lib/i18n/dictionary";
 
 export const metadata: Metadata = {
@@ -98,10 +98,10 @@ export default async function StoriesPage() {
 
           {/* 2. STORIES MAGAZINE GRID */}
           <div className="mb-6 sm:mb-10 text-center">
-            <h2 className="script-title text-3xl sm:text-4xl md:text-5xl text-[#1e293b]">
+            <h2 className="script-title text-3xl sm:text-4xl md:text-5xl text-[#0f172a] drop-shadow-[0_1px_1px_rgba(255,255,255,0.8)]">
               {isEn ? "Latest Articles" : "Bài Viết Mới Nhất"}
             </h2>
-            <p className="mt-1.5 sm:mt-2 text-xs md:text-sm text-[#64748b] font-light">
+            <p className="mt-2 text-sm sm:text-base text-slate-800 font-medium max-w-2xl mx-auto leading-relaxed">
               {isEn
                 ? "A curated collection of insightful articles on travel experiences, cuisine, and local culture."
                 : "Tuyển tập những bài viết chất lượng cao về trải nghiệm, ẩm thực và văn hóa"}

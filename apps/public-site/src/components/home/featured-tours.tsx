@@ -4,7 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { VIETNAM_TOURS, type TourItem } from "@/lib/tours-data";
+import { VIETNAM_TOURS, type TourItem } from "@/data/seed";
 import { useLanguage } from "@/lib/i18n/context";
 
 interface FeaturedToursProps {
@@ -59,10 +59,10 @@ export function FeaturedTours({ initialTours }: FeaturedToursProps) {
     <section className="w-full px-4 sm:px-6 md:px-12 lg:px-16 py-10 sm:py-14 md:py-20">
       <div className="mx-auto max-w-7xl">
         <div className="text-center mb-6 sm:mb-10 md:mb-12">
-          <h2 className="script-title text-3xl sm:text-5xl md:text-6xl text-[#1e293b]">
+          <h2 className="script-title text-3xl sm:text-5xl md:text-6xl text-[#0f172a]">
             {t.featured.heading}
           </h2>
-          <p className="mt-2 text-xs sm:text-sm md:text-base text-[#64748b] font-light max-w-xl mx-auto">
+          <p className="mt-2 text-xs sm:text-sm md:text-base text-slate-800 font-medium max-w-xl mx-auto">
             {t.featured.subheading}
           </p>
         </div>
@@ -101,17 +101,18 @@ export function FeaturedTours({ initialTours }: FeaturedToursProps) {
             key={`tours-page-${currentPage}`}
             className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 animate-fade-in-scale"
           >
-            {currentTours.map((tour) => {
+            {currentTours.map((tour, idx) => {
               const fullDest = isEn && tour.destination_en ? tour.destination_en : tour.destination;
               const shortDest = fullDest.split(",")[0].trim();
               const displayTitle = isEn && tour.title_en ? tour.title_en : tour.title;
               const displayDuration = isEn && tour.duration_en ? tour.duration_en : tour.duration;
+              const delayClass = idx === 0 ? "" : idx === 1 ? "animation-delay-100" : idx === 2 ? "animation-delay-200" : "animation-delay-300";
 
               return (
                 <Link
                   key={tour.id}
                   href={`/tours/${tour.slug}`}
-                  className="group flex flex-col overflow-hidden rounded-[2px] bg-white shadow-md travel-card-lift border border-slate-100"
+                  className={`group flex flex-col overflow-hidden rounded-[2px] bg-white shadow-md travel-card-lift border border-slate-100 transform-gpu ${delayClass}`}
                 >
                   <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-100">
                     <Image

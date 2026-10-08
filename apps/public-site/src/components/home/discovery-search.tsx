@@ -7,10 +7,12 @@ import {
   ChevronDown,
   ChevronLeft,
   ChevronRight,
+  ChevronUp,
   Search,
   Users,
   Calendar,
   X,
+  EyeOff,
 } from "lucide-react";
 import { useLanguage } from "@/lib/i18n/context";
 
@@ -242,6 +244,7 @@ export function DiscoverySearch() {
   const { locale } = useLanguage();
   const isEn = locale === "en";
 
+  const [isSearchOpen, setIsSearchOpen] = useState(true);
   const [activeTab, setActiveTab] = useState<TabType>("flights");
   const [col1Index, setCol1Index] = useState(0); // Hanoi
   const [col2Index, setCol2Index] = useState(6); // Nha Trang
@@ -253,6 +256,23 @@ export function DiscoverySearch() {
   const [openCol2, setOpenCol2] = useState(false);
   const [openTravellers, setOpenTravellers] = useState(false);
   const [openDate, setOpenDate] = useState<"start" | "end" | null>(null);
+
+  // Load saved preference from localStorage
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem("star_travels_search_open");
+      if (saved !== null) {
+        setIsSearchOpen(saved === "true");
+      }
+    } catch {}
+  }, []);
+
+  const toggleSearch = (open: boolean) => {
+    setIsSearchOpen(open);
+    try {
+      localStorage.setItem("star_travels_search_open", String(open));
+    } catch {}
+  };
 
   // Click outside to close dropdowns
   useEffect(() => {
@@ -302,10 +322,40 @@ export function DiscoverySearch() {
     }
   };
 
+  // Collapsed Mode (Mode OFF): Ultra-sleek, luxury minimal pill
+  if (!isSearchOpen) {
+    return (
+      <div id="discovery-search-container" className="w-full select-none flex justify-center animate-fade-in-scale">
+        <button
+          type="button"
+          onClick={() => toggleSearch(true)}
+          className="group relative flex items-center gap-2.5 sm:gap-3.5 bg-black/40 hover:bg-black/60 backdrop-blur-2xl border border-white/20 hover:border-white/40 shadow-[0_8px_32px_rgba(0,0,0,0.35)] rounded-full px-4 sm:px-5 py-2 sm:py-2.5 text-white transition-all duration-300 hover:scale-[1.02] cursor-pointer"
+        >
+          <Search className="size-3.5 sm:size-4 text-white/90 group-hover:text-white transition-transform duration-300 group-hover:scale-110" />
+          <span className="text-xs sm:text-sm font-medium tracking-wide text-white/95">
+            {isEn ? "Search journeys" : "Tìm kiếm hành trình"}
+          </span>
+          <span className="text-white/25 text-xs select-none">|</span>
+          <span className="text-xs text-white/70 font-light truncate max-w-[150px] sm:max-w-none">
+            {isEn
+              ? `${VIETNAM_DESTINATIONS[col1Index]?.en} → ${VIETNAM_DESTINATIONS[col2Index]?.en}`
+              : `${VIETNAM_DESTINATIONS[col1Index]?.vi} → ${VIETNAM_DESTINATIONS[col2Index]?.vi}`}
+          </span>
+          <ChevronDown className="size-3.5 text-white/60 transition-transform duration-300 group-hover:text-white group-hover:translate-y-0.5" />
+        </button>
+      </div>
+    );
+  }
+
+  // Expanded Mode (Mode ON): Full 3 tabs + 5 columns with smart hide toggle
   return (
-    <div id="discovery-search-container" className="w-full select-none">
-      {/* 1. Top Tabs (Centered, Compact Teal Pill - Exactly like Template) */}
-      <div className="flex justify-center w-full">
+    <div id="discovery-search-container" className="w-full select-none animate-fade-in-scale">
+      {/* 1. Top Controls Bar: Tabs + Right-side On/Off Toggle Button */}
+      <div className="flex items-center justify-between w-full max-w-[1100px] mx-auto px-1 sm:px-2 mb-0">
+        {/* Left spacer for optical center alignment on desktop */}
+        <div className="hidden md:block w-36" />
+
+        {/* Center: 3 Teal Tabs */}
         <div className="inline-flex bg-[#0098a2] rounded-t-[6px] sm:rounded-t-[8px] overflow-hidden shadow-md">
           {tabs.map((tab) => (
             <button
@@ -317,7 +367,7 @@ export function DiscoverySearch() {
                 setOpenCol2(false);
                 setOpenTravellers(false);
               }}
-              className={`relative px-5 sm:px-7 md:px-9 py-2.5 sm:py-3 text-[11px] sm:text-xs font-bold tracking-[0.14em] sm:tracking-[0.18em] transition-all cursor-pointer text-center whitespace-nowrap ${
+              className={`relative px-4 sm:px-7 md:px-9 py-2.5 sm:py-3 text-[11px] sm:text-xs font-bold tracking-[0.12em] sm:tracking-[0.18em] transition-all cursor-pointer text-center whitespace-nowrap ${
                 activeTab === tab.key
                   ? "text-white font-black after:absolute after:bottom-0 after:inset-x-3 sm:after:inset-x-5 after:h-[2.5px] after:bg-white"
                   : "text-white/80 hover:text-white hover:bg-white/10"
@@ -326,6 +376,19 @@ export function DiscoverySearch() {
               {isEn ? tab.labelEn : tab.labelVi}
             </button>
           ))}
+        </div>
+
+        {/* Right: Smart Mode Toggle Button (Thu gọn) */}
+        <div className="flex items-center justify-end md:w-36">
+          <button
+            type="button"
+            onClick={() => toggleSearch(false)}
+            className="group flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/40 hover:bg-black/60 text-white/80 hover:text-white backdrop-blur-md border border-white/15 hover:border-white/35 text-[11px] font-medium transition-all shadow-sm cursor-pointer select-none"
+            title={isEn ? "Collapse search" : "Thu gọn"}
+          >
+            <EyeOff className="size-3 text-white/70 group-hover:text-white" />
+            <span className="whitespace-nowrap">{isEn ? "Collapse" : "Thu gọn"}</span>
+          </button>
         </div>
       </div>
 
