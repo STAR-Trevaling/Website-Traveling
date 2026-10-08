@@ -4,63 +4,75 @@
  */
 
 export const VIETNAM_IMAGES = {
-  // Hero & Core Banners
-  hero: "https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=1920&q=85", // Hạ Long Bay
-  oceanBanner: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1920&q=85", // Emerald Sea
-  ctaBanner: "https://images.unsplash.com/photo-1512100356356-de1b84283e18?auto=format&fit=crop&w=1920&q=85", // Sunset over sea
-  pagePattern: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1920&q=85",
+  // Hero & Core Banners (Bright & Famous Vietnam Landmarks - 100% Verified Local Real Photos)
+  hero: "/images/hero/ha-long-bay.jpg", // Vịnh Hạ Long ngọc bích ngập tràn ánh nắng
+  goldenBridge: "/images/hero/golden-bridge.jpg", // Cầu Vàng Bà Nà Hills - Đà Nẵng rực rỡ nắng vàng
+  oceanBanner: "/images/hero/phu-quoc.jpg", // Biển nhiệt đới Bãi Sao Phú Quốc ngọc bích
+  ctaBanner: "/images/hero/hoi-an.jpg", // Phố cổ Hội An lung linh đèn lồng
+  pagePattern: "/images/hero/phu-quoc.jpg",
 
-  // Top Hero Slide Banners
+  // Top Hero Slide Banners (4 Danh thắng nổi tiếng & sáng rực rỡ bậc nhất Việt Nam)
   heroSlides: [
     {
-      id: "vietnam-heritage",
-      title: "Non Sông Gấm Vóc",
-      subtitle: "Khám phá kỳ quan thiên nhiên và di sản văn hóa cùng Star Travels.",
-      image: "https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=1920&q=85",
+      id: "ha-long-bay",
+      title: "Kỳ Quan Vịnh Hạ Long",
+      subtitle: "Non nước ngọc bích và ngàn đảo đá kỳ vĩ",
+      image: "/images/hero/ha-long-bay.jpg",
       tag: "Di sản thiên nhiên thế giới UNESCO",
     },
     {
-      id: "da-lat",
-      title: "Xứ Sở Ngàn Hoa",
-      subtitle: "Thả hồn giữa đồi thông xanh ngát và hồ Tuyền Lâm phẳng lặng.",
-      image: "https://upload.wikimedia.org/wikipedia/commons/e/e2/Da_Lat_-_Viet_Nam.jpg",
-      tag: "Thành phố tình yêu & ngàn hoa",
+      id: "golden-bridge-da-nang",
+      title: "Tuyệt Tác Cầu Vàng",
+      subtitle: "Lối đi bộ vàng rực giữa mây trời Bà Nà Hills",
+      image: "/images/hero/golden-bridge.jpg",
+      tag: "Biểu tượng du lịch quốc tế Đà Nẵng",
     },
     {
-      id: "trang-an",
-      title: "Non Nước Hữu Tình",
-      subtitle: "Chiêm ngưỡng thung lũng đá vôi và di sản thế giới kép UNESCO.",
-      image: "https://upload.wikimedia.org/wikipedia/commons/5/5b/Vietnam%2C_Ninh_Binh%2C_Limestone_peaks.jpg",
-      tag: "Di sản thế giới kép UNESCO",
+      id: "sa-pa-rice-terraces",
+      title: "Mùa Vàng Sa Pa",
+      subtitle: "Kiệt tác ruộng bậc thang óng ả giữa mây ngàn",
+      image: "/images/hero/sapa-terraces.jpg",
+      tag: "Kỳ quan ruộng bậc thang Tây Bắc",
+    },
+    {
+      id: "trang-an-ninh-binh",
+      title: "Non Nước Tràng An",
+      subtitle: "Thuyền nan lướt nhẹ giữa non nước di sản kỳ vĩ",
+      image: "/images/hero/trang-an.jpg",
+      tag: "Di sản thế giới kép UNESCO Ninh Bình",
     },
   ],
 
-  // Destinations (Verified Real Vietnam Photos)
-  haLong: "https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=800&q=80",
-  hoiAn: "https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?auto=format&fit=crop&w=800&q=80",
-  phuQuoc: "https://upload.wikimedia.org/wikipedia/commons/3/33/Kem_Beach_aerial_view_Phu_Quoc_Island_Vietnam.jpg",
-  saPa: "https://upload.wikimedia.org/wikipedia/commons/f/fd/Terraced_fields_Sa_Pa_Vietnam.JPG",
-  daLat: "https://upload.wikimedia.org/wikipedia/commons/e/e2/Da_Lat_-_Viet_Nam.jpg",
-  ninhBinh: "https://upload.wikimedia.org/wikipedia/commons/5/5b/Vietnam%2C_Ninh_Binh%2C_Limestone_peaks.jpg",
-  hue: "https://upload.wikimedia.org/wikipedia/commons/0/0e/Ngo_Mon.jpg",
-  haGiang: "https://upload.wikimedia.org/wikipedia/commons/0/0f/Mountain_road_at_M%C3%A3_P%C3%AD_L%C3%A8ng_Pass%2C_H%C3%A0_Giang_Province%2C_Vietnam.jpg",
-  daNang: "https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?auto=format&fit=crop&w=800&q=80",
-  conDao: "https://upload.wikimedia.org/wikipedia/commons/d/d5/Phu_quoc_plage_sao.jpg",
+  // Destinations (Verified Bright High-Quality Vietnam Photos)
+  haLong: "/images/hero/ha-long-bay.jpg",
+  hoiAn: "/images/hero/hoi-an.jpg",
+  phuQuoc: "/images/hero/phu-quoc.jpg",
+  saPa: "/images/hero/sapa-terraces.jpg",
+  daLat: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=85",
+  ninhBinh: "/images/hero/trang-an.jpg",
+  hue: "https://images.unsplash.com/photo-1583417319070-4a69db38a482?auto=format&fit=crop&w=1200&q=85",
+  haGiang: "https://images.unsplash.com/photo-1570366583862-f91883984fde?auto=format&fit=crop&w=1200&q=85",
+  daNang: "/images/hero/golden-bridge.jpg",
+  conDao: "/images/hero/phu-quoc.jpg",
+  phongNha: "/images/hero/trang-an.jpg",
+  muiNe: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=85",
+  nhaTrang: "/assets/nha-trang-beach-bg.jpg",
+  canTho: "https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?auto=format&fit=crop&w=1200&q=85",
 
   // Experiences & Adventures
   cruise: "https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?auto=format&fit=crop&w=800&q=80",
   kayak: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=800&q=80",
-  camping: "https://images.unsplash.com/photo-1510312305653-8ed496efae75?auto=format&fit=crop&w=800&q=80",
-  hiking: "https://images.unsplash.com/photo-1551632811-561732d1e306?auto=format&fit=crop&w=800&q=80",
-  scubaDiving: "https://images.unsplash.com/photo-1544551763-77ef2d0cfc6c?auto=format&fit=crop&w=800&q=80",
+  camping: "/assets/adventures/camping.jpg",
+  hiking: "/assets/adventures/hiking.jpg",
+  scubaDiving: "/assets/adventures/scuba-diving.jpg",
 
   // Awards & Recognition Highlights
   awards: [
-    "https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=300&q=80", // Vịnh Hạ Long
+    "/images/hero/ha-long-bay.jpg", // Vịnh Hạ Long
     "https://upload.wikimedia.org/wikipedia/commons/e/e2/Da_Lat_-_Viet_Nam.jpg", // Đà Lạt
-    "https://upload.wikimedia.org/wikipedia/commons/3/33/Kem_Beach_aerial_view_Phu_Quoc_Island_Vietnam.jpg", // Biển Phú Quốc
-    "https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?auto=format&fit=crop&w=300&q=80", // Phố cổ Hội An
-    "https://upload.wikimedia.org/wikipedia/commons/5/5b/Vietnam%2C_Ninh_Binh%2C_Limestone_peaks.jpg", // Tràng An Ninh Bình
+    "/images/hero/phu-quoc.jpg", // Biển Phú Quốc
+    "/images/hero/hoi-an.jpg", // Phố cổ Hội An
+    "/images/hero/trang-an.jpg", // Tràng An Ninh Bình
     "https://upload.wikimedia.org/wikipedia/commons/0/0e/Ngo_Mon.jpg", // Cố đô Huế
   ]
 };
