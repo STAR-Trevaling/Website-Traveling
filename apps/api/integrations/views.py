@@ -177,14 +177,14 @@ class OdooWebhookReceiverView(APIView):
         except Exception as e:
             logger.exception(f"Error processing Odoo event {event_id}: {e}")
             event_record.state = IntegrationEvent.State.FAILED
-            event_record.last_error = str(e)
+            event_record.last_error = "Internal processing error"
             event_record.save(update_fields=["state", "last_error"])
             return Response(
                 {
                     "type": "https://star-travels.com/errors/internal_error",
                     "title": "Processing Error",
                     "status": 500,
-                    "detail": str(e),
+                    "detail": "An internal error has occurred while processing the event.",
                 },
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,
             )

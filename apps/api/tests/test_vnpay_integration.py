@@ -73,7 +73,7 @@ def test_vnpay_adapter_url_generation_and_signature(vnpay_adapter):
     assert vnpay_adapter.verify_ipn_signature(signed_data) is True
 
 
-def test_vnpay_ipn_signature_verification_failure(vnpay_adapter, payment_service):
+def test_vnpay_ipn_signature_verification_failure(vnpay_adapter, payment_service, db):
     tampered_data = {
         "vnp_Amount": "500000000",
         "vnp_TxnRef": "ST-202610-TEST01_1728384000",

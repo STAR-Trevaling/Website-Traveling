@@ -53,7 +53,12 @@ function renderFormattedMessage(text: string, onLinkClick: () => void) {
       parts.push(renderBoldText(cleaned.substring(lastIndex, match.index)));
     }
     const label = match[1];
-    const href = match[2];
+    const rawHref = match[2];
+    const isSafe =
+      (rawHref.startsWith("/") && !rawHref.startsWith("//")) ||
+      rawHref.startsWith("https://") ||
+      rawHref.startsWith("http://");
+    const href = isSafe ? rawHref : "#";
     parts.push(
       <Link
         key={`link-${match.index}`}
