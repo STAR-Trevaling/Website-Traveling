@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
-import { User, Shield, Compass, Heart, ArrowRight } from "lucide-react";
+import { User, Shield, Compass, Heart, ArrowRight, CalendarCheck } from "lucide-react";
 import { getCurrentUser } from "@/lib/auth";
 import { SiteHeader } from "@/components/layout/site-header";
 import { LogoutButton } from "@/components/auth/logout-button";
@@ -28,7 +28,7 @@ export default async function Account() {
   return (
     <>
       <SiteHeader overlay={false} />
-      <main className="template-page-bg min-h-screen text-[#282828] px-4 sm:px-6 py-8 sm:py-12 md:px-12 lg:px-16 overflow-x-hidden">
+      <main className="template-page-bg min-h-screen text-[#282828] px-4 sm:px-6 py-8 sm:py-12 md:px-12 lg:px-16">
         <div className="mx-auto max-w-4xl space-y-8">
           {/* USER PROFILE CARD */}
           <div className="bg-white/90 p-8 md:p-10 rounded-[2px] shadow-sm border border-slate-100 backdrop-blur-md">
@@ -84,6 +84,26 @@ export default async function Account() {
                 </div>
                 <span className="mt-4 text-xs font-semibold text-slate-900 flex items-center gap-1">
                   {isEn ? "Explore" : "Khám phá"} <ArrowRight className="size-3" />
+                </span>
+              </Link>
+
+              <Link
+                href="/account/bookings"
+                className="group p-5 bg-[#0098a2]/5 hover:bg-[#0098a2]/10 border border-[#0098a2]/30 rounded-[2px] transition flex flex-col justify-between"
+              >
+                <div>
+                  <CalendarCheck className="size-6 text-[#0098a2] mb-3" />
+                  <h3 className="display-title text-base font-bold text-slate-900 group-hover:text-[#0098a2] transition-colors">
+                    {isEn ? "My Bookings" : "Đơn Đặt Chỗ"}
+                  </h3>
+                  <p className="mt-1 text-xs text-slate-500 font-light">
+                    {isEn
+                      ? "Track your tour reservations, VietQR payment status and receipts."
+                      : "Theo dõi tình trạng đặt chỗ, trạng thái VietQR và vé tour."}
+                  </p>
+                </div>
+                <span className="mt-4 text-xs font-semibold text-[#0098a2] flex items-center gap-1">
+                  {isEn ? "View history" : "Xem lịch sử"} <ArrowRight className="size-3" />
                 </span>
               </Link>
 
