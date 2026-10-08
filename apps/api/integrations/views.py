@@ -1,22 +1,23 @@
 import hashlib
 import hmac
-import json
 import logging
 import uuid
+
 from django.conf import settings
 from django.contrib.gis.geos import Point
 from django.utils import timezone
 from rest_framework import status
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.permissions import AllowAny
 
 from content.models import Article
 from destinations.models import Destination
-from partners.models import PartnerApplication, PartnerOrganization
+from partners.models import PartnerApplication
 from places.models import Category, Place
 from tours.models import Tour
-from .models import Inquiry, IntegrationEvent, IntegrationOutbox
+
+from .models import IntegrationEvent, IntegrationOutbox
 from .serializers import InquiryCreateSerializer, OdooWebhookEventSerializer
 from .tasks import dispatch_outbox_event
 
@@ -28,6 +29,7 @@ class InquiryCreateView(APIView):
     Public API endpoint for inquiries, tour consultations, and bookings.
     Persists Inquiry, creates Outbox event, and enqueues Celery dispatch to Odoo CRM.
     """
+
     permission_classes = [AllowAny]
 
     def post(self, request, *args, **kwargs):
@@ -100,10 +102,13 @@ class OdooWebhookReceiverView(APIView):
     Inbound Webhook receiver from Odoo 18 CMS (destination.published, place.published, article.published, partner.approved).
     Protected by HMAC-SHA256 signature and Idempotency key.
     """
+
     permission_classes = [AllowAny]
 
     def _verify_hmac(self, request):
-        secret = getattr(settings, "ODOO_WEBHOOK_SECRET", "star_travels_super_secret_webhook_key_2026")
+        secret = getattr(
+            settings, "ODOO_WEBHOOK_SECRET", "star_travels_super_secret_webhook_key_2026"
+        )
         sig_header = request.headers.get("X-Signature-SHA256")
         if not sig_header:
             return False
@@ -141,8 +146,13 @@ class OdooWebhookReceiverView(APIView):
         ).first()
 
         if existing_event:
-            if existing_event.state == IntegrationEvent.State.PROCESSED and existing_event.response_json:
-                logger.info(f"Idempotent replay detected for event {event_id}. Returning cached response.")
+            if (
+                existing_event.state == IntegrationEvent.State.PROCESSED
+                and existing_event.response_json
+            ):
+                logger.info(
+                    f"Idempotent replay detected for event {event_id}. Returning cached response."
+                )
                 return Response(existing_event.response_json, status=status.HTTP_200_OK)
             event_record = existing_event
         else:
@@ -203,7 +213,12 @@ class OdooWebhookReceiverView(APIView):
                     "is_published": True,
                 },
             )
-            return {"status": "synced", "model": "Destination", "slug": dest.slug, "created": created}
+            return {
+                "status": "synced",
+                "model": "Destination",
+                "slug": dest.slug,
+                "created": created,
+            }
 
         elif event_type in ("place.published", "place.updated"):
             place_info = data.get("place") or data
@@ -260,7 +275,12 @@ class OdooWebhookReceiverView(APIView):
                     "published_at": timezone.now(),
                 },
             )
-            return {"status": "synced", "model": "Article", "slug": article.slug, "created": created}
+            return {
+                "status": "synced",
+                "model": "Article",
+                "slug": article.slug,
+                "created": created,
+            }
 
         elif event_type in ("tour.published", "tour.updated"):
             tour_info = data.get("tour") or data
@@ -274,8 +294,12 @@ class OdooWebhookReceiverView(APIView):
                     "title": tour_info.get("title", ""),
                     "title_en": tour_info.get("title_en", ""),
                     "destination": dest,
-                    "destination_name": tour_info.get("destination_name", dest.name if dest else ""),
-                    "destination_name_en": tour_info.get("destination_name_en", dest.name_en if dest else ""),
+                    "destination_name": tour_info.get(
+                        "destination_name", dest.name if dest else ""
+                    ),
+                    "destination_name_en": tour_info.get(
+                        "destination_name_en", dest.name_en if dest else ""
+                    ),
                     "duration": tour_info.get("duration", ""),
                     "duration_en": tour_info.get("duration_en", ""),
                     "departure": tour_info.get("departure", ""),
@@ -310,7 +334,12 @@ class OdooWebhookReceiverView(APIView):
                 if org:
                     org.is_active = True
                     org.save(update_fields=["is_active"])
-                return {"status": "synced", "model": "PartnerApplication", "id": str(app.id), "approved": True}
+                return {
+                    "status": "synced",
+                    "model": "PartnerApplication",
+                    "id": str(app.id),
+                    "approved": True,
+                }
             return {"status": "acknowledged", "detail": f"Application {app_id} not found."}
 
         return {"status": "ignored", "event_type": event_type}

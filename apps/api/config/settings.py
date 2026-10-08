@@ -1,8 +1,7 @@
 import os
+import sys
 from datetime import timedelta
 from pathlib import Path
-
-import sys
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 DEBUG = os.getenv("DJANGO_DEBUG", "0") == "1"
@@ -14,7 +13,9 @@ if not SECRET_KEY:
 
 ALLOWED_HOSTS = ["host.docker.internal", "testserver"] + [
     h.strip()
-    for h in os.getenv("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1,host.docker.internal,testserver").split(",")
+    for h in os.getenv(
+        "DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1,host.docker.internal,testserver"
+    ).split(",")
     if h.strip()
 ]
 CSRF_TRUSTED_ORIGINS = [
@@ -155,7 +156,9 @@ VNPAY_HASH_SECRET = os.getenv("VNPAY_HASH_SECRET", "DEMO_HASH_SECRET_KEY")
 VNPAY_RETURN_URL = os.getenv("VNPAY_RETURN_URL", "http://localhost:3000/payment/return")
 
 # VietQR Payment Gateway Settings (NAPAS 247 Standard)
-VIETQR_BANK_BIN = os.getenv("VIETQR_BANK_BIN", "970422")  # MBBank: 970422, Vietinbank: 970415, Vietcombank: 970436
+VIETQR_BANK_BIN = os.getenv(
+    "VIETQR_BANK_BIN", "970422"
+)  # MBBank: 970422, Vietinbank: 970415, Vietcombank: 970436
 VIETQR_BANK_NAME = os.getenv("VIETQR_BANK_NAME", "MBBank")
 VIETQR_ACCOUNT_NO = os.getenv("VIETQR_ACCOUNT_NO", "0987654321")
 VIETQR_ACCOUNT_NAME = os.getenv("VIETQR_ACCOUNT_NAME", "CONG TY TNHH STAR TRAVELS VIET NAM")
@@ -172,5 +175,3 @@ CELERY_BEAT_SCHEDULE = {
         "schedule": 60.0,
     },
 }
-
-

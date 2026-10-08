@@ -1,8 +1,6 @@
 import re
-from typing import List, Optional
-from django.db.models import Q
-from assistant.models import AssistantKnowledgeChunk
 
+from assistant.models import AssistantKnowledgeChunk
 
 DESTINATION_KEYWORDS = {
     "ha-long": ["hạ long", "ha long", "vịnh hạ long", "lan hạ", "bái tử long"],
@@ -17,9 +15,24 @@ DESTINATION_KEYWORDS = {
     "nha-trang": ["nha trang", "nhatrang", "vịnh nha trang", "hòn mun", "tháp bà", "ponagar"],
     "mui-ne": ["mũi né", "mui ne", "phan thiết", "đồi cát", "bàu trắng", "poshanư"],
     "can-tho": ["cần thơ", "can tho", "chợ nổi", "cái răng", "ninh kiều", "miền tây", "sông nước"],
-    "quang-binh": ["quảng bình", "phong nha", "kẻ bàng", "sơn đoòng", "động thiên đường", "hang tối"],
+    "quang-binh": [
+        "quảng bình",
+        "phong nha",
+        "kẻ bàng",
+        "sơn đoòng",
+        "động thiên đường",
+        "hang tối",
+    ],
     "cao-bang": ["cao bằng", "bản giốc", "thác bản giốc", "ngườm ngao", "pác bó", "suối lê nin"],
-    "ho-chi-minh": ["sài gòn", "saigon", "tp hcm", "hồ chí minh", "dinh độc lập", "củ chi", "địa đạo"],
+    "ho-chi-minh": [
+        "sài gòn",
+        "saigon",
+        "tp hcm",
+        "hồ chí minh",
+        "dinh độc lập",
+        "củ chi",
+        "địa đạo",
+    ],
     "con-dao": ["côn đảo", "hàng dương", "võ thị sáu", "bà phi yến", "chuồng cọp"],
     "quy-nhon": ["quy nhơn", "kỳ co", "eo gió", "bình định", "quang trung", "tháp đôi"],
     "phu-yen": ["phú yên", "gành đá đĩa", "mũi điện", "đại lãnh", "vũng rô", "đầm ô loan"],
@@ -34,7 +47,9 @@ REGION_KEYWORDS = {
 }
 
 
-def search_knowledge(query: str, locale: str = "vi", limit: int = 4) -> List[AssistantKnowledgeChunk]:
+def search_knowledge(
+    query: str, locale: str = "vi", limit: int = 4
+) -> list[AssistantKnowledgeChunk]:
     """
     Hybrid retriever finding the most relevant knowledge chunks for the query.
     Uses multi-field search and semantic entity routing.
@@ -57,18 +72,61 @@ def search_knowledge(query: str, locale: str = "vi", limit: int = 4) -> List[Ass
     # 3. Policy & FAQ inquiry detection
     is_policy_inquiry = any(
         kw in clean_query
-        for kw in ["chính sách", "hoàn hủy", "đặt cọc", "hủy tour", "trẻ em", "phụ thu", "bảo hiểm", "quy định", "policy", "refund", "cancel"]
+        for kw in [
+            "chính sách",
+            "hoàn hủy",
+            "đặt cọc",
+            "hủy tour",
+            "trẻ em",
+            "phụ thu",
+            "bảo hiểm",
+            "quy định",
+            "policy",
+            "refund",
+            "cancel",
+        ]
     )
 
     # 4. History & Culture inquiry detection
     is_history_inquiry = any(
         kw in clean_query
         for kw in [
-            "lịch sử", "sự tích", "huyền tích", "truyền thuyết", "nguồn gốc", "tên gọi",
-            "vua", "thế kỷ", "triều đại", "xưa", "cổ", "thương cảng", "chùa cầu", "hoa lư",
-            "yersin", "bảo đại", "mã pí lèng", "con đường hạnh phúc", "mạc cửu", "tháp bà",
-            "poshanư", "sơn đoòng", "phong nha", "mỹ sơn", "bản giốc", "yên tử", "củ chi",
-            "côn đảo", "võ thị sáu", "gành đá đĩa", "eo gió", "history", "legend", "dynasty", "ancient", "heritage"
+            "lịch sử",
+            "sự tích",
+            "huyền tích",
+            "truyền thuyết",
+            "nguồn gốc",
+            "tên gọi",
+            "vua",
+            "thế kỷ",
+            "triều đại",
+            "xưa",
+            "cổ",
+            "thương cảng",
+            "chùa cầu",
+            "hoa lư",
+            "yersin",
+            "bảo đại",
+            "mã pí lèng",
+            "con đường hạnh phúc",
+            "mạc cửu",
+            "tháp bà",
+            "poshanư",
+            "sơn đoòng",
+            "phong nha",
+            "mỹ sơn",
+            "bản giốc",
+            "yên tử",
+            "củ chi",
+            "côn đảo",
+            "võ thị sáu",
+            "gành đá đĩa",
+            "eo gió",
+            "history",
+            "legend",
+            "dynasty",
+            "ancient",
+            "heritage",
         ]
     )
 
@@ -76,9 +134,24 @@ def search_knowledge(query: str, locale: str = "vi", limit: int = 4) -> List[Ass
     is_season_inquiry = any(
         kw in clean_query
         for kw in [
-            "mùa nào", "thời tiết", "tháng mấy", "mùa đẹp nhất", "thời điểm", "nhiệt độ",
-            "săn mây", "lúa chín", "tam giác mạch", "mùa khô", "mùa mưa", "mùa bão", "nước nổi",
-            "season", "weather", "best time", "when to visit", "climate"
+            "mùa nào",
+            "thời tiết",
+            "tháng mấy",
+            "mùa đẹp nhất",
+            "thời điểm",
+            "nhiệt độ",
+            "săn mây",
+            "lúa chín",
+            "tam giác mạch",
+            "mùa khô",
+            "mùa mưa",
+            "mùa bão",
+            "nước nổi",
+            "season",
+            "weather",
+            "best time",
+            "when to visit",
+            "climate",
         ]
     )
 
@@ -86,8 +159,20 @@ def search_knowledge(query: str, locale: str = "vi", limit: int = 4) -> List[Ass
     is_cuisine_inquiry = any(
         kw in clean_query
         for kw in [
-            "ăn gì", "đặc sản", "món ngon", "ẩm thực", "quán ăn", "món ăn", "ăn uống",
-            "uống gì", "món nào ngon", "food", "cuisine", "specialty", "dish", "eat"
+            "ăn gì",
+            "đặc sản",
+            "món ngon",
+            "ẩm thực",
+            "quán ăn",
+            "món ăn",
+            "ăn uống",
+            "uống gì",
+            "món nào ngon",
+            "food",
+            "cuisine",
+            "specialty",
+            "dish",
+            "eat",
         ]
     )
 
@@ -95,8 +180,18 @@ def search_knowledge(query: str, locale: str = "vi", limit: int = 4) -> List[Ass
     is_tips_inquiry = any(
         kw in clean_query
         for kw in [
-            "kinh nghiệm", "chuẩn bị gì", "lưu ý", "trang phục", "đi mấy ngày", "mấy ngày",
-            "lịch trình", "cần mang gì", "tips", "itinerary", "duration", "how many days"
+            "kinh nghiệm",
+            "chuẩn bị gì",
+            "lưu ý",
+            "trang phục",
+            "đi mấy ngày",
+            "mấy ngày",
+            "lịch trình",
+            "cần mang gì",
+            "tips",
+            "itinerary",
+            "duration",
+            "how many days",
         ]
     )
 
@@ -107,12 +202,18 @@ def search_knowledge(query: str, locale: str = "vi", limit: int = 4) -> List[Ass
         score = 0
         slug = chunk.entity_slug.lower()
         title = chunk.title.lower()
-        content = (chunk.content_vi if locale == "vi" else (chunk.content_en or chunk.content_vi)).lower()
+        content = (
+            chunk.content_vi if locale == "vi" else (chunk.content_en or chunk.content_vi)
+        ).lower()
         meta = chunk.metadata or {}
 
         # Destination match
         for dest_slug in matched_dest_slugs:
-            if dest_slug in slug or dest_slug == meta.get("slug") or dest_slug == meta.get("destination_slug"):
+            if (
+                dest_slug in slug
+                or dest_slug == meta.get("slug")
+                or dest_slug == meta.get("destination_slug")
+            ):
                 score += 50
             if dest_slug.replace("-", " ") in title:
                 score += 40

@@ -1,4 +1,5 @@
 from rest_framework import filters, permissions, viewsets
+
 from .models import Tour
 from .serializers import TourSerializer
 
@@ -18,7 +19,9 @@ class TourViewSet(viewsets.ReadOnlyModelViewSet):
         if region and region != "all":
             qs = qs.filter(region=region)
 
-        destination = self.request.query_params.get("destination__slug") or self.request.query_params.get("destination")
+        destination = self.request.query_params.get(
+            "destination__slug"
+        ) or self.request.query_params.get("destination")
         if destination:
             qs = qs.filter(destination__slug=destination)
 

@@ -1,4 +1,5 @@
 import uuid
+
 from django.db import models
 from django.utils import timezone
 
@@ -68,9 +69,7 @@ class IntegrationOutbox(models.Model):
 
     class Meta:
         ordering = ("created_at",)
-        indexes = [
-            models.Index(fields=("state", "next_retry_at"), name="outbox_state_retry_idx")
-        ]
+        indexes = [models.Index(fields=("state", "next_retry_at"), name="outbox_state_retry_idx")]
 
     def __str__(self):
         return f"Outbox [{self.event_type}] {self.event_id} ({self.state})"

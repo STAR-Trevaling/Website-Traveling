@@ -1,20 +1,20 @@
 import pytest
 from rest_framework.test import APIClient
+
 from assistant.models import (
     AssistantConversation,
-    AssistantMessage,
-    AssistantLeadCapture,
     AssistantKnowledgeChunk,
+    AssistantLeadCapture,
 )
+from assistant.services.generator import extract_lead_info, generate_response
 from assistant.services.retriever import search_knowledge
-from assistant.services.generator import generate_response, extract_lead_info
 from integrations.models import IntegrationOutbox
 
 
 @pytest.mark.django_db
 def test_retriever_and_generator_flow():
     # Setup knowledge chunk
-    chunk = AssistantKnowledgeChunk.objects.create(
+    AssistantKnowledgeChunk.objects.create(
         entity_type=AssistantKnowledgeChunk.EntityType.TOUR,
         entity_slug="tour-ha-long-cruise-2n1d",
         title="Du Thuyền 5 Sao Vịnh Hạ Long 2N1Đ",
@@ -81,7 +81,7 @@ def test_assistant_chat_api_endpoint():
 @pytest.mark.django_db
 def test_heritage_history_rag():
     # Setup heritage knowledge chunk
-    chunk = AssistantKnowledgeChunk.objects.create(
+    AssistantKnowledgeChunk.objects.create(
         entity_type=AssistantKnowledgeChunk.EntityType.PLACE,
         entity_slug="hoi-an-chua-cau-heritage",
         title="Lịch Sử & Huyền Tích Đô Thị Cổ Hội An & Chùa Cầu",
@@ -98,7 +98,9 @@ def test_heritage_history_rag():
     )
 
     # 1. Search with historical query
-    results = search_knowledge(query="Lịch sử Chùa Cầu Hội An và truyền thuyết thủy quái Mamazu", locale="vi")
+    results = search_knowledge(
+        query="Lịch sử Chùa Cầu Hội An và truyền thuyết thủy quái Mamazu", locale="vi"
+    )
     assert len(results) > 0
     assert any(c.entity_slug == "hoi-an-chua-cau-heritage" for c in results)
 
@@ -111,7 +113,7 @@ def test_heritage_history_rag():
 @pytest.mark.django_db
 def test_seasonality_and_cuisine_recommendation_rag():
     # Setup rich landmark knowledge chunk
-    chunk = AssistantKnowledgeChunk.objects.create(
+    AssistantKnowledgeChunk.objects.create(
         entity_type=AssistantKnowledgeChunk.EntityType.PLACE,
         entity_slug="ha-long-heritage-history",
         title="Vịnh Hạ Long & Vịnh Lan Hạ — Huyền Tích Rồng Giáng",
@@ -122,18 +124,25 @@ def test_seasonality_and_cuisine_recommendation_rag():
             "destination_slug": "ha-long",
             "best_time_to_visit": "Tháng 4 - 6 và Tháng 9 - 11",
             "signature_cuisine": ["Chả mực giã tay Hạ Long", "Sá sùng Quan Lạn", "Bún bề bề"],
-            "insider_tips": ["Nên chọn du thuyền 5 sao ngủ đêm trên vịnh", "Tránh đi vào tháng 7-8"],
+            "insider_tips": [
+                "Nên chọn du thuyền 5 sao ngủ đêm trên vịnh",
+                "Tránh đi vào tháng 7-8",
+            ],
             "ideal_duration": "2N1Đ hoặc 3N2Đ",
             "recommended_tour_slugs": ["tour-ha-long-cruise-2n1d"],
         },
     )
 
     # 1. Seasonality inquiry
-    results_season = search_knowledge(query="Du lịch Hạ Long mùa nào đẹp nhất trong năm?", locale="vi")
+    results_season = search_knowledge(
+        query="Du lịch Hạ Long mùa nào đẹp nhất trong năm?", locale="vi"
+    )
     assert len(results_season) > 0
     assert any(c.entity_slug == "ha-long-heritage-history" for c in results_season)
 
-    reply_season, slugs_season = generate_response("Hạ Long đi tháng mấy đẹp nhất?", results_season, locale="vi")
+    reply_season, slugs_season = generate_response(
+        "Hạ Long đi tháng mấy đẹp nhất?", results_season, locale="vi"
+    )
     assert "Tháng 4 - 6" in reply_season or "Thời điểm vàng" in reply_season
     assert "tour-ha-long-cruise-2n1d" in slugs_season
 

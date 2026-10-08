@@ -1,6 +1,13 @@
+import logging
+import uuid
+
+from django.utils import timezone
 from rest_framework import permissions, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
+
+from integrations.models import IntegrationOutbox
+from integrations.tasks import dispatch_outbox_event
 
 from .models import PartnerApplication, PartnerMembership
 from .serializers import (
@@ -10,10 +17,16 @@ from .serializers import (
 )
 from .services import approve_application, mark_under_review, reject_application
 
+logger = logging.getLogger(__name__)
+
 
 class IsAdmin(permissions.BasePermission):
     def has_permission(self, request, view):
-        return bool(request.user and request.user.is_authenticated and getattr(request.user, "is_staff", False))
+        return bool(
+            request.user
+            and request.user.is_authenticated
+            and getattr(request.user, "is_staff", False)
+        )
 
 
 class PartnerApplicationViewSet(viewsets.ModelViewSet):
@@ -30,13 +43,6 @@ class PartnerApplicationViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         application = serializer.save(applicant=self.request.user)
         try:
-            import logging
-            import uuid
-            from django.utils import timezone
-            from integrations.models import IntegrationOutbox
-            from integrations.tasks import dispatch_outbox_event
-
-            logger = logging.getLogger(__name__)
             event_id = str(uuid.uuid4())
             envelope = {
                 "event_id": event_id,
@@ -63,8 +69,7 @@ class PartnerApplicationViewSet(viewsets.ModelViewSet):
             )
             dispatch_outbox_event.delay(str(outbox.id))
         except Exception as e:
-            import logging
-            logging.getLogger(__name__).warning(f"Could not enqueue partner outbox event: {e}")
+            logger.warning(f"Could not enqueue partner outbox event: {e}")
 
     @action(detail=True, methods=("post",), permission_classes=(IsAdmin,), url_path="under-review")
     def under_review(self, request, pk=None):

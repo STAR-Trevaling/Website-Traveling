@@ -40,6 +40,4 @@ class VietQRConfirmSerializer(serializers.Serializer):
     amount_confirmed = serializers.DecimalField(
         max_digits=12, decimal_places=2, required=False, default=None
     )
-    source = serializers.CharField(
-        max_length=64, required=False, default="manual_odoo_ui"
-    )  # type: ignore[assignment]
+    source = serializers.CharField(max_length=64, required=False, default="manual_odoo_ui")  # type: ignore[assignment]

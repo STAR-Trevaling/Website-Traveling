@@ -1,6 +1,7 @@
 from django.core.management.base import BaseCommand
-from assistant.models import AssistantKnowledgeChunk
+
 from assistant.data.vietnam_heritage_history import VIETNAM_HERITAGE_HISTORY
+from assistant.models import AssistantKnowledgeChunk
 from destinations.models import Destination
 
 

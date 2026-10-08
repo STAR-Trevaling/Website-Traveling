@@ -1,19 +1,24 @@
 import uuid
-from django.db import migrations, models
+
 import django.utils.timezone
+from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
             name="Inquiry",
             fields=[
-                ("id", models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False)),
+                (
+                    "id",
+                    models.UUIDField(
+                        default=uuid.uuid4, editable=False, primary_key=True, serialize=False
+                    ),
+                ),
                 ("full_name", models.CharField(max_length=180)),
                 ("email", models.EmailField(max_length=254)),
                 ("phone", models.CharField(max_length=40)),
@@ -39,7 +44,11 @@ class Migration(migrations.Migration):
                 (
                     "status",
                     models.CharField(
-                        choices=[("pending", "Pending Sync"), ("synced", "Synced to Odoo CRM"), ("failed", "Sync Failed")],
+                        choices=[
+                            ("pending", "Pending Sync"),
+                            ("synced", "Synced to Odoo CRM"),
+                            ("failed", "Sync Failed"),
+                        ],
                         db_index=True,
                         default="pending",
                         max_length=20,
@@ -57,7 +66,12 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="IntegrationOutbox",
             fields=[
-                ("id", models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False)),
+                (
+                    "id",
+                    models.UUIDField(
+                        default=uuid.uuid4, editable=False, primary_key=True, serialize=False
+                    ),
+                ),
                 ("event_id", models.CharField(db_index=True, max_length=64, unique=True)),
                 ("event_type", models.CharField(db_index=True, max_length=100)),
                 ("event_version", models.PositiveSmallIntegerField(default=1)),
@@ -66,7 +80,11 @@ class Migration(migrations.Migration):
                 (
                     "state",
                     models.CharField(
-                        choices=[("pending", "Pending Delivery"), ("delivered", "Delivered"), ("failed", "Permanently Failed")],
+                        choices=[
+                            ("pending", "Pending Delivery"),
+                            ("delivered", "Delivered"),
+                            ("failed", "Permanently Failed"),
+                        ],
                         db_index=True,
                         default="pending",
                         max_length=20,
@@ -74,7 +92,10 @@ class Migration(migrations.Migration):
                 ),
                 ("retry_count", models.PositiveIntegerField(default=0)),
                 ("max_retries", models.PositiveIntegerField(default=5)),
-                ("next_retry_at", models.DateTimeField(db_index=True, default=django.utils.timezone.now)),
+                (
+                    "next_retry_at",
+                    models.DateTimeField(db_index=True, default=django.utils.timezone.now),
+                ),
                 ("delivered_at", models.DateTimeField(blank=True, null=True)),
                 ("last_error", models.TextField(blank=True)),
                 ("http_status", models.PositiveIntegerField(blank=True, null=True)),
@@ -90,7 +111,12 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="IntegrationEvent",
             fields=[
-                ("id", models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False)),
+                (
+                    "id",
+                    models.UUIDField(
+                        default=uuid.uuid4, editable=False, primary_key=True, serialize=False
+                    ),
+                ),
                 ("source", models.CharField(db_index=True, max_length=50)),
                 ("external_event_id", models.CharField(db_index=True, max_length=100)),
                 ("event_type", models.CharField(db_index=True, max_length=100)),
@@ -99,7 +125,11 @@ class Migration(migrations.Migration):
                 (
                     "state",
                     models.CharField(
-                        choices=[("pending", "Pending"), ("processed", "Processed"), ("failed", "Failed")],
+                        choices=[
+                            ("pending", "Pending"),
+                            ("processed", "Processed"),
+                            ("failed", "Failed"),
+                        ],
                         db_index=True,
                         default="pending",
                         max_length=20,
@@ -114,7 +144,9 @@ class Migration(migrations.Migration):
             options={
                 "ordering": ("-received_at",),
                 "constraints": [
-                    models.UniqueConstraint(fields=["source", "external_event_id"], name="unique_source_external_event"),
+                    models.UniqueConstraint(
+                        fields=["source", "external_event_id"], name="unique_source_external_event"
+                    ),
                 ],
             },
         ),

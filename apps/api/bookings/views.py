@@ -1,11 +1,12 @@
 import logging
 import uuid
+
 from django.utils import timezone
 from rest_framework import permissions, viewsets
-from rest_framework.response import Response
 
 from integrations.models import IntegrationOutbox
 from integrations.tasks import dispatch_outbox_event
+
 from .models import Booking
 from .serializers import BookingSerializer
 
@@ -45,7 +46,9 @@ class BookingViewSet(viewsets.ModelViewSet):
                     "contact_email": booking.contact_email,
                     "contact_phone": booking.contact_phone,
                     "tour_slug": booking.tour.slug if booking.tour else None,
-                    "departure_date": booking.departure_date.isoformat() if booking.departure_date else None,
+                    "departure_date": booking.departure_date.isoformat()
+                    if booking.departure_date
+                    else None,
                     "pax_adults": booking.pax_adults,
                     "pax_children": booking.pax_children,
                     "total_amount": str(booking.total_amount),

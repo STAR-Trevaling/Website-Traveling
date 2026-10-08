@@ -299,9 +299,7 @@ class PaymentService:
 
         # 2. Check Idempotency: if already SUCCESS, return idempotent acknowledgement
         if txn.status == PaymentTransaction.Status.SUCCESS:
-            logger.info(
-                f"VietQR transaction {txn.transaction_code} already confirmed previously."
-            )
+            logger.info(f"VietQR transaction {txn.transaction_code} already confirmed previously.")
             return {
                 "status": "already_confirmed",
                 "message": "Giao dịch đã được xác nhận thanh toán trước đó.",
@@ -339,9 +337,7 @@ class PaymentService:
             booking.status = Booking.Status.PAID
             booking.payment_status = "captured"
             booking.payment_method = "vietqr"
-            booking.save(
-                update_fields=["status", "payment_status", "payment_method", "updated_at"]
-            )
+            booking.save(update_fields=["status", "payment_status", "payment_method", "updated_at"])
 
             # Emit Transactional Outbox Event for Odoo ERP sync
             try:
@@ -434,4 +430,3 @@ class PaymentService:
             "expires_at": txn.expires_at.isoformat() if txn.expires_at else None,
             "is_paid": txn.status == PaymentTransaction.Status.SUCCESS,
         }
-

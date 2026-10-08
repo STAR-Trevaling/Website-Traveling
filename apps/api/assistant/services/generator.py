@@ -1,7 +1,8 @@
 import os
 import re
-from typing import List, Tuple, Optional
+
 from django.conf import settings
+
 from assistant.models import AssistantKnowledgeChunk
 
 PHONE_REGEX = re.compile(r"(\+84|0)(3[2-9]|5[6|8|9]|7[0|6-9]|8[1-9]|9[0-9])[0-9]{7}")
@@ -21,7 +22,10 @@ def extract_lead_info(message: str) -> dict:
     estimated_pax = int(pax_match.group(1)) if pax_match else 2
 
     # Guess contact name if introduced
-    name_match = re.search(r"(mình là|tôi tên|tên tôi là|tôi là|anh|chị)\s+([A-ZĐÀÁẢÃẠ][a-zđàáảãạ]+(?:\s+[A-ZĐÀÁẢÃẠ][a-zđàáảãạ]+)?)", message)
+    name_match = re.search(
+        r"(mình là|tôi tên|tên tôi là|tôi là|anh|chị)\s+([A-ZĐÀÁẢÃẠ][a-zđàáảãạ]+(?:\s+[A-ZĐÀÁẢÃẠ][a-zđàáảãạ]+)?)",
+        message,
+    )
     contact_name = name_match.group(2) if name_match else "Khách hàng STAR"
 
     return {
@@ -35,9 +39,9 @@ def extract_lead_info(message: str) -> dict:
 
 def generate_response(
     query: str,
-    chunks: List[AssistantKnowledgeChunk],
+    chunks: list[AssistantKnowledgeChunk],
     locale: str = "vi",
-) -> Tuple[str, List[str]]:
+) -> tuple[str, list[str]]:
     """
     Generate an intelligent, grounded response and list of recommended tour slugs.
     """
@@ -47,9 +51,11 @@ def generate_response(
     # Extract recommended tour slugs from chunks
     recommended_tour_slugs = []
     for c in chunks:
-        if c.entity_type == AssistantKnowledgeChunk.EntityType.TOUR:
-            if c.entity_slug not in recommended_tour_slugs:
-                recommended_tour_slugs.append(c.entity_slug)
+        if (
+            c.entity_type == AssistantKnowledgeChunk.EntityType.TOUR
+            and c.entity_slug not in recommended_tour_slugs
+        ):
+            recommended_tour_slugs.append(c.entity_slug)
         meta_tours = (c.metadata or {}).get("recommended_tour_slugs", [])
         for s in meta_tours:
             if s not in recommended_tour_slugs:
@@ -59,11 +65,15 @@ def generate_response(
     api_key = getattr(settings, "OPENAI_API_KEY", os.getenv("OPENAI_API_KEY", ""))
     if api_key:
         try:
-            import urllib.request
             import json
+            import urllib.request
 
             context_texts = "\n\n---\n\n".join(
-                [f"[{c.entity_type.upper()}: {c.title} (slug: {c.entity_slug})]\n" + (c.content_vi if not is_en else (c.content_en or c.content_vi)) for c in chunks]
+                [
+                    f"[{c.entity_type.upper()}: {c.title} (slug: {c.entity_slug})]\n"
+                    + (c.content_vi if not is_en else (c.content_en or c.content_vi))
+                    for c in chunks
+                ]
             )
 
             system_prompt = (
@@ -76,15 +86,20 @@ def generate_response(
             )
 
             messages = [
-                {"role": "system", "content": f"{system_prompt}\n\n[KNOWLEDGE BASE]:\n{context_texts}"},
+                {
+                    "role": "system",
+                    "content": f"{system_prompt}\n\n[KNOWLEDGE BASE]:\n{context_texts}",
+                },
                 {"role": "user", "content": query},
             ]
 
-            req_data = json.dumps({
-                "model": "gpt-4o-mini",
-                "messages": messages,
-                "temperature": 0.4,
-            }).encode("utf-8")
+            req_data = json.dumps(
+                {
+                    "model": "gpt-4o-mini",
+                    "messages": messages,
+                    "temperature": 0.4,
+                }
+            ).encode("utf-8")
 
             req = urllib.request.Request(
                 "https://api.openai.com/v1/chat/completions",
@@ -95,7 +110,7 @@ def generate_response(
                 },
             )
 
-            with urllib.request.urlopen(req, timeout=12) as response:
+            with urllib.request.urlopen(req, timeout=12) as response:  # nosec B310
                 res_json = json.loads(response.read().decode("utf-8"))
                 reply_text = res_json["choices"][0]["message"]["content"]
 
@@ -127,10 +142,14 @@ def generate_response(
                 [],
             )
 
-        tour_chunk = next((c for c in chunks if c.entity_type == AssistantKnowledgeChunk.EntityType.TOUR), None)
+        tour_chunk = next(
+            (c for c in chunks if c.entity_type == AssistantKnowledgeChunk.EntityType.TOUR), None
+        )
         if tour_chunk:
             meta = tour_chunk.metadata or {}
-            price_formatted = f"{int(meta.get('price', 0)):,} VND" if meta.get("price") else "Special rate"
+            price_formatted = (
+                f"{int(meta.get('price', 0)):,} VND" if meta.get("price") else "Special rate"
+            )
             reply = (
                 f"Greetings! For your inquiry, STAR Travels warmly recommends:\n\n"
                 f"**{tour_chunk.title}** ({meta.get('duration', 'Curated Package')})\n"
@@ -159,8 +178,12 @@ def generate_response(
         return reply, recommended_tour_slugs[:2]
 
     # Checking policy or specific FAQ
-    policy_chunk = next((c for c in chunks if c.entity_type == AssistantKnowledgeChunk.EntityType.POLICY), None)
-    if policy_chunk and any(kw in query.lower() for kw in ["chính sách", "hoàn hủy", "đặt cọc", "trẻ em", "phụ thu"]):
+    policy_chunk = next(
+        (c for c in chunks if c.entity_type == AssistantKnowledgeChunk.EntityType.POLICY), None
+    )
+    if policy_chunk and any(
+        kw in query.lower() for kw in ["chính sách", "hoàn hủy", "đặt cọc", "trẻ em", "phụ thu"]
+    ):
         reply = (
             f"Dạ về **{policy_chunk.title}**, STAR Travels xin chia sẻ quy định minh bạch như sau ạ:\n\n"
             f"{policy_chunk.content_vi}\n\n"
@@ -176,16 +199,39 @@ def generate_response(
 
     if heritage_chunk:
         meta = heritage_chunk.metadata or {}
-        tour_chunk = next((c for c in chunks if c.entity_type == AssistantKnowledgeChunk.EntityType.TOUR), None)
-        active_slug = tour_chunk.entity_slug if tour_chunk else (recommended_tour_slugs[0] if recommended_tour_slugs else None)
+        tour_chunk = next(
+            (c for c in chunks if c.entity_type == AssistantKnowledgeChunk.EntityType.TOUR), None
+        )
+        active_slug = (
+            tour_chunk.entity_slug
+            if tour_chunk
+            else (recommended_tour_slugs[0] if recommended_tour_slugs else None)
+        )
 
         # 1. Season & Weather query
-        if any(kw in query.lower() for kw in ["mùa nào", "thời tiết", "tháng mấy", "mùa đẹp nhất", "thời điểm", "nhiệt độ", "săn mây", "lúa chín", "tam giác mạch", "mùa khô", "mùa mưa", "nước nổi"]):
+        if any(
+            kw in query.lower()
+            for kw in [
+                "mùa nào",
+                "thời tiết",
+                "tháng mấy",
+                "mùa đẹp nhất",
+                "thời điểm",
+                "nhiệt độ",
+                "săn mây",
+                "lúa chín",
+                "tam giác mạch",
+                "mùa khô",
+                "mùa mưa",
+                "nước nổi",
+            ]
+        ):
             best_time = meta.get("best_time_to_visit", "")
             tour_callout = (
                 f"\n\nSTAR Travels hiện có sẵn lịch trình trọn gói mùa đẹp nhất [TOUR_CARD: {active_slug}]. "
                 f"Quý khách có muốn giữ chỗ hoặc nhận báo giá ưu đãi không ạ?"
-                if active_slug else ""
+                if active_slug
+                else ""
             )
             reply = (
                 f"Dạ về **thời điểm lý tưởng để ghé thăm {heritage_chunk.title}**, STAR Concierge xin chia sẻ kinh nghiệm chuẩn xác nhất ạ:\n\n"
@@ -196,13 +242,31 @@ def generate_response(
             return reply, [active_slug] if active_slug else recommended_tour_slugs[:1]
 
         # 2. Cuisine & Specialty food query
-        if any(kw in query.lower() for kw in ["ăn gì", "đặc sản", "món ngon", "ẩm thực", "quán ăn", "món ăn", "ăn uống", "uống gì", "món nào ngon"]):
+        if any(
+            kw in query.lower()
+            for kw in [
+                "ăn gì",
+                "đặc sản",
+                "món ngon",
+                "ẩm thực",
+                "quán ăn",
+                "món ăn",
+                "ăn uống",
+                "uống gì",
+                "món nào ngon",
+            ]
+        ):
             dishes = meta.get("signature_cuisine", [])
-            dishes_text = "\n".join([f"• **{d}**" for d in dishes]) if dishes else "Ẩm thực bản địa trù phú tươi ngon"
+            dishes_text = (
+                "\n".join([f"• **{d}**" for d in dishes])
+                if dishes
+                else "Ẩm thực bản địa trù phú tươi ngon"
+            )
             tour_callout = (
                 f"\n\nTrong các hành trình trọn gói của STAR Travels [TOUR_CARD: {active_slug}], "
                 f"chúng em đều đưa các món đặc sản trứ danh này vào thực đơn tiêu chuẩn để Quý khách thưởng thức chuẩn vị nhất ạ!"
-                if active_slug else ""
+                if active_slug
+                else ""
             )
             reply = (
                 f"Dạ đến với **{heritage_chunk.title}**, Quý khách nhất định không nên bỏ qua những món ăn đặc sản tinh hoa này ạ:\n\n"
@@ -212,13 +276,29 @@ def generate_response(
             return reply, [active_slug] if active_slug else recommended_tour_slugs[:1]
 
         # 3. Insider tips & Duration query
-        if any(kw in query.lower() for kw in ["kinh nghiệm", "chuẩn bị gì", "lưu ý", "trang phục", "đi mấy ngày", "mấy ngày", "lịch trình"]):
+        if any(
+            kw in query.lower()
+            for kw in [
+                "kinh nghiệm",
+                "chuẩn bị gì",
+                "lưu ý",
+                "trang phục",
+                "đi mấy ngày",
+                "mấy ngày",
+                "lịch trình",
+            ]
+        ):
             tips = meta.get("insider_tips", [])
-            tips_text = "\n".join([f"• {t}" for t in tips]) if tips else "Hãy chuẩn bị giày đi bộ thoải mái và tinh thần sẵn sàng khám phá."
+            tips_text = (
+                "\n".join([f"• {t}" for t in tips])
+                if tips
+                else "Hãy chuẩn bị giày đi bộ thoải mái và tinh thần sẵn sàng khám phá."
+            )
             duration = meta.get("ideal_duration", "2N1Đ hoặc 3N2Đ")
             tour_callout = (
                 f"\n\nQuý khách có thể xem nhanh hành trình từng ngày chuẩn 5 sao qua thẻ tour bên dưới [TOUR_CARD: {active_slug}] ạ!"
-                if active_slug else ""
+                if active_slug
+                else ""
             )
             reply = (
                 f"Dạ để chuyến đi đến **{heritage_chunk.title}** an tâm và trọn vẹn nhất, STAR Concierge xin chia sẻ các mẹo thực tế:\n\n"
@@ -232,9 +312,29 @@ def generate_response(
         if any(
             kw in query.lower()
             for kw in [
-                "lịch sử", "huyền tích", "sự tích", "truyền thuyết", "nguồn gốc", "tên gọi",
-                "vua", "thế kỷ", "triều đại", "xưa", "cổ", "thương cảng", "chùa cầu", "hoa lư",
-                "yersin", "bảo đại", "mã pí lèng", "tháp bà", "poshanư", "mạc cửu", "địa chất", "history", "legend"
+                "lịch sử",
+                "huyền tích",
+                "sự tích",
+                "truyền thuyết",
+                "nguồn gốc",
+                "tên gọi",
+                "vua",
+                "thế kỷ",
+                "triều đại",
+                "xưa",
+                "cổ",
+                "thương cảng",
+                "chùa cầu",
+                "hoa lư",
+                "yersin",
+                "bảo đại",
+                "mã pí lèng",
+                "tháp bà",
+                "poshanư",
+                "mạc cửu",
+                "địa chất",
+                "history",
+                "legend",
             ]
         ):
             tour_callout = (
@@ -251,10 +351,14 @@ def generate_response(
             return reply, [active_slug] if active_slug else recommended_tour_slugs[:1]
 
     # Recommending tour package
-    tour_chunk = next((c for c in chunks if c.entity_type == AssistantKnowledgeChunk.EntityType.TOUR), None)
+    tour_chunk = next(
+        (c for c in chunks if c.entity_type == AssistantKnowledgeChunk.EntityType.TOUR), None
+    )
     if tour_chunk:
         meta = tour_chunk.metadata or {}
-        price_formatted = f"{int(meta.get('price', 0)):,} VNĐ/khách" if meta.get("price") else "Giá liên hệ"
+        price_formatted = (
+            f"{int(meta.get('price', 0)):,} VNĐ/khách" if meta.get("price") else "Giá liên hệ"
+        )
         reply = (
             f"Dạ chào Quý khách! Dựa trên mong muốn của mình, STAR Travels xin gợi ý hành trình trải nghiệm được đánh giá cao nhất:\n\n"
             f"🌟 **{tour_chunk.title}**\n"
@@ -267,7 +371,9 @@ def generate_response(
         )
         return reply, [tour_chunk.entity_slug]
 
-    dest_chunk = next((c for c in chunks if c.entity_type == AssistantKnowledgeChunk.EntityType.DESTINATION), None)
+    dest_chunk = next(
+        (c for c in chunks if c.entity_type == AssistantKnowledgeChunk.EntityType.DESTINATION), None
+    )
     if dest_chunk:
         reply = (
             f"Dạ về điểm đến **{dest_chunk.title}**, đây là một trong những kỳ quan tuyệt đẹp của du lịch Việt Nam:\n\n"

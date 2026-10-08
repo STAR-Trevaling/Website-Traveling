@@ -31,9 +31,13 @@ router.register("partner-applications", PartnerApplicationViewSet, basename="par
 router.register(
     "my-partner-memberships", MyPartnerMembershipViewSet, basename="my-partner-membership"
 )
-router.register("assistant/conversations", AssistantConversationViewSet, basename="assistant-conversation")
+router.register(
+    "assistant/conversations", AssistantConversationViewSet, basename="assistant-conversation"
+)
 router.register("assistant/leads", AssistantLeadCaptureViewSet, basename="assistant-lead")
-router.register("assistant/knowledge", AssistantKnowledgeChunkViewSet, basename="assistant-knowledge")
+router.register(
+    "assistant/knowledge", AssistantKnowledgeChunkViewSet, basename="assistant-knowledge"
+)
 
 
 @api_view(("GET",))

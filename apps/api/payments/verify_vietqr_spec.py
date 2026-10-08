@@ -92,7 +92,9 @@ def run_tests():
     assert bank_info["transfer_content"] == "ST-202610-A89F"
     assert bank_info["amount"] == 3500000
     assert res["expires_at"] == fixed_time + timedelta(minutes=15)
-    print("  -> Passed! QuickLink, EMVCo string, and Bank Info comply 100% with NAPAS VietQR standard.")
+    print(
+        "  -> Passed! QuickLink, EMVCo string, and Bank Info comply 100% with NAPAS VietQR standard."
+    )
 
     # -------------------------------------------------------------
     # TEST 2: HMAC-SHA256 INBOUND WEBHOOK SECURITY (ODOO)
@@ -116,9 +118,7 @@ def run_tests():
         return hmac.compare_digest(header_sig, computed)
 
     # Case A: Valid signature
-    assert verify_request_hmac(raw_body, valid_signature, secret) is True, (
-        "Valid HMAC must pass"
-    )
+    assert verify_request_hmac(raw_body, valid_signature, secret) is True, "Valid HMAC must pass"
 
     # Case B: Tampered payload body
     tampered_body = json.dumps({**test_payload, "amount_confirmed": 1000}).encode("utf-8")
@@ -132,9 +132,7 @@ def run_tests():
     )
 
     # Case D: Missing signature header
-    assert verify_request_hmac(raw_body, None, secret) is False, (
-        "Missing signature must fail"
-    )
+    assert verify_request_hmac(raw_body, None, secret) is False, "Missing signature must fail"
     print("  -> Passed! HMAC-SHA256 accurately authorizes Odoo requests and rejects all tampering.")
 
     # -------------------------------------------------------------
@@ -165,11 +163,13 @@ def run_tests():
             self.provider_ref = confirmed_by
             self.booking_status = "paid"
             self.payment_status = "captured"
-            self.outbox_events.append({
-                "event_type": "booking.paid",
-                "transaction_code": self.transaction_code,
-                "amount": float(self.amount),
-            })
+            self.outbox_events.append(
+                {
+                    "event_type": "booking.paid",
+                    "transaction_code": self.transaction_code,
+                    "amount": float(self.amount),
+                }
+            )
 
     def handle_confirm(txn: MockVietQRTransaction, payload: dict) -> dict:
         # Check idempotency
@@ -203,13 +203,17 @@ def run_tests():
     assert mock_txn.booking_status == "paid", "Booking must transition to paid"
     assert mock_txn.payment_status == "captured", "Booking payment_status must be captured"
     assert len(mock_txn.outbox_events) == 1, "Exactly one outbox event must be emitted"
-    print("  -> Initial confirmation: marked success, booking marked paid, Outbox event registered. (Passed)")
+    print(
+        "  -> Initial confirmation: marked success, booking marked paid, Outbox event registered. (Passed)"
+    )
 
     # Idempotent replay call (Odoo retries)
     res_replay = handle_confirm(mock_txn, test_payload)
     assert res_replay["status"] == "already_confirmed", "Must return already_confirmed"
     assert len(mock_txn.outbox_events) == 1, "Must NOT emit duplicate outbox event on replay"
-    print("  -> Idempotent replay: safely acknowledged without duplicate state change or events. (Passed)")
+    print(
+        "  -> Idempotent replay: safely acknowledged without duplicate state change or events. (Passed)"
+    )
 
     # -------------------------------------------------------------
     # TEST 4: EXPIRATION & CELERY SWEEP SIMULATION

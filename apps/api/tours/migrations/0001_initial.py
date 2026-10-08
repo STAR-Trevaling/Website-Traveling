@@ -1,4 +1,5 @@
 import uuid
+
 import django.db.models.deletion
 from django.db import migrations, models
 
@@ -52,7 +53,11 @@ class Migration(migrations.Migration):
                 (
                     "region",
                     models.CharField(
-                        choices=[("north", "Miền Bắc"), ("central", "Miền Trung"), ("south", "Miền Nam")],
+                        choices=[
+                            ("north", "Miền Bắc"),
+                            ("central", "Miền Trung"),
+                            ("south", "Miền Nam"),
+                        ],
                         db_index=True,
                         default="north",
                         max_length=20,

@@ -12,11 +12,30 @@ VIETNAM_HERITAGE_HISTORY = [
         "historical_period": "Thời Tiền sử (Văn hóa Soi Nhụ, Cái Bèo 7.000 năm), Thế kỷ 13 (Nhà Trần)",
         "unesco_status": "Di sản Thiên nhiên Thế giới UNESCO (1994, 2000, 2023 mở rộng quần thể Cát Bà)",
         "best_time_to_visit": "Tháng 4 - 6 và Tháng 9 - 11 (Tiết trời thu mát mẻ, nắng vàng dịu, biển êm, không mưa bão)",
-        "signature_cuisine": ["Chả mực giã tay Hạ Long", "Sá sùng Quan Lạn", "Bún bề bề", "Sam biển 7 món", "Rượu nếp ngâm hoành bồ"],
-        "must_try_activities": ["Du thuyền ngủ đêm ngắm hoàng hôn vịnh ngọc", "Chèo thuyền kayak luồn qua Hang Luồn & Hang Sáng Tối", "Thăm di chỉ Cái Bèo 7.000 năm", "Khám phá hang Sửng Sốt & Đỉnh Ti Tốp"],
-        "insider_tips": ["Nên chọn du thuyền từ 4-5 sao ngủ đêm trên vịnh để chiêm ngưỡng trọn vẹn bình minh tĩnh lặng lúc 5h30 sáng", "Tránh đi vào tháng 7-8 vì dễ có bão nhiệt đới gây hoãn lệnh xuất bến", "Mang giày thể thao chống trơn khi leo bậc đá hang Sửng Sốt"],
+        "signature_cuisine": [
+            "Chả mực giã tay Hạ Long",
+            "Sá sùng Quan Lạn",
+            "Bún bề bề",
+            "Sam biển 7 món",
+            "Rượu nếp ngâm hoành bồ",
+        ],
+        "must_try_activities": [
+            "Du thuyền ngủ đêm ngắm hoàng hôn vịnh ngọc",
+            "Chèo thuyền kayak luồn qua Hang Luồn & Hang Sáng Tối",
+            "Thăm di chỉ Cái Bèo 7.000 năm",
+            "Khám phá hang Sửng Sốt & Đỉnh Ti Tốp",
+        ],
+        "insider_tips": [
+            "Nên chọn du thuyền từ 4-5 sao ngủ đêm trên vịnh để chiêm ngưỡng trọn vẹn bình minh tĩnh lặng lúc 5h30 sáng",
+            "Tránh đi vào tháng 7-8 vì dễ có bão nhiệt đới gây hoãn lệnh xuất bến",
+            "Mang giày thể thao chống trơn khi leo bậc đá hang Sửng Sốt",
+        ],
         "ideal_duration": "2N1Đ hoặc 3N2Đ",
-        "target_travelers": ["Gia đình nhiều thế hệ", "Cặp đôi nghỉ dưỡng trăng mật", "Khách quốc tế yêu thiên nhiên kỳ quan"],
+        "target_travelers": [
+            "Gia đình nhiều thế hệ",
+            "Cặp đôi nghỉ dưỡng trăng mật",
+            "Khách quốc tế yêu thiên nhiên kỳ quan",
+        ],
         "recommended_tour_slugs": ["tour-ha-long-cruise-2n1d"],
         "content_vi": (
             "1. Huyền tích Rồng Giáng thế: Tên gọi 'Hạ Long' có nghĩa là 'Nơi Rồng đáp xuống'. Truyền thuyết kể rằng "
@@ -43,7 +62,17 @@ VIETNAM_HERITAGE_HISTORY = [
             "4. Cuisine: Hand-pounded squid patties (Cha muc), steamed peanut worms (Sa sung), and fresh mantis shrimp noodles.\n\n"
             "5. Concierge Advice: Opt for an overnight 5-star cruise (2D1N or 3D2N) to experience dawn kayaking in Lan Ha Bay."
         ),
-        "tags": ["Hạ Long", "Huyền tích Rồng", "Trần Hưng Đạo", "Bạch Đằng", "Cái Bèo", "UNESCO", "Chả mực", "Du thuyền", "Lan Hạ"],
+        "tags": [
+            "Hạ Long",
+            "Huyền tích Rồng",
+            "Trần Hưng Đạo",
+            "Bạch Đằng",
+            "Cái Bèo",
+            "UNESCO",
+            "Chả mực",
+            "Du thuyền",
+            "Lan Hạ",
+        ],
     },
     {
         "slug": "hoi-an-heritage-history",
@@ -52,11 +81,32 @@ VIETNAM_HERITAGE_HISTORY = [
         "historical_period": "Văn hóa Sa Huỳnh (thế kỷ 1 TCN), Champa, Thời Chúa Nguyễn (Thế kỷ 16–18)",
         "unesco_status": "Di sản Văn hóa Thế giới UNESCO (1999)",
         "best_time_to_visit": "Tháng 2 - 7 (Mùa khô ráo, nắng ấm, bầu trời trong vắt, đặc biệt vào đêm rằm 14 âm lịch phố cổ tắt đèn hoa đăng)",
-        "signature_cuisine": ["Cao lầu Hội An", "Mì Quảng gà ta", "Cơm gà bà Buội", "Bánh mì Phượng / Madam Khánh", "Bánh bao bánh vạc (White Rose)", "Nước Mót thảo mộc"],
-        "must_try_activities": ["Đi dạo phố cổ đêm hoa đăng thả đèn trên sông Hoài", "Chiêm bái Chùa Cầu (Lai Viễn Kiều)", "Thưởng thức show diễn thực cảnh Ký Ức Hội An", "Trải nghiệm chèo thuyền thúng Rừng dừa Bảy Mẫu", "Đạp xe ngắm hoàng hôn cánh đồng lúa Cẩm Châu"],
-        "insider_tips": ["Hãy dậy thật sớm lúc 6h sáng để ngắm Hội An thanh bình, tĩnh mịch khi chưa có dòng khách đông đúc", "Nếu đến vào đêm Rằm 14 âm lịch, toàn bộ phố cổ tắt đèn điện và thắp sáng hàng ngàn đèn lồng lung linh huyền ảo", "Trang phục màu vàng mustard, trắng, hoặc áo dài truyền thống chụp ảnh cực kỳ tôn dáng"],
+        "signature_cuisine": [
+            "Cao lầu Hội An",
+            "Mì Quảng gà ta",
+            "Cơm gà bà Buội",
+            "Bánh mì Phượng / Madam Khánh",
+            "Bánh bao bánh vạc (White Rose)",
+            "Nước Mót thảo mộc",
+        ],
+        "must_try_activities": [
+            "Đi dạo phố cổ đêm hoa đăng thả đèn trên sông Hoài",
+            "Chiêm bái Chùa Cầu (Lai Viễn Kiều)",
+            "Thưởng thức show diễn thực cảnh Ký Ức Hội An",
+            "Trải nghiệm chèo thuyền thúng Rừng dừa Bảy Mẫu",
+            "Đạp xe ngắm hoàng hôn cánh đồng lúa Cẩm Châu",
+        ],
+        "insider_tips": [
+            "Hãy dậy thật sớm lúc 6h sáng để ngắm Hội An thanh bình, tĩnh mịch khi chưa có dòng khách đông đúc",
+            "Nếu đến vào đêm Rằm 14 âm lịch, toàn bộ phố cổ tắt đèn điện và thắp sáng hàng ngàn đèn lồng lung linh huyền ảo",
+            "Trang phục màu vàng mustard, trắng, hoặc áo dài truyền thống chụp ảnh cực kỳ tôn dáng",
+        ],
         "ideal_duration": "2N1Đ hoặc 3N2Đ",
-        "target_travelers": ["Cặp đôi lãng mạn", "Người yêu kiến trúc cổ xưa", "Gia đình yêu văn hóa & ẩm thực"],
+        "target_travelers": [
+            "Cặp đôi lãng mạn",
+            "Người yêu kiến trúc cổ xưa",
+            "Gia đình yêu văn hóa & ẩm thực",
+        ],
         "recommended_tour_slugs": ["tour-hoi-an-da-nang-3n2d"],
         "content_vi": (
             "1. Lịch sử Thương cảng Faifo: Tọa lạc bên hạ lưu sông Thu Bồn, Hội An từng là một trong những thương cảng mậu dịch quốc tế "
@@ -79,7 +129,17 @@ VIETNAM_HERITAGE_HISTORY = [
             "4. Iconic Food: Cao Lau noodles, Mi Quang, Ba Buoi chicken rice, and White Rose dumplings.\n\n"
             "5. Concierge Advice: Watch the Hoi An Memories live outdoor spectacle and stroll the lantern-lit streets at dusk."
         ),
-        "tags": ["Hội An", "Chùa Cầu", "Faifo", "Mamazu", "Chúa Nguyễn", "Cao lầu", "Ký ức Hội An", "Đèn lồng", "Thu Bồn"],
+        "tags": [
+            "Hội An",
+            "Chùa Cầu",
+            "Faifo",
+            "Mamazu",
+            "Chúa Nguyễn",
+            "Cao lầu",
+            "Ký ức Hội An",
+            "Đèn lồng",
+            "Thu Bồn",
+        ],
     },
     {
         "slug": "ninh-binh-trang-an-hoa-lu-history",
@@ -88,11 +148,30 @@ VIETNAM_HERITAGE_HISTORY = [
         "historical_period": "Kinh đô Đại Cồ Việt (968 - 1010, Triều Đinh - Tiền Lê), Triều Trần (Hành cung Vũ Lâm)",
         "unesco_status": "Di sản Kép Văn hóa và Thiên nhiên Thế giới UNESCO (2014, duy nhất tại Đông Nam Á)",
         "best_time_to_visit": "Tháng 1 - 3 âm lịch (Mùa lễ hội chùa Bái Đính, tiết xuân thanh tịnh) và Tháng 5 - 6 (Mùa lúa chín vàng Tam Cốc uốn quanh dòng sông Ngô Đồng)",
-        "signature_cuisine": ["Thịt dê núi Ninh Bình tái chanh", "Cơm cháy giòn rụm chấm sốt dê", "Ốc núi Ninh Bình hấp sả", "Xôi trứng kiến Nho Quan", "Rượu cần Nho Quan"],
-        "must_try_activities": ["Ngồi thuyền nan chèo tay xuyên thủy động Tràng An", "Leo 500 bậc đá Hang Múa ngắm toàn cảnh Tam Cốc ngoạn mục", "Dâng hương Đền Vua Đinh - Đền Vua Lê tại Cố đô Hoa Lư", "Tham quan Hành cung Vũ Lâm nơi các vua Trần xuất gia"],
-        "insider_tips": ["Tuyến thuyền số 2 và số 3 tại Tràng An có hành trình đẹp nhất, vừa đi qua các hang dài vừa ghé Hành cung Vũ Lâm", "Nên leo Hang Múa vào lúc 16h30 chiều để đón hoàng hôn buông xuống thung lũng lúa", "Chuẩn bị nón lá hoặc ô che nắng vì thời gian ngồi thuyền nan kéo dài khoảng 2,5 - 3 tiếng"],
+        "signature_cuisine": [
+            "Thịt dê núi Ninh Bình tái chanh",
+            "Cơm cháy giòn rụm chấm sốt dê",
+            "Ốc núi Ninh Bình hấp sả",
+            "Xôi trứng kiến Nho Quan",
+            "Rượu cần Nho Quan",
+        ],
+        "must_try_activities": [
+            "Ngồi thuyền nan chèo tay xuyên thủy động Tràng An",
+            "Leo 500 bậc đá Hang Múa ngắm toàn cảnh Tam Cốc ngoạn mục",
+            "Dâng hương Đền Vua Đinh - Đền Vua Lê tại Cố đô Hoa Lư",
+            "Tham quan Hành cung Vũ Lâm nơi các vua Trần xuất gia",
+        ],
+        "insider_tips": [
+            "Tuyến thuyền số 2 và số 3 tại Tràng An có hành trình đẹp nhất, vừa đi qua các hang dài vừa ghé Hành cung Vũ Lâm",
+            "Nên leo Hang Múa vào lúc 16h30 chiều để đón hoàng hôn buông xuống thung lũng lúa",
+            "Chuẩn bị nón lá hoặc ô che nắng vì thời gian ngồi thuyền nan kéo dài khoảng 2,5 - 3 tiếng",
+        ],
         "ideal_duration": "1 ngày (Day Trip từ Hà Nội) hoặc 2N1Đ",
-        "target_travelers": ["Gia đình", "Du khách yêu tâm linh & lịch sử dựng nước", "Cặp đôi thích chụp ảnh phong cảnh sơn thủy"],
+        "target_travelers": [
+            "Gia đình",
+            "Du khách yêu tâm linh & lịch sử dựng nước",
+            "Cặp đôi thích chụp ảnh phong cảnh sơn thủy",
+        ],
         "recommended_tour_slugs": ["tour-ninh-binh-trang-an-1n"],
         "content_vi": (
             "1. Cố đô Hoa Lư — Kinh đô đá đầu tiên: Năm 968, Đinh Bộ Lĩnh dẹp loạn 12 sứ quân, xưng Hoàng đế (Đinh Tiên Hoàng), "
@@ -115,7 +194,17 @@ VIETNAM_HERITAGE_HISTORY = [
             "4. Cuisine: Mountain goat specialties and crispy scorched rice (Com chay).\n\n"
             "5. Concierge Advice: Take Trang An boat route 2 or 3, paired with Mua Cave dragon peak hike at sunset."
         ),
-        "tags": ["Ninh Bình", "Tràng An", "Hoa Lư", "Đinh Tiên Hoàng", "Hành cung Vũ Lâm", "Tam Cốc", "UNESCO", "Dê núi", "Hang Múa"],
+        "tags": [
+            "Ninh Bình",
+            "Tràng An",
+            "Hoa Lư",
+            "Đinh Tiên Hoàng",
+            "Hành cung Vũ Lâm",
+            "Tam Cốc",
+            "UNESCO",
+            "Dê núi",
+            "Hang Múa",
+        ],
     },
     {
         "slug": "hue-heritage-history",
@@ -124,11 +213,31 @@ VIETNAM_HERITAGE_HISTORY = [
         "historical_period": "Kinh đô Triều Nguyễn (1802 - 1945, 13 đời vua)",
         "unesco_status": "Di sản Văn hóa Thế giới UNESCO (1993) & Nhã nhạc Cung đình Huế (2003)",
         "best_time_to_visit": "Tháng 1 - 4 (Thời tiết mùa xuân mát mẻ, hoa sen hồ Tịnh Tâm nở rộ, tránh được cái nắng gắt tháng 6-7 và mùa mưa dầm tháng 10-11)",
-        "signature_cuisine": ["Bún bò Huế giò heo chả cua", "Cơm hến & Bún hến cồn Hến", "Bánh bèo, nậm, lọc, ram ít", "Chè bột lọc bọc heo quay", "Ẩm thực chay Cung đình"],
-        "must_try_activities": ["Tham quan Đại Nội Huế (Ngọ Môn, Điện Thái Hòa, Tử Cấm Thành)", "Đi thuyền rồng ngắm hoàng hôn sông Hương nghe Nhã nhạc", "Viếng Lăng Tự Đức, Lăng Khải Định, Lăng Minh Mạng", "Chiêm bái Chùa Thiên Mụ và ngắm tháp Phước Duyên", "Dạo chợ Đông Ba thưởng thức tinh hoa chè Huế"],
-        "insider_tips": ["Nên thuê hướng dẫn viên thuyết minh tại Đại Nội để thấu hiểu câu chuyện thâm cung bí sử và kiến trúc phong thủy triều Nguyễn", "Khi vào điện thờ và lăng tẩm hoàng gia, bắt buộc mặc trang phục kín đáo (áo có tay, quần/váy quá đầu gối)", "Thuê áo dài Cổ phục Việt Nam (Nhật Bình, Ngũ Thân) chụp ảnh tại lăng Tự Đức và Đại Nội vô cùng quý phái"],
+        "signature_cuisine": [
+            "Bún bò Huế giò heo chả cua",
+            "Cơm hến & Bún hến cồn Hến",
+            "Bánh bèo, nậm, lọc, ram ít",
+            "Chè bột lọc bọc heo quay",
+            "Ẩm thực chay Cung đình",
+        ],
+        "must_try_activities": [
+            "Tham quan Đại Nội Huế (Ngọ Môn, Điện Thái Hòa, Tử Cấm Thành)",
+            "Đi thuyền rồng ngắm hoàng hôn sông Hương nghe Nhã nhạc",
+            "Viếng Lăng Tự Đức, Lăng Khải Định, Lăng Minh Mạng",
+            "Chiêm bái Chùa Thiên Mụ và ngắm tháp Phước Duyên",
+            "Dạo chợ Đông Ba thưởng thức tinh hoa chè Huế",
+        ],
+        "insider_tips": [
+            "Nên thuê hướng dẫn viên thuyết minh tại Đại Nội để thấu hiểu câu chuyện thâm cung bí sử và kiến trúc phong thủy triều Nguyễn",
+            "Khi vào điện thờ và lăng tẩm hoàng gia, bắt buộc mặc trang phục kín đáo (áo có tay, quần/váy quá đầu gối)",
+            "Thuê áo dài Cổ phục Việt Nam (Nhật Bình, Ngũ Thân) chụp ảnh tại lăng Tự Đức và Đại Nội vô cùng quý phái",
+        ],
         "ideal_duration": "2N1Đ hoặc 3N2Đ",
-        "target_travelers": ["Người yêu lịch sử & văn hóa truyền thống", "Du khách trung niên & gia đình", "Nhiếp ảnh gia cổ phục"],
+        "target_travelers": [
+            "Người yêu lịch sử & văn hóa truyền thống",
+            "Du khách trung niên & gia đình",
+            "Nhiếp ảnh gia cổ phục",
+        ],
         "recommended_tour_slugs": ["tour-hue-di-san-2n1d"],
         "content_vi": (
             "1. Kinh thành Huế & Triều Nguyễn: Năm 1802, Vua Gia Long thống nhất đất nước, chọn Phú Xuân (Huế) làm kinh đô. "
@@ -150,7 +259,18 @@ VIETNAM_HERITAGE_HISTORY = [
             "4. Best Season: January to April for gentle spring weather; avoid heavy autumn rains in Oct-Nov.\n\n"
             "5. Royal Gastronomy: Spicy Hue beef noodles, Com Hen (baby basket-clam rice), and delicate royal court tea cakes."
         ),
-        "tags": ["Huế", "Đại Nội", "Chùa Thiên Mụ", "Sông Hương", "Gia Long", "Minh Mạng", "Tự Đức", "Khải Định", "UNESCO", "Bún bò Huế"],
+        "tags": [
+            "Huế",
+            "Đại Nội",
+            "Chùa Thiên Mụ",
+            "Sông Hương",
+            "Gia Long",
+            "Minh Mạng",
+            "Tự Đức",
+            "Khải Định",
+            "UNESCO",
+            "Bún bò Huế",
+        ],
     },
     {
         "slug": "ha-giang-dong-van-heritage-history",
@@ -159,11 +279,31 @@ VIETNAM_HERITAGE_HISTORY = [
         "historical_period": "Kiến tạo địa chất kỷ Cambri (500 triệu năm), Dinh Vua Mèo (đầu thế kỷ 20), Đường Hạnh Phúc (1959 - 1965)",
         "unesco_status": "Công viên Địa chất Toàn cầu UNESCO (2010)",
         "best_time_to_visit": "Tháng 9 - 10 (Mùa lúa chín vàng Hoàng Su Phì) và Tháng 10 - 12 (Mùa hoa tam giác mạch phủ hồng cao nguyên đá)",
-        "signature_cuisine": ["Cháo ấu tẩu giải cảm đêm lạnh", "Thắng cố ngựa chợ phiên Đồng Văn", "Thịt lợn đen gác bếp", "Bánh tam giác mạch nướng than hồng", "Rượu ngô men lá Quản Bạ"],
-        "must_try_activities": ["Chinh phục đèo Mã Pí Lèng - một trong Tứ đại đỉnh đèo miền Bắc", "Đi thuyền máy xuôi dòng sông Nho Quế ngắm hẻm vực Tu Sản sâu nhất Đông Nam Á", "Thăm Dinh thự Vua Mèo họ Vương (Vương Chính Đức)", "Chạm tay vào Cột cờ Lũng Cú - Điểm cực Bắc thiêng liêng của Tổ quốc", "Tham gia chợ phiên Mèo Vạc sáng Chủ Nhật"],
-        "insider_tips": ["Đường đèo dốc uốn lượn quanh co, nếu tự lái xe máy cần có tay lái rất vững và kiểm tra phanh kỹ; phương án an toàn nhất là thuê xe riêng kèm tài xế bản địa", "Nhiệt độ vùng cao ban đêm xuống rất thấp (có thể dưới 10°C vào mùa đông), hãy chuẩn bị áo ấm chắn gió", "Tôn trọng phong tục đồng bào H'Mông, không xoa đầu trẻ em vùng cao"],
+        "signature_cuisine": [
+            "Cháo ấu tẩu giải cảm đêm lạnh",
+            "Thắng cố ngựa chợ phiên Đồng Văn",
+            "Thịt lợn đen gác bếp",
+            "Bánh tam giác mạch nướng than hồng",
+            "Rượu ngô men lá Quản Bạ",
+        ],
+        "must_try_activities": [
+            "Chinh phục đèo Mã Pí Lèng - một trong Tứ đại đỉnh đèo miền Bắc",
+            "Đi thuyền máy xuôi dòng sông Nho Quế ngắm hẻm vực Tu Sản sâu nhất Đông Nam Á",
+            "Thăm Dinh thự Vua Mèo họ Vương (Vương Chính Đức)",
+            "Chạm tay vào Cột cờ Lũng Cú - Điểm cực Bắc thiêng liêng của Tổ quốc",
+            "Tham gia chợ phiên Mèo Vạc sáng Chủ Nhật",
+        ],
+        "insider_tips": [
+            "Đường đèo dốc uốn lượn quanh co, nếu tự lái xe máy cần có tay lái rất vững và kiểm tra phanh kỹ; phương án an toàn nhất là thuê xe riêng kèm tài xế bản địa",
+            "Nhiệt độ vùng cao ban đêm xuống rất thấp (có thể dưới 10°C vào mùa đông), hãy chuẩn bị áo ấm chắn gió",
+            "Tôn trọng phong tục đồng bào H'Mông, không xoa đầu trẻ em vùng cao",
+        ],
         "ideal_duration": "3N2Đ hoặc 4N3Đ",
-        "target_travelers": ["Phượt thủ & tín đồ mê xê dịch", "Nhiếp ảnh gia phong cảnh", "Du khách thích khám phá văn hóa bản địa vùng cao"],
+        "target_travelers": [
+            "Phượt thủ & tín đồ mê xê dịch",
+            "Nhiếp ảnh gia phong cảnh",
+            "Du khách thích khám phá văn hóa bản địa vùng cao",
+        ],
         "recommended_tour_slugs": ["tour-ha-giang-loop-3n2d"],
         "content_vi": (
             "1. Kỳ quan địa chất 500 triệu năm: Cao nguyên đá Đồng Văn trải rộng trên 4 huyện Quản Bạ, Yên Minh, Đồng Văn, Mèo Vạc. "
@@ -184,7 +324,17 @@ VIETNAM_HERITAGE_HISTORY = [
             "4. Best Season: Sept-Oct for golden rice terraces; Oct-Dec for blooming pink buckwheat flowers.\n\n"
             "5. Highland Cuisine: Warm Au Tau herbal porridge, Thang Co horse stew, and corn wine."
         ),
-        "tags": ["Hà Giang", "Mã Pí Lèng", "Đồng Văn", "Vua Mèo", "Nho Quế", "Tu Sản", "UNESCO", "Tam giác mạch", "Lũng Cú"],
+        "tags": [
+            "Hà Giang",
+            "Mã Pí Lèng",
+            "Đồng Văn",
+            "Vua Mèo",
+            "Nho Quế",
+            "Tu Sản",
+            "UNESCO",
+            "Tam giác mạch",
+            "Lũng Cú",
+        ],
     },
     {
         "slug": "sa-pa-fansipan-heritage-history",
@@ -193,11 +343,31 @@ VIETNAM_HERITAGE_HISTORY = [
         "historical_period": "Tiền sử (Bãi đá cổ Mường Hoa), Trạm nghỉ dưỡng Pháp cổ (1903), Văn hóa H'Mông - Dao Đỏ",
         "unesco_status": "Ruộng bậc thang Sa Pa lọt top Di sản ruộng bậc thang kỳ vĩ nhất thế giới",
         "best_time_to_visit": "Tháng 9 - 10 (Mùa lúa chín vàng thung lũng Mường Hoa) và Tháng 12 - 2 (Mùa đông săn mây, săn tuyết trắng và hoa đào rừng Tây Bắc)",
-        "signature_cuisine": ["Cá hồi & cá tầm Thác Bạc nấu lẩu măng chua", "Lợn cắp nách nướng than hoa", "Thịt trâu gác bếp xào rau cải ngồng", "Cơm lam nướng ống tre chấm muối vừng", "Thắng cố A Quỳnh"],
-        "must_try_activities": ["Chinh phục đỉnh Fansipan 3.143m bằng cáp treo 3 dây đạt kỷ lục Guiness", "Đi tàu hỏa leo núi Mường Hoa băng qua thung lũng mây", "Trekking bản Tả Van, Lao Chải ngắm ruộng bậc thang", "Tắm lá thuốc người Dao Đỏ cổ truyền tại bản Tả Phìn", "Ghé thăm Nhà thờ Đá Sa Pa xây dựng năm 1895"],
-        "insider_tips": ["Để săn mây đỉnh Fansipan, nên lên đỉnh vào khoảng 9h30 - 11h sáng khi nắng lên xua tan sương mù dày", "Mang theo áo khoác dày, khăn ấm và găng tay vì nhiệt độ trên đỉnh Fansipan thường thấp hơn thị xã từ 8 - 10°C", "Khi mua sắm đồ thổ cẩm tại chợ, hãy phân biệt thổ cẩm dệt tay truyền thống của đồng bào với hàng may công nghiệp"],
+        "signature_cuisine": [
+            "Cá hồi & cá tầm Thác Bạc nấu lẩu măng chua",
+            "Lợn cắp nách nướng than hoa",
+            "Thịt trâu gác bếp xào rau cải ngồng",
+            "Cơm lam nướng ống tre chấm muối vừng",
+            "Thắng cố A Quỳnh",
+        ],
+        "must_try_activities": [
+            "Chinh phục đỉnh Fansipan 3.143m bằng cáp treo 3 dây đạt kỷ lục Guiness",
+            "Đi tàu hỏa leo núi Mường Hoa băng qua thung lũng mây",
+            "Trekking bản Tả Van, Lao Chải ngắm ruộng bậc thang",
+            "Tắm lá thuốc người Dao Đỏ cổ truyền tại bản Tả Phìn",
+            "Ghé thăm Nhà thờ Đá Sa Pa xây dựng năm 1895",
+        ],
+        "insider_tips": [
+            "Để săn mây đỉnh Fansipan, nên lên đỉnh vào khoảng 9h30 - 11h sáng khi nắng lên xua tan sương mù dày",
+            "Mang theo áo khoác dày, khăn ấm và găng tay vì nhiệt độ trên đỉnh Fansipan thường thấp hơn thị xã từ 8 - 10°C",
+            "Khi mua sắm đồ thổ cẩm tại chợ, hãy phân biệt thổ cẩm dệt tay truyền thống của đồng bào với hàng may công nghiệp",
+        ],
         "ideal_duration": "2N1Đ hoặc 3N2Đ",
-        "target_travelers": ["Cặp đôi săn mây", "Gia đình nghỉ dưỡng", "Du khách yêu leo núi & văn hóa Tây Bắc"],
+        "target_travelers": [
+            "Cặp đôi săn mây",
+            "Gia đình nghỉ dưỡng",
+            "Du khách yêu leo núi & văn hóa Tây Bắc",
+        ],
         "recommended_tour_slugs": ["tour-sa-pa-fansipan-3n2d"],
         "content_vi": (
             "1. Lịch sử Trạm nghỉ dưỡng Pháp cổ: Năm 1903, đoàn thám hiểm người Pháp phát hiện ra cao nguyên Sa Pa với khí hậu mát mẻ "
@@ -220,7 +390,17 @@ VIETNAM_HERITAGE_HISTORY = [
             "4. Best Season: Sept-Oct for golden terraced paddies; Dec-Feb for winter frost and sea-of-clouds photography.\n\n"
             "5. Gastronomy & Wellness: Fresh Thac Bac sturgeon and salmon hotpot, paired with therapeutic Red Dao herbal bath rituals."
         ),
-        "tags": ["Sa Pa", "Fansipan", "Mường Hoa", "Nhà thờ Đá", "Pháp cổ", "Dao Đỏ", "H'Mông", "Ruộng bậc thang", "Cá hồi"],
+        "tags": [
+            "Sa Pa",
+            "Fansipan",
+            "Mường Hoa",
+            "Nhà thờ Đá",
+            "Pháp cổ",
+            "Dao Đỏ",
+            "H'Mông",
+            "Ruộng bậc thang",
+            "Cá hồi",
+        ],
     },
     {
         "slug": "da-lat-langbiang-heritage-history",
@@ -229,11 +409,32 @@ VIETNAM_HERITAGE_HISTORY = [
         "historical_period": "BS Alexandre Yersin khám phá 1893, Dinh Bảo Đại, Ga xe lửa bánh răng cưa 1932",
         "unesco_status": "Khu dự trữ sinh quyển thế giới Langbiang UNESCO (2015)",
         "best_time_to_visit": "Tháng 11 - 3 (Mùa hoa dã quỳ vàng rực, hoa mai anh đào nở hồng khắp phố, thời tiết khô ráo, se lạnh lãng mạn)",
-        "signature_cuisine": ["Lẩu gà lá é Tao Ngộ", "Bánh tráng nướng Đà Lạt (Pizza Việt Nam)", "Bánh căn xíu mại nước chấm hành béo ngậy", "Lẩu bò Ba Toa quán gỗ", "Kem bơ sáp béo ngậy", "Dâu tây New Zealand hái tại vườn"],
-        "must_try_activities": ["Săn mây bình minh đồi chè Cầu Đất lúc 5h00 sáng", "Chinh phục đỉnh Radar Langbiang bằng xe Jeep ngắm toàn cảnh Suối Vàng", "Đi thuyền kayak trên hồ Tuyền Lâm phẳng lặng", "Thăm Dinh III Bảo Đại bảo tồn nguyên vẹn phòng làm việc của vị vua cuối cùng", "Đi chuyến tàu cổ Đà Lạt - Trại Mát bằng đầu máy hơi nước"],
-        "insider_tips": ["Nhiệt độ Đà Lạt chênh lệch lớn giữa ngày và đêm: trưa nắng ấm nhưng tối hạ xuống 13 - 15°C, luôn mang theo áo len hoặc cardigan", "Tránh hái dâu tây ở các vườn 'cò mồi' ven đường đèo, nên đến các nông trại công nghệ cao uy tín tại Đa Quý hoặc Tuyền Lâm", "Đường dốc quanh co nên khi thuê xe máy hãy chọn xe số hoặc tay ga khỏe"],
+        "signature_cuisine": [
+            "Lẩu gà lá é Tao Ngộ",
+            "Bánh tráng nướng Đà Lạt (Pizza Việt Nam)",
+            "Bánh căn xíu mại nước chấm hành béo ngậy",
+            "Lẩu bò Ba Toa quán gỗ",
+            "Kem bơ sáp béo ngậy",
+            "Dâu tây New Zealand hái tại vườn",
+        ],
+        "must_try_activities": [
+            "Săn mây bình minh đồi chè Cầu Đất lúc 5h00 sáng",
+            "Chinh phục đỉnh Radar Langbiang bằng xe Jeep ngắm toàn cảnh Suối Vàng",
+            "Đi thuyền kayak trên hồ Tuyền Lâm phẳng lặng",
+            "Thăm Dinh III Bảo Đại bảo tồn nguyên vẹn phòng làm việc của vị vua cuối cùng",
+            "Đi chuyến tàu cổ Đà Lạt - Trại Mát bằng đầu máy hơi nước",
+        ],
+        "insider_tips": [
+            "Nhiệt độ Đà Lạt chênh lệch lớn giữa ngày và đêm: trưa nắng ấm nhưng tối hạ xuống 13 - 15°C, luôn mang theo áo len hoặc cardigan",
+            "Tránh hái dâu tây ở các vườn 'cò mồi' ven đường đèo, nên đến các nông trại công nghệ cao uy tín tại Đa Quý hoặc Tuyền Lâm",
+            "Đường dốc quanh co nên khi thuê xe máy hãy chọn xe số hoặc tay ga khỏe",
+        ],
         "ideal_duration": "3N2Đ hoặc 4N3Đ",
-        "target_travelers": ["Cặp đôi trăng mật", "Người yêu nghệ thuật & kiến trúc hoài niệm", "Nhóm bạn trẻ yêu thích cafe săn mây"],
+        "target_travelers": [
+            "Cặp đôi trăng mật",
+            "Người yêu nghệ thuật & kiến trúc hoài niệm",
+            "Nhóm bạn trẻ yêu thích cafe săn mây",
+        ],
         "recommended_tour_slugs": ["tour-da-lat-thanh-pho-ngan-hoa-3n2d"],
         "content_vi": (
             "1. Dấu ấn Bác sĩ Alexandre Yersin: Ngày 21/6/1893, nhà bác học Alexandre Yersin đặt chân lên cao nguyên Lang Biang sau chuyến thám hiểm gian nan. "
@@ -257,7 +458,17 @@ VIETNAM_HERITAGE_HISTORY = [
             "4. Best Season: Nov-March for blooming pink wild cherry blossoms and golden wild sunflowers.\n\n"
             "5. Romantic Gastronomy: Vietnamese street pizza (Banh trang nuong), chicken hotpot with e leaves, and fresh artisan avocado ice cream."
         ),
-        "tags": ["Đà Lạt", "Langbiang", "Yersin", "Bảo Đại", "Ga Đà Lạt", "Hồ Tuyền Lâm", "Hồ Xuân Hương", "Mai anh đào", "Lẩu gà lá é"],
+        "tags": [
+            "Đà Lạt",
+            "Langbiang",
+            "Yersin",
+            "Bảo Đại",
+            "Ga Đà Lạt",
+            "Hồ Tuyền Lâm",
+            "Hồ Xuân Hương",
+            "Mai anh đào",
+            "Lẩu gà lá é",
+        ],
     },
     {
         "slug": "phu-quoc-dao-ngoc-heritage-history",
@@ -266,11 +477,31 @@ VIETNAM_HERITAGE_HISTORY = [
         "historical_period": "Khai hoang mở đất thời Mạc Cửu (1708), Chúa Nguyễn Ánh bôn tẩu lánh nạn, Trại giam Tù binh Phú Quốc",
         "unesco_status": "Khu dự trữ sinh quyển thế giới Kiên Giang UNESCO (2006)",
         "best_time_to_visit": "Tháng 11 - 4 năm sau (Mùa khô, biển êm như mặt gương, nước biển trong vắt như ngọc bích, nắng vàng rực rỡ)",
-        "signature_cuisine": ["Gỏi cá trích tươi cuốn bánh tráng rau rừng", "Bún quậy Kiến Xây tự pha nước chấm", "Còi biên mai nướng muối ớt", "Nhum biển (Cầu gai) nướng mỡ hành", "Ghẹ Hàm Ninh hấp chấm tiêu Phú Quốc"],
-        "must_try_activities": ["Đi cano 4 đảo ngắm san hô (Hòn Mây Rút, Hòn Gầm Ghì, Hòn Móng Tay)", "Trải nghiệm cáp treo vượt biển Hòn Thơm dài nhất thế giới", "Thăm Di tích Lịch sử Nhà tù Phú Quốc tưởng niệm các chiến sĩ cách mạng", "Khám phá nhà thùng nước mắm truyền thống 200 năm", "Ngắm hoàng hôn Sunset Sanato / Bãi Trường"],
-        "insider_tips": ["Tránh đi vào tháng 7 - 9 vì là mùa mưa bão Tây Nam, sóng biển mạnh tại Bãi Trường và Bãi Dài; nếu đi vào thời gian này hãy chọn Bãi Sao hoặc Bãi Khem ở phía Nam vì biển vẫn rất êm", "Khi mua nước mắm truyền thống mang lên máy bay, các hãng hàng không yêu cầu đóng thùng xốp tiêu chuẩn và ký gửi riêng", "Bún quậy là món ăn trải nghiệm độc đáo, hãy tự tay quậy chén nước chấm muối ớt quất thơm nồng"],
+        "signature_cuisine": [
+            "Gỏi cá trích tươi cuốn bánh tráng rau rừng",
+            "Bún quậy Kiến Xây tự pha nước chấm",
+            "Còi biên mai nướng muối ớt",
+            "Nhum biển (Cầu gai) nướng mỡ hành",
+            "Ghẹ Hàm Ninh hấp chấm tiêu Phú Quốc",
+        ],
+        "must_try_activities": [
+            "Đi cano 4 đảo ngắm san hô (Hòn Mây Rút, Hòn Gầm Ghì, Hòn Móng Tay)",
+            "Trải nghiệm cáp treo vượt biển Hòn Thơm dài nhất thế giới",
+            "Thăm Di tích Lịch sử Nhà tù Phú Quốc tưởng niệm các chiến sĩ cách mạng",
+            "Khám phá nhà thùng nước mắm truyền thống 200 năm",
+            "Ngắm hoàng hôn Sunset Sanato / Bãi Trường",
+        ],
+        "insider_tips": [
+            "Tránh đi vào tháng 7 - 9 vì là mùa mưa bão Tây Nam, sóng biển mạnh tại Bãi Trường và Bãi Dài; nếu đi vào thời gian này hãy chọn Bãi Sao hoặc Bãi Khem ở phía Nam vì biển vẫn rất êm",
+            "Khi mua nước mắm truyền thống mang lên máy bay, các hãng hàng không yêu cầu đóng thùng xốp tiêu chuẩn và ký gửi riêng",
+            "Bún quậy là món ăn trải nghiệm độc đáo, hãy tự tay quậy chén nước chấm muối ớt quất thơm nồng",
+        ],
         "ideal_duration": "3N2Đ hoặc 4N3Đ",
-        "target_travelers": ["Cặp đôi nghỉ dưỡng biển", "Gia đình yêu thích biển đảo & resort 5 sao", "Du khách quốc tế"],
+        "target_travelers": [
+            "Cặp đôi nghỉ dưỡng biển",
+            "Gia đình yêu thích biển đảo & resort 5 sao",
+            "Du khách quốc tế",
+        ],
         "recommended_tour_slugs": ["tour-phu-quoc-thien-duong-dao-ngoc-3n2d"],
         "content_vi": (
             "1. Lịch sử Khai phá thời Mạc Cửu: Năm 1708, nhà buôn Mạc Cửu sau khi khai phá vùng đất Hà Tiên và đảo Koh Tral (Phú Quốc) "
@@ -292,7 +523,17 @@ VIETNAM_HERITAGE_HISTORY = [
             "4. Best Season: November to April brings glassy turquoise seas and dry sunny days.\n\n"
             "5. Island Cuisine: Fresh herring salad (Goi ca trich), custom-whipped Kien Xay noodles (Bun quay), and charcoal-grilled sea urchins."
         ),
-        "tags": ["Phú Quốc", "Mạc Cửu", "Giếng Ngự", "Gia Long", "Nhà tù Phú Quốc", "Nước mắm", "Bãi Sao", "Hòn Thơm", "Gỏi cá trích"],
+        "tags": [
+            "Phú Quốc",
+            "Mạc Cửu",
+            "Giếng Ngự",
+            "Gia Long",
+            "Nhà tù Phú Quốc",
+            "Nước mắm",
+            "Bãi Sao",
+            "Hòn Thơm",
+            "Gỏi cá trích",
+        ],
     },
     {
         "slug": "da-nang-ngu-hanh-son-cham-heritage-history",
@@ -301,9 +542,25 @@ VIETNAM_HERITAGE_HISTORY = [
         "historical_period": "Vương quốc Champa (thế kỷ 5 - 15), Vua Minh Mạng đặt tên Ngũ Hành Sơn 1825, Viện EFEO 1915",
         "unesco_status": "Văn bia Ma Nhai Ngũ Hành Sơn là Di sản Tư liệu Ký ức Thế giới UNESCO (2022)",
         "best_time_to_visit": "Tháng 3 - 8 (Thời tiết mùa khô, biển Mỹ Khê trong xanh cát trắng, nắng đẹp lý tưởng để tắm biển và vui chơi Bà Nà Hills)",
-        "signature_cuisine": ["Mì Quảng ếch / tôm thịt", "Bánh tráng cuốn thịt heo hai đầu da chấm mắm nêm", "Bún chả cá Đà Nẵng", "Gỏi cá Nam Ô trứ danh", "Chè sầu Liên béo ngậy"],
-        "must_try_activities": ["Dạo bước trên Cầu Vàng Bà Nà Hills nâng đỡ bởi đôi bàn tay khổng lồ", "Chinh phục đỉnh Thủy Sơn và khám phá động Huyền Không kỳ ảo", "Chiêm ngưỡng bộ sưu tập cổ vật Chăm Pa tại Bảo tàng Điêu khắc Chăm", "Xem Cầu Rồng phun lửa và phun nước vào 21h00 tối thứ Bảy và Chủ Nhật", "Tắm biển Mỹ Khê - một trong những bãi biển quyến rũ nhất hành tinh"],
-        "insider_tips": ["Động Huyền Không tại Ngũ Hành Sơn đẹp nhất vào khoảng 11h30 - 12h30 trưa khi ánh nắng mặt trời chiếu thẳng qua vòm hang tạo nên luồng hào quang thần thánh", "Nên đi Bà Nà Hills sớm trước 8h00 sáng để tránh xếp hàng cáp treo và check-in Cầu Vàng khi chưa quá đông", "Thưởng thức bánh tráng thịt heo nên chọn quán có chén mắm nêm chuẩn vị pha dứa và ớt cay"],
+        "signature_cuisine": [
+            "Mì Quảng ếch / tôm thịt",
+            "Bánh tráng cuốn thịt heo hai đầu da chấm mắm nêm",
+            "Bún chả cá Đà Nẵng",
+            "Gỏi cá Nam Ô trứ danh",
+            "Chè sầu Liên béo ngậy",
+        ],
+        "must_try_activities": [
+            "Dạo bước trên Cầu Vàng Bà Nà Hills nâng đỡ bởi đôi bàn tay khổng lồ",
+            "Chinh phục đỉnh Thủy Sơn và khám phá động Huyền Không kỳ ảo",
+            "Chiêm ngưỡng bộ sưu tập cổ vật Chăm Pa tại Bảo tàng Điêu khắc Chăm",
+            "Xem Cầu Rồng phun lửa và phun nước vào 21h00 tối thứ Bảy và Chủ Nhật",
+            "Tắm biển Mỹ Khê - một trong những bãi biển quyến rũ nhất hành tinh",
+        ],
+        "insider_tips": [
+            "Động Huyền Không tại Ngũ Hành Sơn đẹp nhất vào khoảng 11h30 - 12h30 trưa khi ánh nắng mặt trời chiếu thẳng qua vòm hang tạo nên luồng hào quang thần thánh",
+            "Nên đi Bà Nà Hills sớm trước 8h00 sáng để tránh xếp hàng cáp treo và check-in Cầu Vàng khi chưa quá đông",
+            "Thưởng thức bánh tráng thịt heo nên chọn quán có chén mắm nêm chuẩn vị pha dứa và ớt cay",
+        ],
         "ideal_duration": "3N2Đ hoặc 4N3Đ",
         "target_travelers": ["Gia đình", "Nhóm bạn trẻ", "Khách MICE & hội nghị"],
         "recommended_tour_slugs": ["tour-hoi-an-da-nang-3n2d"],
@@ -329,7 +586,17 @@ VIETNAM_HERITAGE_HISTORY = [
             "4. Best Season: March to August offers sunny blue skies and calm waters at My Khe Beach.\n\n"
             "5. Cuisine: Two-ended pork belly wrapped in rice paper with spicy mam nem dipping sauce, and turmeric Mi Quang noodles."
         ),
-        "tags": ["Đà Nẵng", "Ngũ Hành Sơn", "Bà Nà Hills", "Cầu Vàng", "Bảo tàng Chăm", "UNESCO", "Minh Mạng", "Cầu Rồng", "Biển Mỹ Khê"],
+        "tags": [
+            "Đà Nẵng",
+            "Ngũ Hành Sơn",
+            "Bà Nà Hills",
+            "Cầu Vàng",
+            "Bảo tàng Chăm",
+            "UNESCO",
+            "Minh Mạng",
+            "Cầu Rồng",
+            "Biển Mỹ Khê",
+        ],
     },
     {
         "slug": "nha-trang-thap-ba-ponagar-heritage-history",
@@ -338,11 +605,31 @@ VIETNAM_HERITAGE_HISTORY = [
         "historical_period": "Vương quốc Champa cổ đại (Thế kỷ 8 - 13), Tín ngưỡng Thờ Mẫu Thiên Y A Na của người Việt",
         "unesco_status": "Lễ hội Tháp Bà Ponagar được công nhận là Di sản Văn hóa Phi vật thể Quốc gia",
         "best_time_to_visit": "Tháng 1 - 8 (Mùa khô chan hòa ánh nắng, biển trong xanh màu ngọc bích, lý tưởng để lặn biển ngắm san hô tại Hòn Mun)",
-        "signature_cuisine": ["Bún sứa & bún chả cá Nha Trang", "Bánh căn hải sản tôm mực chấm mắm nêm / mắm ngọt", "Nem nướng Ninh Hòa cuốn bánh tráng", "Gỏi cá mai tươi rói", "Bò nướng Lạc Cảnh sốt bí truyền"],
-        "must_try_activities": ["Chiêm bái Tháp Bà Ponagar và xem múa Chăm với tiếng trống Paranưng", "Tắm bùn khoáng nóng tự nhiên thư giãn tại I-Resort / Tháp Bà", "Tour du thuyền ngắm hoàng hôn vịnh biển Nha Trang", "Lặn biển bình khí ngắm rạn san hô nguyên sinh tại Hòn Mun", "Vui chơi công viên giải trí VinWonders Hòn Tre"],
-        "insider_tips": ["Tháp Bà Ponagar yêu cầu mặc áo choàng lam kín đáo do ban quản lý cấp miễn phí nếu du khách mặc váy ngắn hoặc áo sát nách", "Nên đi tắm bùn vào buổi chiều muộn từ 15h30 để vừa ngâm khoáng ấm vừa tránh nắng gắt", "Mua yến sào Khánh Hòa nên chọn showroom chính hãng của Công ty Yến sào Khánh Hòa để đảm bảo nguồn gốc"],
+        "signature_cuisine": [
+            "Bún sứa & bún chả cá Nha Trang",
+            "Bánh căn hải sản tôm mực chấm mắm nêm / mắm ngọt",
+            "Nem nướng Ninh Hòa cuốn bánh tráng",
+            "Gỏi cá mai tươi rói",
+            "Bò nướng Lạc Cảnh sốt bí truyền",
+        ],
+        "must_try_activities": [
+            "Chiêm bái Tháp Bà Ponagar và xem múa Chăm với tiếng trống Paranưng",
+            "Tắm bùn khoáng nóng tự nhiên thư giãn tại I-Resort / Tháp Bà",
+            "Tour du thuyền ngắm hoàng hôn vịnh biển Nha Trang",
+            "Lặn biển bình khí ngắm rạn san hô nguyên sinh tại Hòn Mun",
+            "Vui chơi công viên giải trí VinWonders Hòn Tre",
+        ],
+        "insider_tips": [
+            "Tháp Bà Ponagar yêu cầu mặc áo choàng lam kín đáo do ban quản lý cấp miễn phí nếu du khách mặc váy ngắn hoặc áo sát nách",
+            "Nên đi tắm bùn vào buổi chiều muộn từ 15h30 để vừa ngâm khoáng ấm vừa tránh nắng gắt",
+            "Mua yến sào Khánh Hòa nên chọn showroom chính hãng của Công ty Yến sào Khánh Hòa để đảm bảo nguồn gốc",
+        ],
         "ideal_duration": "3N2Đ hoặc 4N3Đ",
-        "target_travelers": ["Gia đình nghỉ dưỡng", "Cặp đôi thích biển & ẩm thực", "Du khách chăm sóc sức khỏe & tắm khoáng"],
+        "target_travelers": [
+            "Gia đình nghỉ dưỡng",
+            "Cặp đôi thích biển & ẩm thực",
+            "Du khách chăm sóc sức khỏe & tắm khoáng",
+        ],
         "recommended_tour_slugs": ["tour-da-lat-thanh-pho-ngan-hoa-3n2d"],
         "content_vi": (
             "1. Lịch sử Tháp Bà Ponagar: Được xây dựng từ thế kỷ 8 đến thế kỷ 13 trên đồi Cù Lao nhìn ra cửa sông Cái, "
@@ -364,7 +651,16 @@ VIETNAM_HERITAGE_HISTORY = [
             "4. Best Season: January to August offers azure sunny skies and mirror-calm diving waters.\n\n"
             "5. Gastronomy: Crunchy jellyfish noodles (Bun sua), grilled Nem Ninh Hoa, and Lac Canh marinated grilled beef."
         ),
-        "tags": ["Nha Trang", "Tháp Bà Ponagar", "Champa", "Thiên Y A Na", "Hòn Mun", "Tắm bùn", "Bún sứa", "Nem nướng"],
+        "tags": [
+            "Nha Trang",
+            "Tháp Bà Ponagar",
+            "Champa",
+            "Thiên Y A Na",
+            "Hòn Mun",
+            "Tắm bùn",
+            "Bún sứa",
+            "Nem nướng",
+        ],
     },
     {
         "slug": "mui-ne-poshanu-heritage-history",
@@ -373,11 +669,31 @@ VIETNAM_HERITAGE_HISTORY = [
         "historical_period": "Vương quốc Champa (Thế kỷ 8 – 9), Làng chài Mũi Né truyền thống thế kỷ 19",
         "unesco_status": "Di tích Kiến trúc Nghệ thuật Cấp Quốc gia",
         "best_time_to_visit": "Tháng 11 - 4 (Thời tiết khô ráo, nắng vàng chan hòa, gió biển lộng gió, cực kỳ lý tưởng cho lướt ván diều và trượt cát)",
-        "signature_cuisine": ["Lẩu thả Phan Thiết tinh hoa 5 màu", "Bánh căn Phan Thiết ăn kèm xíu mại cá nục kho", "Răng mực nướng bơ tỏi", "Gỏi cá mai Phan Thiết", "Bánh quai vạc đồi cát"],
-        "must_try_activities": ["Trải nghiệm xe Jeep địa hình vượt đồi cát trắng Bàu Trắng đón bình minh", "Thăm cụm Tháp Chàm Poshanư cổ kính trên đồi Bà Nài", "Lội suối Tiên ngắm hẻm cát đất sét đỏ kỳ vĩ", "Khám phá Làng chài Mũi Né lúc bình minh khi thuyền thúng cập bờ", "Thử thách lướt ván diều (Kitesurfing) tại bãi biển Hàm Tiến"],
-        "insider_tips": ["Thời điểm ngắm Đồi Cát Bay và Bàu Trắng đẹp nhất là 5h30 - 7h00 sáng hoặc 16h30 - 18h00 chiều khi cát không bị bỏng chân và ánh sáng mềm mại", "Nên thuê xe Jeep địa hình tại Bàu Trắng để được tài xế chở lên đỉnh đồi cát cao nhất và chụp ảnh chuyên nghiệp", "Nước mắm cá cơm truyền thống Phan Thiết có độ đạm tự nhiên cao, là món quà biếu rất quý"],
+        "signature_cuisine": [
+            "Lẩu thả Phan Thiết tinh hoa 5 màu",
+            "Bánh căn Phan Thiết ăn kèm xíu mại cá nục kho",
+            "Răng mực nướng bơ tỏi",
+            "Gỏi cá mai Phan Thiết",
+            "Bánh quai vạc đồi cát",
+        ],
+        "must_try_activities": [
+            "Trải nghiệm xe Jeep địa hình vượt đồi cát trắng Bàu Trắng đón bình minh",
+            "Thăm cụm Tháp Chàm Poshanư cổ kính trên đồi Bà Nài",
+            "Lội suối Tiên ngắm hẻm cát đất sét đỏ kỳ vĩ",
+            "Khám phá Làng chài Mũi Né lúc bình minh khi thuyền thúng cập bờ",
+            "Thử thách lướt ván diều (Kitesurfing) tại bãi biển Hàm Tiến",
+        ],
+        "insider_tips": [
+            "Thời điểm ngắm Đồi Cát Bay và Bàu Trắng đẹp nhất là 5h30 - 7h00 sáng hoặc 16h30 - 18h00 chiều khi cát không bị bỏng chân và ánh sáng mềm mại",
+            "Nên thuê xe Jeep địa hình tại Bàu Trắng để được tài xế chở lên đỉnh đồi cát cao nhất và chụp ảnh chuyên nghiệp",
+            "Nước mắm cá cơm truyền thống Phan Thiết có độ đạm tự nhiên cao, là món quà biếu rất quý",
+        ],
         "ideal_duration": "2N1Đ hoặc 3N2Đ",
-        "target_travelers": ["Cặp đôi yêu thích chụp ảnh sa mạc biển", "Khách thể thao lướt ván mạo hiểm", "Gia đình nghỉ dưỡng biển"],
+        "target_travelers": [
+            "Cặp đôi yêu thích chụp ảnh sa mạc biển",
+            "Khách thể thao lướt ván mạo hiểm",
+            "Gia đình nghỉ dưỡng biển",
+        ],
         "recommended_tour_slugs": ["tour-phu-quoc-thien-duong-dao-ngoc-3n2d"],
         "content_vi": (
             "1. Lịch sử Tháp Chàm Poshanư: Tọa lạc trên đồi Bà Nài nhìn ra biển Phan Thiết, tháp Poshanư được xây dựng từ cuối thế kỷ 8 đầu thế kỷ 9 "
@@ -397,7 +713,16 @@ VIETNAM_HERITAGE_HISTORY = [
             "4. Iconic Cuisine: Lau Tha (Hotpot of the 5 Elements served in banana flower petals) and grilled squid teeth.\n\n"
             "5. Concierge Advice: Ride ATVs across the white dunes of Bau Trang at sunrise and stroll barefoot through the red canyons of Fairy Stream."
         ),
-        "tags": ["Mũi Né", "Phan Thiết", "Tháp Chàm Poshanư", "Bàu Trắng", "Đồi cát bay", "Suối Tiên", "Lẩu thả", "Lướt ván diều"],
+        "tags": [
+            "Mũi Né",
+            "Phan Thiết",
+            "Tháp Chàm Poshanư",
+            "Bàu Trắng",
+            "Đồi cát bay",
+            "Suối Tiên",
+            "Lẩu thả",
+            "Lướt ván diều",
+        ],
     },
     {
         "slug": "can-tho-mekong-cai-rang-heritage-history",
@@ -406,11 +731,32 @@ VIETNAM_HERITAGE_HISTORY = [
         "historical_period": "Khai khẩn đất phương Nam (Thế kỷ 18), Thời Tây Đô thời Pháp thuộc, Nhà cổ Bình Thủy 1870",
         "unesco_status": "Văn hóa Chợ nổi Cái Răng là Di sản Văn hóa Phi vật thể Quốc gia",
         "best_time_to_visit": "Tháng 9 - 11 (Mùa nước nổi đặc trưng miền Tây, tôm cá đầy ắp, đồng hoa súng bung nở) và Tháng 5 - 8 (Mùa trái cây chín rộ tại các miệt vườn Phong Điền, Cái Răng)",
-        "signature_cuisine": ["Lẩu mắm miền Tây cá linh bông điên điển", "Vịt nấu chao Cần Thơ", "Bánh xèo củ hủ dừa giòn rụm", "Hủ tiếu khô Sa Đéc / Hủ tiếu Cái Răng", "Nem nướng Cái Răng", "Bánh tét lá cẩm Cần Thơ"],
-        "must_try_activities": ["Đi thuyền máy khám phá Chợ nổi Cái Răng lúc 5h30 sáng ngắm cây 'bẹo' chào hàng", "Thưởng thức tô hủ tiếu nóng hổi và ly cà phê bọt trên thuyền tròng trành", "Thăm Nhà cổ Bình Thủy 1870 — bối cảnh phim điện ảnh Người Tình (The Lover)", "Đạp xe dạo quanh cồn Sơn trải nghiệm làm bánh dân gian và xem cá lóc bay", "Ghé thăm Chợ đêm Ninh Kiều bên bến sông"],
-        "insider_tips": ["Chợ nổi Cái Răng họp đông đúc và nhộn nhịp nhất từ 5h00 đến 7h30 sáng; nếu đi sau 8h00 chợ sẽ bắt đầu tan dần", "Nhìn lên cây tre ('cây bẹo') dựng trên đầu mỗi mũi thuyền để biết thuyền đó bán loại nông sản gì (treo gì bán nấy)", "Khi ghé nhà vườn ăn trái cây, hãy ủng hộ các sản phẩm đặc sản mộc mạc do bà con nông dân tự tay làm"],
+        "signature_cuisine": [
+            "Lẩu mắm miền Tây cá linh bông điên điển",
+            "Vịt nấu chao Cần Thơ",
+            "Bánh xèo củ hủ dừa giòn rụm",
+            "Hủ tiếu khô Sa Đéc / Hủ tiếu Cái Răng",
+            "Nem nướng Cái Răng",
+            "Bánh tét lá cẩm Cần Thơ",
+        ],
+        "must_try_activities": [
+            "Đi thuyền máy khám phá Chợ nổi Cái Răng lúc 5h30 sáng ngắm cây 'bẹo' chào hàng",
+            "Thưởng thức tô hủ tiếu nóng hổi và ly cà phê bọt trên thuyền tròng trành",
+            "Thăm Nhà cổ Bình Thủy 1870 — bối cảnh phim điện ảnh Người Tình (The Lover)",
+            "Đạp xe dạo quanh cồn Sơn trải nghiệm làm bánh dân gian và xem cá lóc bay",
+            "Ghé thăm Chợ đêm Ninh Kiều bên bến sông",
+        ],
+        "insider_tips": [
+            "Chợ nổi Cái Răng họp đông đúc và nhộn nhịp nhất từ 5h00 đến 7h30 sáng; nếu đi sau 8h00 chợ sẽ bắt đầu tan dần",
+            "Nhìn lên cây tre ('cây bẹo') dựng trên đầu mỗi mũi thuyền để biết thuyền đó bán loại nông sản gì (treo gì bán nấy)",
+            "Khi ghé nhà vườn ăn trái cây, hãy ủng hộ các sản phẩm đặc sản mộc mạc do bà con nông dân tự tay làm",
+        ],
         "ideal_duration": "2N1Đ hoặc 3N2Đ",
-        "target_travelers": ["Gia đình", "Du khách quốc tế muốn trải nghiệm văn hóa bản địa chân thực", "Những ai yêu thích ẩm thực miệt vườn"],
+        "target_travelers": [
+            "Gia đình",
+            "Du khách quốc tế muốn trải nghiệm văn hóa bản địa chân thực",
+            "Những ai yêu thích ẩm thực miệt vườn",
+        ],
         "recommended_tour_slugs": ["tour-phu-quoc-thien-duong-dao-ngoc-3n2d"],
         "content_vi": (
             "1. Lịch sử Cần Thơ — Đô thị Tây Đô: Nằm ở hạ lưu sông Hậu, Cần Thơ được hình thành từ công cuộc khai khẩn đất phương Nam "
@@ -429,7 +775,16 @@ VIETNAM_HERITAGE_HISTORY = [
             "4. Best Season: Sept-Nov for the fertile floating season; May-Aug for lush fruit harvest orchards.\n\n"
             "5. Mekong Delicacies: Fermented fish hotpot with water lily blooms, duck with fermented tofu (Vit nau chao), and crispy giant river pancakes."
         ),
-        "tags": ["Cần Thơ", "Chợ nổi Cái Răng", "Bến Ninh Kiều", "Nhà cổ Bình Thủy", "Miền Tây", "Mùa nước nổi", "Cây bẹo", "Lẩu mắm"],
+        "tags": [
+            "Cần Thơ",
+            "Chợ nổi Cái Răng",
+            "Bến Ninh Kiều",
+            "Nhà cổ Bình Thủy",
+            "Miền Tây",
+            "Mùa nước nổi",
+            "Cây bẹo",
+            "Lẩu mắm",
+        ],
     },
     {
         "slug": "phong-nha-ke-bang-son-doong-heritage-history",
@@ -438,11 +793,31 @@ VIETNAM_HERITAGE_HISTORY = [
         "historical_period": "Địa chất Karst 400 triệu năm tuổi (Kỷ Cổ sinh), Căn cứ địa Đường mòn Hồ Chí Minh trong chiến tranh",
         "unesco_status": "Di sản Thiên nhiên Thế giới UNESCO (2003, 2015 tiêu chí đa dạng sinh học)",
         "best_time_to_visit": "Tháng 3 - 8 (Mùa khô, nước sông Son trong xanh vắt, khí hậu trong hang mát mẻ 22 - 25°C, an toàn tuyệt đối để thám hiểm)",
-        "signature_cuisine": ["Cá trắm sông Son nướng mè / kho tiêu", "Cháo canh Quảng Bình cá lóc đồng", "Gà đồi nướng chấm muối cheo thảo mộc", "Khoai dẻo Quảng Bình", "Đọt mây xào tôm"],
-        "must_try_activities": ["Thám hiểm Động Thiên Đường — Hoàng cung trong lòng đất dài 31km", "Ngồi thuyền ngược dòng sông Son vào khám phá Động Phong Nha", "Chèo thuyền kayak và đu zipline tắm bùn tại Hang Tối", "Thám hiểm Hang Sơn Đoòng (Hang động tự nhiên lớn nhất hành tinh) hoặc Hang Én", "Khám phá thung lũng sinh thái Suối Nước Moọc"],
-        "insider_tips": ["Tháng 9 đến tháng 11 là mùa mưa lũ tại miền Trung, các hang động ngập nước sẽ tạm dừng đón khách tham quan", "Khi thám hiểm hang động, chuẩn bị giày bám đá tốt, quần áo mau khô và túi chống nước cho điện thoại/máy ảnh", "Để đi tour thám hiểm Sơn Đoòng, du khách cần đặt trước từ 6 tháng đến 1 năm và đảm bảo bài kiểm tra thể lực"],
+        "signature_cuisine": [
+            "Cá trắm sông Son nướng mè / kho tiêu",
+            "Cháo canh Quảng Bình cá lóc đồng",
+            "Gà đồi nướng chấm muối cheo thảo mộc",
+            "Khoai dẻo Quảng Bình",
+            "Đọt mây xào tôm",
+        ],
+        "must_try_activities": [
+            "Thám hiểm Động Thiên Đường — Hoàng cung trong lòng đất dài 31km",
+            "Ngồi thuyền ngược dòng sông Son vào khám phá Động Phong Nha",
+            "Chèo thuyền kayak và đu zipline tắm bùn tại Hang Tối",
+            "Thám hiểm Hang Sơn Đoòng (Hang động tự nhiên lớn nhất hành tinh) hoặc Hang Én",
+            "Khám phá thung lũng sinh thái Suối Nước Moọc",
+        ],
+        "insider_tips": [
+            "Tháng 9 đến tháng 11 là mùa mưa lũ tại miền Trung, các hang động ngập nước sẽ tạm dừng đón khách tham quan",
+            "Khi thám hiểm hang động, chuẩn bị giày bám đá tốt, quần áo mau khô và túi chống nước cho điện thoại/máy ảnh",
+            "Để đi tour thám hiểm Sơn Đoòng, du khách cần đặt trước từ 6 tháng đến 1 năm và đảm bảo bài kiểm tra thể lực",
+        ],
         "ideal_duration": "3N2Đ hoặc 4N3Đ",
-        "target_travelers": ["Những người đam mê thám hiểm mạo hiểm", "Du khách yêu thiên nhiên nguyên sinh kỳ vĩ", "Gia đình yêu thích cảnh sắc hang động"],
+        "target_travelers": [
+            "Những người đam mê thám hiểm mạo hiểm",
+            "Du khách yêu thiên nhiên nguyên sinh kỳ vĩ",
+            "Gia đình yêu thích cảnh sắc hang động",
+        ],
         "recommended_tour_slugs": ["tour-hue-di-san-2n1d"],
         "content_vi": (
             "1. Lịch sử Địa chất 400 triệu năm: Phong Nha - Kẻ Bàng là một trong những vùng đá vôi nhiệt đới cổ nhất và rộng lớn nhất châu Á "
@@ -462,7 +837,16 @@ VIETNAM_HERITAGE_HISTORY = [
             "4. Cuisine: Son River grass carp, charcoal-grilled highland chicken with indigenous 'cheo' salt, and Quang Binh cassava.\n\n"
             "5. Concierge Advice: Trek through Paradise Cave (31km) and experience ziplining mud baths inside Dark Cave."
         ),
-        "tags": ["Phong Nha", "Sơn Đoòng", "Động Thiên Đường", "Quảng Bình", "UNESCO", "Sông Son", "Hang Tối", "Thám hiểm"],
+        "tags": [
+            "Phong Nha",
+            "Sơn Đoòng",
+            "Động Thiên Đường",
+            "Quảng Bình",
+            "UNESCO",
+            "Sông Son",
+            "Hang Tối",
+            "Thám hiểm",
+        ],
     },
     {
         "slug": "my-son-sanctuary-heritage-history",
@@ -471,11 +855,29 @@ VIETNAM_HERITAGE_HISTORY = [
         "historical_period": "Thế kỷ 4 - 13 (Vương triều Champa), Thờ Thần Shiva Bhadresvara",
         "unesco_status": "Di sản Văn hóa Thế giới UNESCO (1999)",
         "best_time_to_visit": "Tháng 2 - 8 (Thời tiết mùa khô ráo, thích hợp dạo bộ giữa thung lũng núi Chúa thanh tịnh)",
-        "signature_cuisine": ["Bê thui Cầu Mống chấm mắm nêm", "Mì Quảng Phú Chiêm", "Bánh tổ Quảng Nam", "Gà than đèo Le"],
-        "must_try_activities": ["Thưởng thức điệu múa Apsara uyển chuyển và tiếng kèn Saranai tại sân khấu nhà bia", "Khám phá cụm tháp A, B, C, D với kiến trúc gạch nung không mạch vữa", "Tìm hiểu linga - yoni biểu tượng của sự sinh sôi nảy nở", "Ngắm bình minh thanh tịnh chiếu rọi các đền tháp rêu phong"],
-        "insider_tips": ["Nên ghé thăm Mỹ Sơn vào sáng sớm lúc 7h30 sáng trước khi các đoàn khách đông tràn về và trước khi ánh nắng trưa trở nên oi ả", "Thánh địa nằm giữa thung lũng lòng chảo nên nhiệt độ mùa hè có thể khá nóng, hãy mang theo mũ nón và nước uống", "Kết hợp chuyến đi Mỹ Sơn nửa ngày buổi sáng và buổi chiều về phố cổ Hội An là một ngày di sản trọn vẹn"],
+        "signature_cuisine": [
+            "Bê thui Cầu Mống chấm mắm nêm",
+            "Mì Quảng Phú Chiêm",
+            "Bánh tổ Quảng Nam",
+            "Gà than đèo Le",
+        ],
+        "must_try_activities": [
+            "Thưởng thức điệu múa Apsara uyển chuyển và tiếng kèn Saranai tại sân khấu nhà bia",
+            "Khám phá cụm tháp A, B, C, D với kiến trúc gạch nung không mạch vữa",
+            "Tìm hiểu linga - yoni biểu tượng của sự sinh sôi nảy nở",
+            "Ngắm bình minh thanh tịnh chiếu rọi các đền tháp rêu phong",
+        ],
+        "insider_tips": [
+            "Nên ghé thăm Mỹ Sơn vào sáng sớm lúc 7h30 sáng trước khi các đoàn khách đông tràn về và trước khi ánh nắng trưa trở nên oi ả",
+            "Thánh địa nằm giữa thung lũng lòng chảo nên nhiệt độ mùa hè có thể khá nóng, hãy mang theo mũ nón và nước uống",
+            "Kết hợp chuyến đi Mỹ Sơn nửa ngày buổi sáng và buổi chiều về phố cổ Hội An là một ngày di sản trọn vẹn",
+        ],
         "ideal_duration": "Nửa ngày (Half-day excursion từ Hội An hoặc Đà Nẵng)",
-        "target_travelers": ["Người say mê khảo cổ học & tôn giáo cổ đại", "Khách du lịch văn hóa quốc tế", "Nhiếp ảnh gia di sản"],
+        "target_travelers": [
+            "Người say mê khảo cổ học & tôn giáo cổ đại",
+            "Khách du lịch văn hóa quốc tế",
+            "Nhiếp ảnh gia di sản",
+        ],
         "recommended_tour_slugs": ["tour-hoi-an-da-nang-3n2d"],
         "content_vi": (
             "1. Lịch sử Thánh địa Hoàng gia Champa: Nằm trong một thung lũng kín được bao bọc bởi núi Chúa hùng vĩ, Mỹ Sơn là trung tâm cúng tế, "
@@ -495,7 +897,16 @@ VIETNAM_HERITAGE_HISTORY = [
             "4. Cuisine: Cau Mong roasted veal with savory fermented anchovy dip.\n\n"
             "5. Concierge Advice: Arrive early at 8:00 AM to enjoy Cham Apsara dances and intimate morning light on moss-covered ruins."
         ),
-        "tags": ["Mỹ Sơn", "Thánh địa Mỹ Sơn", "Champa", "Shiva", "Apsara", "UNESCO", "Quảng Nam", "Hội An"],
+        "tags": [
+            "Mỹ Sơn",
+            "Thánh địa Mỹ Sơn",
+            "Champa",
+            "Shiva",
+            "Apsara",
+            "UNESCO",
+            "Quảng Nam",
+            "Hội An",
+        ],
     },
     {
         "slug": "cao-bang-ban-gioc-heritage-history",
@@ -504,11 +915,30 @@ VIETNAM_HERITAGE_HISTORY = [
         "historical_period": "Địa chất Karst miền Đông Bắc, Văn hóa dân tộc Tày - Nùng, Di tích Cội nguồn Cách mạng Pác Bó",
         "unesco_status": "Công viên Địa chất Toàn cầu UNESCO Non nước Cao Bằng (2018)",
         "best_time_to_visit": "Tháng 8 - 10 (Mùa thác Bản Giốc đẹp nhất, dòng nước sông Quây Sơn xanh ngọc bích chảy cuồn cuộn giữa những thung lũng lúa chín vàng)",
-        "signature_cuisine": ["Vịt quay 7 vị Cao Bằng", "Bánh cuốn canh nước xương Cao Bằng", "Hạt dẻ Trùng Khánh nướng thơm bùi", "Phở chua Cao Bằng", "Rau dạ hiến xào thịt bò"],
-        "must_try_activities": ["Đi bè tre ngắm cận cảnh dòng thác Bản Giốc hùng vĩ xuyên biên giới", "Khám phá Động Ngườm Ngao — kiệt tác thạch nhũ vàng hình búp sen úp ngược", "Viếng Khu di tích Quốc gia đặc biệt Pác Bó (Suối Lê Nin, Núi Các Mác)", "Thăm làng rèn dao cổ truyền Phúc Sen của người Nùng An"],
-        "insider_tips": ["Nhớ mang theo CCCD/Hộ chiếu khi đến Thác Bản Giốc vì đây là khu vực giáp ranh biên giới Việt - Trung", "Mùa mưa (tháng 6-7) thác chảy rất mạnh nhưng nước có thể hơi đục ngầu phù sa; mùa thu (tháng 9-10) là lúc nước trong xanh biếc và đẹp nhất", "Thưởng thức hạt dẻ Trùng Khánh chính vụ vào tháng 9-10 hương vị thơm béo khác biệt"],
+        "signature_cuisine": [
+            "Vịt quay 7 vị Cao Bằng",
+            "Bánh cuốn canh nước xương Cao Bằng",
+            "Hạt dẻ Trùng Khánh nướng thơm bùi",
+            "Phở chua Cao Bằng",
+            "Rau dạ hiến xào thịt bò",
+        ],
+        "must_try_activities": [
+            "Đi bè tre ngắm cận cảnh dòng thác Bản Giốc hùng vĩ xuyên biên giới",
+            "Khám phá Động Ngườm Ngao — kiệt tác thạch nhũ vàng hình búp sen úp ngược",
+            "Viếng Khu di tích Quốc gia đặc biệt Pác Bó (Suối Lê Nin, Núi Các Mác)",
+            "Thăm làng rèn dao cổ truyền Phúc Sen của người Nùng An",
+        ],
+        "insider_tips": [
+            "Nhớ mang theo CCCD/Hộ chiếu khi đến Thác Bản Giốc vì đây là khu vực giáp ranh biên giới Việt - Trung",
+            "Mùa mưa (tháng 6-7) thác chảy rất mạnh nhưng nước có thể hơi đục ngầu phù sa; mùa thu (tháng 9-10) là lúc nước trong xanh biếc và đẹp nhất",
+            "Thưởng thức hạt dẻ Trùng Khánh chính vụ vào tháng 9-10 hương vị thơm béo khác biệt",
+        ],
         "ideal_duration": "3N2Đ kết hợp Hà Giang hoặc 2N1Đ từ Hà Nội",
-        "target_travelers": ["Những người yêu danh lam thắng cảnh thiên nhiên", "Khách du lịch về nguồn lịch sử", "Nhiếp ảnh gia mùa vàng"],
+        "target_travelers": [
+            "Những người yêu danh lam thắng cảnh thiên nhiên",
+            "Khách du lịch về nguồn lịch sử",
+            "Nhiếp ảnh gia mùa vàng",
+        ],
         "recommended_tour_slugs": ["tour-ha-giang-loop-3n2d"],
         "content_vi": (
             "1. Tuyệt tác Thác Bản Giốc: Nằm trên dòng sông Quây Sơn, Thác Bản Giốc là thác nước tự nhiên xuyên biên giới lớn thứ 4 thế giới "
@@ -530,7 +960,16 @@ VIETNAM_HERITAGE_HISTORY = [
             "4. Best Season: August to October for turquoise waters contrasted against golden harvest paddies.\n\n"
             "5. Cuisine: 7-spice roasted duck, Trung Khanh chestnuts, and warm broth rolled pancakes (Banh cuon canh)."
         ),
-        "tags": ["Cao Bằng", "Thác Bản Giốc", "Động Ngườm Ngao", "Pác Bó", "Suối Lê Nin", "UNESCO", "Sông Quây Sơn", "Hạt dẻ"],
+        "tags": [
+            "Cao Bằng",
+            "Thác Bản Giốc",
+            "Động Ngườm Ngao",
+            "Pác Bó",
+            "Suối Lê Nin",
+            "UNESCO",
+            "Sông Quây Sơn",
+            "Hạt dẻ",
+        ],
     },
     {
         "slug": "yen-tu-tuyen-lam-heritage-history",
@@ -539,11 +978,30 @@ VIETNAM_HERITAGE_HISTORY = [
         "historical_period": "Thế kỷ 13 (Nhà Trần), Phật hoàng Trần Nhân Tông sáng lập Thiền phái Trúc Lâm (1299)",
         "unesco_status": "Quần thể Di tích và Danh thắng Yên Tử - Vĩnh Nghiêm - Côn Sơn, Kiếp Bạc (Hồ sơ đệ trình Di sản Thế giới UNESCO)",
         "best_time_to_visit": "Tháng 1 - 3 âm lịch (Mùa lễ hội xuân Yên Tử linh thiêng) và Tháng 9 - 11 (Tiết thu hanh vàng, ít mây mù, ngắm hoàng hôn đỉnh Chùa Đồng tuyệt mỹ)",
-        "signature_cuisine": ["Măng trúc Yên Tử xào thịt bò", "Canh rau dớn rừng", "Chè lam Yên Tử", "Bánh gật gù Tiên Yên", "Rượu mơ Yên Tử êm dịu"],
-        "must_try_activities": ["Chinh phục đỉnh Chùa Đồng trên độ cao 1.068m đúc hoàn toàn bằng đồng nguyên khối", "Viếng tháp Huệ Quang nơi lưu giữ xá lị Phật hoàng Trần Nhân Tông", "Đi cáp treo lướt qua rừng trúc và rừng xích tùng cổ thụ 700 năm tuổi", "Nghỉ dưỡng tĩnh tại và trải nghiệm thiền định tại Legacy Yên Tử MGallery"],
-        "insider_tips": ["Để leo lên Chùa Đồng, hãy chuẩn bị giày thể thao có độ bám dốc cao vì những bậc đá đoạn cuối khá dốc và trơn trượt", "Nếu đi vào mùa đông hoặc sáng sớm, hãy mang áo ấm vì đỉnh núi gió rất mạnh và sương mù dày đặc", "Trải nghiệm lưu trú tại Legacy Yên Tử được thiết kế theo cảm hứng kiến trúc thời Trần thế kỷ 13 là một trải nghiệm nghỉ dưỡng văn hóa đỉnh cao"],
+        "signature_cuisine": [
+            "Măng trúc Yên Tử xào thịt bò",
+            "Canh rau dớn rừng",
+            "Chè lam Yên Tử",
+            "Bánh gật gù Tiên Yên",
+            "Rượu mơ Yên Tử êm dịu",
+        ],
+        "must_try_activities": [
+            "Chinh phục đỉnh Chùa Đồng trên độ cao 1.068m đúc hoàn toàn bằng đồng nguyên khối",
+            "Viếng tháp Huệ Quang nơi lưu giữ xá lị Phật hoàng Trần Nhân Tông",
+            "Đi cáp treo lướt qua rừng trúc và rừng xích tùng cổ thụ 700 năm tuổi",
+            "Nghỉ dưỡng tĩnh tại và trải nghiệm thiền định tại Legacy Yên Tử MGallery",
+        ],
+        "insider_tips": [
+            "Để leo lên Chùa Đồng, hãy chuẩn bị giày thể thao có độ bám dốc cao vì những bậc đá đoạn cuối khá dốc và trơn trượt",
+            "Nếu đi vào mùa đông hoặc sáng sớm, hãy mang áo ấm vì đỉnh núi gió rất mạnh và sương mù dày đặc",
+            "Trải nghiệm lưu trú tại Legacy Yên Tử được thiết kế theo cảm hứng kiến trúc thời Trần thế kỷ 13 là một trải nghiệm nghỉ dưỡng văn hóa đỉnh cao",
+        ],
         "ideal_duration": "1 ngày hoặc 2N1Đ kết hợp Hạ Long",
-        "target_travelers": ["Du khách hành hương tâm linh", "Những ai tìm kiếm sự tĩnh tại thiền định", "Gia đình và người yêu lịch sử Đại Việt"],
+        "target_travelers": [
+            "Du khách hành hương tâm linh",
+            "Những ai tìm kiếm sự tĩnh tại thiền định",
+            "Gia đình và người yêu lịch sử Đại Việt",
+        ],
         "recommended_tour_slugs": ["tour-ha-long-cruise-2n1d"],
         "content_vi": (
             "1. Lịch sử Phật hoàng Trần Nhân Tông: Sau hai lần trực tiếp lãnh đạo quân dân Đại Việt đánh tan đế quốc Nguyên Mông hùng mạnh (1285, 1288), "
@@ -565,7 +1023,16 @@ VIETNAM_HERITAGE_HISTORY = [
             "4. Best Season: Spring (Jan-March) for spiritual pilgrimages; Autumn (Sept-Nov) for tranquil meditation and clear skies.\n\n"
             "5. Cuisine: Yen Tu mountain bamboo shoots, nourishing monastic vegetarian banquets, and sweet apricot wine."
         ),
-        "tags": ["Yên Tử", "Trần Nhân Tông", "Trúc Lâm", "Chùa Đồng", "Quảng Ninh", "Tâm linh", "Di sản", "Legacy Yên Tử"],
+        "tags": [
+            "Yên Tử",
+            "Trần Nhân Tông",
+            "Trúc Lâm",
+            "Chùa Đồng",
+            "Quảng Ninh",
+            "Tâm linh",
+            "Di sản",
+            "Legacy Yên Tử",
+        ],
     },
     {
         "slug": "pu-luong-mai-chau-heritage-history",
@@ -574,11 +1041,31 @@ VIETNAM_HERITAGE_HISTORY = [
         "historical_period": "Văn hóa dân tộc Thái trắng & Mường, Dấu ấn đoàn quân Tây Tiến (1947)",
         "unesco_status": "Khu Bảo tồn Thiên nhiên Pù Luông",
         "best_time_to_visit": "Tháng 5 - 6 (Mùa lúa chín đầu tiên trong năm) và Tháng 9 - 10 (Mùa vàng rực rỡ nhất của ruộng bậc thang Bản Đôn, Pù Luông)",
-        "signature_cuisine": ["Vịt Cổ Lũng nướng than hoa da giòn thịt ngọt lịm", "Cơm lam Mai Châu dẻo thơm hạt ngọc", "Cá suối nướng pa pỉnh tộp", "Măng đắng xào mẻ", "Rượu cần Mường xông men lá"],
-        "must_try_activities": ["Ngắm guồng cọn nước tre khổng lồ quay đều bên dòng suối Chàm", "Trekking xuyên các bản làng người Thái: Bản Đôn, Bản Kho Mường, Bản Lác", "Khám phá Hang Dơi (Hang Kho Mường) kỳ bí giữa lòng núi đá", "Tắm hồ bơi vô cực view thung lũng ruộng bậc thang tại Pù Luông", "Xem múa xòe Thái và uống rượu cần quanh đống lửa"],
-        "insider_tips": ["Pù Luông có 2 vụ lúa chín trong năm (tháng 5-6 và tháng 9-10), đây là điểm khác biệt lớn so với Mù Cang Chải hay Sa Pa chỉ có 1 vụ lúa chín", "Nên đặt trước phòng nghỉ dạng ecolodge hoặc homestay view thung lũng Bản Đôn từ sớm nếu đi vào mùa lúa", "Đường từ Mai Châu sang Pù Luông qua đèo Thung Khe (Đèo Đá Trắng) có sương mù quanh năm, chụp ảnh đèo rất đẹp"],
+        "signature_cuisine": [
+            "Vịt Cổ Lũng nướng than hoa da giòn thịt ngọt lịm",
+            "Cơm lam Mai Châu dẻo thơm hạt ngọc",
+            "Cá suối nướng pa pỉnh tộp",
+            "Măng đắng xào mẻ",
+            "Rượu cần Mường xông men lá",
+        ],
+        "must_try_activities": [
+            "Ngắm guồng cọn nước tre khổng lồ quay đều bên dòng suối Chàm",
+            "Trekking xuyên các bản làng người Thái: Bản Đôn, Bản Kho Mường, Bản Lác",
+            "Khám phá Hang Dơi (Hang Kho Mường) kỳ bí giữa lòng núi đá",
+            "Tắm hồ bơi vô cực view thung lũng ruộng bậc thang tại Pù Luông",
+            "Xem múa xòe Thái và uống rượu cần quanh đống lửa",
+        ],
+        "insider_tips": [
+            "Pù Luông có 2 vụ lúa chín trong năm (tháng 5-6 và tháng 9-10), đây là điểm khác biệt lớn so với Mù Cang Chải hay Sa Pa chỉ có 1 vụ lúa chín",
+            "Nên đặt trước phòng nghỉ dạng ecolodge hoặc homestay view thung lũng Bản Đôn từ sớm nếu đi vào mùa lúa",
+            "Đường từ Mai Châu sang Pù Luông qua đèo Thung Khe (Đèo Đá Trắng) có sương mù quanh năm, chụp ảnh đèo rất đẹp",
+        ],
         "ideal_duration": "2N1Đ hoặc 3N2Đ",
-        "target_travelers": ["Những người tìm kiếm kỳ nghỉ dưỡng xanh gần gũi thiên nhiên", "Cặp đôi", "Khách quốc tế yêu văn hóa làng bản"],
+        "target_travelers": [
+            "Những người tìm kiếm kỳ nghỉ dưỡng xanh gần gũi thiên nhiên",
+            "Cặp đôi",
+            "Khách quốc tế yêu văn hóa làng bản",
+        ],
         "recommended_tour_slugs": ["tour-ninh-binh-trang-an-1n"],
         "content_vi": (
             "1. Miền thung lũng văn hóa Thái - Mường: Pù Luông (theo tiếng Thái nghĩa là 'Đỉnh núi cao nhất') và Mai Châu là cái nôi cư trú "
@@ -599,7 +1086,16 @@ VIETNAM_HERITAGE_HISTORY = [
             "4. Best Season: Dual harvest seasons per year: May-June and September-October for golden terrace vistas.\n\n"
             "5. Rustic Gastronomy: Famous Co Lung roasted duck, fragrant bamboo-tube sticky rice (Com lam), and stream fish marinated in wild herbs."
         ),
-        "tags": ["Pù Luông", "Mai Châu", "Ruộng bậc thang", "Người Thái", "Vịt Cổ Lũng", "Cọn nước", "Thanh Hóa", "Hòa Bình"],
+        "tags": [
+            "Pù Luông",
+            "Mai Châu",
+            "Ruộng bậc thang",
+            "Người Thái",
+            "Vịt Cổ Lũng",
+            "Cọn nước",
+            "Thanh Hóa",
+            "Hòa Bình",
+        ],
     },
     {
         "slug": "sai-gon-cu-chi-dinh-doc-lap-heritage-history",
@@ -608,11 +1104,31 @@ VIETNAM_HERITAGE_HISTORY = [
         "historical_period": "Lễ Thành Hầu Nguyễn Hữu Cảnh mở cõi 1698, Thời Pháp thuộc (Hòn ngọc Viễn Đông), Đại thắng mùa Xuân 1975",
         "unesco_status": "Địa đạo Củ Chi đang trong quá trình lập hồ sơ đề nghị công nhận Di sản Thế giới UNESCO",
         "best_time_to_visit": "Tháng 12 - 4 (Mùa khô ráo, nắng ấm rực rỡ, trời trong xanh, không lo những cơn mưa rào bất chợt lúc chiều muộn)",
-        "signature_cuisine": ["Cơm tấm sườn bì chả mỡ hành Sài Gòn", "Bánh mì Sài Gòn kẹp thịt chả pate", "Hủ tiếu Nam Vang thập cẩm", "Ốc đêm chợ Bến Thành / hẻm quận 4", "Cà phê sữa đá vỉa hè"],
-        "must_try_activities": ["Tham quan Dinh Độc Lập — chứng tích lịch sử thời khắc trưa ngày 30/4/1975", "Thám hiểm mê cung công sự ngầm Địa đạo Củ Chi dài hơn 250km", "Check-in Bưu điện Trung tâm Sài Gòn và Nhà thờ Đức Bà kiến trúc Pháp cổ", "Ngắm toàn cảnh thành phố rực rỡ từ đài quan sát Landmark 81", "Du ngoạn du thuyền ngắm hoàng hôn và bữa tối lãng mạn trên sông Sài Gòn"],
-        "insider_tips": ["Khi đi thám hiểm hầm ngầm Củ Chi, những người có tiền sử bệnh tim mạch hoặc hội chứng sợ không gian kín (claustrophobia) nên chọn các đoạn hầm đã được mở rộng", "Trải nghiệm cà phê bệt nhà thờ Đức Bà vào buổi sáng sớm là nét văn hóa đô thị chân thực nhất của người Sài Gòn", "Hãy cẩn thận bảo quản tư trang điện thoại khi đứng chụp ảnh trên vỉa hè"],
+        "signature_cuisine": [
+            "Cơm tấm sườn bì chả mỡ hành Sài Gòn",
+            "Bánh mì Sài Gòn kẹp thịt chả pate",
+            "Hủ tiếu Nam Vang thập cẩm",
+            "Ốc đêm chợ Bến Thành / hẻm quận 4",
+            "Cà phê sữa đá vỉa hè",
+        ],
+        "must_try_activities": [
+            "Tham quan Dinh Độc Lập — chứng tích lịch sử thời khắc trưa ngày 30/4/1975",
+            "Thám hiểm mê cung công sự ngầm Địa đạo Củ Chi dài hơn 250km",
+            "Check-in Bưu điện Trung tâm Sài Gòn và Nhà thờ Đức Bà kiến trúc Pháp cổ",
+            "Ngắm toàn cảnh thành phố rực rỡ từ đài quan sát Landmark 81",
+            "Du ngoạn du thuyền ngắm hoàng hôn và bữa tối lãng mạn trên sông Sài Gòn",
+        ],
+        "insider_tips": [
+            "Khi đi thám hiểm hầm ngầm Củ Chi, những người có tiền sử bệnh tim mạch hoặc hội chứng sợ không gian kín (claustrophobia) nên chọn các đoạn hầm đã được mở rộng",
+            "Trải nghiệm cà phê bệt nhà thờ Đức Bà vào buổi sáng sớm là nét văn hóa đô thị chân thực nhất của người Sài Gòn",
+            "Hãy cẩn thận bảo quản tư trang điện thoại khi đứng chụp ảnh trên vỉa hè",
+        ],
         "ideal_duration": "2N1Đ hoặc 3N2Đ",
-        "target_travelers": ["Khách du lịch quốc tế tìm hiểu lịch sử hiện đại", "Gia đình", "Doanh nhân & khách MICE"],
+        "target_travelers": [
+            "Khách du lịch quốc tế tìm hiểu lịch sử hiện đại",
+            "Gia đình",
+            "Doanh nhân & khách MICE",
+        ],
         "recommended_tour_slugs": ["tour-phu-quoc-thien-duong-dao-ngoc-3n2d"],
         "content_vi": (
             "1. Lịch sử 300 năm mở cõi đất Sài Gòn: Năm 1698, Kinh lược sứ Lễ Thành Hầu Nguyễn Hữu Cảnh vâng lệnh Chúa Nguyễn kinh lý phương Nam, "
@@ -634,7 +1150,15 @@ VIETNAM_HERITAGE_HISTORY = [
             "4. Best Season: December to April for warm, dry weather.\n\n"
             "5. Dynamic Gastronomy: Broken rice with honey-glazed pork ribs (Com tam), crispy banh mi baguettes, and iconic sidewalk iced milk coffee."
         ),
-        "tags": ["Sài Gòn", "Dinh Độc Lập", "Địa đạo Củ Chi", "Nguyễn Hữu Cảnh", "Bưu điện Trung tâm", "Cơm tấm", "Hồ Chí Minh"],
+        "tags": [
+            "Sài Gòn",
+            "Dinh Độc Lập",
+            "Địa đạo Củ Chi",
+            "Nguyễn Hữu Cảnh",
+            "Bưu điện Trung tâm",
+            "Cơm tấm",
+            "Hồ Chí Minh",
+        ],
     },
     {
         "slug": "con-dao-hang-duong-heritage-history",
@@ -643,11 +1167,31 @@ VIETNAM_HERITAGE_HISTORY = [
         "historical_period": "Chúa Nguyễn Ánh bôn tẩu (1783, Truyền thuyết Bà Phi Yến), Hệ thống Nhà tù Côn Đảo 113 năm (1862 - 1975)",
         "unesco_status": "Vườn Quốc gia Côn Đảo (Khu Ramsar Thế giới & Khu bảo tồn rùa biển số 1 Việt Nam)",
         "best_time_to_visit": "Tháng 3 - 9 (Biển êm ả, sóng lặng, gió nhẹ, mùa rùa biển lên bờ đẻ trứng thiêng liêng; mặc dù có mưa rào nhưng thường chỉ kéo dài 30 phút rồi hửng nắng)",
-        "signature_cuisine": ["Cháo hàu Côn Đảo béo ngậy", "Cá thu một nắng Côn Đảo chiên sốt tỏi ớt", "Mứt hạt bàng Côn Đảo giòn bùi mặn ngọt", "Ốc vú nàng nướng mỡ hành", "Tôm mũ ni hấp sả"],
-        "must_try_activities": ["Viếng mộ Nữ Anh hùng Võ Thị Sáu tại Nghĩa trang Hàng Dương vào lúc nửa đêm", "Thăm Di tích Lịch sử Nhà tù Côn Đảo (Trại Phú Hải, Chuồng Cọp Pháp, Chuồng Cọp Mỹ)", "Xem rùa biển đẻ trứng vào ban đêm tại Hòn Bảy Cạnh", "Lặn ngắm rạn san hô nguyên sinh tại Hòn Cau và Vịnh Đầm Tre", "Tắm biển Bãi Đầm Trầu ngắm máy bay hạ cánh sát mặt biển"],
-        "insider_tips": ["Lễ viếng Nghĩa trang Hàng Dương thường diễn ra trang trọng vào ban đêm từ 21h00 đến 23h30; trang phục bắt buộc phải lịch sự, kín đáo", "Nếu muốn trải nghiệm xem rùa đẻ trứng, cần đăng ký trước với Ban quản lý Vườn Quốc gia Côn Đảo", "Mứt hạt bàng rang muối hoặc tẩm đường là món quà đặc sản ý nghĩa nhất mang về từ đảo"],
+        "signature_cuisine": [
+            "Cháo hàu Côn Đảo béo ngậy",
+            "Cá thu một nắng Côn Đảo chiên sốt tỏi ớt",
+            "Mứt hạt bàng Côn Đảo giòn bùi mặn ngọt",
+            "Ốc vú nàng nướng mỡ hành",
+            "Tôm mũ ni hấp sả",
+        ],
+        "must_try_activities": [
+            "Viếng mộ Nữ Anh hùng Võ Thị Sáu tại Nghĩa trang Hàng Dương vào lúc nửa đêm",
+            "Thăm Di tích Lịch sử Nhà tù Côn Đảo (Trại Phú Hải, Chuồng Cọp Pháp, Chuồng Cọp Mỹ)",
+            "Xem rùa biển đẻ trứng vào ban đêm tại Hòn Bảy Cạnh",
+            "Lặn ngắm rạn san hô nguyên sinh tại Hòn Cau và Vịnh Đầm Tre",
+            "Tắm biển Bãi Đầm Trầu ngắm máy bay hạ cánh sát mặt biển",
+        ],
+        "insider_tips": [
+            "Lễ viếng Nghĩa trang Hàng Dương thường diễn ra trang trọng vào ban đêm từ 21h00 đến 23h30; trang phục bắt buộc phải lịch sự, kín đáo",
+            "Nếu muốn trải nghiệm xem rùa đẻ trứng, cần đăng ký trước với Ban quản lý Vườn Quốc gia Côn Đảo",
+            "Mứt hạt bàng rang muối hoặc tẩm đường là món quà đặc sản ý nghĩa nhất mang về từ đảo",
+        ],
         "ideal_duration": "3N2Đ",
-        "target_travelers": ["Du khách hành hương tâm linh & tưởng niệm lịch sử", "Người yêu thiên nhiên biển đảo nguyên sơ", "Cặp đôi thích sự yên tĩnh"],
+        "target_travelers": [
+            "Du khách hành hương tâm linh & tưởng niệm lịch sử",
+            "Người yêu thiên nhiên biển đảo nguyên sơ",
+            "Cặp đôi thích sự yên tĩnh",
+        ],
         "recommended_tour_slugs": ["tour-phu-quoc-thien-duong-dao-ngoc-3n2d"],
         "content_vi": (
             "1. Lịch sử Bi tráng Nhà tù Côn Đảo 113 năm: Trong suốt hơn 1 thế kỷ (1862–1975), Côn Đảo từng bị biến thành 'Địa ngục trần gian' "
@@ -670,7 +1214,16 @@ VIETNAM_HERITAGE_HISTORY = [
             "4. Marine Turtle Sanctuary: Vietnam's paramount ecological haven for sea turtle nesting and untouched coral reefs.\n\n"
             "5. Best Season: March to September brings calm, glass-like seas and turtle nesting encounters."
         ),
-        "tags": ["Côn Đảo", "Hàng Dương", "Võ Thị Sáu", "Nhà tù Côn Đảo", "Bà Phi Yến", "Rùa biển", "Bãi Đầm Trầu", "Bảo tồn"],
+        "tags": [
+            "Côn Đảo",
+            "Hàng Dương",
+            "Võ Thị Sáu",
+            "Nhà tù Côn Đảo",
+            "Bà Phi Yến",
+            "Rùa biển",
+            "Bãi Đầm Trầu",
+            "Bảo tồn",
+        ],
     },
     {
         "slug": "quy-nhon-ky-co-eo-gio-heritage-history",
@@ -679,11 +1232,31 @@ VIETNAM_HERITAGE_HISTORY = [
         "historical_period": "Vương triều Champa Đồ Bàn (Thế kỷ 11 - 15), Triều đại Tây Sơn Quang Trung (Thế kỷ 18), Thi sĩ Hàn Mặc Tử",
         "unesco_status": "Võ cổ truyền Bình Định là Di sản Văn hóa Phi vật thể Quốc gia",
         "best_time_to_visit": "Tháng 3 - 9 (Mùa khô ráo, nắng vàng chan hòa, biển Kỳ Co xanh ngắt hai màu nước, sóng êm thuận lợi đi cano ra đảo)",
-        "signature_cuisine": ["Bánh xèo tôm nhảy rau mầm giòn rụm", "Bún chả cá Quy Nhơn nước dùng ngọt thanh", "Bánh ít lá gai dẻo thơm nhân dừa đậu xanh", "Chả ram tôm đất giòn tan", "Rượu Bàu Đá trứ danh"],
-        "must_try_activities": ["Đi cano ra bãi tắm Kỳ Co lặn ngắm san hô Bãi Dứa", "Dạo bước trên con đường ven biển Eo Gió — nơi ngắm hoàng hôn đẹp nhất Việt Nam", "Chiêm ngưỡng Tháp Đôi Champa xây bằng gạch nung ngay giữa lòng thành phố", "Thăm Bảo tàng Quang Trung viếng đền thờ Tây Sơn Tam Kiệt và cây me cổ thụ 300 năm", "Viếng mộ thi sĩ Hàn Mặc Tử tại Ghềnh Ráng Tiên Sa"],
-        "insider_tips": ["Eo Gió lộng gió quanh năm, khi đi dạo trên các bậc thang ven biển hãy chú ý giữ mũ nón cẩn thận", "Nên đi cano Kỳ Co vào buổi sáng khoảng 8h00 - 11h00 khi thủy triều êm và nước biển trong vắt nhất", "Mua quà mang về: Bánh ít lá gai và chả ram tôm đất là hai đặc sản được yêu thích nhất"],
+        "signature_cuisine": [
+            "Bánh xèo tôm nhảy rau mầm giòn rụm",
+            "Bún chả cá Quy Nhơn nước dùng ngọt thanh",
+            "Bánh ít lá gai dẻo thơm nhân dừa đậu xanh",
+            "Chả ram tôm đất giòn tan",
+            "Rượu Bàu Đá trứ danh",
+        ],
+        "must_try_activities": [
+            "Đi cano ra bãi tắm Kỳ Co lặn ngắm san hô Bãi Dứa",
+            "Dạo bước trên con đường ven biển Eo Gió — nơi ngắm hoàng hôn đẹp nhất Việt Nam",
+            "Chiêm ngưỡng Tháp Đôi Champa xây bằng gạch nung ngay giữa lòng thành phố",
+            "Thăm Bảo tàng Quang Trung viếng đền thờ Tây Sơn Tam Kiệt và cây me cổ thụ 300 năm",
+            "Viếng mộ thi sĩ Hàn Mặc Tử tại Ghềnh Ráng Tiên Sa",
+        ],
+        "insider_tips": [
+            "Eo Gió lộng gió quanh năm, khi đi dạo trên các bậc thang ven biển hãy chú ý giữ mũ nón cẩn thận",
+            "Nên đi cano Kỳ Co vào buổi sáng khoảng 8h00 - 11h00 khi thủy triều êm và nước biển trong vắt nhất",
+            "Mua quà mang về: Bánh ít lá gai và chả ram tôm đất là hai đặc sản được yêu thích nhất",
+        ],
         "ideal_duration": "3N2Đ hoặc 4N3Đ",
-        "target_travelers": ["Cặp đôi yêu biển xanh hoang sơ", "Gia đình yêu lịch sử hào hùng", "Nhóm bạn trẻ yêu thích chụp ảnh thiên nhiên"],
+        "target_travelers": [
+            "Cặp đôi yêu biển xanh hoang sơ",
+            "Gia đình yêu lịch sử hào hùng",
+            "Nhóm bạn trẻ yêu thích chụp ảnh thiên nhiên",
+        ],
         "recommended_tour_slugs": ["tour-hoi-an-da-nang-3n2d"],
         "content_vi": (
             "1. Miền Đất Võ & Vương triều Tây Sơn: Bình Định là cội nguồn phát tích của phong trào khởi nghĩa Tây Sơn hào hùng thế kỷ 18 "
@@ -702,7 +1275,16 @@ VIETNAM_HERITAGE_HISTORY = [
             "4. Best Season: March to September offers tranquil waters and vivid sunshine.\n\n"
             "5. Binh Dinh Cuisine: Jumping shrimp sizzling pancakes (Banh xeo tom nhay), crispy earth shrimp spring rolls, and Bau Da traditional rice liquor."
         ),
-        "tags": ["Quy Nhơn", "Kỳ Co", "Eo Gió", "Quang Trung", "Tây Sơn", "Tháp Đôi", "Hàn Mặc Tử", "Bình Định"],
+        "tags": [
+            "Quy Nhơn",
+            "Kỳ Co",
+            "Eo Gió",
+            "Quang Trung",
+            "Tây Sơn",
+            "Tháp Đôi",
+            "Hàn Mặc Tử",
+            "Bình Định",
+        ],
     },
     {
         "slug": "phu-yen-ganh-da-dia-heritage-history",
@@ -711,11 +1293,31 @@ VIETNAM_HERITAGE_HISTORY = [
         "historical_period": "Núi lửa phun trào hàng triệu năm trước, Hải đăng Đại Lãnh 1890, Bến Tàu Không Số Vũng Rô (1964 - 1965)",
         "unesco_status": "Gành Đá Đĩa được xếp hạng Di tích Thắng cảnh Quốc gia Đặc biệt (2020)",
         "best_time_to_visit": "Tháng 2 - 8 (Mùa khô xứ Nẫu, biển trong xanh màu ngọc, nắng ấm rực rỡ, thích hợp để đón bình minh Mũi Điện và check-in cánh đồng rêu xanh)",
-        "signature_cuisine": ["Mắt cá ngừ đại dương hầm thuốc bắc béo ngậy", "Bánh canh hẹ chả cá Phú Yên xanh mướt", "Gỏi cá mai đầm Ô Loan", "Sò huyết đầm Ô Loan nướng mọi", "Cơm gà Phú Yên vàng ươm"],
-        "must_try_activities": ["Chiêm ngưỡng kỳ quan tổ ong đá bazan đen óng tại Gành Đá Đĩa", "Chinh phục ngọn hải đăng Đại Lãnh (Mũi Điện) — nơi đón ánh bình minh đầu tiên trên đất liền Việt Nam", "Thăm Di tích Lịch sử Vịnh Vũng Rô và bến tàu Không Số huyền thoại", "Check-in Bãi Xép — 'Tôi thấy hoa vàng trên cỏ xanh'", "Thưởng thức hải sản tươi sống trên bè nổi đầm Ô Loan"],
-        "insider_tips": ["Để đón được khoảnh khắc mặt trời mọc đầu tiên tại Mũi Điện, du khách nên thức dậy từ 4h00 sáng và bắt đầu đi bộ lên ngọn hải đăng lúc 4h45", "Tại Gành Đá Đĩa, đá ven biển có thể trơn do rêu biển ướt, hãy đi giày đế bám và tránh bước quá sát mép sóng lớn", "Mắt cá ngừ đại dương hầm thố đất giữ nhiệt rất nóng, hãy thưởng thức từ từ cùng rau tía tô thái sợi"],
+        "signature_cuisine": [
+            "Mắt cá ngừ đại dương hầm thuốc bắc béo ngậy",
+            "Bánh canh hẹ chả cá Phú Yên xanh mướt",
+            "Gỏi cá mai đầm Ô Loan",
+            "Sò huyết đầm Ô Loan nướng mọi",
+            "Cơm gà Phú Yên vàng ươm",
+        ],
+        "must_try_activities": [
+            "Chiêm ngưỡng kỳ quan tổ ong đá bazan đen óng tại Gành Đá Đĩa",
+            "Chinh phục ngọn hải đăng Đại Lãnh (Mũi Điện) — nơi đón ánh bình minh đầu tiên trên đất liền Việt Nam",
+            "Thăm Di tích Lịch sử Vịnh Vũng Rô và bến tàu Không Số huyền thoại",
+            "Check-in Bãi Xép — 'Tôi thấy hoa vàng trên cỏ xanh'",
+            "Thưởng thức hải sản tươi sống trên bè nổi đầm Ô Loan",
+        ],
+        "insider_tips": [
+            "Để đón được khoảnh khắc mặt trời mọc đầu tiên tại Mũi Điện, du khách nên thức dậy từ 4h00 sáng và bắt đầu đi bộ lên ngọn hải đăng lúc 4h45",
+            "Tại Gành Đá Đĩa, đá ven biển có thể trơn do rêu biển ướt, hãy đi giày đế bám và tránh bước quá sát mép sóng lớn",
+            "Mắt cá ngừ đại dương hầm thố đất giữ nhiệt rất nóng, hãy thưởng thức từ từ cùng rau tía tô thái sợi",
+        ],
         "ideal_duration": "2N1Đ hoặc 3N2Đ kết hợp Quy Nhơn",
-        "target_travelers": ["Những người yêu thích kỳ quan địa chất độc nhất vô nhị", "Khách du lịch yêu phong cảnh lãng mạn", "Nhiếp ảnh gia bình minh"],
+        "target_travelers": [
+            "Những người yêu thích kỳ quan địa chất độc nhất vô nhị",
+            "Khách du lịch yêu phong cảnh lãng mạn",
+            "Nhiếp ảnh gia bình minh",
+        ],
         "recommended_tour_slugs": ["tour-da-lat-thanh-pho-ngan-hoa-3n2d"],
         "content_vi": (
             "1. Tuyệt tác Địa chất Gành Đá Đĩa: Được hình thành từ quá trình dung nham núi lửa phun trào cách đây hàng triệu năm gặp nước biển lạnh "
@@ -736,6 +1338,15 @@ VIETNAM_HERITAGE_HISTORY = [
             "4. Best Season: February to August for radiant sunshine and sapphire coastal vistas.\n\n"
             "5. Unique Gastronomy: Ocean tuna eyeball herbal stew, O Loan lagoon blood cockles, and green chive fishcake noodle soup."
         ),
-        "tags": ["Phú Yên", "Gành Đá Đĩa", "Mũi Điện", "Vũng Rô", "Tàu Không Số", "Hải đăng", "Đầm Ô Loan", "Mắt cá ngừ"],
+        "tags": [
+            "Phú Yên",
+            "Gành Đá Đĩa",
+            "Mũi Điện",
+            "Vũng Rô",
+            "Tàu Không Số",
+            "Hải đăng",
+            "Đầm Ô Loan",
+            "Mắt cá ngừ",
+        ],
     },
 ]

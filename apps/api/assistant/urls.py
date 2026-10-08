@@ -1,8 +1,9 @@
 from rest_framework.routers import DefaultRouter
+
 from .views import (
     AssistantConversationViewSet,
-    AssistantLeadCaptureViewSet,
     AssistantKnowledgeChunkViewSet,
+    AssistantLeadCaptureViewSet,
 )
 
 router = DefaultRouter()

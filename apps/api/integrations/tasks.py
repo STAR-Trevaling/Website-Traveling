@@ -2,12 +2,14 @@ import hashlib
 import hmac
 import json
 import logging
-import urllib.request
 import urllib.error
+import urllib.request
+
 from celery import shared_task
 from django.conf import settings
 from django.utils import timezone
-from .models import IntegrationOutbox, Inquiry
+
+from .models import Inquiry, IntegrationOutbox
 
 logger = logging.getLogger(__name__)
 
@@ -51,7 +53,7 @@ def dispatch_outbox_event(self, outbox_id):
     req = urllib.request.Request(url, data=raw_body, headers=headers, method="POST")
 
     try:
-        with urllib.request.urlopen(req, timeout=10) as resp:
+        with urllib.request.urlopen(req, timeout=10) as resp:  # nosec B310
             status_code = resp.getcode()
             resp_body = resp.read().decode("utf-8")
             if 200 <= status_code < 300:
@@ -74,7 +76,9 @@ def dispatch_outbox_event(self, outbox_id):
                 except Exception as update_err:
                     logger.warning(f"Could not update inquiry status: {update_err}")
 
-                logger.info(f"Successfully dispatched Outbox Event {outbox.event_id} to Odoo ({status_code})")
+                logger.info(
+                    f"Successfully dispatched Outbox Event {outbox.event_id} to Odoo ({status_code})"
+                )
                 return True
     except urllib.error.HTTPError as e:
         err_msg = f"HTTP {e.code}: {e.read().decode('utf-8', errors='ignore')}"

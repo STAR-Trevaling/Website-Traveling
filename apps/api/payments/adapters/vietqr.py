@@ -12,8 +12,10 @@ try:
             return getattr(settings, key, os.getenv(key, default))
         return os.getenv(key, default)
 except ImportError:
+
     def _get_setting(key: str, default: str) -> str:
         return os.getenv(key, default)
+
 
 VN_TZ = timezone(timedelta(hours=7))
 
@@ -25,7 +27,7 @@ def crc16_ccitt(data: str) -> str:
     """
     crc = 0xFFFF
     for byte in data.encode("utf-8"):
-        crc ^= (byte << 8)
+        crc ^= byte << 8
         for _ in range(8):
             crc = ((crc << 1) ^ 0x1021) & 0xFFFF if (crc & 0x8000) else (crc << 1) & 0xFFFF
     return f"{crc:04X}"

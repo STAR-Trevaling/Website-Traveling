@@ -1,23 +1,24 @@
 import logging
 import uuid
+
 from django.utils import timezone
-from rest_framework import permissions, viewsets, status
+from rest_framework import permissions, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from integrations.models import IntegrationOutbox
 from integrations.tasks import dispatch_outbox_event
+
 from .models import (
     AssistantConversation,
-    AssistantMessage,
-    AssistantLeadCapture,
     AssistantKnowledgeChunk,
+    AssistantLeadCapture,
+    AssistantMessage,
 )
 from .serializers import (
     AssistantConversationSerializer,
-    AssistantMessageSerializer,
-    AssistantLeadCaptureSerializer,
     AssistantKnowledgeChunkSerializer,
+    AssistantLeadCaptureSerializer,
 )
 
 logger = logging.getLogger(__name__)
@@ -40,9 +41,10 @@ class AssistantConversationViewSet(viewsets.ModelViewSet):
 
     @action(detail=False, methods=("post",), url_path="chat")
     def chat(self, request):
-        from .services.retriever import search_knowledge
-        from .services.generator import generate_response, extract_lead_info
         from tours.models import Tour
+
+        from .services.generator import extract_lead_info, generate_response
+        from .services.retriever import search_knowledge
 
         message = request.data.get("message", "").strip()
         if not message:
@@ -77,6 +79,7 @@ class AssistantConversationViewSet(viewsets.ModelViewSet):
 
         # 4. Fetch Rich Tour Cards
         import re
+
         found_slugs = re.findall(r"\[TOUR_CARD:\s*([\w-]+)\]", reply_text)
         for s in found_slugs:
             if s not in recommended_tour_slugs:
@@ -86,14 +89,20 @@ class AssistantConversationViewSet(viewsets.ModelViewSet):
         if recommended_tour_slugs:
             matched_tours = Tour.objects.filter(slug__in=recommended_tour_slugs, is_published=True)
             for t in matched_tours:
-                tour_cards.append({
-                    "slug": t.slug,
-                    "title": t.title_en if locale == "en" and t.title_en else t.title,
-                    "price": int(t.price),
-                    "duration": t.duration_en if locale == "en" and t.duration_en else t.duration,
-                    "departure": t.departure_en if locale == "en" and t.departure_en else t.departure,
-                    "image": t.image_url,
-                })
+                tour_cards.append(
+                    {
+                        "slug": t.slug,
+                        "title": t.title_en if locale == "en" and t.title_en else t.title,
+                        "price": int(t.price),
+                        "duration": t.duration_en
+                        if locale == "en" and t.duration_en
+                        else t.duration,
+                        "departure": t.departure_en
+                        if locale == "en" and t.departure_en
+                        else t.departure,
+                        "image": t.image_url,
+                    }
+                )
 
         # 5. Lead Information Capture & Odoo CRM Sync
         lead_info = extract_lead_info(message)
@@ -147,12 +156,14 @@ class AssistantConversationViewSet(viewsets.ModelViewSet):
             structured_payload={"tours": tour_cards},
         )
 
-        return Response({
-            "session_token": conversation.session_token,
-            "message": reply_text,
-            "recommended_tours": tour_cards,
-            "lead_captured": lead_captured,
-        })
+        return Response(
+            {
+                "session_token": conversation.session_token,
+                "message": reply_text,
+                "recommended_tours": tour_cards,
+                "lead_captured": lead_captured,
+            }
+        )
 
 
 class AssistantLeadCaptureViewSet(viewsets.ModelViewSet):

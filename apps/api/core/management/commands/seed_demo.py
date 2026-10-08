@@ -1,7 +1,9 @@
 from decimal import Decimal
+
 from django.contrib.gis.geos import Point
 from django.core.management.base import BaseCommand
 from django.utils import timezone
+
 from accounts.models import User
 from assistant.models import AssistantKnowledgeChunk
 from bookings.models import Booking
@@ -240,7 +242,21 @@ class Command(BaseCommand):
         ]
 
         destinations = {}
-        for slug, name, name_en, country, country_en, price, image, summary, summary_en, desc, desc_en, lng, lat in destination_rows:
+        for (
+            slug,
+            name,
+            name_en,
+            country,
+            country_en,
+            price,
+            image,
+            summary,
+            summary_en,
+            desc,
+            desc_en,
+            lng,
+            lat,
+        ) in destination_rows:
             d, _ = Destination.objects.update_or_create(
                 slug=slug,
                 defaults={
@@ -463,7 +479,24 @@ class Command(BaseCommand):
             ),
         ]
 
-        for slug, name, name_en, cat, dest, image, short_desc, short_desc_en, desc, desc_en, address, address_en, lat, lng, rating, review_count in place_rows:
+        for (
+            slug,
+            name,
+            name_en,
+            cat,
+            dest,
+            image,
+            short_desc,
+            short_desc_en,
+            desc,
+            desc_en,
+            address,
+            address_en,
+            lat,
+            lng,
+            rating,
+            review_count,
+        ) in place_rows:
             Place.objects.update_or_create(
                 slug=slug,
                 defaults={
@@ -508,12 +541,34 @@ class Command(BaseCommand):
                 VIETNAM_PHOTO_MAP["cruise"],
                 "Hải trình 2 ngày 1 đêm trên du thuyền sang trọng tiêu chuẩn 5 sao quốc tế, chiêm ngưỡng hàng ngàn đảo đá vôi kỳ vĩ.",
                 "Two-day five-star luxury cruise journey discovering sublime limestone karsts and secluded emerald coves.",
-                ["Check-in du thuyền 5 sao đẳng cấp", "Chèo kayak khám phá Hang Sáng Tối", "Tiệc hoàng hôn Sunset Party trên sundeck", "Bữa tối hải sản tươi sống thịnh soạn"],
                 [
-                    {"day": 1, "title": "Hà Nội — Vịnh Hạ Long — Du Thuyền", "morning": "Xe đón tại phố cổ Hà Nội", "afternoon": "Nhận phòng, ăn trưa buffet, chèo kayak", "evening": "Tiệc trà chiều, gala dinner hải sản"},
-                    {"day": 2, "title": "Hang Sửng Sốt — Bến Cảng — Hà Nội", "morning": "Tập Thái Cực Quyền, thăm Hang Sửng Sốt", "afternoon": "Thưởng thức bữa trưa sớm, cập bến", "evening": "Xe đưa về điểm đón Hà Nội"},
+                    "Check-in du thuyền 5 sao đẳng cấp",
+                    "Chèo kayak khám phá Hang Sáng Tối",
+                    "Tiệc hoàng hôn Sunset Party trên sundeck",
+                    "Bữa tối hải sản tươi sống thịnh soạn",
                 ],
-                ["Phòng nghỉ cao cấp view biển", "Tất cả các bữa ăn trong lịch trình", "Vé tham quan các thắng cảnh", "Xe đưa đón limousine"],
+                [
+                    {
+                        "day": 1,
+                        "title": "Hà Nội — Vịnh Hạ Long — Du Thuyền",
+                        "morning": "Xe đón tại phố cổ Hà Nội",
+                        "afternoon": "Nhận phòng, ăn trưa buffet, chèo kayak",
+                        "evening": "Tiệc trà chiều, gala dinner hải sản",
+                    },
+                    {
+                        "day": 2,
+                        "title": "Hang Sửng Sốt — Bến Cảng — Hà Nội",
+                        "morning": "Tập Thái Cực Quyền, thăm Hang Sửng Sốt",
+                        "afternoon": "Thưởng thức bữa trưa sớm, cập bến",
+                        "evening": "Xe đưa về điểm đón Hà Nội",
+                    },
+                ],
+                [
+                    "Phòng nghỉ cao cấp view biển",
+                    "Tất cả các bữa ăn trong lịch trình",
+                    "Vé tham quan các thắng cảnh",
+                    "Xe đưa đón limousine",
+                ],
                 ["Đồ uống cá nhân", "Dịch vụ spa massage trên tàu", "Tiền tip hướng dẫn viên"],
                 True,
             ),
@@ -537,13 +592,40 @@ class Command(BaseCommand):
                 VIETNAM_PHOTO_MAP["sa-pa"],
                 "Khám phá thị trấn trong sương, chạm tay vào cột mốc 3.143m trên nóc nhà Đông Dương Fansipan và trải nghiệm văn hóa H'Mông.",
                 "Journey through misty high alpine valleys, conquer Indochina's 3,143m apex, and experience H'Mong culture.",
-                ["Chinh phục đỉnh Fansipan bằng cáp treo 3 dây kỷ lục", "Bản Cát Cát cổ kính với guồng nước và suối Tiên Sa", "Khách sạn 4 sao trung tâm view núi Mường Hoa"],
                 [
-                    {"day": 1, "title": "Hà Nội — Sa Pa — Bản Cát Cát", "morning": "Xe giường nằm khởi hành đi Sa Pa", "afternoon": "Check-in khách sạn, tản bộ Bản Cát Cát", "evening": "Thưởng thức lẩu cá tầm nóng hổi"},
-                    {"day": 2, "title": "Chinh Phục Đỉnh Fansipan 3.143m", "morning": "Đi cáp treo lên quần thể Fansipan", "afternoon": "Tự do dạo phố Sa Pa, nhà thờ Đá", "evening": "Chợ đêm Sa Pa, tắm lá thuốc Dao Đỏ"},
-                    {"day": 3, "title": "Thung Lũng Mường Hoa — Hà Nội", "morning": "Ngắm ruộng bậc thang Mường Hoa", "afternoon": "Mua quà lưu niệm, lên xe về Hà Nội", "evening": "Về đến Hà Nội an toàn"},
+                    "Chinh phục đỉnh Fansipan bằng cáp treo 3 dây kỷ lục",
+                    "Bản Cát Cát cổ kính với guồng nước và suối Tiên Sa",
+                    "Khách sạn 4 sao trung tâm view núi Mường Hoa",
                 ],
-                ["Xe limousine khứ hồi", "Khách sạn 4 sao 2 đêm", "Vé cáp treo Fansipan khứ hồi", "Ăn uống theo chương trình"],
+                [
+                    {
+                        "day": 1,
+                        "title": "Hà Nội — Sa Pa — Bản Cát Cát",
+                        "morning": "Xe giường nằm khởi hành đi Sa Pa",
+                        "afternoon": "Check-in khách sạn, tản bộ Bản Cát Cát",
+                        "evening": "Thưởng thức lẩu cá tầm nóng hổi",
+                    },
+                    {
+                        "day": 2,
+                        "title": "Chinh Phục Đỉnh Fansipan 3.143m",
+                        "morning": "Đi cáp treo lên quần thể Fansipan",
+                        "afternoon": "Tự do dạo phố Sa Pa, nhà thờ Đá",
+                        "evening": "Chợ đêm Sa Pa, tắm lá thuốc Dao Đỏ",
+                    },
+                    {
+                        "day": 3,
+                        "title": "Thung Lũng Mường Hoa — Hà Nội",
+                        "morning": "Ngắm ruộng bậc thang Mường Hoa",
+                        "afternoon": "Mua quà lưu niệm, lên xe về Hà Nội",
+                        "evening": "Về đến Hà Nội an toàn",
+                    },
+                ],
+                [
+                    "Xe limousine khứ hồi",
+                    "Khách sạn 4 sao 2 đêm",
+                    "Vé cáp treo Fansipan khứ hồi",
+                    "Ăn uống theo chương trình",
+                ],
                 ["Chi phí cá nhân", "Vé tàu hỏa leo núi Mường Hoa", "Thuế VAT"],
                 True,
             ),
@@ -567,11 +649,26 @@ class Command(BaseCommand):
                 VIETNAM_PHOTO_MAP["ninh-binh"],
                 "Chuyến đi trọn vẹn trong ngày khám phá quần thể danh thắng Tràng An di sản thế giới kép đầu tiên tại Đông Nam Á.",
                 "Full-day exploration through Trang An UNESCO dual heritage waters and panoramic Mua Cave summits.",
-                ["Thuyền nan 3 giờ len lỏi qua 4 hang động Tràng An", "Leo 500 bậc đá Hang Múa ngắm toàn cảnh Tam Cốc", "Bữa trưa đặc sản dê núi cơm cháy Ninh Bình"],
                 [
-                    {"day": 1, "title": "Hà Nội — Cố Đô Hoa Lư — Tràng An — Hang Múa", "morning": "Đón khách, thăm Cố đô Hoa Lư ngàn năm", "afternoon": "Đi thuyền Tràng An, leo đỉnh Hang Múa", "evening": "Khởi hành về Hà Nội"},
+                    "Thuyền nan 3 giờ len lỏi qua 4 hang động Tràng An",
+                    "Leo 500 bậc đá Hang Múa ngắm toàn cảnh Tam Cốc",
+                    "Bữa trưa đặc sản dê núi cơm cháy Ninh Bình",
                 ],
-                ["Xe đưa đón đời mới", "Vé thuyền Tràng An và Hang Múa", "Bữa trưa buffet đặc sản", "Hướng dẫn viên song ngữ"],
+                [
+                    {
+                        "day": 1,
+                        "title": "Hà Nội — Cố Đô Hoa Lư — Tràng An — Hang Múa",
+                        "morning": "Đón khách, thăm Cố đô Hoa Lư ngàn năm",
+                        "afternoon": "Đi thuyền Tràng An, leo đỉnh Hang Múa",
+                        "evening": "Khởi hành về Hà Nội",
+                    },
+                ],
+                [
+                    "Xe đưa đón đời mới",
+                    "Vé thuyền Tràng An và Hang Múa",
+                    "Bữa trưa buffet đặc sản",
+                    "Hướng dẫn viên song ngữ",
+                ],
                 ["Đồ uống ngoài thực đơn", "Chi phí mua sắm cá nhân"],
                 False,
             ),
@@ -595,13 +692,40 @@ class Command(BaseCommand):
                 VIETNAM_PHOTO_MAP["ha-giang"],
                 "Hành trình huyền thoại nơi địa đầu Tổ quốc, chinh phục một trong tứ đại đỉnh đèo hiểm trở bậc nhất Việt Nam.",
                 "Legendary frontier motorbike expedition conquering Vietnam's most iconic mountain passes.",
-                ["Đi thuyền hẻm vực Tu Sản sâu nhất Đông Nam Á", "Check-in cột cờ Lũng Cú cực Bắc Tổ quốc", "Đêm nghỉ homestay nhà trình tường người H'Mông"],
                 [
-                    {"day": 1, "title": "Hà Giang — Quản Bạ — Đồng Văn", "morning": "Cổng trời Quản Bạ, núi đôi Cô Tiên", "afternoon": "Dốc Thẩm Mã, Nhà của Pao", "evening": "Check-in phố cổ Đồng Văn"},
-                    {"day": 2, "title": "Đèo Mã Pí Lèng — Sông Nho Quế — Mèo Vạc", "morning": "Đi thuyền sông Nho Quế màu ngọc bích", "afternoon": "Chinh phục đỉnh đèo Mã Pí Lèng", "evening": "Lửa trại và ẩm thực dân tộc bản địa"},
-                    {"day": 3, "title": "Mèo Vạc — Cột Cờ Lũng Cú — Hà Giang", "morning": "Thăm Cột cờ Lũng Cú", "afternoon": "Xuôi đèo về thành phố Hà Giang", "evening": "Lên xe giường nằm về Hà Nội"},
+                    "Đi thuyền hẻm vực Tu Sản sâu nhất Đông Nam Á",
+                    "Check-in cột cờ Lũng Cú cực Bắc Tổ quốc",
+                    "Đêm nghỉ homestay nhà trình tường người H'Mông",
                 ],
-                ["Xe máy + xăng hoặc xe ô tô đưa đón", "Homestay và khách sạn cao cấp", "Các bữa ăn đặc sản núi rừng", "Vé thuyền Tu Sản"],
+                [
+                    {
+                        "day": 1,
+                        "title": "Hà Giang — Quản Bạ — Đồng Văn",
+                        "morning": "Cổng trời Quản Bạ, núi đôi Cô Tiên",
+                        "afternoon": "Dốc Thẩm Mã, Nhà của Pao",
+                        "evening": "Check-in phố cổ Đồng Văn",
+                    },
+                    {
+                        "day": 2,
+                        "title": "Đèo Mã Pí Lèng — Sông Nho Quế — Mèo Vạc",
+                        "morning": "Đi thuyền sông Nho Quế màu ngọc bích",
+                        "afternoon": "Chinh phục đỉnh đèo Mã Pí Lèng",
+                        "evening": "Lửa trại và ẩm thực dân tộc bản địa",
+                    },
+                    {
+                        "day": 3,
+                        "title": "Mèo Vạc — Cột Cờ Lũng Cú — Hà Giang",
+                        "morning": "Thăm Cột cờ Lũng Cú",
+                        "afternoon": "Xuôi đèo về thành phố Hà Giang",
+                        "evening": "Lên xe giường nằm về Hà Nội",
+                    },
+                ],
+                [
+                    "Xe máy + xăng hoặc xe ô tô đưa đón",
+                    "Homestay và khách sạn cao cấp",
+                    "Các bữa ăn đặc sản núi rừng",
+                    "Vé thuyền Tu Sản",
+                ],
                 ["Bảo hiểm du lịch tự túc", "Chi phí đồ uống cá nhân"],
                 True,
             ),
@@ -625,13 +749,40 @@ class Command(BaseCommand):
                 VIETNAM_PHOTO_MAP["hoi-an"],
                 "Kết hợp hoàn hảo giữa thành phố biển đáng sống, Cầu Vàng kỳ ảo giữa mây trời và phố cổ đèn lồng rêu phong.",
                 "Perfect union of coastal modern charm, Ba Na Hills surreal bridges, and historic lantern-lit alleys.",
-                ["Check-in Cầu Vàng nổi tiếng toàn cầu tại Bà Nà Hills", "Thả hoa đăng ước nguyện trên dòng sông Hoài Hội An", "Thưởng thức mì Quảng và cao lầu chuẩn vị xứ Quảng"],
                 [
-                    {"day": 1, "title": "Đà Nẵng — Bán Đảo Sơn Trà — Phố Cổ Hội An", "morning": "Đón sân bay Đà Nẵng, viếng chùa Linh Ứng", "afternoon": "Về Hội An, đi thuyền hoa đăng", "evening": "Tự do ngắm phố cổ về đêm"},
-                    {"day": 2, "title": "Khu Du Lịch Bà Nà Hills — Cầu Vàng", "morning": "Cáp treo Bà Nà Hills, check-in Cầu Vàng", "afternoon": "Làng Pháp, hầm rượu Debay", "evening": "Ngắm Cầu Rồng phun lửa tại Đà Nẵng"},
-                    {"day": 3, "title": "Biển Mỹ Khê — Chợ Hàn — Tiễn Bay", "morning": "Tắm biển Mỹ Khê cát trắng", "afternoon": "Mua sắm đặc sản chợ Hàn, tiễn sân bay", "evening": "Kết thúc chuyến đi tốt đẹp"},
+                    "Check-in Cầu Vàng nổi tiếng toàn cầu tại Bà Nà Hills",
+                    "Thả hoa đăng ước nguyện trên dòng sông Hoài Hội An",
+                    "Thưởng thức mì Quảng và cao lầu chuẩn vị xứ Quảng",
                 ],
-                ["Khách sạn 4 sao tiện nghi", "Vé cáp treo Bà Nà Hills", "Tất cả các bữa ăn tiêu chuẩn", "Xe du lịch đời mới máy lạnh"],
+                [
+                    {
+                        "day": 1,
+                        "title": "Đà Nẵng — Bán Đảo Sơn Trà — Phố Cổ Hội An",
+                        "morning": "Đón sân bay Đà Nẵng, viếng chùa Linh Ứng",
+                        "afternoon": "Về Hội An, đi thuyền hoa đăng",
+                        "evening": "Tự do ngắm phố cổ về đêm",
+                    },
+                    {
+                        "day": 2,
+                        "title": "Khu Du Lịch Bà Nà Hills — Cầu Vàng",
+                        "morning": "Cáp treo Bà Nà Hills, check-in Cầu Vàng",
+                        "afternoon": "Làng Pháp, hầm rượu Debay",
+                        "evening": "Ngắm Cầu Rồng phun lửa tại Đà Nẵng",
+                    },
+                    {
+                        "day": 3,
+                        "title": "Biển Mỹ Khê — Chợ Hàn — Tiễn Bay",
+                        "morning": "Tắm biển Mỹ Khê cát trắng",
+                        "afternoon": "Mua sắm đặc sản chợ Hàn, tiễn sân bay",
+                        "evening": "Kết thúc chuyến đi tốt đẹp",
+                    },
+                ],
+                [
+                    "Khách sạn 4 sao tiện nghi",
+                    "Vé cáp treo Bà Nà Hills",
+                    "Tất cả các bữa ăn tiêu chuẩn",
+                    "Xe du lịch đời mới máy lạnh",
+                ],
                 ["Chi phí trò chơi tính phí tại Fantasy Park", "Tiền tip tài xế và HDV"],
                 True,
             ),
@@ -655,12 +806,33 @@ class Command(BaseCommand):
                 VIETNAM_PHOTO_MAP["hue"],
                 "Lắng đọng cùng vẻ đẹp trầm mặc của Đại Nội kinh thành xưa, các lăng tẩm hoàng gia và nghe ca Huế trên sông Hương.",
                 "Serene exploration of royal citadels, poetic river boat excursions, and imperial gastronomy.",
-                ["Khám phá Đại Nội Kinh Thành triều Nguyễn", "Đi thuyền rồng ngắm hoàng hôn sông Hương và nghe ca Huế", "Viếng Chùa Thiên Mụ cổ kính linh thiêng"],
                 [
-                    {"day": 1, "title": "Huế — Đại Nội — Thuyền Rồng Sông Hương", "morning": "Đón khách, thăm Đại Nội và Ngọ Môn", "afternoon": "Lăng Khải Định với kiến trúc tinh xảo", "evening": "Nghe ca Huế trên thuyền rồng"},
-                    {"day": 2, "title": "Chùa Thiên Mụ — Lăng Tự Đức — Chợ Đông Ba", "morning": "Viếng chùa Thiên Mụ, thăm lăng Tự Đức", "afternoon": "Mua sắm tại chợ Đông Ba, tiễn khách", "evening": "Kết thúc chương trình"},
+                    "Khám phá Đại Nội Kinh Thành triều Nguyễn",
+                    "Đi thuyền rồng ngắm hoàng hôn sông Hương và nghe ca Huế",
+                    "Viếng Chùa Thiên Mụ cổ kính linh thiêng",
                 ],
-                ["Khách sạn 4 sao trung tâm", "Vé thuyền rồng sông Hương", "Vé tham quan các lăng tẩm", "Các bữa ăn đặc sản Huế"],
+                [
+                    {
+                        "day": 1,
+                        "title": "Huế — Đại Nội — Thuyền Rồng Sông Hương",
+                        "morning": "Đón khách, thăm Đại Nội và Ngọ Môn",
+                        "afternoon": "Lăng Khải Định với kiến trúc tinh xảo",
+                        "evening": "Nghe ca Huế trên thuyền rồng",
+                    },
+                    {
+                        "day": 2,
+                        "title": "Chùa Thiên Mụ — Lăng Tự Đức — Chợ Đông Ba",
+                        "morning": "Viếng chùa Thiên Mụ, thăm lăng Tự Đức",
+                        "afternoon": "Mua sắm tại chợ Đông Ba, tiễn khách",
+                        "evening": "Kết thúc chương trình",
+                    },
+                ],
+                [
+                    "Khách sạn 4 sao trung tâm",
+                    "Vé thuyền rồng sông Hương",
+                    "Vé tham quan các lăng tẩm",
+                    "Các bữa ăn đặc sản Huế",
+                ],
                 ["Chi phí cá nhân ngoài chương trình", "Vé máy bay đến/đi từ Huế"],
                 False,
             ),
@@ -684,13 +856,40 @@ class Command(BaseCommand):
                 VIETNAM_PHOTO_MAP["da-lat"],
                 "Hòa mình vào không khí se lạnh, những đồi thông thơ mộng và thung lũng hoa ngát hương xứ ngàn hoa.",
                 "Cool highland retreat nestled among whispering pines, flower gardens, and calm mountain lakes.",
-                ["Săn mây bình minh tại đồi chè Cầu Đất", "Chèo SUP ngắm rừng lá phong Hồ Tuyền Lâm", "Check-in các quán cà phê ngắm hoàng hôn thung lũng"],
                 [
-                    {"day": 1, "title": "Đón Sân Bay — Quảng Trường Lâm Viên — Hồ Xuân Hương", "morning": "Đón sân bay Liên Khương, check-in khách sạn", "afternoon": "Dạo quanh Hồ Xuân Hương thơ mộng", "evening": "Khám phá chợ đêm ẩm thực Đà Lạt"},
-                    {"day": 2, "title": "Săn Mây Cầu Đất — Chèo SUP Hồ Tuyền Lâm", "morning": "Đón bình minh săn mây đồi chè", "afternoon": "Chèo SUP thư thái trên Hồ Tuyền Lâm", "evening": "Tiệc BBQ giữa đồi thông se lạnh"},
-                    {"day": 3, "title": "Dinh Bảo Đại — Thác Datanla — Tiễn Bay", "morning": "Thăm Dinh III, trải nghiệm máng trượt Datanla", "afternoon": "Mua mứt và hoa tươi, tiễn sân bay", "evening": "Kết thúc tour trọn vẹn"},
+                    "Săn mây bình minh tại đồi chè Cầu Đất",
+                    "Chèo SUP ngắm rừng lá phong Hồ Tuyền Lâm",
+                    "Check-in các quán cà phê ngắm hoàng hôn thung lũng",
                 ],
-                ["Khách sạn 3-4 sao phong cách Pháp", "Hoạt động chèo SUP + áo phao", "Xe ô tô đưa đón tham quan", "Các bữa ăn theo lịch trình"],
+                [
+                    {
+                        "day": 1,
+                        "title": "Đón Sân Bay — Quảng Trường Lâm Viên — Hồ Xuân Hương",
+                        "morning": "Đón sân bay Liên Khương, check-in khách sạn",
+                        "afternoon": "Dạo quanh Hồ Xuân Hương thơ mộng",
+                        "evening": "Khám phá chợ đêm ẩm thực Đà Lạt",
+                    },
+                    {
+                        "day": 2,
+                        "title": "Săn Mây Cầu Đất — Chèo SUP Hồ Tuyền Lâm",
+                        "morning": "Đón bình minh săn mây đồi chè",
+                        "afternoon": "Chèo SUP thư thái trên Hồ Tuyền Lâm",
+                        "evening": "Tiệc BBQ giữa đồi thông se lạnh",
+                    },
+                    {
+                        "day": 3,
+                        "title": "Dinh Bảo Đại — Thác Datanla — Tiễn Bay",
+                        "morning": "Thăm Dinh III, trải nghiệm máng trượt Datanla",
+                        "afternoon": "Mua mứt và hoa tươi, tiễn sân bay",
+                        "evening": "Kết thúc tour trọn vẹn",
+                    },
+                ],
+                [
+                    "Khách sạn 3-4 sao phong cách Pháp",
+                    "Hoạt động chèo SUP + áo phao",
+                    "Xe ô tô đưa đón tham quan",
+                    "Các bữa ăn theo lịch trình",
+                ],
                 ["Vé trò chơi mạo hiểm tại Datanla", "Đồ uống cá nhân"],
                 True,
             ),
@@ -714,19 +913,71 @@ class Command(BaseCommand):
                 VIETNAM_PHOTO_MAP["phu-quoc"],
                 "Kỳ nghỉ biển đảo trọn vẹn tại Nam đảo Ngọc, trải nghiệm cáp treo vượt biển dài nhất thế giới và lặn ngắm san hô tự nhiên.",
                 "Ultimate tropical island getaway with world-record sea cable cars and coral reef adventures.",
-                ["Trải nghiệm cáp treo vượt biển Hòn Thơm kỷ lục Guinness", "Cano 4 đảo: Móng Tay, Gầm Ghì, Mây Rút, Hòn Thơm", "Tiệc hải sản tươi sống và ngắm hoàng hôn Sunset Sanato"],
                 [
-                    {"day": 1, "title": "Đón Sân Bay — Sunset Town Thị Trấn Hoàng Hôn", "morning": "Đón sân bay Phú Quốc, nhận phòng resort", "afternoon": "Dạo chơi Thị trấn Hoàng Hôn Địa Trung Hải", "evening": "Ngắm Cầu Hôn, chợ đêm Vui-Phết"},
-                    {"day": 2, "title": "Cano 4 Đảo Nam Phú Quốc & Lặn Ngắm San Hô", "morning": "Cano cao tốc đi Hòn Móng Tay, Hòn Gầm Ghì", "afternoon": "Lặn biển bình khí, vui chơi công viên nước Hòn Thơm", "evening": "Tiệc BBQ hải sản tại Bãi Sao"},
-                    {"day": 3, "title": "Vườn Tiêu — Nhà Thùng Nước Mắm — Tiễn Bay", "morning": "Thăm cơ sở ngọc trai và nước mắm truyền thống", "afternoon": "Mua sắm đặc sản đảo, tiễn sân bay", "evening": "Tạm biệt Phú Quốc xinh đẹp"},
+                    "Trải nghiệm cáp treo vượt biển Hòn Thơm kỷ lục Guinness",
+                    "Cano 4 đảo: Móng Tay, Gầm Ghì, Mây Rút, Hòn Thơm",
+                    "Tiệc hải sản tươi sống và ngắm hoàng hôn Sunset Sanato",
                 ],
-                ["Resort 4 sao sát biển 2 đêm", "Vé cáp treo Hòn Thơm 2 chiều", "Cano cao tốc riêng tham quan 4 đảo", "Flycam chụp ảnh và quay video kỷ niệm"],
+                [
+                    {
+                        "day": 1,
+                        "title": "Đón Sân Bay — Sunset Town Thị Trấn Hoàng Hôn",
+                        "morning": "Đón sân bay Phú Quốc, nhận phòng resort",
+                        "afternoon": "Dạo chơi Thị trấn Hoàng Hôn Địa Trung Hải",
+                        "evening": "Ngắm Cầu Hôn, chợ đêm Vui-Phết",
+                    },
+                    {
+                        "day": 2,
+                        "title": "Cano 4 Đảo Nam Phú Quốc & Lặn Ngắm San Hô",
+                        "morning": "Cano cao tốc đi Hòn Móng Tay, Hòn Gầm Ghì",
+                        "afternoon": "Lặn biển bình khí, vui chơi công viên nước Hòn Thơm",
+                        "evening": "Tiệc BBQ hải sản tại Bãi Sao",
+                    },
+                    {
+                        "day": 3,
+                        "title": "Vườn Tiêu — Nhà Thùng Nước Mắm — Tiễn Bay",
+                        "morning": "Thăm cơ sở ngọc trai và nước mắm truyền thống",
+                        "afternoon": "Mua sắm đặc sản đảo, tiễn sân bay",
+                        "evening": "Tạm biệt Phú Quốc xinh đẹp",
+                    },
+                ],
+                [
+                    "Resort 4 sao sát biển 2 đêm",
+                    "Vé cáp treo Hòn Thơm 2 chiều",
+                    "Cano cao tốc riêng tham quan 4 đảo",
+                    "Flycam chụp ảnh và quay video kỷ niệm",
+                ],
                 ["Dịch vụ lặn bình khí sâu (Scuba diving chuyên nghiệp)", "Chi phí cá nhân"],
                 True,
             ),
         ]
 
-        for slug, title, title_en, dest_slug, dest_name, dest_name_en, region, duration, duration_en, departure, departure_en, group_size, price, orig_price, rating, review_count, image, overview, overview_en, highlights, itinerary, included, excluded, is_featured in tour_rows:
+        for (
+            slug,
+            title,
+            title_en,
+            dest_slug,
+            dest_name,
+            dest_name_en,
+            region,
+            duration,
+            duration_en,
+            departure,
+            departure_en,
+            group_size,
+            price,
+            orig_price,
+            rating,
+            review_count,
+            image,
+            overview,
+            overview_en,
+            highlights,
+            itinerary,
+            included,
+            excluded,
+            is_featured,
+        ) in tour_rows:
             Tour.objects.update_or_create(
                 slug=slug,
                 defaults={
@@ -836,7 +1087,19 @@ class Command(BaseCommand):
             ),
         ]
 
-        for slug, title, excerpt, body, cover, dest, read_time, cat, author, role, tags in story_rows:
+        for (
+            slug,
+            title,
+            excerpt,
+            body,
+            cover,
+            dest,
+            read_time,
+            cat,
+            author,
+            role,
+            tags,
+        ) in story_rows:
             Article.objects.update_or_create(
                 slug=slug,
                 defaults={
@@ -909,7 +1172,10 @@ class Command(BaseCommand):
         # 9b. Index all Tours
         for tour in Tour.objects.all():
             itinerary_text_vi = "\n".join(
-                [f"Ngày {d.get('day')}: {d.get('title')} — Sáng: {d.get('morning')} | Chiều: {d.get('afternoon')} | Tối: {d.get('evening')}" for d in tour.itinerary]
+                [
+                    f"Ngày {d.get('day')}: {d.get('title')} — Sáng: {d.get('morning')} | Chiều: {d.get('afternoon')} | Tối: {d.get('evening')}"
+                    for d in tour.itinerary
+                ]
             )
             highlights_text = ", ".join(tour.highlights or [])
             inclusions_text = ", ".join(tour.included or [])
@@ -1004,4 +1270,8 @@ class Command(BaseCommand):
                 },
             )
 
-        self.stdout.write(self.style.SUCCESS("Đã nạp toàn bộ 12 Điểm đến, 10 Trải nghiệm, 8 Tour, 4 Bài viết, 1 Booking và Tri thức Lịch sử & Di sản AI RAG vào hệ thống thành công!"))
+        self.stdout.write(
+            self.style.SUCCESS(
+                "Đã nạp toàn bộ 12 Điểm đến, 10 Trải nghiệm, 8 Tour, 4 Bài viết, 1 Booking và Tri thức Lịch sử & Di sản AI RAG vào hệ thống thành công!"
+            )
+        )

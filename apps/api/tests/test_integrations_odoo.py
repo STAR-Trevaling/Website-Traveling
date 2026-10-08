@@ -2,11 +2,13 @@ import hashlib
 import hmac
 import json
 import uuid
+
 import pytest
 from django.conf import settings
+from rest_framework.test import APIClient
+
 from destinations.models import Destination
 from integrations.models import Inquiry, IntegrationEvent, IntegrationOutbox
-from rest_framework.test import APIClient
 
 
 @pytest.fixture
