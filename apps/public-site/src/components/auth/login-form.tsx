@@ -44,7 +44,7 @@ export function LoginForm() {
         <input
           required
           placeholder={a.usernamePlaceholder}
-          className="mt-1.5 h-11 w-full rounded-[2px] border border-slate-200 bg-white px-3 text-sm text-slate-800 outline-none transition focus:border-[#0098a2]"
+          className="mt-1.5 h-11 w-full rounded-[2px] border border-slate-200 bg-white px-3 text-sm text-slate-800 outline-none transition focus:border-[#da251d]"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
@@ -56,7 +56,7 @@ export function LoginForm() {
           type="password"
           required
           placeholder={a.passwordPlaceholder}
-          className="mt-1.5 h-11 w-full rounded-[2px] border border-slate-200 bg-white px-3 text-sm text-slate-800 outline-none transition focus:border-[#0098a2]"
+          className="mt-1.5 h-11 w-full rounded-[2px] border border-slate-200 bg-white px-3 text-sm text-slate-800 outline-none transition focus:border-[#da251d]"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
@@ -64,7 +64,7 @@ export function LoginForm() {
 
       <button
         disabled={loading}
-        className="w-full bg-[#0098a2] text-white py-3.5 text-xs md:text-sm font-bold uppercase tracking-wider rounded-[2px] shadow-sm transition-all duration-200 hover:bg-[#008f99] hover:shadow-[0px_8px_25px_rgba(0,152,162,0.35)] hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer"
+        className="w-full bg-[#da251d] text-white py-3.5 text-xs md:text-sm font-bold uppercase tracking-wider rounded-[2px] shadow-sm transition-all duration-200 hover:bg-[#c92018] hover:shadow-[0px_8px_25px_rgba(218,37,29,0.35)] hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer"
       >
         <LogIn className="size-4" />
         <span>

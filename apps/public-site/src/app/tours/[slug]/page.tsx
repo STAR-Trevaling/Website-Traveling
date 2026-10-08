@@ -15,8 +15,10 @@ import {
   PhoneCall,
 } from "lucide-react";
 import { SiteHeader } from "@/components/layout/site-header";
-import { getTourBySlug, VIETNAM_TOURS } from "@/lib/tours-data";
+import { Breadcrumb } from "@/components/shared/breadcrumb";
+import { getTourBySlug, VIETNAM_TOURS } from "@/data/seed";
 import { TourBookingCard } from "@/components/tours";
+import { publicApi } from "@/lib/api";
 import { DICTIONARY } from "@/lib/i18n/dictionary";
 import type { Locale } from "@/lib/i18n/types";
 
@@ -32,7 +34,17 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: TourDetailPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const tour = getTourBySlug(slug);
+  let tour: any = getTourBySlug(slug);
+  try {
+    const backendTour = await publicApi.tour(slug);
+    if (backendTour) {
+      tour = {
+        ...tour,
+        ...backendTour,
+        image: backendTour.image || backendTour.imageUrl || (backendTour as any).image_url || tour?.image,
+      };
+    }
+  } catch {}
 
   if (!tour) {
     return {
@@ -42,10 +54,10 @@ export async function generateMetadata({ params }: TourDetailPageProps): Promise
 
   return {
     title: `${tour.title} | Star Travels Vietnam`,
-    description: tour.overview.slice(0, 160),
+    description: (tour.overview || "").slice(0, 160),
     openGraph: {
       title: tour.title,
-      description: tour.overview.slice(0, 160),
+      description: (tour.overview || "").slice(0, 160),
       images: [{ url: tour.image }],
     },
   };
@@ -59,7 +71,23 @@ export default async function TourDetailPage({ params }: TourDetailPageProps) {
   const td = dict.tourDetailPage;
 
   const { slug } = await params;
-  const tour = getTourBySlug(slug);
+  let tour: any;
+
+  try {
+    const backendTour = await publicApi.tour(slug);
+    const fallback = getTourBySlug(slug);
+    tour = {
+      ...fallback,
+      ...backendTour,
+      image: backendTour.image || backendTour.imageUrl || (backendTour as any).image_url || fallback?.image,
+      itinerary: (backendTour.itinerary && backendTour.itinerary.length > 0) ? backendTour.itinerary : fallback?.itinerary || [],
+      highlights: (backendTour.highlights && backendTour.highlights.length > 0) ? backendTour.highlights : fallback?.highlights || [],
+      inclusions: (backendTour.included && backendTour.included.length > 0) ? backendTour.included : ((backendTour as any).inclusions || fallback?.inclusions || []),
+      exclusions: (backendTour.excluded && backendTour.excluded.length > 0) ? backendTour.excluded : ((backendTour as any).exclusions || fallback?.exclusions || []),
+    };
+  } catch {
+    tour = getTourBySlug(slug);
+  }
 
   if (!tour) {
     notFound();
@@ -85,14 +113,14 @@ export default async function TourDetailPage({ params }: TourDetailPageProps) {
           unoptimized
           className="object-cover animate-ken-burns"
         />
-        {/* Deep contrast gradient overlay so text is never washed out by background */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/65 to-black/45" />
+        {/* Light cinematic gradient overlay ensuring bright landmark imagery while text remains clear */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/25 to-black/20" />
         <SiteHeader overlay />
 
         <div className="relative z-10 mx-auto w-full max-w-7xl px-4 sm:px-6 pb-10 sm:pb-16 md:px-12 pt-24 sm:pt-32">
-          <div className="max-w-4xl bg-black/40 backdrop-blur-[3px] p-4 sm:p-7 md:p-9 rounded-[2px] border border-white/20 shadow-2xl animate-fade-in-up">
+          <div className="max-w-4xl bg-black/30 backdrop-blur-md p-4 sm:p-7 md:p-9 rounded-[2px] border border-white/20 shadow-2xl animate-fade-in-up">
             <div className="flex flex-wrap items-center gap-2 sm:gap-3">
-              <span className="rounded-[2px] bg-[#0098a2] px-3 py-1 sm:px-3.5 sm:py-1.5 text-[11px] sm:text-xs md:text-sm font-bold uppercase tracking-wider text-white shadow-md">
+              <span className="rounded-[2px] bg-[#da251d] px-3 py-1 sm:px-3.5 sm:py-1.5 text-[11px] sm:text-xs md:text-sm font-bold uppercase tracking-wider text-white shadow-md">
                 {displayDuration}
               </span>
               <span className="flex items-center gap-1.5 rounded-[2px] bg-black/60 px-3 py-1 sm:px-3.5 sm:py-1.5 text-[11px] sm:text-xs md:text-sm font-semibold text-white backdrop-blur-md border border-white/20 shadow-sm">
@@ -174,8 +202,19 @@ export default async function TourDetailPage({ params }: TourDetailPageProps) {
       </section>
 
       {/* 3. MAIN CONTENT & BOOKING SIDEBAR */}
-      <main className="template-page-bg min-h-screen px-4 sm:px-6 py-10 sm:py-16 md:px-12">
-        <div className="mx-auto grid max-w-7xl gap-8 sm:gap-12 lg:grid-cols-[1fr_380px]">
+      <main className="template-page-bg min-h-screen px-4 sm:px-6 py-8 sm:py-12 md:px-12">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-6 sm:mb-8">
+            <Breadcrumb
+              items={[
+                { label: isEn ? "Home" : "Trang Chủ", href: "/" },
+                { label: isEn ? "Tours" : "Tour Tuyển Chọn", href: "/tours" },
+                { label: displayTitle },
+              ]}
+            />
+          </div>
+
+          <div className="grid gap-8 sm:gap-12 lg:grid-cols-[1fr_380px]">
           {/* LEFT: Detailed Info */}
           <div className="space-y-8 sm:space-y-12">
             {/* Highlights */}
@@ -184,7 +223,7 @@ export default async function TourDetailPage({ params }: TourDetailPageProps) {
                 {td.highlightsTitle}
               </h2>
               <div className="mt-6 grid gap-4 sm:grid-cols-2">
-                {tour.highlights.map((h, i) => (
+                {tour.highlights.map((h: string, i: number) => (
                   <div key={i} className="flex items-start gap-3">
                     <CheckCircle2 className="size-5 shrink-0 text-slate-800 mt-0.5" />
                     <span className="text-sm font-light leading-relaxed text-slate-700">
@@ -202,7 +241,7 @@ export default async function TourDetailPage({ params }: TourDetailPageProps) {
                   {isEn ? "Tour Experience Gallery" : "Hình Ảnh Trải Nghiệm"}
                 </h2>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3">
-                  {tour.gallery.map((img, idx) => (
+                  {tour.gallery.map((img: string, idx: number) => (
                     <div
                       key={idx}
                       className="group relative aspect-[4/3] overflow-hidden rounded-[2px] bg-slate-100 shadow-sm"
@@ -232,13 +271,13 @@ export default async function TourDetailPage({ params }: TourDetailPageProps) {
               </p>
 
               <div className="mt-6 sm:mt-8 space-y-4 sm:space-y-6">
-                {tour.itinerary.map((day) => (
+                {tour.itinerary.map((day: any) => (
                   <div
                     key={day.day}
-                    className="relative border-l-2 border-[#0098a2]/30 pl-5 sm:pl-6 pb-5 sm:pb-6 last:pb-0"
+                    className="relative border-l-2 border-[#da251d]/30 pl-5 sm:pl-6 pb-5 sm:pb-6 last:pb-0"
                   >
                     {/* Day Marker */}
-                    <div className="absolute -left-[11px] top-0 flex size-5 items-center justify-center rounded-full bg-[#0098a2] text-[10px] font-bold text-white shadow-sm">
+                    <div className="absolute -left-[11px] top-0 flex size-5 items-center justify-center rounded-full bg-[#da251d] text-[10px] font-bold text-white shadow-sm">
                       {day.day}
                     </div>
 
@@ -282,7 +321,7 @@ export default async function TourDetailPage({ params }: TourDetailPageProps) {
                   {td.inclusionsTitle}
                 </h3>
                 <ul className="space-y-2 sm:space-y-2.5 text-xs md:text-sm font-light text-slate-600">
-                  {tour.inclusions.map((item, idx) => (
+                  {tour.inclusions.map((item: string, idx: number) => (
                     <li key={idx} className="flex items-start gap-2">
                       <span className="text-emerald-500 font-bold">✓</span>
                       <span>{item}</span>
@@ -298,7 +337,7 @@ export default async function TourDetailPage({ params }: TourDetailPageProps) {
                   {td.exclusionsTitle}
                 </h3>
                 <ul className="space-y-2 sm:space-y-2.5 text-xs md:text-sm font-light text-slate-600">
-                  {tour.exclusions.map((item, idx) => (
+                  {tour.exclusions.map((item: string, idx: number) => (
                     <li key={idx} className="flex items-start gap-2">
                       <span className="text-rose-500 font-bold">✕</span>
                       <span>{item}</span>
@@ -324,12 +363,12 @@ export default async function TourDetailPage({ params }: TourDetailPageProps) {
                   : "Đội ngũ chuyên viên Star Travels sẵn sàng hỗ trợ thiết kế tour theo yêu cầu riêng cho gia đình hoặc đoàn thể."}
               </p>
               <div className="mt-5 flex items-center gap-3 pt-4 border-t border-slate-100">
-                <div className="flex size-10 items-center justify-center rounded-full bg-[#0098a2] text-white">
+                <div className="flex size-10 items-center justify-center rounded-full bg-[#da251d] text-white">
                   <PhoneCall className="size-4" />
                 </div>
                 <div>
                   <span className="text-[11px] text-slate-500 block">{td.hotlineAssist}</span>
-                  <a href="tel:0912345678" className="text-sm font-bold text-[#0098a2] hover:underline">
+                  <a href="tel:0912345678" className="text-sm font-bold text-[#da251d] hover:underline">
                     +84 912 345 678
                   </a>
                 </div>
@@ -337,14 +376,15 @@ export default async function TourDetailPage({ params }: TourDetailPageProps) {
             </div>
           </aside>
         </div>
+      </div>
 
         {/* RELATED TOURS */}
         <section className="mx-auto max-w-7xl mt-24">
           <div className="text-center mb-10">
-            <h2 className="script-title text-4xl md:text-5xl text-[#1e293b]">
+            <h2 className="script-title text-4xl md:text-5xl text-[#0f172a]">
               {td.relatedToursTitle}
             </h2>
-            <p className="mt-2 text-sm text-[#64748b] font-light">
+            <p className="mt-2 text-sm sm:text-base text-slate-800 font-medium">
               {isEn
                 ? "Explore more handcrafted heritage routes across beautiful Vietnam"
                 : "Khám phá thêm những cung đường di sản tuyệt đẹp khác tại Việt Nam"}
@@ -382,7 +422,7 @@ export default async function TourDetailPage({ params }: TourDetailPageProps) {
                       <span className="text-[11px] font-bold text-slate-900 uppercase tracking-wider block">
                         {rDestination}
                       </span>
-                      <h3 className="display-title mt-2 text-lg font-bold text-[#1e293b] group-hover:text-[#0098a2] transition-colors line-clamp-2">
+                      <h3 className="display-title mt-2 text-lg font-bold text-[#1e293b] group-hover:text-[#da251d] transition-colors line-clamp-2">
                         {rTitle}
                       </h3>
                     </div>
@@ -398,7 +438,7 @@ export default async function TourDetailPage({ params }: TourDetailPageProps) {
                             : `${rTour.price.toLocaleString("vi-VN")}đ`}
                         </span>
                       </div>
-                      <span className="text-xs font-semibold text-slate-800 group-hover:text-[#0098a2] transition-colors uppercase tracking-wider">
+                      <span className="text-xs font-semibold text-slate-800 group-hover:text-[#da251d] transition-colors uppercase tracking-wider">
                         {isEn ? "View tour" : "Xem tour"} →
                       </span>
                     </div>

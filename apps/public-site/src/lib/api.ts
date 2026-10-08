@@ -5,6 +5,7 @@ import type {
   Place,
   PlaceCategory,
   Review,
+  TourItem,
 } from "@/lib/types";
 
 const BASE_URL = process.env.BACKEND_URL ?? "http://localhost:8000/api/v1";
@@ -59,9 +60,99 @@ export const publicApi = {
   articles: (query = "") => list<Article>(`/articles/${query}`),
   article: (slug: string) => fetchJson<Article>(`/articles/${slug}/`),
 
+  // Tours
+  tours: (query = "") => list<TourItem>(`/tours/${query}`),
+  tour: (slug: string) => fetchJson<TourItem>(`/tours/${slug}/`),
+
   // Reviews
   reviews: (placeSlug: string) =>
     list<Review>(`/reviews/?place__slug=${encodeURIComponent(placeSlug)}`),
+
+  // AI Trip Assistant & RAG
+  assistantChat: (payload: { message: string; session_token?: string; locale?: string }) =>
+    fetchJson<{
+      session_token: string;
+      message: string;
+      recommended_tours: Array<{
+        slug: string;
+        title: string;
+        price: number;
+        duration: string;
+        departure: string;
+        image: string;
+      }>;
+      lead_captured: boolean;
+    }>("/assistant/conversations/chat/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    }),
+
+  // Payments, VNPay & VietQR Integration
+  createPayment: (payload: {
+    booking_code: string;
+    gateway?: string;
+    bank_code?: string;
+    locale?: string;
+    return_url?: string;
+  }) =>
+    fetchJson<{
+      payment_id?: string;
+      payment_url?: string;
+      transaction_code: string;
+      booking_code: string;
+      amount: string;
+      currency: string;
+      gateway: string;
+      status?: string;
+      expires_at: string;
+      qr_code_url?: string;
+      emvco_payload?: string;
+      bank_info?: {
+        bank_name: string;
+        bank_bin: string;
+        account_number: string;
+        account_name: string;
+        amount: number;
+        transfer_content: string;
+      };
+    }>("/payments/create/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    }),
+  getPaymentStatus: (id: string) =>
+    fetchJson<{
+      payment_id: string;
+      transaction_code: string;
+      booking_code: string;
+      state: string;
+      status: string;
+      amount: string;
+      currency: string;
+      gateway: string;
+      provider_ref?: string;
+      created_at: string;
+      completed_at?: string;
+      expires_at?: string;
+      is_paid: boolean;
+    }>(`/payments/${encodeURIComponent(id)}/status/`),
+  queryPayment: (txnRef: string) =>
+    fetchJson<{
+      payment_id?: string;
+      transaction_code: string;
+      booking_code: string;
+      state?: string;
+      status: string;
+      amount: string;
+      currency: string;
+      gateway: string;
+      provider_ref?: string;
+      created_at: string;
+      completed_at?: string;
+      expires_at?: string;
+      is_paid: boolean;
+    }>(`/payments/query/?txn_ref=${encodeURIComponent(txnRef)}`),
 };
 
 /**

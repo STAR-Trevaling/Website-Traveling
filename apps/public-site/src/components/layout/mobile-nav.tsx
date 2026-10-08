@@ -147,7 +147,7 @@ export function MobileNav({ user, overlay = false }: MobileNavProps) {
                     href={item.href}
                     className={`flex items-center justify-between px-3 py-2.5 text-sm font-medium rounded-[2px] transition ${
                       active
-                        ? "bg-[#0098a2]/10 text-[#0098a2] font-semibold"
+                        ? "bg-[#da251d]/10 text-[#da251d] font-semibold"
                         : "text-slate-700 hover:bg-slate-50 hover:text-slate-900"
                     }`}
                   >
@@ -184,12 +184,12 @@ export function MobileNav({ user, overlay = false }: MobileNavProps) {
                             href={sub.href}
                             className={`flex items-center justify-between px-2.5 py-2 text-xs md:text-sm font-medium rounded-[2px] transition ${
                               active
-                                ? "bg-[#0098a2]/10 text-[#0098a2] font-semibold"
+                                ? "bg-[#da251d]/10 text-[#da251d] font-semibold"
                                 : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
                             }`}
                           >
                             <span className="flex items-center gap-2">
-                              <Icon className="size-3.5 text-[#0098a2] opacity-75 shrink-0" />
+                              <Icon className="size-3.5 text-[#da251d] opacity-75 shrink-0" />
                               <span>{sub.label}</span>
                             </span>
                             <ArrowRight className="size-3 opacity-30" />
@@ -208,7 +208,7 @@ export function MobileNav({ user, overlay = false }: MobileNavProps) {
         <div className="pt-6 border-t border-slate-100 space-y-4">
           <Link
             href={user ? "/account" : "/login"}
-            className="flex items-center justify-center gap-2 w-full bg-[#0098a2] text-white py-2.5 text-xs font-bold uppercase tracking-wider rounded-[2px] shadow-sm transition-all duration-200 hover:bg-[#008f99] hover:shadow-[0px_8px_25px_rgba(0,152,162,0.35)] hover:-translate-y-0.5 active:translate-y-0"
+            className="flex items-center justify-center gap-2 w-full bg-[#da251d] text-white py-2.5 text-xs font-bold uppercase tracking-wider rounded-[2px] shadow-sm transition-all duration-200 hover:bg-[#c92018] hover:shadow-[0px_8px_25px_rgba(218,37,29,0.35)] hover:-translate-y-0.5 active:translate-y-0"
           >
             <UserRound className="size-4" />
             <span>{user ? user.username : t.nav.login}</span>
@@ -216,11 +216,11 @@ export function MobileNav({ user, overlay = false }: MobileNavProps) {
 
           <div className="space-y-1 text-xs text-slate-600">
             <div className="flex items-center gap-2">
-              <Phone className="size-3.5 text-[#0098a2]" />
+              <Phone className="size-3.5 text-[#da251d]" />
               <span>{t.nav.phoneLabel}</span>
             </div>
             <div className="flex items-center gap-2">
-              <Mail className="size-3.5 text-[#0098a2]" />
+              <Mail className="size-3.5 text-[#da251d]" />
               <span>{t.nav.emailLabel}</span>
             </div>
           </div>

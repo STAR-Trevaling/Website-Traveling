@@ -4,12 +4,12 @@
 @tailwind utilities;
 
 @layer base {
-  :root { --background:0 0% 100%; --foreground:222.2 47.4% 11.2%; --card:0 0% 100%; --card-foreground:222.2 47.4% 11.2%; --popover:0 0% 100%; --popover-foreground:222.2 47.4% 11.2%; --primary:185 100% 32%; --primary-foreground:210 40% 98%; --secondary:210 40% 96.1%; --secondary-foreground:222.2 47.4% 11.2%; --muted:210 40% 96.1%; --muted-foreground:215.4 16.3% 46.9%; --accent:210 40% 96.1%; --accent-foreground:222.2 47.4% 11.2%; --destructive:0 84.2% 60.2%; --destructive-foreground:210 40% 98%; --border:214.3 31.8% 91.4%; --input:214.3 31.8% 91.4%; --ring:185 100% 32%; }
+  :root { --background:0 0% 100%; --foreground:222.2 47.4% 11.2%; --card:0 0% 100%; --card-foreground:222.2 47.4% 11.2%; --popover:0 0% 100%; --popover-foreground:222.2 47.4% 11.2%; --primary:2.5 76% 48.4%; --primary-foreground:210 40% 98%; --secondary:210 40% 96.1%; --secondary-foreground:222.2 47.4% 11.2%; --muted:210 40% 96.1%; --muted-foreground:215.4 16.3% 46.9%; --accent:210 40% 96.1%; --accent-foreground:222.2 47.4% 11.2%; --destructive:0 84.2% 60.2%; --destructive-foreground:210 40% 98%; --border:214.3 31.8% 91.4%; --input:214.3 31.8% 91.4%; --ring:2.5 76% 48.4%; }
   * { @apply border-border; }
-  html { scroll-behavior:smooth; background:#edf7f6; }
-  body { @apply text-foreground; font-family:"Work Sans",Arial,sans-serif; overflow-x:hidden; width:100%; min-height:100vh; background-color:transparent; }
+  html { scroll-behavior:smooth; background:#faf8f8; overflow-x:hidden; }
+  body { @apply text-foreground; font-family:"Work Sans",Arial,sans-serif; width:100%; min-height:100vh; background-color:transparent; }
   a { text-decoration:none; }
-  ::selection { background:#0098a2; color:#fff; }
+  ::selection { background:#da251d; color:#fff; }
 }
 
 .template-page-bg {
@@ -22,6 +22,89 @@
 .display-title { font-family:"Abril Fatface",serif; }
 .logo-title { font-family:"Allison",cursive; }
 .brand-wordmark { font-family:"Cinzel","Playfair Display",Georgia,serif; }
+
+/* Animated Left-to-Right Underline System */
+.hover-underline-ltr {
+  position: relative;
+  display: inline-block;
+  width: fit-content;
+  color: #000000 !important;
+  text-decoration: none !important;
+}
+
+.hover-underline-ltr::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 1.5px;
+  background-color: #000000;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  backface-visibility: hidden;
+}
+
+.hover-underline-ltr:hover::after,
+.group:hover .hover-underline-ltr::after,
+.hover-underline-ltr.active::after {
+  transform: scaleX(1);
+}
+
+.nav-underline-overlay {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none !important;
+}
+
+.nav-underline-overlay::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 1.5px;
+  background-color: #ffffff;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  backface-visibility: hidden;
+}
+
+.nav-underline-overlay:hover::after,
+.group:hover .nav-underline-overlay::after,
+.nav-underline-overlay.active::after {
+  transform: scaleX(1);
+}
+
+.nav-underline-dark {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none !important;
+}
+
+.nav-underline-dark::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 1.5px;
+  background-color: #000000;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  backface-visibility: hidden;
+}
+
+.nav-underline-dark:hover::after,
+.group:hover .nav-underline-dark::after,
+.nav-underline-dark.active::after {
+  transform: scaleX(1);
+}
 
 /* Custom Cinematic Motion & Luxury Travel Micro-animations */
 @keyframes fadeInUp {
@@ -68,13 +151,13 @@
 
 @keyframes kenBurnsSlow {
   0% {
-    transform: scale(1.0);
+    transform: translate3d(0, 0, 0) scale(1.0);
   }
   50% {
-    transform: scale(1.06);
+    transform: translate3d(0, 0, 0) scale(1.035);
   }
   100% {
-    transform: scale(1.0);
+    transform: translate3d(0, 0, 0) scale(1.0);
   }
 }
 
@@ -96,6 +179,19 @@
 
 .animate-ken-burns {
   animation: kenBurnsSlow 18s ease-in-out infinite;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+}
+
+/* Hardware GPU acceleration utilities */
+.transform-gpu {
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+}
+
+.will-change-gpu {
+  will-change: transform, opacity;
 }
 
 /* Stagger delay utilities */
@@ -105,14 +201,25 @@
 .animation-delay-400 { animation-delay: 400ms; }
 .animation-delay-500 { animation-delay: 500ms; }
 
+/* Subtle luxury section divider */
+.section-divider {
+  width: 100%;
+  max-width: 1200px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(218, 37, 29, 0.18) 35%, rgba(218, 37, 29, 0.22) 50%, rgba(218, 37, 29, 0.18) 65%, transparent 100%);
+  margin: 0 auto;
+}
+
 /* Luxury card hover lift with soft ambient shadow */
 .travel-card-lift {
   transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: transform, box-shadow;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
 }
 .travel-card-lift:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 18px 36px -8px rgba(0, 152, 162, 0.16), 0 8px 16px -6px rgba(15, 23, 42, 0.08);
+  transform: translate3d(0, -6px, 0);
+  box-shadow: 0 18px 36px -8px rgba(218, 37, 29, 0.16), 0 8px 16px -6px rgba(15, 23, 42, 0.08);
 }
 .travel-card-lift:active {
   transform: translateY(-2px) scale(0.99);
@@ -127,6 +234,72 @@
   transform: scale(1.08);
 }
 
+/* ==========================================================================
+   Smooth GPU Scroll Reveal & Stagger Animation System
+   Hardware-accelerated transforms & opacity with slow, cinematic cubic-bezier.
+   Default duration 1.15s (1150ms) for noticeable, graceful entrance.
+   ========================================================================== */
+
+:root {
+  --reveal-distance: 32px;
+}
+
+.reveal-init {
+  opacity: 0;
+  transform: translate3d(0, var(--reveal-distance, 32px), 0);
+  transition-property: opacity, transform;
+  transition-duration: 1.15s;
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+  backface-visibility: hidden;
+}
+
+.reveal-init.reveal-down {
+  transform: translate3d(0, calc(-1 * var(--reveal-distance, 32px)), 0);
+}
+
+.reveal-init.reveal-scale {
+  transform: translate3d(0, 18px, 0) scale(0.95);
+}
+
+.reveal-init.reveal-fade {
+  transform: translate3d(0, 0, 0);
+}
+
+/* Active State (Triggered when element scrolls into view) */
+.reveal-init.reveal-active {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
+/* Stagger Children */
+.reveal-child {
+  opacity: 0;
+  transform: translate3d(0, var(--reveal-distance, 28px), 0);
+  transition-property: opacity, transform;
+  transition-duration: 1.15s;
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+  backface-visibility: hidden;
+}
+
+.reveal-child.reveal-down {
+  transform: translate3d(0, calc(-1 * var(--reveal-distance, 28px)), 0);
+}
+
+.reveal-child.reveal-scale {
+  transform: translate3d(0, 16px, 0) scale(0.95);
+}
+
+.reveal-child.reveal-fade {
+  transform: translate3d(0, 0, 0);
+}
+
+.reveal-child.reveal-active {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
 /* Accessible reduced motion support */
 @media (prefers-reduced-motion: reduce) {
   *, ::before, ::after {
@@ -134,5 +307,10 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+  .reveal-init, .reveal-child {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
   }
 }

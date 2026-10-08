@@ -32,7 +32,7 @@ export function NewsletterAwards() {
         <div className="grid gap-8 sm:gap-10 lg:grid-cols-[390px_1fr] xl:grid-cols-[430px_1fr] lg:gap-12 xl:gap-16 items-stretch">
           
           {/* LEFT: NEWSLETTER CARD (Balanced height, perfectly aligned with right side) */}
-          <div className="mx-auto w-full max-w-[440px] bg-[#dceee9]/85 p-6 sm:p-8 md:p-10 lg:p-9 xl:p-10 shadow-2xl backdrop-blur-md rounded-[2px] flex flex-col justify-between">
+          <div className="mx-auto w-full max-w-[440px] bg-[#fdf2f2]/95 p-6 sm:p-8 md:p-10 lg:p-9 xl:p-10 shadow-xl border border-white/70 rounded-[2px] flex flex-col justify-between">
             <div>
               {/* Symmetrical, elegant 2-line title without single orphan words */}
               <h2 className="display-title text-center text-2xl sm:text-3xl lg:text-[34px] font-black tracking-wider text-[#1e293b] leading-tight text-balance">
@@ -62,7 +62,7 @@ export function NewsletterAwards() {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder={t.newsletter.namePlaceholder}
-                    className="h-11 sm:h-12 w-full bg-white px-4 text-xs sm:text-sm text-slate-800 placeholder:text-slate-400 outline-none shadow-sm transition focus:ring-2 focus:ring-[#0098a2]"
+                    className="h-11 sm:h-12 w-full bg-white px-4 text-xs sm:text-sm text-slate-800 placeholder:text-slate-400 outline-none shadow-sm transition focus:ring-2 focus:ring-[#da251d]"
                   />
                 </div>
                 <div>
@@ -72,7 +72,7 @@ export function NewsletterAwards() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder={t.newsletter.emailPlaceholder}
-                    className="h-11 sm:h-12 w-full bg-white px-4 text-xs sm:text-sm text-slate-800 placeholder:text-slate-400 outline-none shadow-sm transition focus:ring-2 focus:ring-[#0098a2]"
+                    className="h-11 sm:h-12 w-full bg-white px-4 text-xs sm:text-sm text-slate-800 placeholder:text-slate-400 outline-none shadow-sm transition focus:ring-2 focus:ring-[#da251d]"
                   />
                 </div>
 
@@ -107,36 +107,39 @@ export function NewsletterAwards() {
               </p>
             </div>
 
-            {/* 2 Columns x 3 Rows Layout */}
+            {/* 2 Columns x 3 Rows Layout with Stagger Delay */}
             <div className="mt-6 sm:mt-7 grid grid-cols-1 sm:grid-cols-2 gap-x-5 sm:gap-x-6 lg:gap-x-8 gap-y-3 sm:gap-y-4">
-              {t.awards.items.map((item, idx) => (
-                <div
-                  key={idx}
-                  className="group flex items-center gap-3 sm:gap-3.5 p-2 rounded-[2px] transition-all duration-300 hover:bg-white/80 hover:shadow-sm hover:-translate-y-0.5 cursor-pointer border border-transparent hover:border-slate-200/60"
-                >
-                  {/* Photo thumbnail */}
-                  <div className="relative h-[68px] w-[94px] sm:h-[76px] sm:w-[106px] md:h-[80px] md:w-[114px] shrink-0 overflow-hidden shadow-sm rounded-[2px] bg-slate-200">
-                    <Image
-                      src={AWARD_IMAGES[idx] || AWARD_IMAGES[0]}
-                      alt={item.title}
-                      fill
-                      unoptimized
-                      className="object-cover transition-transform duration-500 ease-out group-hover:scale-110"
-                    />
-                    <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-300" />
-                  </div>
+              {t.awards.items.map((item, idx) => {
+                const delayClass = idx === 0 ? "" : idx === 1 ? "animation-delay-100" : idx === 2 ? "animation-delay-200" : idx === 3 ? "animation-delay-300" : idx === 4 ? "animation-delay-400" : "animation-delay-500";
+                return (
+                  <div
+                    key={idx}
+                    className={`group flex items-center gap-3 sm:gap-3.5 p-2 rounded-[2px] transition-all duration-300 hover:bg-white/80 hover:shadow-sm hover:-translate-y-0.5 cursor-pointer border border-transparent hover:border-slate-200/60 transform-gpu ${delayClass}`}
+                  >
+                    {/* Photo thumbnail */}
+                    <div className="relative h-[68px] w-[94px] sm:h-[76px] sm:w-[106px] md:h-[80px] md:w-[114px] shrink-0 overflow-hidden shadow-sm rounded-[2px] bg-slate-200">
+                      <Image
+                        src={AWARD_IMAGES[idx] || AWARD_IMAGES[0]}
+                        alt={item.title}
+                        fill
+                        unoptimized
+                        className="object-cover transition-transform duration-500 ease-out group-hover:scale-110"
+                      />
+                      <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-300" />
+                    </div>
 
-                  {/* Text details */}
-                  <div className="flex-1 min-w-0">
-                    <h3 className="text-xs sm:text-[13px] md:text-sm font-bold text-[#1e293b] leading-snug group-hover:text-[#0098a2] transition-colors duration-200">
-                      {item.title}
-                    </h3>
-                    <p className="mt-0.5 text-[11px] sm:text-xs text-[#64748b] font-light leading-relaxed line-clamp-2">
-                      {item.subtitle}
-                    </p>
+                    {/* Text details */}
+                    <div className="flex-1 min-w-0">
+                      <h3 className="text-xs sm:text-[13px] md:text-sm font-bold text-[#1e293b] leading-snug group-hover:text-[#da251d] transition-colors duration-200">
+                        {item.title}
+                      </h3>
+                      <p className="mt-0.5 text-[11px] sm:text-xs text-[#64748b] font-light leading-relaxed line-clamp-2">
+                        {item.subtitle}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
 

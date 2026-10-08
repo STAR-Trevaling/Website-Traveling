@@ -48,7 +48,7 @@ export function PlaceCard({ place }: PlaceCardProps) {
         </div>
 
         <div className="p-5">
-          <h3 className="script-title text-2xl font-bold text-slate-900 group-hover:text-[#0098a2] transition-colors leading-tight">
+          <h3 className="script-title text-2xl font-bold text-slate-900 group-hover:text-[#da251d] transition-colors leading-tight">
             {displayName}
           </h3>
 
@@ -75,7 +75,7 @@ export function PlaceCard({ place }: PlaceCardProps) {
             </span>
           </div>
 
-          <span className="text-slate-900 font-bold text-xs tracking-wider uppercase group-hover:text-[#0098a2] flex items-center gap-1 transition-colors">
+          <span className="text-slate-900 font-bold text-xs tracking-wider uppercase group-hover:text-[#da251d] flex items-center gap-1 transition-colors">
             <span>{t.common.details}</span>
             <ArrowRight className="size-3 transition-transform duration-300 group-hover:translate-x-1" />
           </span>

@@ -6,7 +6,8 @@ export default {
   theme: {
     extend: {
       colors: {
-        ocean: {50:"#effcfc",100:"#d6f7f6",200:"#b1efed",300:"#7de1df",400:"#42cac8",500:"#0098a2",600:"#087c86",700:"#0c626b",800:"#104f57",900:"#123f46"},
+        ocean: {50:"#fff1f2",100:"#ffe4e6",200:"#fecdd3",300:"#fda4af",400:"#fb7185",500:"#da251d",600:"#c92018",700:"#b91c1c",800:"#991b1b",900:"#7f1d1d"},
+        vnred: {50:"#fff1f2",100:"#ffe4e6",200:"#fecdd3",300:"#fda4af",400:"#fb7185",500:"#da251d",600:"#c92018",700:"#b91c1c",800:"#991b1b",900:"#7f1d1d"},
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

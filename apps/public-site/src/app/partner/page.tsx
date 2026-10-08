@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import { ShieldCheck, TrendingUp, Sparkles, Award, FileCheck2, Search, CheckCircle, Handshake } from "lucide-react";
-import { PageHero } from "@/components/layout/page-hero";
+import { SiteHeader } from "@/components/layout/site-header";
+import { Breadcrumb } from "@/components/shared/breadcrumb";
 import { PartnerForm } from "@/components/partner/partner-form";
-import { VIETNAM_IMAGES } from "@/lib/assets";
 import { DICTIONARY } from "@/lib/i18n/dictionary";
 
 export const metadata: Metadata = {
@@ -22,17 +22,39 @@ export default async function PartnerPage() {
 
   return (
     <>
-      <PageHero
-        title="Đồng Hành Cùng Star Travels"
-        titleEn="Partner with Star Travels"
-        subtitle="Hệ sinh thái đối tác lữ hành, resort và nghệ nhân bản địa kiến tạo chuẩn mực du lịch mới tại Việt Nam."
-        subtitleEn="Join an exclusive ecosystem of local operators, boutique resorts, and cultural artisans."
-        image={VIETNAM_IMAGES.hero}
-      />
+      <SiteHeader overlay={false} />
 
-      <main className="template-page-bg min-h-screen text-[#282828] overflow-x-hidden">
+      <main className="template-page-bg min-h-screen text-[#282828]">
+        {/* HEADER & INTRO */}
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 pt-8 sm:pt-12 md:px-12 lg:px-16">
+          {/* Breadcrumb Navigation */}
+          <div className="mb-6 sm:mb-8">
+            <Breadcrumb
+              items={[
+                { label: isEn ? "Home" : "Trang Chủ", href: "/" },
+                { label: isEn ? "Partner Portal" : "Cổng Đối Tác" },
+              ]}
+            />
+          </div>
+
+          {/* Page Title Card */}
+          <div className="rounded-[2px] bg-white/85 backdrop-blur-md p-6 sm:p-8 md:p-10 shadow-[0_4px_24px_rgba(0,152,162,0.06)] border border-white/90 mb-8 sm:mb-12">
+            <span className="inline-block px-3 py-1 rounded-[2px] bg-[#0098a2]/15 text-[#007a82] border border-[#0098a2]/25 text-[11px] font-bold uppercase tracking-[0.2em] mb-2">
+              {isEn ? "Partner Portal" : "Cổng Đối Tác"}
+            </span>
+            <h1 className="script-title mt-1 text-4xl sm:text-5xl md:text-6xl text-[#0f172a] leading-tight">
+              {isEn ? "Partner with Star Travels" : "Đồng Hành Cùng Star Travels"}
+            </h1>
+            <p className="mt-2 text-sm sm:text-base md:text-[17px] text-slate-800 font-medium max-w-3xl leading-relaxed">
+              {isEn
+                ? "Join an exclusive ecosystem of local operators, boutique resorts, and cultural artisans."
+                : "Hệ sinh thái đối tác lữ hành, resort và nghệ nhân bản địa kiến tạo chuẩn mực du lịch mới tại Việt Nam."}
+            </p>
+          </div>
+        </div>
+
         {/* SECTION 1: VALUE PROPOSITION */}
-        <section className="relative w-full px-4 sm:px-6 py-10 sm:py-16 md:py-20 md:px-12 lg:px-16">
+        <section className="relative w-full px-4 sm:px-6 pb-10 sm:pb-16 md:pb-20 md:px-12 lg:px-16">
           <div className="mx-auto max-w-7xl">
             <div className="text-center max-w-3xl mx-auto">
               <span className="text-xs font-bold uppercase tracking-[0.25em] text-slate-900">

@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { cookies } from "next/headers";
-import { ChevronRight } from "lucide-react";
 import { SiteHeader } from "@/components/layout/site-header";
 import { PlaceCard } from "@/components/shared/place-card";
+import { Breadcrumb } from "@/components/shared/breadcrumb";
 import { publicApi, safe } from "@/lib/api";
 import { VIETNAM_IMAGES } from "@/lib/assets";
-import { VIETNAM_EXPERIENCES } from "@/lib/experiences-data";
+import { VIETNAM_EXPERIENCES } from "@/data/seed";
 import { DICTIONARY } from "@/lib/i18n/dictionary";
 import type { Locale } from "@/lib/i18n/types";
 
@@ -81,43 +81,48 @@ export default async function ExperiencesPage({ searchParams }: ExperiencesPageP
     <>
       <SiteHeader overlay={false} />
 
-      <main className="template-page-bg min-h-screen text-[#282828] px-4 sm:px-6 py-8 sm:py-12 md:px-12 lg:px-16 overflow-x-hidden">
+      <main className="template-page-bg min-h-screen text-[#282828] px-4 sm:px-6 py-8 sm:py-12 md:px-12 lg:px-16">
         <div className="mx-auto max-w-7xl">
           {/* Breadcrumb Navigation */}
-          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs text-slate-500 mb-6 sm:mb-8 font-normal">
-            <Link href="/" className="hover:text-[#0098a2] transition">
-              {locale === "en" ? "Home" : "Trang Chủ"}
-            </Link>
-            <ChevronRight className="size-3 text-slate-400" />
-            <span className="text-slate-800 font-medium">
-              {locale === "en" ? "Experiences" : "Trải Nghiệm"}
-            </span>
-          </nav>
+          <div className="mb-6 sm:mb-8">
+            <Breadcrumb
+              items={[
+                { label: locale === "en" ? "Home" : "Trang Chủ", href: "/" },
+                { label: locale === "en" ? "Experiences" : "Trải Nghiệm" },
+              ]}
+            />
+          </div>
 
           {/* HEADER & FILTER BAR */}
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 sm:gap-6 pb-6 sm:pb-10 border-b border-slate-200">
+          <div className="rounded-[2px] bg-white/85 backdrop-blur-md p-6 sm:p-8 md:p-10 shadow-[0_4px_24px_rgba(0,152,162,0.06)] border border-white/90 mb-8 sm:mb-12">
             <div>
-              <span className="text-xs font-bold uppercase tracking-[0.25em] text-slate-900">
+              <span className="inline-block px-3 py-1 rounded-[2px] bg-[#0098a2]/15 text-[#007a82] border border-[#0098a2]/25 text-[11px] font-bold uppercase tracking-[0.2em] mb-2">
                 {ep.badge}
               </span>
-              <h2 className="script-title mt-1 text-3xl sm:text-4xl md:text-5xl text-[#1e293b]">
+              <h1 className="script-title mt-1 text-4xl sm:text-5xl md:text-6xl text-[#0f172a] leading-tight">
                 {ep.heading}
-              </h2>
+              </h1>
+              <p className="mt-2 text-sm sm:text-base md:text-[17px] text-slate-800 font-medium max-w-2xl leading-relaxed">
+                {locale === "en"
+                  ? "Curated collection of authentic local adventures, expeditions and cultural experiences across Vietnam."
+                  : "Tuyển tập những hoạt động thám hiểm bản địa, du thuyền và trải nghiệm văn hóa đặc sắc khắp Việt Nam."}
+              </p>
             </div>
 
             {/* Category Filter Pills */}
-            <div className="flex flex-wrap gap-1.5 sm:gap-2">
+            <div className="mt-6 pt-5 border-t border-slate-200/60 flex flex-wrap gap-1.5 sm:gap-2">
               {categories.map((cat) => {
                 const isActive = currentCategory === cat.slug;
                 const href = cat.slug ? `/experiences?category=${cat.slug}` : "/experiences";
+
                 return (
                   <Link
                     key={cat.slug || "all"}
                     href={href}
-                    className={`px-3 sm:px-4 py-1.5 sm:py-2 text-[11px] sm:text-xs font-semibold uppercase tracking-wider rounded-[2px] transition-all duration-200 cursor-pointer ${
+                    className={`px-3.5 sm:px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-[2px] transition-all duration-200 cursor-pointer ${
                       isActive
                         ? "bg-[#0098a2] text-white shadow-[0px_4px_14px_rgba(0,152,162,0.35)]"
-                        : "bg-white text-slate-700 hover:bg-white hover:border-slate-400 hover:shadow-[0px_4px_16px_rgba(0,0,0,0.08)] hover:-translate-y-0.5 border border-slate-200"
+                        : "bg-white text-slate-800 hover:bg-slate-50 hover:border-slate-400 hover:shadow-sm border border-slate-200"
                     }`}
                   >
                     {cat.label}

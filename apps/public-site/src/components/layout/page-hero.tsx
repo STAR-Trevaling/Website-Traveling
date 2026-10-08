@@ -26,8 +26,8 @@ export async function PageHero({ title, titleEn, subtitle, subtitleEn, image }: 
         unoptimized
         className="object-cover"
       />
-      {/* High-contrast gradient overlay ensuring crystal-clear text readability */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-black/40" />
+      {/* Bright cinematic gradient overlay ensuring vivid landmark imagery with crystal-clear text readability */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/25 to-black/20" />
       <SiteHeader overlay />
 
       <div className="relative z-10 mx-auto w-full max-w-7xl px-4 sm:px-6 md:px-12 pb-7 sm:pb-10 pt-24 sm:pt-28 md:pt-32">

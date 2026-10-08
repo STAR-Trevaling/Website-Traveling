@@ -4,17 +4,23 @@ import { useState, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Clock, MapPin, Star, CheckCircle2, Bus, Hotel, ArrowRight } from "lucide-react";
-import { VIETNAM_TOURS } from "@/lib/tours-data";
+import { VIETNAM_TOURS, type TourItem } from "@/data/seed";
 import { useLanguage } from "@/lib/i18n/context";
 
-export function ToursCatalog() {
+interface ToursCatalogProps {
+  initialTours?: TourItem[];
+}
+
+export function ToursCatalog({ initialTours }: ToursCatalogProps) {
   const { t, isEnglish } = useLanguage();
   const [selectedRegion, setSelectedRegion] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [sortBy, setSortBy] = useState<"featured" | "price-asc" | "price-desc">("featured");
 
+  const baseTours = (initialTours && initialTours.length > 0) ? initialTours : VIETNAM_TOURS;
+
   const filteredTours = useMemo(() => {
-    let result = [...VIETNAM_TOURS];
+    let result = [...baseTours];
 
     if (selectedRegion !== "all") {
       result = result.filter((t) => t.region === selectedRegion);
@@ -63,7 +69,7 @@ export function ToursCatalog() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder={t.toursPage.searchPlaceholder}
-              className="w-full rounded-[2px] border border-slate-200 bg-slate-50 px-3.5 sm:px-4 py-2.5 sm:py-3 text-xs sm:text-sm focus:border-[#0098a2] focus:bg-white focus:outline-none focus:ring-1 focus:ring-[#0098a2]"
+              className="w-full rounded-[2px] border border-slate-200 bg-slate-50 px-3.5 sm:px-4 py-2.5 sm:py-3 text-xs sm:text-sm focus:border-[#da251d] focus:bg-white focus:outline-none focus:ring-1 focus:ring-[#da251d]"
             />
           </div>
 
@@ -80,7 +86,7 @@ export function ToursCatalog() {
                   onClick={() => setSelectedRegion(r.key)}
                   className={`rounded-[2px] px-3 sm:px-4 py-2.5 sm:py-3 text-xs md:text-sm font-semibold transition-all duration-200 uppercase tracking-wider text-center cursor-pointer ${
                     selectedRegion === r.key
-                      ? "bg-[#0098a2] text-white shadow-[0px_4px_14px_rgba(0,152,162,0.35)]"
+                      ? "bg-[#da251d] text-white shadow-[0px_4px_14px_rgba(218,37,29,0.35)]"
                       : "bg-slate-100 text-slate-600 hover:bg-white hover:shadow-[0px_4px_16px_rgba(0,0,0,0.08)] hover:-translate-y-0.5"
                   }`}
                 >
@@ -98,7 +104,7 @@ export function ToursCatalog() {
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as any)}
-              className="w-full md:w-auto h-[42px] sm:h-[46px] rounded-[2px] border border-slate-200 bg-white px-3 sm:px-4 text-xs md:text-sm font-medium text-slate-700 focus:border-[#0098a2] focus:outline-none"
+              className="w-full md:w-auto h-[42px] sm:h-[46px] rounded-[2px] border border-slate-200 bg-white px-3 sm:px-4 text-xs md:text-sm font-medium text-slate-700 focus:border-[#da251d] focus:outline-none"
             >
               <option value="featured">{t.toursPage.sortOptions.featured}</option>
               <option value="price-asc">{t.toursPage.sortOptions.priceAsc}</option>
@@ -168,7 +174,7 @@ export function ToursCatalog() {
                     </span>
                   </div>
 
-                  <h3 className="script-title mt-2 text-2xl font-bold leading-tight text-slate-900 group-hover:text-[#0098a2] transition-colors line-clamp-2">
+                  <h3 className="script-title mt-2 text-2xl font-bold leading-tight text-slate-900 group-hover:text-[#da251d] transition-colors line-clamp-2">
                     {displayTitle}
                   </h3>
 
@@ -221,7 +227,7 @@ export function ToursCatalog() {
                 <div className="flex gap-2">
                   <Link
                     href={`/tours/${tour.slug}`}
-                    className="rounded-[2px] bg-[#0098a2] px-4 py-2 text-xs font-bold uppercase tracking-wider text-white shadow-sm transition-all duration-200 hover:bg-[#008f99] hover:shadow-[0px_6px_20px_rgba(0,152,162,0.35)] hover:-translate-y-0.5 active:translate-y-0 flex items-center gap-1"
+                    className="rounded-[2px] bg-[#da251d] px-4 py-2 text-xs font-bold uppercase tracking-wider text-white shadow-sm transition-all duration-200 hover:bg-[#c92018] hover:shadow-[0px_6px_20px_rgba(218,37,29,0.35)] hover:-translate-y-0.5 active:translate-y-0 flex items-center gap-1"
                   >
                     <span>{t.toursPage.viewDetails}</span>
                     <ArrowRight className="size-3 transition-transform duration-200 group-hover:translate-x-0.5" />

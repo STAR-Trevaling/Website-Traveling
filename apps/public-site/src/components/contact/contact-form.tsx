@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Send, CheckCircle2 } from "lucide-react";
 import { useLanguage } from "@/lib/i18n/context";
+import { submitInquiry } from "@/app/actions";
 
 export function ContactForm() {
   const { t, isEnglish } = useLanguage();
@@ -21,13 +22,25 @@ export function ContactForm() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
+    const res = await submitInquiry({
+      name: formData.name,
+      email: formData.email,
+      phone: formData.phone,
+      destination: formData.destination,
+      travelDate: formData.travelDate,
+      guests: formData.guests,
+      message: formData.message,
+      inquiry_type: "consultation",
+    });
+    setLoading(false);
+    if (res.ok) {
       setSubmitted(true);
-    }, 600);
+    } else {
+      alert(res.message);
+    }
   };
 
   if (submitted) {
@@ -55,7 +68,7 @@ export function ContactForm() {
               message: "",
             });
           }}
-          className="mt-8 bg-[#0098a2] text-white px-8 py-3 text-xs md:text-sm font-semibold tracking-widest uppercase rounded-[2px] shadow-sm transition-all duration-200 hover:bg-[#008f99] hover:shadow-[0px_8px_25px_rgba(0,152,162,0.35)] hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
+          className="mt-8 bg-[#da251d] text-white px-8 py-3 text-xs md:text-sm font-semibold tracking-widest uppercase rounded-[2px] shadow-sm transition-all duration-200 hover:bg-[#c92018] hover:shadow-[0px_8px_25px_rgba(218,37,29,0.35)] hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
         >
           {isEnglish ? "Submit Another Request" : "Gửi Yêu Cầu Khác"}
         </button>
@@ -76,7 +89,7 @@ export function ContactForm() {
             placeholder={f.fullNamePlaceholder}
             value={formData.name}
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-            className="w-full bg-slate-50 border border-slate-200 px-4 py-3 text-sm text-slate-800 placeholder:text-slate-400 outline-none transition focus:bg-white focus:border-[#0098a2] focus:ring-1 focus:ring-[#0098a2] rounded-[2px]"
+            className="w-full bg-slate-50 border border-slate-200 px-4 py-3 text-sm text-slate-800 placeholder:text-slate-400 outline-none transition focus:bg-white focus:border-[#da251d] focus:ring-1 focus:ring-[#da251d] rounded-[2px]"
           />
         </div>
 
@@ -90,7 +103,7 @@ export function ContactForm() {
             placeholder={f.phonePlaceholder}
             value={formData.phone}
             onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-            className="w-full bg-slate-50 border border-slate-200 px-4 py-3 text-sm text-slate-800 placeholder:text-slate-400 outline-none transition focus:bg-white focus:border-[#0098a2] focus:ring-1 focus:ring-[#0098a2] rounded-[2px]"
+            className="w-full bg-slate-50 border border-slate-200 px-4 py-3 text-sm text-slate-800 placeholder:text-slate-400 outline-none transition focus:bg-white focus:border-[#da251d] focus:ring-1 focus:ring-[#da251d] rounded-[2px]"
           />
         </div>
       </div>
@@ -106,7 +119,7 @@ export function ContactForm() {
             placeholder={f.emailPlaceholder}
             value={formData.email}
             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-            className="w-full bg-slate-50 border border-slate-200 px-4 py-3 text-sm text-slate-800 placeholder:text-slate-400 outline-none transition focus:bg-white focus:border-[#0098a2] focus:ring-1 focus:ring-[#0098a2] rounded-[2px]"
+            className="w-full bg-slate-50 border border-slate-200 px-4 py-3 text-sm text-slate-800 placeholder:text-slate-400 outline-none transition focus:bg-white focus:border-[#da251d] focus:ring-1 focus:ring-[#da251d] rounded-[2px]"
           />
         </div>
 
@@ -117,7 +130,7 @@ export function ContactForm() {
           <select
             value={formData.destination}
             onChange={(e) => setFormData({ ...formData, destination: e.target.value })}
-            className="w-full bg-slate-50 border border-slate-200 px-4 py-3 text-sm text-slate-800 outline-none transition focus:bg-white focus:border-[#0098a2] focus:ring-1 focus:ring-[#0098a2] rounded-[2px]"
+            className="w-full bg-slate-50 border border-slate-200 px-4 py-3 text-sm text-slate-800 outline-none transition focus:bg-white focus:border-[#da251d] focus:ring-1 focus:ring-[#da251d] rounded-[2px]"
           >
             <option value="ha-long">
               {isEnglish ? "Ha Long Bay (Heritage Cruise)" : "Vịnh Hạ Long (Du thuyền di sản)"}
@@ -150,7 +163,7 @@ export function ContactForm() {
             type="date"
             value={formData.travelDate}
             onChange={(e) => setFormData({ ...formData, travelDate: e.target.value })}
-            className="w-full bg-slate-50 border border-slate-200 px-4 py-3 text-sm text-slate-800 outline-none transition focus:bg-white focus:border-[#0098a2] focus:ring-1 focus:ring-[#0098a2] rounded-[2px]"
+            className="w-full bg-slate-50 border border-slate-200 px-4 py-3 text-sm text-slate-800 outline-none transition focus:bg-white focus:border-[#da251d] focus:ring-1 focus:ring-[#da251d] rounded-[2px]"
           />
         </div>
 
@@ -164,7 +177,7 @@ export function ContactForm() {
             max="100"
             value={formData.guests}
             onChange={(e) => setFormData({ ...formData, guests: e.target.value })}
-            className="w-full bg-slate-50 border border-slate-200 px-4 py-3 text-sm text-slate-800 outline-none transition focus:bg-white focus:border-[#0098a2] focus:ring-1 focus:ring-[#0098a2] rounded-[2px]"
+            className="w-full bg-slate-50 border border-slate-200 px-4 py-3 text-sm text-slate-800 outline-none transition focus:bg-white focus:border-[#da251d] focus:ring-1 focus:ring-[#da251d] rounded-[2px]"
           />
         </div>
       </div>
@@ -178,14 +191,14 @@ export function ContactForm() {
           placeholder={f.messagePlaceholder}
           value={formData.message}
           onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-          className="w-full bg-slate-50 border border-slate-200 px-4 py-3 text-sm text-slate-800 placeholder:text-slate-400 outline-none transition focus:bg-white focus:border-[#0098a2] focus:ring-1 focus:ring-[#0098a2] rounded-[2px]"
+          className="w-full bg-slate-50 border border-slate-200 px-4 py-3 text-sm text-slate-800 placeholder:text-slate-400 outline-none transition focus:bg-white focus:border-[#da251d] focus:ring-1 focus:ring-[#da251d] rounded-[2px]"
         />
       </div>
 
       <button
         type="submit"
         disabled={loading}
-        className="w-full bg-[#0098a2] text-white py-4 text-xs md:text-sm font-semibold tracking-widest uppercase rounded-[2px] shadow-sm transition-all duration-200 hover:bg-[#008f99] hover:shadow-[0px_8px_25px_rgba(0,152,162,0.35)] hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-70 flex items-center justify-center gap-2 cursor-pointer"
+        className="w-full bg-[#da251d] text-white py-4 text-xs md:text-sm font-semibold tracking-widest uppercase rounded-[2px] shadow-sm transition-all duration-200 hover:bg-[#c92018] hover:shadow-[0px_8px_25px_rgba(218,37,29,0.35)] hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-70 flex items-center justify-center gap-2 cursor-pointer"
       >
         <Send className="size-4" />
         <span>

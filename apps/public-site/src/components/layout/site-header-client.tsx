@@ -230,16 +230,23 @@ export function SiteHeaderClient({ user, overlay = false }: SiteHeaderClientProp
                       type="button"
                       onClick={() => toggleDropdown(item.label)}
                       aria-expanded={isOpen}
-                      className={`inline-flex items-center gap-1.5 py-0.5 tracking-wide transition-colors duration-150 cursor-pointer ${
+                      className={`group inline-flex items-center gap-1.5 py-0.5 tracking-wide transition-colors duration-150 cursor-pointer ${
                         isGroupActive
-                          ? "font-medium underline underline-offset-4 " +
-                            (overlay ? "text-white" : "text-slate-950 font-semibold")
+                          ? overlay
+                            ? "text-white font-medium"
+                            : "text-slate-950 font-semibold"
                           : overlay
-                          ? "text-white/95 hover:text-white hover:underline underline-offset-4"
-                          : "text-slate-700 hover:text-slate-950 hover:underline underline-offset-4"
+                          ? "text-white/95 hover:text-white"
+                          : "text-slate-700 hover:text-slate-950"
                       }`}
                     >
-                      <span>{item.label}</span>
+                      <span
+                        className={`${
+                          overlay ? "nav-underline-overlay" : "nav-underline-dark"
+                        } ${isGroupActive ? "active" : ""}`}
+                      >
+                        {item.label}
+                      </span>
                       <ChevronDown
                         className={`size-3.5 transition-transform duration-200 ${
                           isOpen ? "rotate-180" : ""
@@ -247,7 +254,7 @@ export function SiteHeaderClient({ user, overlay = false }: SiteHeaderClientProp
                       />
                     </button>
 
-                    {/* Dropdown Menu Popover matching template media_1791280764148.png */}
+                    {/* Dropdown Menu Popover matching template */}
                     {isOpen && (
                       <div
                         className="absolute left-0 top-full pt-2 z-50 animate-in fade-in duration-150"
@@ -264,18 +271,17 @@ export function SiteHeaderClient({ user, overlay = false }: SiteHeaderClientProp
                                 pathname === sub.href || pathname.startsWith(sub.href + "/");
 
                               return (
-                                <Link
-                                  key={sub.href}
-                                  href={sub.href}
-                                  onClick={() => setOpenDropdown(null)}
-                                  className={`block text-[13px] sm:text-[14px] leading-normal transition-colors ${
-                                    isSubActive
-                                      ? "text-[#0098a2] font-semibold"
-                                      : "text-slate-800 hover:text-[#0098a2]"
-                                  }`}
-                                >
-                                  {sub.label}
-                                </Link>
+                                <div key={sub.href}>
+                                  <Link
+                                    href={sub.href}
+                                    onClick={() => setOpenDropdown(null)}
+                                    className={`hover-underline-ltr block w-fit text-[13px] sm:text-[14px] leading-normal text-black transition-colors ${
+                                      isSubActive ? "active font-bold" : "font-normal"
+                                    }`}
+                                  >
+                                    <span className="text-black">{sub.label}</span>
+                                  </Link>
+                                </div>
                               );
                             })}
                           </div>
@@ -295,10 +301,13 @@ export function SiteHeaderClient({ user, overlay = false }: SiteHeaderClientProp
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`py-0.5 tracking-wide transition-colors duration-150 hover:underline underline-offset-4 ${
+                  className={`py-0.5 tracking-wide transition-colors duration-150 cursor-pointer ${
+                    overlay
+                      ? "nav-underline-overlay text-white"
+                      : "nav-underline-dark text-slate-900"
+                  } ${
                     isActive
-                      ? "font-medium underline underline-offset-4 " +
-                        (overlay ? "text-white" : "text-slate-950 font-semibold")
+                      ? "active font-medium"
                       : overlay
                       ? "text-white/95 hover:text-white"
                       : "text-slate-700 hover:text-slate-950"

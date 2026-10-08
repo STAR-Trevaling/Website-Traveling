@@ -2,8 +2,9 @@
 
 import { useState } from "react";
 import { Users, Calendar, ShieldCheck, Check } from "lucide-react";
-import type { TourItem } from "@/lib/tours-data";
+import type { TourItem } from "@/data/seed";
 import { useLanguage } from "@/lib/i18n/context";
+import { submitInquiry } from "@/app/actions";
 
 interface TourBookingCardProps {
   tour: TourItem;
@@ -25,12 +26,26 @@ export function TourBookingCard({ tour }: TourBookingCardProps) {
   const totalPrice = adults * pricePerAdult + children * pricePerChild;
   const b = t.tourDetailPage.bookingCard;
 
-  const handleBookingSubmit = (e: React.FormEvent) => {
+  const handleBookingSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsBooked(true);
-    setTimeout(() => {
-      setShowModal(false);
-    }, 2500);
+    const res = await submitInquiry({
+      name: fullName,
+      email: email,
+      phone: phone,
+      tour: tour.slug,
+      travelDate: departureDate,
+      guests: adults + children,
+      message: `Booking for ${adults} adults, ${children} children. Total: ${totalPrice.toLocaleString()} VND.`,
+      inquiry_type: "tour_booking",
+    });
+    if (res.ok) {
+      setIsBooked(true);
+      setTimeout(() => {
+        setShowModal(false);
+      }, 2500);
+    } else {
+      alert(res.message);
+    }
   };
 
   const displayTitle = isEnglish && tour.title_en ? tour.title_en : tour.title;
@@ -72,7 +87,7 @@ export function TourBookingCard({ tour }: TourBookingCardProps) {
               type="date"
               value={departureDate}
               onChange={(e) => setDepartureDate(e.target.value)}
-              className="w-full rounded-[2px] border border-slate-200 px-3 py-2 text-xs md:text-sm text-slate-800 focus:border-[#0098a2] focus:outline-none"
+              className="w-full rounded-[2px] border border-slate-200 px-3 py-2 text-xs md:text-sm text-slate-800 focus:border-[#da251d] focus:outline-none"
             />
           </div>
 
@@ -150,7 +165,7 @@ export function TourBookingCard({ tour }: TourBookingCardProps) {
         <button
           type="button"
           onClick={() => setShowModal(true)}
-          className="mt-6 w-full rounded-[2px] bg-[#0098a2] py-3.5 text-xs md:text-sm font-bold uppercase tracking-wider text-white shadow-sm transition-all duration-200 hover:bg-[#008f99] hover:shadow-[0px_8px_25px_rgba(0,152,162,0.35)] hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
+          className="mt-6 w-full rounded-[2px] bg-[#da251d] py-3.5 text-xs md:text-sm font-bold uppercase tracking-wider text-white shadow-sm transition-all duration-200 hover:bg-[#c92018] hover:shadow-[0px_8px_25px_rgba(218,37,29,0.35)] hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
         >
           {b.bookNowBtn}
         </button>
@@ -209,7 +224,7 @@ export function TourBookingCard({ tour }: TourBookingCardProps) {
                       value={fullName}
                       onChange={(e) => setFullName(e.target.value)}
                       placeholder={b.fullNamePlaceholder}
-                      className="w-full rounded-[2px] border border-slate-200 px-3 py-2 text-sm focus:border-[#0098a2] focus:outline-none"
+                      className="w-full rounded-[2px] border border-slate-200 px-3 py-2 text-sm focus:border-[#da251d] focus:outline-none"
                     />
                   </div>
 
@@ -224,7 +239,7 @@ export function TourBookingCard({ tour }: TourBookingCardProps) {
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
                         placeholder={b.phonePlaceholder}
-                        className="w-full rounded-[2px] border border-slate-200 px-3 py-2 text-sm focus:border-[#0098a2] focus:outline-none"
+                        className="w-full rounded-[2px] border border-slate-200 px-3 py-2 text-sm focus:border-[#da251d] focus:outline-none"
                       />
                     </div>
                     <div>
@@ -237,7 +252,7 @@ export function TourBookingCard({ tour }: TourBookingCardProps) {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder={b.emailPlaceholder}
-                        className="w-full rounded-[2px] border border-slate-200 px-3 py-2 text-sm focus:border-[#0098a2] focus:outline-none"
+                        className="w-full rounded-[2px] border border-slate-200 px-3 py-2 text-sm focus:border-[#da251d] focus:outline-none"
                       />
                     </div>
                   </div>
@@ -273,7 +288,7 @@ export function TourBookingCard({ tour }: TourBookingCardProps) {
                     </button>
                     <button
                       type="submit"
-                      className="flex-1 rounded-[2px] bg-[#0098a2] py-2.5 text-xs font-bold uppercase tracking-wider text-white shadow-sm transition-all duration-200 hover:bg-[#008f99] hover:shadow-[0px_8px_25px_rgba(0,152,162,0.35)] hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
+                      className="flex-1 rounded-[2px] bg-[#da251d] py-2.5 text-xs font-bold uppercase tracking-wider text-white shadow-sm transition-all duration-200 hover:bg-[#c92018] hover:shadow-[0px_8px_25px_rgba(218,37,29,0.35)] hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
                     >
                       {b.confirmBookingBtn}
                     </button>

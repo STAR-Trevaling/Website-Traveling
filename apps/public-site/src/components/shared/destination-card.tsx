@@ -41,7 +41,7 @@ export async function DestinationCard({ destination }: DestinationCardProps) {
         </div>
 
         <div className="p-5">
-          <h3 className="script-title text-2xl font-bold text-slate-900 group-hover:text-[#0098a2] transition-colors leading-tight">
+          <h3 className="script-title text-2xl font-bold text-slate-900 group-hover:text-[#da251d] transition-colors leading-tight">
             {displayName}
           </h3>
 
@@ -71,7 +71,7 @@ export async function DestinationCard({ destination }: DestinationCardProps) {
           )}
         </div>
 
-        <span className="text-xs font-semibold uppercase tracking-wider text-slate-700 group-hover:text-[#0098a2] flex items-center gap-1 transition-colors">
+        <span className="text-xs font-semibold uppercase tracking-wider text-slate-700 group-hover:text-[#da251d] flex items-center gap-1 transition-colors">
           <span>{isEn ? "Explore" : "Khám phá"}</span>
           <ArrowRight className="size-3 transition-transform duration-300 group-hover:translate-x-1" />
         </span>
