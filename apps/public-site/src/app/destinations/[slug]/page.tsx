@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -19,6 +20,24 @@ import type { Locale } from "@/lib/i18n/types";
 
 interface DestinationDetailProps {
   params: Promise<{ slug: string }>;
+}
+
+export async function generateMetadata({ params }: DestinationDetailProps): Promise<Metadata> {
+  const { slug } = await params;
+  const destination = ALL_VIETNAM_DESTINATIONS.find((d) => d.slug === slug);
+  const title = destination?.name ? `${destination.name} - Khám Phá & Du Lịch | STAR Travels` : "Điểm Đến | STAR Travels";
+  const description = destination?.description || "Khám phá vẻ đẹp, danh lam thắng cảnh và văn hóa độc đáo cùng STAR Travels.";
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      images: (destination?.image_url || (destination as any)?.image)
+        ? [{ url: destination?.image_url || (destination as any)?.image }]
+        : [],
+    },
+  };
 }
 
 export default async function DestinationDetail({ params }: DestinationDetailProps) {
@@ -75,8 +94,26 @@ export default async function DestinationDetail({ params }: DestinationDetailPro
   const displayDesc =
     isEn && destination.description_en ? destination.description_en : destination.description;
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "TouristDestination",
+    name: displayName,
+    description: displayDesc || displaySummary,
+    image: destination.hero_image_url || destination.image_url || VIETNAM_IMAGES.hero,
+    touristType: ["Culture", "Nature", "Heritage", "Adventure"],
+    containedInPlace: {
+      "@type": "Country",
+      name: displayCountry,
+    },
+    url: `https://startravels.vn/destinations/${slug}`,
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <section className="relative min-h-[620px] text-white">
         <Image
           src={destination.hero_image_url || destination.image_url || VIETNAM_IMAGES.hero}

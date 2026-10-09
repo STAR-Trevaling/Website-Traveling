@@ -6,7 +6,10 @@ import { cookies, headers } from "next/headers";
 import type { Locale } from "@/lib/i18n/types";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { LanguageProvider } from "@/lib/i18n/context";
+import { AuthProvider } from "@/providers/auth-provider";
+import { getCurrentUser } from "@/lib/auth";
 import { AITripAssistant } from "@/components/assistant/ai-trip-assistant";
+import { GoogleAnalytics } from "@/components/shared/google-analytics";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://startravels.vn";
 const SITE_NAME = "Star Travels Vietnam";
@@ -138,6 +141,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const headersList = await headers();
   const acceptLang = headersList.get("accept-language") || "";
   const savedLocale = cookieStore.get("star_travels_locale")?.value as Locale | undefined;
+  const currentUser = await getCurrentUser();
 
   // Auto-detect browser preferred language or fallback to Vietnamese
   const browserPrefersEnglish =
@@ -175,11 +179,14 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <div className="absolute inset-0 bg-[#edf7f6]/55 backdrop-blur-[1.5px]" />
         </div>
 
-        <LanguageProvider initialLocale={initialLocale} initialConfirmed={true}>
-          <div className="flex-1 relative z-0">{children}</div>
-          <SiteFooter />
-          <AITripAssistant />
-        </LanguageProvider>
+        <AuthProvider initialUser={currentUser}>
+          <LanguageProvider initialLocale={initialLocale} initialConfirmed={true}>
+            <div className="flex-1 relative z-0">{children}</div>
+            <SiteFooter />
+            <AITripAssistant />
+          </LanguageProvider>
+        </AuthProvider>
+        <GoogleAnalytics />
       </body>
     </html>
   );

@@ -1,9 +1,13 @@
 import type {
+  Accommodation,
   Article,
   Destination,
   Paginated,
   Place,
   PlaceCategory,
+  ReferralTrackPayload,
+  ReferralTrackResponse,
+  Restaurant,
   Review,
   TourItem,
 } from "@/lib/types";
@@ -63,6 +67,32 @@ export const publicApi = {
   // Tours
   tours: (query = "") => list<TourItem>(`/tours/${query}`),
   tour: (slug: string) => fetchJson<TourItem>(`/tours/${slug}/`),
+
+  // Bookings
+  createBooking: (payload: {
+    tour_slug_input?: string;
+    contact_name: string;
+    contact_email: string;
+    contact_phone: string;
+    departure_date?: string;
+    pax_adults: number;
+    pax_children?: number;
+    special_requests?: string;
+  }) =>
+    fetchJson<{
+      id: string;
+      booking_code: string;
+      unit_price: string;
+      total_amount: string;
+      currency: string;
+      status: string;
+      tour_title?: string;
+      tour_slug?: string;
+    }>("/bookings/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    }),
 
   // Reviews
   reviews: (placeSlug: string) =>
@@ -153,6 +183,39 @@ export const publicApi = {
       expires_at?: string;
       is_paid: boolean;
     }>(`/payments/query/?txn_ref=${encodeURIComponent(txnRef)}`),
+
+  // Accommodations (Partner Referral Model)
+  accommodations: (query = "") => list<Accommodation>(`/accommodations/${query}`),
+  accommodation: (slug: string) => fetchJson<Accommodation>(`/accommodations/${slug}/`),
+
+  // Restaurants (Partner Referral Model)
+  restaurants: (query = "") => list<Restaurant>(`/restaurants/${query}`),
+  restaurant: (slug: string) => fetchJson<Restaurant>(`/restaurants/${slug}/`),
+
+  // Referral Click Tracking (1.5s timeout, non-blocking)
+  trackReferral: async (
+    payload: ReferralTrackPayload,
+    timeoutMs = 1500
+  ): Promise<ReferralTrackResponse> => {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), timeoutMs);
+    try {
+      const res = await fetch(`${BASE_URL}/referrals/track/`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+        signal: controller.signal,
+      });
+      clearTimeout(timer);
+      if (!res.ok) {
+        throw new Error(`Referral tracking failed with status ${res.status}`);
+      }
+      return (await res.json()) as ReferralTrackResponse;
+    } catch (err) {
+      clearTimeout(timer);
+      throw err;
+    }
+  },
 };
 
 /**

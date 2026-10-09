@@ -9,6 +9,7 @@ import { VIETNAM_IMAGES } from "@/lib/assets";
 import { VIETNAM_EXPERIENCES } from "@/data/seed";
 import { DICTIONARY } from "@/lib/i18n/dictionary";
 import type { Locale } from "@/lib/i18n/types";
+import { Search, Compass, Sparkles, X } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Gói Trải Nghiệm & Phiêu Lưu Độc Bản | Star Travels Vietnam",
@@ -93,36 +94,95 @@ export default async function ExperiencesPage({ searchParams }: ExperiencesPageP
             />
           </div>
 
-          {/* HEADER & FILTER BAR */}
-          <div className="rounded-[2px] bg-white/85 backdrop-blur-md p-6 sm:p-8 md:p-10 shadow-[0_4px_24px_rgba(0,152,162,0.06)] border border-white/90 mb-8 sm:mb-12">
-            <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
-              <div>
-                <span className="inline-block px-3 py-1 rounded-[2px] bg-[#0098a2]/15 text-[#007a82] border border-[#0098a2]/25 text-[11px] font-bold uppercase tracking-[0.2em] mb-2">
-                  {ep.badge}
-                </span>
-                <h1 className="script-title mt-1 text-4xl sm:text-5xl md:text-6xl text-[#0f172a] leading-tight">
+          {/* HEADER & FILTER BAR - Space-efficient & Balanced Layout */}
+          <div className="rounded-[2px] bg-white/90 backdrop-blur-md p-5 sm:p-6 md:p-8 shadow-[0_4px_24px_rgba(0,152,162,0.06)] border border-white/90 mb-6 sm:mb-8">
+            {/* Top Row: Title, Subtitle & Interactive Search */}
+            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 sm:gap-6">
+              <div className="flex-1 min-w-0">
+                <div className="flex flex-wrap items-center gap-2 mb-1.5 sm:mb-2">
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-[2px] bg-[#0098a2]/15 text-[#007a82] border border-[#0098a2]/25 text-[11px] font-bold uppercase tracking-[0.2em]">
+                    <Sparkles className="size-3 text-[#0098a2]" />
+                    {ep.badge}
+                  </span>
+                  <span className="text-xs font-semibold text-slate-400">✦</span>
+                  <span className="text-xs font-semibold text-slate-500">
+                    {items.length} {locale === "en" ? "Experiences" : "Trải nghiệm độc bản"}
+                  </span>
+                </div>
+                <h1 className="script-title text-3xl sm:text-4xl md:text-5xl text-[#0f172a] leading-tight tracking-wide whitespace-normal">
                   {ep.heading}
                 </h1>
-                <p className="mt-2 text-sm sm:text-base md:text-[17px] text-slate-800 font-medium max-w-2xl leading-relaxed">
+                <p className="mt-1.5 text-xs sm:text-sm md:text-[15px] text-slate-600 font-medium max-w-2xl leading-relaxed">
                   {locale === "en"
                     ? "Curated collection of authentic local adventures, expeditions and cultural experiences across Vietnam."
                     : "Tuyển tập những hoạt động thám hiểm bản địa, du thuyền và trải nghiệm văn hóa đặc sắc khắp Việt Nam."}
                 </p>
               </div>
 
-              {/* Category Filter Pills */}
-              <div className="flex flex-wrap gap-1.5 sm:gap-2 shrink-0">
+              {/* Right Side: Quick Search */}
+              <div className="w-full lg:w-auto lg:min-w-[320px] xl:min-w-[360px] shrink-0">
+                <form method="GET" action="/experiences" className="relative">
+                  {currentCategory && <input type="hidden" name="category" value={currentCategory} />}
+                  <div className="relative flex items-center">
+                    <Search className="absolute left-3.5 size-4 text-slate-400 pointer-events-none" />
+                    <input
+                      type="text"
+                      name="search"
+                      defaultValue={params.search || ""}
+                      placeholder={locale === "en" ? "Search adventures, places..." : "Tìm kiếm trải nghiệm, địa danh..."}
+                      className="w-full bg-slate-50/80 hover:bg-white focus:bg-white border border-slate-200 focus:border-[#0098a2] pl-10 pr-24 py-2.5 text-xs sm:text-sm text-slate-900 placeholder:text-slate-400 outline-none rounded-[2px] shadow-inner transition focus:ring-1 focus:ring-[#0098a2]"
+                    />
+                    <button
+                      type="submit"
+                      className="absolute right-1.5 bg-[#0098a2] text-white px-3 py-1.5 text-xs font-bold uppercase tracking-wider rounded-[2px] hover:bg-[#00818a] transition cursor-pointer"
+                    >
+                      {locale === "en" ? "Search" : "Tìm kiếm"}
+                    </button>
+                  </div>
+                </form>
+
+                {params.search && (
+                  <div className="mt-1.5 flex items-center justify-between text-xs text-slate-500 px-1">
+                    <span>
+                      {locale === "en" ? "Keyword:" : "Từ khóa:"} <strong className="text-slate-800 font-semibold">&ldquo;{params.search}&rdquo;</strong>
+                    </span>
+                    <Link
+                      href={currentCategory ? `/experiences?category=${currentCategory}` : "/experiences"}
+                      className="text-[#0098a2] hover:underline flex items-center gap-1 font-medium"
+                    >
+                      <X className="size-3" />
+                      {locale === "en" ? "Clear" : "Xóa bộ lọc"}
+                    </Link>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Subtle Divider */}
+            <div className="border-t border-slate-200/80 my-4 sm:my-5" />
+
+            {/* Bottom Row: Category Filter Pills */}
+            <div className="flex flex-col sm:flex-row sm:items-center gap-2.5 sm:gap-3">
+              <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 shrink-0 flex items-center gap-1.5">
+                <Compass className="size-3.5 text-[#0098a2]" />
+                {locale === "en" ? "Category:" : "Danh mục:"}
+              </span>
+
+              <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
                 {categories.map((cat) => {
                   const isActive = currentCategory === cat.slug;
-                  const href = cat.slug ? `/experiences?category=${cat.slug}` : "/experiences";
+                  const searchParam = params.search ? `&search=${encodeURIComponent(params.search)}` : "";
+                  const href = cat.slug
+                    ? `/experiences?category=${cat.slug}${searchParam}`
+                    : (params.search ? `/experiences?search=${encodeURIComponent(params.search)}` : "/experiences");
                   return (
                     <Link
                       key={cat.slug || "all"}
                       href={href}
-                      className={`px-3.5 sm:px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-[2px] transition-all duration-200 cursor-pointer ${
+                      className={`px-3 sm:px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider rounded-[2px] transition-all duration-200 cursor-pointer flex items-center gap-1.5 ${
                         isActive
-                          ? "bg-[#0098a2] text-white shadow-[0px_4px_14px_rgba(0,152,162,0.35)]"
-                          : "bg-white text-slate-800 hover:bg-slate-50 hover:border-slate-400 hover:shadow-sm border border-slate-200"
+                          ? "bg-[#0098a2] text-white shadow-[0px_2px_10px_rgba(0,152,162,0.35)]"
+                          : "bg-white text-slate-700 hover:bg-slate-50 hover:text-[#0098a2] hover:border-slate-300 border border-slate-200 shadow-xs"
                       }`}
                     >
                       {cat.label}

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import {
   CalendarCheck,
@@ -7,6 +8,7 @@ import {
   ShieldCheck,
   XCircle,
   QrCode,
+  Banknote,
   ArrowRight,
   Compass,
   AlertCircle,
@@ -39,6 +41,17 @@ const DEMO_BOOKINGS: BookingItem[] = [
     created_at: "2026-10-08T18:30:00Z",
   },
   {
+    booking_code: "ST-202610-C72M",
+    tour_title: "Tour Khám Phá Cố Đô Huế & Đầm Chuồn Hoàng Hôn",
+    departure_date: "2026-10-28",
+    pax_adults: 2,
+    total_amount: 3200000,
+    currency: "VND",
+    status: "pending",
+    payment_method: "cash",
+    created_at: "2026-10-09T08:00:00Z",
+  },
+  {
     booking_code: "ST-202609-B41C",
     tour_title: "Thám Hiểm Vịnh Hạ Long & Lan Hạ Trên Du Thuyền 5 Sao",
     departure_date: "2026-11-05",
@@ -64,6 +77,10 @@ const DEMO_BOOKINGS: BookingItem[] = [
 
 export default async function AccountBookingsPage() {
   const user = await getCurrentUser();
+  if (!user) {
+    redirect("/login?returnUrl=/account/bookings&reason=view_booking");
+  }
+
   const cookieStore = await cookies();
   const isEn = cookieStore.get("star_travels_locale")?.value === "en";
 
@@ -120,12 +137,21 @@ export default async function AccountBookingsPage() {
 
                       {/* DISTINCT STATUS BADGES */}
                       {isPending && (
-                        <span className="inline-flex items-center gap-1.5 text-xs font-bold text-amber-900 bg-amber-100 border border-amber-300 px-2.5 py-0.5 rounded">
-                          <Clock className="size-3.5 text-amber-700" />
-                          {isEn
-                            ? "Pending Payment (VietQR Awaiting)"
-                            : "Chờ thanh toán / Đang chờ xác nhận VietQR"}
-                        </span>
+                        b.payment_method === "cash" ? (
+                          <span className="inline-flex items-center gap-1.5 text-xs font-bold text-amber-900 bg-amber-100 border border-amber-300 px-2.5 py-0.5 rounded">
+                            <Banknote className="size-3.5 text-amber-700" />
+                            {isEn
+                              ? "Reserved (Cash Payment Pending)"
+                              : "Đã giữ chỗ (Chờ nộp tiền mặt)"}
+                          </span>
+                        ) : (
+                          <span className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-900 bg-blue-50 border border-blue-200 px-2.5 py-0.5 rounded">
+                            <Clock className="size-3.5 text-blue-700" />
+                            {isEn
+                              ? "Pending Payment (QR / VietQR)"
+                              : "Chờ thanh toán (Mã QR / VietQR)"}
+                          </span>
+                        )
                       )}
 
                       {isPaid && (
@@ -188,14 +214,25 @@ export default async function AccountBookingsPage() {
                   {/* ACTION BUTTONS */}
                   <div className="flex items-center gap-3 pt-2 md:pt-0 border-t md:border-t-0 border-slate-100">
                     {isPending ? (
-                      <Link
-                        href={`/booking/${encodeURIComponent(b.booking_code)}/payment?amount=${b.total_amount}`}
-                        className="w-full md:w-auto px-4 py-2 bg-[#0098a2] hover:bg-[#00828a] text-white text-xs font-bold rounded-[2px] transition flex items-center justify-center gap-2 shadow-sm"
-                      >
-                        <QrCode className="size-4" />
-                        <span>{isEn ? "Pay Now (VietQR / VNPay)" : "Thanh Toán Ngay"}</span>
-                        <ArrowRight className="size-3.5" />
-                      </Link>
+                      b.payment_method === "cash" ? (
+                        <Link
+                          href={`/booking/${encodeURIComponent(b.booking_code)}/payment?gateway=cash&amount=${b.total_amount}`}
+                          className="w-full md:w-auto px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold rounded-[2px] transition flex items-center justify-center gap-2 shadow-sm"
+                        >
+                          <Banknote className="size-4" />
+                          <span>{isEn ? "View Cash Voucher" : "Xem Phiếu Nộp Tiền"}</span>
+                          <ArrowRight className="size-3.5" />
+                        </Link>
+                      ) : (
+                        <Link
+                          href={`/booking/${encodeURIComponent(b.booking_code)}/payment?gateway=vietqr&amount=${b.total_amount}`}
+                          className="w-full md:w-auto px-4 py-2 bg-[#0098a2] hover:bg-[#00828a] text-white text-xs font-bold rounded-[2px] transition flex items-center justify-center gap-2 shadow-sm"
+                        >
+                          <QrCode className="size-4" />
+                          <span>{isEn ? "Pay with QR Code" : "Thanh Toán Mã QR"}</span>
+                          <ArrowRight className="size-3.5" />
+                        </Link>
+                      )
                     ) : (
                       <Link
                         href={`/booking/${encodeURIComponent(b.booking_code)}/success`}

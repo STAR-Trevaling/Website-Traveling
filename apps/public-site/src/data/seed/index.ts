@@ -18,12 +18,16 @@ export * from "./tours";
 export * from "./experiences";
 export * from "./stories";
 export * from "./history";
+export * from "./accommodations";
+export * from "./restaurants";
 
 import { ALL_VIETNAM_DESTINATIONS, VIETNAM_DESTINATIONS_PAGES, getDestinationBySlug } from "./destinations";
 import { VIETNAM_TOURS, getTourBySlug } from "./tours";
 import { VIETNAM_EXPERIENCES, getExperienceBySlug } from "./experiences";
 import { VIETNAM_STORIES, getStoryBySlug } from "./stories";
 import { VIETNAM_HERITAGE_HISTORY, getHeritageBySlug, getHeritageByDestination } from "./history";
+import { VIETNAM_ACCOMMODATIONS, getAccommodationBySlug } from "./accommodations";
+import { VIETNAM_RESTAURANTS, getRestaurantBySlug } from "./restaurants";
 
 /**
  * Đối tượng gom toàn bộ seed data về 1 điểm truy cập duy nhất
@@ -35,6 +39,8 @@ export const SEED_DATA = {
   experiences: VIETNAM_EXPERIENCES,
   stories: VIETNAM_STORIES,
   heritageHistory: VIETNAM_HERITAGE_HISTORY,
+  accommodations: VIETNAM_ACCOMMODATIONS,
+  restaurants: VIETNAM_RESTAURANTS,
 } as const;
 
 /**
@@ -47,6 +53,8 @@ export const seedFinder = {
   story: getStoryBySlug,
   heritage: getHeritageBySlug,
   heritageByDestination: getHeritageByDestination,
+  accommodation: getAccommodationBySlug,
+  restaurant: getRestaurantBySlug,
 };
 
 export default SEED_DATA;

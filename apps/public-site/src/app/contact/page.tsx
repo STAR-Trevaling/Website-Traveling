@@ -74,9 +74,9 @@ export default async function ContactPage() {
                 <span className="text-xs font-bold uppercase tracking-[0.25em] text-slate-900">
                   {t.formBadge}
                 </span>
-                <h2 className="script-title mt-1.5 sm:mt-2 text-3xl sm:text-4xl md:text-5xl text-[#1e293b]">
+                <h1 className="script-title mt-1.5 sm:mt-2 text-3xl sm:text-4xl md:text-5xl text-[#1e293b]">
                   {t.formTitle}
-                </h2>
+                </h1>
                 <p className="mt-2.5 sm:mt-3 text-xs sm:text-sm md:text-base font-light text-slate-600 leading-relaxed mb-6 sm:mb-8">
                   {t.formDesc}
                 </p>

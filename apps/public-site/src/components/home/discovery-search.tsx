@@ -16,7 +16,7 @@ import {
 } from "lucide-react";
 import { useLanguage } from "@/lib/i18n/context";
 
-type TabType = "flights" | "hotels" | "tours";
+type TabType = "hotels" | "dining" | "tours" | "flights";
 
 interface BilingualOption {
   vi: string;
@@ -131,11 +131,11 @@ function CalendarPopover({
     <div
       ref={popoverRef}
       onClick={(e) => e.stopPropagation()}
-      className={`absolute ${placementClass} ${alignClass} z-50 w-[260px] sm:w-[275px] rounded-[6px] bg-white p-2.5 shadow-2xl border border-slate-200 text-slate-800 animate-in fade-in duration-150`}
+      className={`absolute ${placementClass} ${alignClass} z-50 w-[270px] sm:w-[285px] rounded-2xl bg-black/85 backdrop-blur-2xl p-3 shadow-[0_20px_50px_rgba(0,0,0,0.6)] border border-white/20 text-white animate-in fade-in duration-150`}
     >
       {/* Header: Title and Month navigation */}
-      <div className="flex items-center justify-between pb-1.5 mb-1.5 border-b border-slate-100">
-        <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">
+      <div className="flex items-center justify-between pb-2 mb-2 border-b border-white/15">
+        <span className="text-[10px] font-bold text-white/50 uppercase tracking-wider">
           {title}
         </span>
         <div className="flex items-center gap-0.5">
@@ -143,18 +143,18 @@ function CalendarPopover({
             type="button"
             onClick={prevMonth}
             aria-label="Previous month"
-            className="p-1 rounded hover:bg-slate-100 text-slate-600 transition cursor-pointer"
+            className="p-1 rounded-full hover:bg-white/15 text-white/70 hover:text-white transition cursor-pointer"
           >
             <ChevronLeft className="size-3.5" />
           </button>
-          <span className="text-xs font-bold text-slate-800 min-w-[95px] text-center">
+          <span className="text-xs font-bold text-white min-w-[95px] text-center">
             {isEn ? `${monthNamesEn[viewMonth]} ${viewYear}` : `${monthNamesVi[viewMonth]}, ${viewYear}`}
           </span>
           <button
             type="button"
             onClick={nextMonth}
             aria-label="Next month"
-            className="p-1 rounded hover:bg-slate-100 text-slate-600 transition cursor-pointer"
+            className="p-1 rounded-full hover:bg-white/15 text-white/70 hover:text-white transition cursor-pointer"
           >
             <ChevronRight className="size-3.5" />
           </button>
@@ -162,9 +162,9 @@ function CalendarPopover({
       </div>
 
       {/* Weekday headers */}
-      <div className="grid grid-cols-7 gap-0.5 text-center mb-0.5">
+      <div className="grid grid-cols-7 gap-0.5 text-center mb-1">
         {(isEn ? weekHeadersEn : weekHeadersVi).map((day, i) => (
-          <span key={i} className="text-[10px] font-semibold text-slate-400 py-0.5">
+          <span key={i} className="text-[10px] font-semibold text-white/45 py-0.5">
             {day}
           </span>
         ))}
@@ -193,12 +193,12 @@ function CalendarPopover({
               onClick={() => onSelectDate(dateStr)}
               className={`size-7 text-[11px] font-medium rounded-full flex items-center justify-center transition cursor-pointer ${
                 isSelected
-                  ? "bg-[#0098a2] text-white font-bold shadow-sm"
+                  ? "bg-[#DA251D] text-white font-bold shadow-[0_2px_8px_rgba(218,37,29,0.5)]"
                   : isPast
-                  ? "text-slate-300 cursor-not-allowed"
+                  ? "text-white/20 cursor-not-allowed"
                   : isToday
-                  ? "border border-[#0098a2] text-[#0098a2] font-semibold hover:bg-slate-100"
-                  : "text-slate-700 hover:bg-slate-100"
+                  ? "border border-white/40 text-white font-semibold hover:bg-white/15"
+                  : "text-white/85 hover:bg-white/15 hover:text-white"
               }`}
             >
               {dayNum}
@@ -208,11 +208,11 @@ function CalendarPopover({
       </div>
 
       {/* Quick actions footer */}
-      <div className="flex items-center justify-between pt-1.5 mt-1.5 border-t border-slate-100 text-[11px]">
+      <div className="flex items-center justify-between pt-2 mt-2 border-t border-white/15 text-[11px]">
         <button
           type="button"
           onClick={() => onSelectDate(todayStr)}
-          className="text-[#0098a2] hover:underline font-semibold cursor-pointer"
+          className="text-[#DA251D] hover:text-[#f87171] hover:underline font-semibold cursor-pointer"
         >
           {isEn ? "Today" : "Hôm nay"}
         </button>
@@ -221,7 +221,7 @@ function CalendarPopover({
             <button
               type="button"
               onClick={() => onSelectDate("")}
-              className="text-slate-400 hover:text-slate-700 transition cursor-pointer"
+              className="text-white/50 hover:text-white transition cursor-pointer"
             >
               {isEn ? "Clear" : "Xoá"}
             </button>
@@ -229,7 +229,7 @@ function CalendarPopover({
           <button
             type="button"
             onClick={onClose}
-            className="text-slate-700 hover:text-black font-semibold cursor-pointer"
+            className="text-white hover:text-white/80 font-bold bg-white/15 hover:bg-white/25 px-2.5 py-0.5 rounded-full cursor-pointer"
           >
             {isEn ? "Done" : "Xong"}
           </button>
@@ -289,11 +289,12 @@ export function DiscoverySearch() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Template-exact 3 tabs
+  // Discovery Tabs: Nơi ở, Ẩm thực, Gói tour, Chuyến bay
   const tabs = [
-    { key: "flights" as TabType, labelVi: "CHUYẾN BAY", labelEn: "FLIGHTS", route: "/destinations" },
-    { key: "hotels" as TabType, labelVi: "KHÁCH SẠN", labelEn: "HOTELS", route: "/experiences" },
+    { key: "hotels" as TabType, labelVi: "NƠI Ở", labelEn: "STAYS", route: "/accommodations" },
+    { key: "dining" as TabType, labelVi: "ẨM THỰC", labelEn: "DINING", route: "/restaurants" },
     { key: "tours" as TabType, labelVi: "GÓI TOUR", labelEn: "TOURS", route: "/tours" },
+    { key: "flights" as TabType, labelVi: "CHUYẾN BAY", labelEn: "FLIGHTS", route: "/destinations" },
   ];
 
   const formatDateDisplay = (dateStr: string) => {
@@ -307,17 +308,15 @@ export function DiscoverySearch() {
   };
 
   const handleSearch = () => {
-    if (activeTab === "tours") {
-      const dest = VIETNAM_DESTINATIONS[col2Index];
-      const query = isEn ? dest?.en : dest?.vi;
-      router.push(`/tours?q=${encodeURIComponent(query || "")}`);
+    const dest = VIETNAM_DESTINATIONS[col2Index];
+    const query = isEn ? dest?.en : dest?.vi;
+    if (activeTab === "dining") {
+      router.push(`/restaurants?destination=${encodeURIComponent(query || "")}`);
     } else if (activeTab === "hotels") {
-      const dest = VIETNAM_DESTINATIONS[col2Index];
-      const query = isEn ? dest?.en : dest?.vi;
-      router.push(`/experiences?q=${encodeURIComponent(query || "")}`);
+      router.push(`/accommodations?destination=${encodeURIComponent(query || "")}`);
+    } else if (activeTab === "tours") {
+      router.push(`/tours?q=${encodeURIComponent(query || "")}`);
     } else {
-      const dest = VIETNAM_DESTINATIONS[col2Index];
-      const query = isEn ? dest?.en : dest?.vi;
       router.push(`/destinations?q=${encodeURIComponent(query || "")}`);
     }
   };
@@ -350,13 +349,13 @@ export function DiscoverySearch() {
   // Expanded Mode (Mode ON): Full 3 tabs + 5 columns with smart hide toggle
   return (
     <div id="discovery-search-container" className="w-full select-none animate-fade-in-scale">
-      {/* 1. Top Controls Bar: Tabs + Right-side On/Off Toggle Button */}
-      <div className="flex items-center justify-between w-full max-w-[1100px] mx-auto px-1 sm:px-2 mb-0">
+      {/* 1. Top Controls Bar: Luxury Dark Capsule Tabs + Right-side On/Off Toggle Button */}
+      <div className="flex items-center justify-between w-full max-w-[1100px] mx-auto px-1 sm:px-2 mb-2">
         {/* Left spacer for optical center alignment on desktop */}
         <div className="hidden md:block w-36" />
 
-        {/* Center: 3 Teal Tabs */}
-        <div className="inline-flex bg-[#0098a2] rounded-t-[6px] sm:rounded-t-[8px] overflow-hidden shadow-md">
+        {/* Center: 3 Dark Glass Capsule Tabs */}
+        <div className="inline-flex bg-black/40 hover:bg-black/50 backdrop-blur-2xl border border-white/20 rounded-full p-1 shadow-[0_8px_32px_rgba(0,0,0,0.35)] gap-1">
           {tabs.map((tab) => (
             <button
               key={tab.key}
@@ -367,10 +366,10 @@ export function DiscoverySearch() {
                 setOpenCol2(false);
                 setOpenTravellers(false);
               }}
-              className={`relative px-4 sm:px-7 md:px-9 py-2.5 sm:py-3 text-[11px] sm:text-xs font-bold tracking-[0.12em] sm:tracking-[0.18em] transition-all cursor-pointer text-center whitespace-nowrap ${
+              className={`px-4 sm:px-6 md:px-8 py-1.5 sm:py-2 text-[11px] sm:text-xs font-bold tracking-[0.12em] rounded-full transition-all cursor-pointer text-center whitespace-nowrap ${
                 activeTab === tab.key
-                  ? "text-white font-black after:absolute after:bottom-0 after:inset-x-3 sm:after:inset-x-5 after:h-[2.5px] after:bg-white"
-                  : "text-white/80 hover:text-white hover:bg-white/10"
+                  ? "bg-[#DA251D] text-white shadow-[0_2px_10px_rgba(218,37,29,0.5)] font-black"
+                  : "text-white/75 hover:text-white hover:bg-white/10"
               }`}
             >
               {isEn ? tab.labelEn : tab.labelVi}
@@ -392,10 +391,10 @@ export function DiscoverySearch() {
         </div>
       </div>
 
-      {/* 2. Main Search Bar (Translucent White Frosted Glass with 5 Clean Columns matching Template) */}
-      <div className="relative flex flex-col md:flex-row items-stretch bg-white/90 backdrop-blur-md text-slate-700 shadow-2xl border border-white/70 rounded-[6px] sm:rounded-[8px] md:h-16 w-full max-w-[1100px] mx-auto">
+      {/* 2. Main Search Bar: Luxury Dark Glass Capsule matching Collapsed Style */}
+      <div className="relative flex flex-col md:flex-row items-stretch bg-black/50 hover:bg-black/60 backdrop-blur-2xl text-white shadow-[0_16px_48px_rgba(0,0,0,0.45)] border border-white/20 hover:border-white/30 rounded-2xl md:rounded-full md:h-16 w-full max-w-[1100px] mx-auto transition-all p-1.5 md:p-1">
         {/* Column 1: From (Origin) */}
-        <div className="relative flex-1 border-b md:border-b-0 md:border-r border-slate-200/80">
+        <div className="relative flex-1 border-b md:border-b-0 md:border-r border-white/15">
           <button
             type="button"
             onClick={() => {
@@ -403,21 +402,25 @@ export function DiscoverySearch() {
               setOpenCol2(false);
               setOpenTravellers(false);
             }}
-            className="flex h-13 sm:h-14 md:h-full w-full items-center justify-between px-3.5 sm:px-4.5 transition hover:bg-slate-50/60 text-left cursor-pointer"
+            className="flex h-13 sm:h-14 md:h-full w-full items-center justify-between px-3.5 sm:px-4.5 transition hover:bg-white/10 rounded-xl md:rounded-full text-left cursor-pointer"
           >
             <div className="flex items-center gap-2 min-w-0 truncate">
-              <MapPin className="size-4 shrink-0 text-slate-500" />
-              <div className="flex items-center gap-1 min-w-0 truncate text-xs sm:text-[13px] text-slate-700">
-                <span className="text-slate-400 font-normal">{isEn ? "From" : "Từ"}</span>
-                <span className="font-semibold text-slate-800 truncate">
+              <MapPin className="size-4 shrink-0 text-white/70" />
+              <div className="flex items-center gap-1.5 min-w-0 truncate text-xs sm:text-[13px]">
+                <span className="text-white/50 font-normal">
+                  {activeTab === "hotels" || activeTab === "dining"
+                    ? (isEn ? "Area" : "Khu vực")
+                    : (isEn ? "From" : "Từ")}
+                </span>
+                <span className="font-semibold text-white truncate">
                   {isEn ? VIETNAM_DESTINATIONS[col1Index]?.en : VIETNAM_DESTINATIONS[col1Index]?.vi}
                 </span>
               </div>
             </div>
-            <ChevronDown className="size-3.5 shrink-0 text-slate-400 ml-1" />
+            <ChevronDown className="size-3.5 shrink-0 text-white/50 ml-1" />
           </button>
           {openCol1 && (
-            <div className="absolute left-0 right-0 sm:right-auto top-full z-50 mt-1 max-h-56 sm:w-60 overflow-auto rounded-[3px] bg-white p-1.5 shadow-2xl border border-slate-100">
+            <div className="absolute left-0 right-0 sm:right-auto top-full z-50 mt-2 max-h-56 sm:w-60 overflow-auto rounded-xl sm:rounded-2xl bg-black/85 backdrop-blur-2xl p-1.5 shadow-[0_20px_50px_rgba(0,0,0,0.6)] border border-white/20">
               {VIETNAM_DESTINATIONS.map((opt, idx) => (
                 <button
                   key={idx}
@@ -426,7 +429,11 @@ export function DiscoverySearch() {
                     setCol1Index(idx);
                     setOpenCol1(false);
                   }}
-                  className="w-full rounded-[2px] px-3.5 py-2 text-left text-xs sm:text-[13px] font-normal text-slate-800 hover:bg-slate-50 hover:text-black transition-colors cursor-pointer"
+                  className={`w-full rounded-lg px-3.5 py-2 text-left text-xs sm:text-[13px] transition-colors cursor-pointer ${
+                    col1Index === idx
+                      ? "bg-white/20 text-white font-semibold"
+                      : "text-white/80 hover:bg-white/15 hover:text-white"
+                  }`}
                 >
                   {isEn ? opt.en : opt.vi}
                 </button>
@@ -436,7 +443,7 @@ export function DiscoverySearch() {
         </div>
 
         {/* Column 2: To (Destination) */}
-        <div className="relative flex-1 border-b md:border-b-0 md:border-r border-slate-200/80">
+        <div className="relative flex-1 border-b md:border-b-0 md:border-r border-white/15">
           <button
             type="button"
             onClick={() => {
@@ -444,21 +451,27 @@ export function DiscoverySearch() {
               setOpenCol1(false);
               setOpenTravellers(false);
             }}
-            className="flex h-13 sm:h-14 md:h-full w-full items-center justify-between px-3.5 sm:px-4.5 transition hover:bg-slate-50/60 text-left cursor-pointer"
+            className="flex h-13 sm:h-14 md:h-full w-full items-center justify-between px-3.5 sm:px-4.5 transition hover:bg-white/10 rounded-xl md:rounded-full text-left cursor-pointer"
           >
             <div className="flex items-center gap-2 min-w-0 truncate">
-              <MapPin className="size-4 shrink-0 text-slate-500" />
-              <div className="flex items-center gap-1 min-w-0 truncate text-xs sm:text-[13px] text-slate-700">
-                <span className="text-slate-400 font-normal">{isEn ? "To" : "Đến"}</span>
-                <span className="font-semibold text-slate-800 truncate">
+              <MapPin className="size-4 shrink-0 text-white/70" />
+              <div className="flex items-center gap-1.5 min-w-0 truncate text-xs sm:text-[13px]">
+                <span className="text-white/50 font-normal">
+                  {activeTab === "hotels"
+                    ? (isEn ? "Stay" : "Điểm nghỉ")
+                    : activeTab === "dining"
+                    ? (isEn ? "Dine" : "Điểm hẹn")
+                    : (isEn ? "To" : "Đến")}
+                </span>
+                <span className="font-semibold text-white truncate">
                   {isEn ? VIETNAM_DESTINATIONS[col2Index]?.en : VIETNAM_DESTINATIONS[col2Index]?.vi}
                 </span>
               </div>
             </div>
-            <ChevronDown className="size-3.5 shrink-0 text-slate-400 ml-1" />
+            <ChevronDown className="size-3.5 shrink-0 text-white/50 ml-1" />
           </button>
           {openCol2 && (
-            <div className="absolute left-0 right-0 sm:right-auto top-full z-50 mt-1 max-h-56 sm:w-60 overflow-auto rounded-[3px] bg-white p-1.5 shadow-2xl border border-slate-100">
+            <div className="absolute left-0 right-0 sm:right-auto top-full z-50 mt-2 max-h-56 sm:w-60 overflow-auto rounded-xl sm:rounded-2xl bg-black/85 backdrop-blur-2xl p-1.5 shadow-[0_20px_50px_rgba(0,0,0,0.6)] border border-white/20">
               {VIETNAM_DESTINATIONS.map((opt, idx) => (
                 <button
                   key={idx}
@@ -467,7 +480,11 @@ export function DiscoverySearch() {
                     setCol2Index(idx);
                     setOpenCol2(false);
                   }}
-                  className="w-full rounded-[2px] px-3.5 py-2 text-left text-xs sm:text-[13px] font-normal text-slate-800 hover:bg-slate-50 hover:text-black transition-colors cursor-pointer"
+                  className={`w-full rounded-lg px-3.5 py-2 text-left text-xs sm:text-[13px] transition-colors cursor-pointer ${
+                    col2Index === idx
+                      ? "bg-white/20 text-white font-semibold"
+                      : "text-white/80 hover:bg-white/15 hover:text-white"
+                  }`}
                 >
                   {isEn ? opt.en : opt.vi}
                 </button>
@@ -477,7 +494,7 @@ export function DiscoverySearch() {
         </div>
 
         {/* Column 3: Departure Date (Chọn ngày đi) */}
-        <div className="relative flex-1 border-b md:border-b-0 md:border-r border-slate-200/80">
+        <div className="relative flex-1 border-b md:border-b-0 md:border-r border-white/15">
           <button
             type="button"
             onClick={() => {
@@ -486,13 +503,19 @@ export function DiscoverySearch() {
               setOpenCol2(false);
               setOpenTravellers(false);
             }}
-            className="flex h-13 sm:h-14 md:h-full w-full items-center justify-between px-3.5 sm:px-4.5 transition hover:bg-slate-50/60 text-left cursor-pointer"
+            className="flex h-13 sm:h-14 md:h-full w-full items-center justify-between px-3.5 sm:px-4.5 transition hover:bg-white/10 rounded-xl md:rounded-full text-left cursor-pointer"
           >
             <div className="flex items-center gap-2 min-w-0 truncate">
-              <Calendar className="size-4 shrink-0 text-slate-500" />
+              <Calendar className="size-4 shrink-0 text-white/70" />
               <div className="flex items-center gap-1 min-w-0 truncate text-xs sm:text-[13px]">
-                <span className={`truncate ${startDate ? "font-semibold text-slate-800" : "font-normal text-slate-700"}`}>
-                  {startDate ? formatDateDisplay(startDate) : (isEn ? "Departure Date" : "Ngày đi")}
+                <span className={`truncate ${startDate ? "font-semibold text-white" : "font-normal text-white/70"}`}>
+                  {startDate
+                    ? formatDateDisplay(startDate)
+                    : activeTab === "dining"
+                    ? (isEn ? "Reservation Date" : "Ngày hẹn")
+                    : activeTab === "hotels"
+                    ? (isEn ? "Check-in" : "Nhận phòng")
+                    : (isEn ? "Departure Date" : "Ngày đi")}
                 </span>
               </div>
             </div>
@@ -510,13 +533,13 @@ export function DiscoverySearch() {
                     setStartDate("");
                   }
                 }}
-                className="text-slate-400 hover:text-slate-700 p-0.5 rounded cursor-pointer"
+                className="text-white/50 hover:text-white p-0.5 rounded cursor-pointer"
                 title={isEn ? "Clear date" : "Xoá ngày"}
               >
                 <X className="size-3" />
               </span>
             ) : (
-              <ChevronDown className="size-3.5 shrink-0 text-slate-400 ml-1" />
+              <ChevronDown className="size-3.5 shrink-0 text-white/50 ml-1" />
             )}
           </button>
 
@@ -528,7 +551,6 @@ export function DiscoverySearch() {
                 if (endDate && date && date > endDate) {
                   setEndDate("");
                 }
-                // Automatically suggest selecting return date if not yet chosen
                 if (!endDate && date) {
                   setOpenDate("end");
                 } else {
@@ -537,14 +559,26 @@ export function DiscoverySearch() {
               }}
               onClose={() => setOpenDate(null)}
               isEn={isEn}
-              title={isEn ? "Departure Date" : "Chọn Ngày Đi"}
+              title={
+                isEn
+                  ? activeTab === "dining"
+                    ? "Reservation Date"
+                    : activeTab === "hotels"
+                    ? "Check-in Date"
+                    : "Departure Date"
+                  : activeTab === "dining"
+                  ? "Chọn Ngày Hẹn"
+                  : activeTab === "hotels"
+                  ? "Chọn Ngày Nhận Phòng"
+                  : "Chọn Ngày Đi"
+              }
               align="left"
             />
           )}
         </div>
 
         {/* Column 4: Return Date (Chọn ngày về) */}
-        <div className="relative flex-1 border-b md:border-b-0 md:border-r border-slate-200/80">
+        <div className="relative flex-1 border-b md:border-b-0 md:border-r border-white/15">
           <button
             type="button"
             onClick={() => {
@@ -553,13 +587,19 @@ export function DiscoverySearch() {
               setOpenCol2(false);
               setOpenTravellers(false);
             }}
-            className="flex h-13 sm:h-14 md:h-full w-full items-center justify-between px-3.5 sm:px-4.5 transition hover:bg-slate-50/60 text-left cursor-pointer"
+            className="flex h-13 sm:h-14 md:h-full w-full items-center justify-between px-3.5 sm:px-4.5 transition hover:bg-white/10 rounded-xl md:rounded-full text-left cursor-pointer"
           >
             <div className="flex items-center gap-2 min-w-0 truncate">
-              <Calendar className="size-4 shrink-0 text-slate-500" />
+              <Calendar className="size-4 shrink-0 text-white/70" />
               <div className="flex items-center gap-1 min-w-0 truncate text-xs sm:text-[13px]">
-                <span className={`truncate ${endDate ? "font-semibold text-slate-800" : "font-normal text-slate-700"}`}>
-                  {endDate ? formatDateDisplay(endDate) : (isEn ? "Return Date" : "Ngày về")}
+                <span className={`truncate ${endDate ? "font-semibold text-white" : "font-normal text-white/70"}`}>
+                  {endDate
+                    ? formatDateDisplay(endDate)
+                    : activeTab === "dining"
+                    ? (isEn ? "Time Window" : "Khung giờ")
+                    : activeTab === "hotels"
+                    ? (isEn ? "Check-out" : "Trả phòng")
+                    : (isEn ? "Return Date" : "Ngày về")}
                 </span>
               </div>
             </div>
@@ -577,13 +617,13 @@ export function DiscoverySearch() {
                     setEndDate("");
                   }
                 }}
-                className="text-slate-400 hover:text-slate-700 p-0.5 rounded cursor-pointer"
+                className="text-white/50 hover:text-white p-0.5 rounded cursor-pointer"
                 title={isEn ? "Clear date" : "Xoá ngày"}
               >
                 <X className="size-3" />
               </span>
             ) : (
-              <ChevronDown className="size-3.5 shrink-0 text-slate-400 ml-1" />
+              <ChevronDown className="size-3.5 shrink-0 text-white/50 ml-1" />
             )}
           </button>
 
@@ -597,14 +637,26 @@ export function DiscoverySearch() {
               }}
               onClose={() => setOpenDate(null)}
               isEn={isEn}
-              title={isEn ? "Return Date" : "Chọn Ngày Về"}
+              title={
+                isEn
+                  ? activeTab === "dining"
+                    ? "Alternate Date"
+                    : activeTab === "hotels"
+                    ? "Check-out Date"
+                    : "Return Date"
+                  : activeTab === "dining"
+                  ? "Chọn Ngày / Giờ Dự Phòng"
+                  : activeTab === "hotels"
+                  ? "Chọn Ngày Trả Phòng"
+                  : "Chọn Ngày Về"
+              }
               align="right"
             />
           )}
         </div>
 
         {/* Column 5: Traveller(s), Class */}
-        <div className="relative flex-[1.2] border-b md:border-b-0 md:border-r border-slate-200/80">
+        <div className="relative flex-[1.2] border-b md:border-b-0 md:border-r border-white/15">
           <button
             type="button"
             onClick={() => {
@@ -612,18 +664,18 @@ export function DiscoverySearch() {
               setOpenCol1(false);
               setOpenCol2(false);
             }}
-            className="flex h-13 sm:h-14 md:h-full w-full items-center justify-between px-3.5 sm:px-4.5 transition hover:bg-slate-50/60 text-left cursor-pointer"
+            className="flex h-13 sm:h-14 md:h-full w-full items-center justify-between px-3.5 sm:px-4.5 transition hover:bg-white/10 rounded-xl md:rounded-full text-left cursor-pointer"
           >
             <div className="flex items-center gap-2 min-w-0 truncate">
-              <Users className="size-4 shrink-0 text-slate-500" />
-              <span className="text-xs sm:text-[13px] font-medium text-slate-700 truncate">
+              <Users className="size-4 shrink-0 text-white/70" />
+              <span className="text-xs sm:text-[13px] font-medium text-white truncate">
                 {isEn ? TRAVELLER_OPTIONS[travellerIndex]?.en : TRAVELLER_OPTIONS[travellerIndex]?.vi}
               </span>
             </div>
-            <ChevronDown className="size-3.5 shrink-0 text-slate-400 ml-1" />
+            <ChevronDown className="size-3.5 shrink-0 text-white/50 ml-1" />
           </button>
           {openTravellers && (
-            <div className="absolute left-0 right-0 sm:left-auto sm:right-0 top-full z-50 mt-1 sm:w-60 rounded-[3px] bg-white p-1.5 shadow-2xl border border-slate-100">
+            <div className="absolute left-0 right-0 sm:left-auto sm:right-0 top-full z-50 mt-2 sm:w-60 rounded-xl sm:rounded-2xl bg-black/85 backdrop-blur-2xl p-1.5 shadow-[0_20px_50px_rgba(0,0,0,0.6)] border border-white/20">
               {TRAVELLER_OPTIONS.map((opt, idx) => (
                 <button
                   key={idx}
@@ -632,7 +684,11 @@ export function DiscoverySearch() {
                     setTravellerIndex(idx);
                     setOpenTravellers(false);
                   }}
-                  className="w-full rounded-[2px] px-3.5 py-2 text-left text-xs sm:text-[13px] font-normal text-slate-800 hover:bg-slate-50 hover:text-black transition-colors cursor-pointer"
+                  className={`w-full rounded-lg px-3.5 py-2 text-left text-xs sm:text-[13px] transition-colors cursor-pointer ${
+                    travellerIndex === idx
+                      ? "bg-white/20 text-white font-semibold"
+                      : "text-white/80 hover:bg-white/15 hover:text-white"
+                  }`}
                 >
                   {isEn ? opt.en : opt.vi}
                 </button>
@@ -641,15 +697,15 @@ export function DiscoverySearch() {
           )}
         </div>
 
-        {/* 6. Clean Search Button (Icon without green background) */}
-        <div className="flex items-center justify-center px-3 sm:px-4 py-2 shrink-0 self-center">
+        {/* 6. Crimson Red Search Button */}
+        <div className="flex items-center justify-center px-2.5 sm:px-3 py-2 shrink-0 self-center">
           <button
             type="button"
             onClick={handleSearch}
             aria-label={isEn ? "Search experiences" : "Tìm kiếm chuyến đi"}
-            className="group size-10 sm:size-11 md:size-12 rounded-full flex items-center justify-center text-slate-700 hover:text-black hover:bg-slate-100 active:scale-95 transition-all duration-200 shrink-0 cursor-pointer"
+            className="group size-10 sm:size-11 md:size-12 rounded-full bg-[#DA251D] hover:bg-[#C92018] text-white shadow-[0_4px_16px_rgba(218,37,29,0.4)] flex items-center justify-center hover:scale-105 active:scale-95 transition-all duration-200 shrink-0 cursor-pointer"
           >
-            <Search className="size-5 sm:size-5.5 text-slate-700 transition-transform duration-200 group-hover:scale-110 group-hover:text-black" />
+            <Search className="size-4 sm:size-5 text-white transition-transform duration-200 group-hover:scale-110" />
           </button>
         </div>
       </div>
