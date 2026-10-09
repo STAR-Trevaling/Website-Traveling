@@ -1,8 +1,10 @@
+import json
 import logging
 import uuid
 from decimal import Decimal
 from typing import Any
 
+from django.core.serializers.json import DjangoJSONEncoder
 from django.db import transaction
 from django.utils import timezone
 from rest_framework.exceptions import ValidationError
@@ -327,7 +329,7 @@ class PaymentService:
         confirmed_by = str(payload.get("confirmed_by", payload.get("source", "odoo_erp")))
         txn.status = PaymentTransaction.Status.SUCCESS
         txn.provider_ref = confirmed_by
-        txn.response_payload = payload
+        txn.response_payload = json.loads(json.dumps(payload, cls=DjangoJSONEncoder))
         txn.completed_at = now
         txn.save(update_fields=["status", "provider_ref", "response_payload", "completed_at"])
 
