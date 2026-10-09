@@ -142,14 +142,13 @@ export function queryAssistantKnowledge(message: string, locale: "vi" | "en" = "
   ];
 
   if (OUT_OF_SCOPE_KEYWORDS.some((kw) => q.includes(kw))) {
-    const userQueryDisplay = message.trim();
     const notFoundVi =
-      `Dạ hiện tại trong kho kiến thức và danh mục tour của STAR Travels chưa có dữ liệu có sẵn phù hợp với yêu cầu: **"${userQueryDisplay}"**.\n\n` +
-      `Để được đội ngũ chuyên viên hỗ trợ tư vấn thiết kế lịch trình riêng theo yêu cầu cá nhân hóa hoặc giải đáp chi tiết, Quý khách vui lòng liên hệ trực tiếp với chúng em qua trang [Liên Hệ & Tư Vấn Riêng](/contact) hoặc gọi hotline **+84 (0) 24 3999 8888** (hỗ trợ 24/7) nhé ạ!`;
+      "Dạ hiện tại trong kho kiến thức và danh mục tour của STAR Travels chưa có dữ liệu có sẵn phù hợp với dịch vụ hoặc điểm đến ngoài phạm vi này.\n\n" +
+      "Để được đội ngũ chuyên viên hỗ trợ tư vấn thiết kế lịch trình riêng theo yêu cầu cá nhân hóa hoặc giải đáp chi tiết, Quý khách vui lòng liên hệ trực tiếp với chúng em qua trang [Liên Hệ & Tư Vấn Riêng](/contact) hoặc gọi hotline **+84 (0) 24 3999 8888** (hỗ trợ 24/7) nhé ạ!";
 
     const notFoundEn =
-      `Currently, our knowledge base and curated tour catalog do not have pre-packaged itineraries matching your request: **"${userQueryDisplay}"**.\n\n` +
-      `To request a customized private itinerary or speak directly with our concierge specialists, please reach out via our [Contact & Support Page](/contact) or call our 24/7 hotline at **+84 (0) 24 3999 8888**.`;
+      "Currently, our knowledge base and curated tour catalog do not have pre-packaged itineraries matching this specific request.\n\n" +
+      "To request a customized private itinerary or speak directly with our concierge specialists, please reach out via our [Contact & Support Page](/contact) or call our 24/7 hotline at **+84 (0) 24 3999 8888**.";
 
     return {
       message: isEn ? notFoundEn : notFoundVi,
@@ -630,10 +629,10 @@ export function queryAssistantKnowledge(message: string, locale: "vi" | "en" = "
     const finalDests = matchedDests.slice(0, 2).map((d) => mapDestinationToCard(d, isEn));
 
     const textVi =
-      `Dạ STAR Travels đã tra cứu trong kho kiến thức và tìm thấy các thông tin, hành trình phù hợp nhất với yêu cầu **"${message.trim()}"** của Quý khách. Mời Quý khách xem trực tiếp qua các liên kết bên dưới:`;
+      "Dạ STAR Travels đã tra cứu trong kho kiến thức và tìm thấy các thông tin, hành trình phù hợp nhất với yêu cầu của Quý khách. Mời Quý khách xem trực tiếp qua các liên kết bên dưới:";
 
     const textEn =
-      `STAR Travels searched our knowledge base and found relevant itineraries and travel guides matching **"${message.trim()}"**. Feel free to explore the direct links below:`;
+      "STAR Travels searched our knowledge base and found relevant itineraries and travel guides matching your inquiry. Feel free to explore the direct links below:";
 
     return {
       message: isEn ? textEn : textVi,
@@ -645,14 +644,13 @@ export function queryAssistantKnowledge(message: string, locale: "vi" | "en" = "
   }
 
   // Case B: KHÔNG TÌM THẤY trong dataset -> Yêu cầu khách liên hệ qua Contact & Hotline
-  const userQueryDisplay = message.trim();
   const notFoundVi =
-    `Dạ hiện tại trong kho kiến thức và danh mục tour của STAR Travels chưa có dữ liệu có sẵn phù hợp với yêu cầu: **"${userQueryDisplay}"**.\n\n` +
-    `Để được đội ngũ chuyên viên hỗ trợ tư vấn thiết kế lịch trình riêng theo yêu cầu cá nhân hóa hoặc giải đáp chi tiết, Quý khách vui lòng liên hệ trực tiếp với chúng em qua trang [Liên Hệ & Tư Vấn Riêng](/contact) hoặc gọi hotline **+84 (0) 24 3999 8888** (hỗ trợ 24/7) nhé ạ!`;
+    "Dạ hiện tại trong kho kiến thức và danh mục tour của STAR Travels chưa có dữ liệu có sẵn phù hợp với điểm đến hoặc yêu cầu này.\n\n" +
+    "Để được đội ngũ chuyên viên hỗ trợ tư vấn thiết kế lịch trình riêng theo yêu cầu cá nhân hóa hoặc giải đáp chi tiết, Quý khách vui lòng liên hệ trực tiếp với chúng em qua trang [Liên Hệ & Tư Vấn Riêng](/contact) hoặc gọi hotline **+84 (0) 24 3999 8888** (hỗ trợ 24/7) nhé ạ!";
 
   const notFoundEn =
-    `Currently, our knowledge base and curated tour catalog do not have pre-packaged itineraries matching your request: **"${userQueryDisplay}"**.\n\n` +
-    `To request a customized private itinerary or speak directly with our concierge specialists, please reach out via our [Contact & Support Page](/contact) or call our 24/7 hotline at **+84 (0) 24 3999 8888**.`;
+    "Currently, our knowledge base and curated tour catalog do not have pre-packaged itineraries matching this specific request.\n\n" +
+    "To request a customized private itinerary or speak directly with our concierge specialists, please reach out via our [Contact & Support Page](/contact) or call our 24/7 hotline at **+84 (0) 24 3999 8888**.";
 
   return {
     message: isEn ? notFoundEn : notFoundVi,
