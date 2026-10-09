@@ -42,11 +42,16 @@ Built upon strict **Clean/Hexagonal Architecture** and pragmatic **DDD-lite** bo
 
 | Capability | Technical Implementation | Value Delivered |
 |---|---|---|
+| 🧭 **GPS & Geolocation** | Client-side Web Geolocation API & Haversine distance algorithm (`lib/geo-utils.ts`). | Live distance calculation (`~850 m`, `~1.2 km`), nearest-venue sorting, and smart badges on stays & dining. |
+| 🏨 **Affiliate Referrals** | Non-blocking beacon tracking (`POST /api/v1/referrals/track/`) mapping bookings to partners. | Tracking referral conversions for Booking.com, Agoda, TableCheck with zero payment friction. |
+| 💳 **Tour Bookings & Pay** | Server-side price recalculation, VNPay Sandbox, and VietQR (NAPAS 247) integration. | Bulletproof checkout with zero client price tampering and automatic transaction ledger updates. |
+| 🤖 **AI Concierge & RAG** | Dual-tier RAG engine (Django pgvector semantic search + client-side deterministic fallback). | Prompt-injection-safe itinerary recommendations, regional discovery, and CRM lead capture. |
+| ⚖️ **Legal Compliance** | Decrees 13/2023/NĐ-CP (PDPD) and 52/2013/NĐ-CP (E-Commerce) integration (`/privacy`, `/terms`). | Explicit consent checkboxes, privacy protection, and full MOIT corporate disclosures. |
 | 📍 **Geospatial Discovery** | PostGIS 3.5 spatial indexing with `ST_DWithin` radius queries (`?lat=&lng=&radius_km=`). | Real-time discovery of nearby attractions, heritage sites, and experiences. |
 | ⚡ **Next.js 15 & React 19** | App Router, Server-Side Rendering (SSR), React Server Components (RSC), and Edge middleware. | Sub-second page loads, optimal Core Web Vitals, and indexable SEO metadata. |
 | 🛡️ **BFF Cookie Security** | Next.js Backend-for-Frontend routes (`/api/auth/*`) issuing secure `HttpOnly` session cookies. | Eliminates token storage in `localStorage` to defend against Cross-Site Scripting (XSS). |
 | 🌐 **100% Bilingual System** | Pure Vietnamese (`vi`) and English (`en`) dictionary toggle with zero mixed-language UI bleeding. | First-class UX for domestic travelers and international explorers alike. |
-| 🏛️ **Modular Monolith** | 8 decoupled bounded contexts in Django (`accounts`, `destinations`, `places`, `partners`, `content`, `reviews`, `audit`, `core`). | Clean separation of concerns with atomic transactional boundaries. |
+| 🏛️ **Modular Monolith** | 13 decoupled bounded contexts in Django (`accounts`, `destinations`, `places`, `tours`, `experiences`, `bookings`, `payments`, `assistant`, `accommodations`, `restaurants`, `partners`, `content`, `reviews`). | Clean separation of concerns with atomic transactional boundaries. |
 | 🤝 **Partner State Machine** | Strict state transitions (`submitted` → `under_review` → `approved`/`rejected`) with row-level locks. | Prevents concurrent approval races and maintains immutable audit logs. |
 | 📦 **Shared Data Contracts** | Standalone package `@travel/contracts` exporting TypeScript models and OpenAPI 3.1 schemas. | Guaranteed type safety across polyglot stacks without leaky internal abstractions. |
 | 🎨 **STAR Design System** | Reconstructed from the Anima STAR Travels reference using Tailwind CSS, Bento grids, and Radix UI. | Pixel-accurate visual hierarchy with responsive fluidity across mobile, tablet, and desktop. |
@@ -62,7 +67,7 @@ graph TD
     Client["🌐 Web Client (Desktop / Mobile)"]
 
     subgraph "Frontend Layer (apps/public-site)"
-        NextWeb["Next.js 15 App Router<br/>(SSR, RSC, Bilingual i18n)"]
+        NextWeb["Next.js 15 App Router<br/>(25 Routes, SSR/RSC, Bilingual i18n, GPS Engine)"]
         BFF["BFF Auth Proxy (/api/auth/*)<br/>HttpOnly Cookie Session Storage"]
     end
 
@@ -73,19 +78,20 @@ graph TD
     subgraph "Backend Core (apps/api)"
         DRF["Django 5.2 REST Framework API Root (/api/v1/)"]
         subgraph "Bounded Contexts"
-            AccountsCtx["accounts<br/>(Identity, RBAC, JWT)"]
-            DestCtx["destinations & places<br/>(Catalog & PostGIS Engine)"]
-            PartnerCtx["partners<br/>(B2B State Machine & Locking)"]
-            ContentCtx["content<br/>(Stories & Editorial Feeds)"]
-            ReviewCtx["reviews & favorites<br/>(Social Proof & Bookmarks)"]
-            AuditCtx["audit<br/>(Immutable Privileged Logs)"]
+            AccountsCtx["accounts (Identity, RBAC, JWT)"]
+            CatalogCtx["destinations, places, tours, experiences"]
+            HospitalityCtx["accommodations, restaurants (Referral Maps)"]
+            TransactionCtx["bookings, payments (VNPay, VietQR)"]
+            AICtx["assistant (RAG & pgvector)"]
+            PartnerCtx["partners (B2B State Machine & Locking)"]
+            SocialCtx["content, reviews, audit"]
         end
     end
 
     subgraph "Persistence & Workers"
         Postgres[("🐘 PostgreSQL 17 + PostGIS 3.5<br/>Spatial Queries & ACID Store")]
         Redis[("⚡ Redis 7<br/>Cache Store & Celery Broker")]
-        CeleryWorker["⚙️ Celery 5 Async Worker<br/>Background Notifications"]
+        CeleryWorker["⚙️ Celery 5 Async Worker<br/>Background Outbox & Notifications"]
     end
 
     Client -->|HTTPS / UI Interaction| NextWeb
@@ -94,8 +100,8 @@ graph TD
     NextWeb -.->|Static Type Contract| Contracts
     DRF -.->|OpenAPI Contract Sync| Contracts
     NextWeb -->|Direct Read Operations /api/v1/*| DRF
-    DRF --> AccountsCtx & DestCtx & PartnerCtx & ContentCtx & ReviewCtx & AuditCtx
-    AccountsCtx & DestCtx & PartnerCtx & ContentCtx & ReviewCtx & AuditCtx --> Postgres
+    DRF --> AccountsCtx & CatalogCtx & HospitalityCtx & TransactionCtx & AICtx & PartnerCtx & SocialCtx
+    AccountsCtx & CatalogCtx & HospitalityCtx & TransactionCtx & AICtx & PartnerCtx & SocialCtx --> Postgres
     DRF --> Redis
     Redis <--> CeleryWorker
 ```
@@ -108,15 +114,22 @@ graph TD
 travel-platform-mvp-complete/
 ├── apps/
 │   ├── api/                          # Django 5.2 REST Framework modular monolith
-│   │   ├── accounts/                 # User identity, roles (Customer, Partner, Staff), JWT auth
+│   │   ├── accounts/                 # User identity, roles (Traveler, Partner, Staff), JWT auth
+│   │   ├── accommodations/           # Luxury hotel/resort entities and affiliate partner mapping
+│   │   ├── assistant/                # AI Concierge RAG engine, vector search, prompt defense
 │   │   ├── audit/                    # Append-only audit logging for privileged actions
+│   │   ├── bookings/                 # Tour reservations and affiliate referral bookings
 │   │   ├── config/                   # Root settings, ASGI/WSGI handlers, Celery app, URLs
 │   │   ├── content/                  # Editorial articles, travel stories, and spotlights
 │   │   ├── core/                     # Shared pagination, exceptions, and seed commands
 │   │   ├── destinations/             # Destination models, regions, and search filters
+│   │   ├── experiences/              # Localized adventure activities and booking slots
 │   │   ├── partners/                 # B2B partner application state machine and review service
+│   │   ├── payments/                 # Transaction ledger, VNPay Sandbox, VietQR mock
 │   │   ├── places/                   # Locations, categories, and PostGIS geospatial search
+│   │   ├── restaurants/              # Dining venues, Michelin spotlights, referral mapping
 │   │   ├── reviews/                  # User ratings, verified reviews, and saved favorites
+│   │   ├── tours/                    # Tour packages, daily itineraries, pricing tiers
 │   │   ├── tests/                    # Unit, integration, and state-machine test suites
 │   │   ├── Dockerfile                # Multi-stage Python 3.12 production container
 │   │   ├── manage.py                 # Django management CLI
@@ -125,9 +138,10 @@ travel-platform-mvp-complete/
 │   └── public-site/                  # Next.js 15.5 customer & partner web application
 │       ├── public/                   # Static media, SVG icons, and brand graphics
 │       ├── src/
-│       │   ├── app/                  # 19 App Router pages (SSR/RSC with full bilingual i18n)
-│       │   ├── components/           # Reusable Radix UI primitives, cards, hero, and navigation
-│       │   └── lib/                  # BFF client, auth helpers, and bilingual translation dictionaries
+│       │   ├── app/                  # 25 App Router pages (SSR/RSC with full bilingual i18n)
+│       │   ├── components/           # Reusable Radix UI primitives, cards, hero, and catalogs
+│       │   ├── data/seed/            # Centralized 100% Vietnam verified seed dataset
+│       │   └── lib/                  # BFF client, auth helpers, geo-utils, and dictionaries
 │       ├── Dockerfile                # Production Node.js 20 Next.js container
 │       ├── eslint.config.mjs         # ESLint 9 flat configuration
 │       ├── package.json              # Web dependencies and scripts

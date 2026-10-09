@@ -1,1 +1,0 @@
-export { TravelCompany } from "./TravelCompany";
