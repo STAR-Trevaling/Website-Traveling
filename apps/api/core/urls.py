@@ -4,17 +4,19 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.routers import DefaultRouter
 
+from accommodations.views import AccommodationViewSet
 from accounts.serializers import CurrentUserSerializer, RegisterSerializer
 from assistant.views import (
     AssistantConversationViewSet,
     AssistantKnowledgeChunkViewSet,
     AssistantLeadCaptureViewSet,
 )
-from bookings.views import BookingViewSet
+from bookings.views import BookingViewSet, ReferralTrackView
 from content.views import ArticleViewSet
 from destinations.views import DestinationViewSet
 from partners.views import MyPartnerMembershipViewSet, PartnerApplicationViewSet
 from places.views import CategoryViewSet, PlaceViewSet
+from restaurants.views import RestaurantViewSet
 from reviews.views import FavoriteViewSet, ReviewViewSet
 from tours.views import TourViewSet
 
@@ -23,6 +25,8 @@ router.register("destinations", DestinationViewSet, basename="destination")
 router.register("place-categories", CategoryViewSet, basename="place-category")
 router.register("places", PlaceViewSet, basename="place")
 router.register("tours", TourViewSet, basename="tour")
+router.register("accommodations", AccommodationViewSet, basename="accommodation")
+router.register("restaurants", RestaurantViewSet, basename="restaurant")
 router.register("bookings", BookingViewSet, basename="booking")
 router.register("articles", ArticleViewSet, basename="article")
 router.register("reviews", ReviewViewSet, basename="review")
@@ -58,5 +62,6 @@ def register(request):
 urlpatterns = [
     path("auth/me/", me, name="me"),
     path("auth/register/", register, name="register"),
+    path("referrals/track/", ReferralTrackView.as_view(), name="referrals-track"),
     path("", include(router.urls)),
 ]

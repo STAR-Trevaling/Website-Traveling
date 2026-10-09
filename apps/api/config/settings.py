@@ -6,7 +6,13 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 DEBUG = os.getenv("DJANGO_DEBUG", "0") == "1"
 IS_TESTING = "pytest" in sys.modules or bool(os.getenv("PYTEST_CURRENT_TEST"))
-IS_DEV_OR_TEST = DEBUG or IS_TESTING or any("manage.py" in arg for arg in sys.argv)
+IS_DEV_OR_TEST = (
+    DEBUG
+    or IS_TESTING
+    or any("manage.py" in arg for arg in sys.argv)
+    or any("mypy" in arg for arg in sys.argv)
+    or "mypy" in sys.modules
+)
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY") or ("dev-only-change-me" if IS_DEV_OR_TEST else "")
 if not SECRET_KEY:
     raise RuntimeError("DJANGO_SECRET_KEY is required when DJANGO_DEBUG=0")
@@ -43,6 +49,8 @@ INSTALLED_APPS = [
     "core",
     "integrations",
     "tours",
+    "accommodations",
+    "restaurants",
     "bookings",
     "payments",
     "assistant",
@@ -122,6 +130,16 @@ REST_FRAMEWORK = {
     "DEFAULT_PAGINATION_CLASS": "core.pagination.StandardPagination",
     "PAGE_SIZE": 12,
     "EXCEPTION_HANDLER": "core.exceptions.api_exception_handler",
+    "DEFAULT_THROTTLE_CLASSES": [
+        "rest_framework.throttling.AnonRateThrottle",
+        "rest_framework.throttling.UserRateThrottle",
+    ],
+    "DEFAULT_THROTTLE_RATES": {
+        "anon": os.getenv("DRF_THROTTLE_ANON", "200/day"),
+        "user": os.getenv("DRF_THROTTLE_USER", "2000/day"),
+        "auth": os.getenv("DRF_THROTTLE_AUTH", "10/minute"),
+        "payment": os.getenv("DRF_THROTTLE_PAYMENT", "30/minute"),
+    },
 }
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
@@ -142,9 +160,17 @@ CSRF_COOKIE_SECURE = not DEBUG
 SECURE_CONTENT_TYPE_NOSNIFF = True
 X_FRAME_OPTIONS = "DENY"
 
+if not IS_DEV_OR_TEST:
+    SECURE_HSTS_SECONDS = 31536000  # 1 year
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
+    SECURE_SSL_REDIRECT = True
+
 # Odoo 18 ERP Integration Settings
 ODOO_BASE_URL = os.getenv("ODOO_BASE_URL", "http://host.docker.internal:8069")
-ODOO_WEBHOOK_SECRET = os.getenv("ODOO_WEBHOOK_SECRET", "star_travels_super_secret_webhook_key_2026")
+ODOO_WEBHOOK_SECRET = os.getenv("ODOO_WEBHOOK_SECRET") or ("star_travels_super_secret_webhook_key_2026" if IS_DEV_OR_TEST else "")
+if not ODOO_WEBHOOK_SECRET:
+    raise RuntimeError("ODOO_WEBHOOK_SECRET is required when DJANGO_DEBUG=0")
 ODOO_INBOUND_API_KEY = os.getenv("ODOO_INBOUND_API_KEY", "star_travels_inbound_api_token_2026")
 
 # VNPay Payment Gateway Sandbox Settings
@@ -152,7 +178,9 @@ VNPAY_PAYMENT_URL = os.getenv(
     "VNPAY_PAYMENT_URL", "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html"
 )
 VNPAY_TMN_CODE = os.getenv("VNPAY_TMN_CODE", "DEMO_TMN")
-VNPAY_HASH_SECRET = os.getenv("VNPAY_HASH_SECRET", "DEMO_HASH_SECRET_KEY")
+VNPAY_HASH_SECRET = os.getenv("VNPAY_HASH_SECRET") or ("DEMO_HASH_SECRET_KEY" if IS_DEV_OR_TEST else "")
+if not VNPAY_HASH_SECRET:
+    raise RuntimeError("VNPAY_HASH_SECRET is required when DJANGO_DEBUG=0")
 VNPAY_RETURN_URL = os.getenv("VNPAY_RETURN_URL", "http://localhost:3000/payment/return")
 
 # VietQR Payment Gateway Settings (NAPAS 247 Standard)
@@ -175,3 +203,54 @@ CELERY_BEAT_SCHEDULE = {
         "schedule": 60.0,
     },
 }
+
+# Structured Logging Configuration
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "verbose": {
+            "format": "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
+            "datefmt": "%Y-%m-%d %H:%M:%S",
+        },
+        "simple": {
+            "format": "%(levelname)s %(message)s",
+        },
+    },
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "formatter": "verbose",
+        },
+    },
+    "root": {
+        "handlers": ["console"],
+        "level": os.getenv("DJANGO_LOG_LEVEL", "INFO"),
+    },
+    "loggers": {
+        "django.request": {
+            "handlers": ["console"],
+            "level": "WARNING",
+            "propagate": False,
+        },
+    },
+}
+
+# Optional Sentry APM & Error Tracking
+SENTRY_DSN = os.getenv("SENTRY_DSN")
+if SENTRY_DSN:
+    try:
+        import sentry_sdk
+        from sentry_sdk.integrations.celery import CeleryIntegration
+        from sentry_sdk.integrations.django import DjangoIntegration
+
+        sentry_sdk.init(
+            dsn=SENTRY_DSN,
+            integrations=[DjangoIntegration(), CeleryIntegration()],
+            traces_sample_rate=float(os.getenv("SENTRY_TRACES_SAMPLE_RATE", "0.1")),
+            send_default_pii=False,
+            environment=os.getenv("ENVIRONMENT", "production"),
+        )
+    except ImportError:
+        pass
+

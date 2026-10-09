@@ -38,6 +38,12 @@ class PaymentCreateView(APIView):
             )
             return Response(result, status=status.HTTP_201_CREATED)
 
+        if gateway == "cash":
+            result = service.create_cash_payment(
+                booking_code=data["booking_code"],
+            )
+            return Response(result, status=status.HTTP_201_CREATED)
+
         if gateway == "vnpay":
             client_ip = VNPayAdapter.get_client_ip(request)
             result = service.create_vnpay_payment(
@@ -53,7 +59,7 @@ class PaymentCreateView(APIView):
             {
                 "gateway": (
                     f"Cổng thanh toán '{gateway}' chưa được hỗ trợ. "
-                    "Vui lòng chọn 'vnpay' hoặc 'vietqr'."
+                    "Vui lòng chọn 'vietqr', 'cash' hoặc 'vnpay'."
                 )
             },
             status=status.HTTP_400_BAD_REQUEST,

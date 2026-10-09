@@ -163,6 +163,63 @@ class PaymentService:
         }
 
     @transaction.atomic
+    def create_cash_payment(
+        self,
+        booking_code: str,
+    ) -> dict[str, Any]:
+        """
+        Registers cash payment preference for a booking and creates pending PaymentTransaction.
+        Sets booking payment_method to 'cash'.
+        """
+        booking = Booking.objects.filter(booking_code=booking_code).first()
+        if not booking:
+            raise ValidationError(
+                {"booking_code": f"Không tìm thấy đơn đặt tour với mã {booking_code}."}
+            )
+
+        if booking.status in (Booking.Status.PAID, Booking.Status.COMPLETED):
+            raise ValidationError(
+                {"booking_code": "Đơn đặt tour đã được thanh toán thành công trước đó."}
+            )
+
+        if booking.status == Booking.Status.CANCELLED:
+            raise ValidationError({"booking_code": "Đơn đặt tour đã bị hủy, không thể thanh toán."})
+
+        now = timezone.now()
+        timestamp = int(now.timestamp())
+        txn_ref = f"{booking.booking_code}_CASH_{timestamp}"
+
+        # Update booking payment method to cash
+        booking.payment_method = "cash"
+        booking.save(update_fields=["payment_method", "updated_at"])
+
+        # Create or update PaymentTransaction record
+        txn, _ = PaymentTransaction.objects.get_or_create(
+            booking=booking,
+            transaction_code=txn_ref,
+            defaults={
+                "provider": PaymentTransaction.Provider.CASH,
+                "amount": booking.total_amount,
+                "currency": booking.currency,
+                "status": PaymentTransaction.Status.PENDING,
+                "idempotency_key": f"cash:{txn_ref}",
+                "request_payload": {"method": "cash", "registered_at": now.isoformat()},
+            },
+        )
+
+        return {
+            "payment_id": str(txn.id),
+            "transaction_code": txn.transaction_code,
+            "booking_code": booking.booking_code,
+            "amount": str(booking.total_amount),
+            "currency": booking.currency,
+            "gateway": "cash",
+            "status": txn.status,
+            "payment_method": "cash",
+            "message": "Đã ghi nhận phương thức thanh toán tiền mặt. Quý khách vui lòng nộp tiền tại văn phòng hoặc cho HDV khi khởi hành.",
+        }
+
+    @transaction.atomic
     def process_vnpay_ipn(self, data: dict[str, Any]) -> dict[str, str]:
         """
         Processes server-to-server VNPay IPN webhook according to specification.
