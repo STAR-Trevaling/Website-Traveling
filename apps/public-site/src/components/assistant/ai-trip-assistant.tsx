@@ -39,6 +39,21 @@ interface ChatMessage {
 /**
  * Parses markdown bold **text** and [Link Label](url) into interactive Next.js Link components
  */
+function getSafeHref(url: string): string {
+  try {
+    if (url.startsWith("/") && !url.startsWith("//")) {
+      return encodeURI(url);
+    }
+    const parsed = new URL(url);
+    if (parsed.protocol === "http:" || parsed.protocol === "https:") {
+      return encodeURI(url);
+    }
+  } catch {
+    // Invalid URL fallback
+  }
+  return "#";
+}
+
 function renderFormattedMessage(text: string, onLinkClick: () => void) {
   const cleaned = text
     .replace(/\[TOUR_CARD:\s*[\w-]+\]/g, "")
@@ -54,11 +69,7 @@ function renderFormattedMessage(text: string, onLinkClick: () => void) {
     }
     const label = match[1];
     const rawHref = match[2];
-    const isSafe =
-      (rawHref.startsWith("/") && !rawHref.startsWith("//")) ||
-      rawHref.startsWith("https://") ||
-      rawHref.startsWith("http://");
-    const href = isSafe ? rawHref : "#";
+    const href = getSafeHref(rawHref);
     parts.push(
       <Link
         key={`link-${match.index}`}
@@ -362,7 +373,9 @@ export function AITripAssistant() {
                   }`}
                 >
                   <div className="whitespace-pre-line">
-                    {renderFormattedMessage(msg.content, () => setIsOpen(false))}
+                    {msg.role === "user"
+                      ? msg.content
+                      : renderFormattedMessage(msg.content, () => setIsOpen(false))}
                   </div>
                 </div>
 
