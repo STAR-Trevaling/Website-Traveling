@@ -28,7 +28,8 @@ import {
 interface ChatMessage {
   id: string;
   role: "user" | "assistant";
-  content: string;
+  userText?: string;
+  assistantContent?: string;
   tours?: TourCardData[];
   stories?: StoryCardData[];
   destinations?: DestinationCardData[];
@@ -40,13 +41,15 @@ interface ChatMessage {
  * Parses markdown bold **text** and [Link Label](url) into interactive Next.js Link components
  */
 function getSafeHref(url: string): string {
+  if (!url || typeof url !== "string") return "#";
+  const trimmed = url.trim();
+  if (trimmed.startsWith("/") && !trimmed.startsWith("//") && !trimmed.startsWith("/\\")) {
+    return encodeURI(trimmed);
+  }
   try {
-    if (url.startsWith("/") && !url.startsWith("//")) {
-      return encodeURI(url);
-    }
-    const parsed = new URL(url);
+    const parsed = new URL(trimmed);
     if (parsed.protocol === "http:" || parsed.protocol === "https:") {
-      return encodeURI(url);
+      return parsed.href;
     }
   } catch {
     // Invalid URL fallback
@@ -72,7 +75,7 @@ function renderFormattedMessage(text: string, onLinkClick: () => void) {
     const href = getSafeHref(rawHref);
     parts.push(
       <Link
-        key={`link-${match.index}`}
+        key={`link-part-${parts.length}`}
         href={href}
         onClick={onLinkClick}
         className="inline-flex items-center gap-0.5 font-bold text-[#da251d] underline underline-offset-2 hover:text-[#991b1b] transition mx-0.5"
@@ -181,7 +184,7 @@ export function AITripAssistant() {
       {
         id: "welcome",
         role: "assistant",
-        content: isEnglish ? greetingEn : greetingVi,
+        assistantContent: isEnglish ? greetingEn : greetingVi,
       },
     ]);
   }, [isEnglish]);
@@ -200,7 +203,7 @@ export function AITripAssistant() {
     const userMsg: ChatMessage = {
       id: `user_${Date.now()}`,
       role: "user",
-      content: text,
+      userText: text,
     };
 
     setMessages((prev) => [...prev, userMsg]);
@@ -227,7 +230,7 @@ export function AITripAssistant() {
       const assistantMsg: ChatMessage = {
         id: `assistant_${Date.now()}`,
         role: "assistant",
-        content: data.message,
+        assistantContent: data.message,
         tours: data.recommended_tours || [],
         stories: data.recommended_stories || [],
         destinations: data.recommended_destinations || [],
@@ -245,7 +248,7 @@ export function AITripAssistant() {
         {
           id: `fallback_${Date.now()}`,
           role: "assistant",
-          content: localData.message,
+          assistantContent: localData.message,
           tours: localData.recommended_tours,
           stories: localData.recommended_stories,
           destinations: localData.recommended_destinations,
@@ -373,9 +376,11 @@ export function AITripAssistant() {
                   }`}
                 >
                   <div className="whitespace-pre-line">
-                    {msg.role === "user"
-                      ? msg.content
-                      : renderFormattedMessage(msg.content, () => setIsOpen(false))}
+                    {msg.role === "user" ? (
+                      <span>{msg.userText}</span>
+                    ) : (
+                      renderFormattedMessage(msg.assistantContent || "", () => setIsOpen(false))
+                    )}
                   </div>
                 </div>
 
