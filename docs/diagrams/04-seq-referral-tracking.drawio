@@ -1,0 +1,65 @@
+<?xml version="1.0" ?>
+<mxfile host="app.diagrams.net" modified="2026-10-09T00:00:00.000Z" agent="STAR-Travels-Drawio-Master-Suite" version="24.0.0" type="device">
+  <diagram name="4. Seq - Referral Tracking" id="page-4-seq-referral">
+    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1650" pageHeight="1000" background="#FFFFFF">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="p4-title-block" value="&amp;lt;b style=&amp;quot;font-size:14px; color:#0F172A;&amp;quot;&amp;gt;STAR Travels — Sơ Đồ Tuần Tự: Tiếp Thị Liên Kết Đối Tác (Affiliate Referral)&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;font color=&amp;quot;#475569&amp;quot; style=&amp;quot;font-size:11px;&amp;quot;&amp;gt;Chuẩn: OMG UML 2.5.1 Sequence Diagram | Cơ chế: Non-blocking beacon tracking&amp;lt;br&amp;gt;&amp;lt;i&amp;gt;Phạm vi:&amp;lt;/i&amp;gt; Modal cảnh báo 1.5s, navigator.sendBeacon, Outbox event và đồng bộ Odoo CRM Lead&amp;lt;/font&amp;gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=#94A3B8;strokeWidth=1.2;align=left;spacingLeft=14;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="30" width="600" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="p4-legend-block" value="&amp;lt;b style=&amp;quot;font-size:11px; color:#0F172A;&amp;quot;&amp;gt;CHÚ GIẢI (LEGEND)&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;■ &amp;lt;font color=&amp;quot;#0F172A&amp;quot;&amp;gt;●&amp;lt;/font&amp;gt; Tác vụ người dùng / Gọi hệ thống&amp;lt;br&amp;gt;■ &amp;lt;font color=&amp;quot;#DA251D&amp;quot;&amp;gt;●&amp;lt;/font&amp;gt; Beacon ngầm không chặn luồng trình duyệt&amp;lt;br&amp;gt;■ &amp;lt;font color=&amp;quot;#D97706&amp;quot;&amp;gt;●&amp;lt;/font&amp;gt; Đồng bộ CRM Lead sang Odoo 18&amp;lt;br&amp;gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CBD5E1;strokeWidth=1;align=left;spacingLeft=10;fontSize=10;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="1320" y="30" width="290" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="r-trav" value="Traveler&#10;(Khách tham quan)" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;size=42;fillColor=#1E293B;strokeColor=#0F172A;fontColor=#FFFFFF;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="90" y="130" width="140" height="830" as="geometry"/>
+        </mxCell>
+        <mxCell id="r-catalog" value="Hospitality Catalog&#10;(/accommodations | /restaurants)" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;size=42;fillColor=#1E293B;strokeColor=#0F172A;fontColor=#FFFFFF;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="330" y="130" width="180" height="830" as="geometry"/>
+        </mxCell>
+        <mxCell id="r-modal" value="Advisory Modal&#10;(ReferralAdvisoryModal)" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;size=42;fillColor=#1E293B;strokeColor=#0F172A;fontColor=#FFFFFF;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="590" y="130" width="170" height="830" as="geometry"/>
+        </mxCell>
+        <mxCell id="r-api" value="Django Referral API&#10;(POST /referrals/track/)" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;size=42;fillColor=#1E293B;strokeColor=#0F172A;fontColor=#FFFFFF;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="840" y="130" width="170" height="830" as="geometry"/>
+        </mxCell>
+        <mxCell id="r-outbox" value="Transactional Outbox&#10;&amp; Celery Worker" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;size=42;fillColor=#1E293B;strokeColor=#0F172A;fontColor=#FFFFFF;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1090" y="130" width="170" height="830" as="geometry"/>
+        </mxCell>
+        <mxCell id="r-partner" value="Partner Booking Site&#10;(Booking.com / Agoda)" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;size=42;fillColor=#1E293B;strokeColor=#0F172A;fontColor=#FFFFFF;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1340" y="130" width="160" height="830" as="geometry"/>
+        </mxCell>
+        <mxCell id="r-act1" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#CBD5E1;strokeColor=#475569;" vertex="1" parent="1">
+          <mxGeometry x="670" y="280" width="12" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="r-act2" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#CBD5E1;strokeColor=#475569;" vertex="1" parent="1">
+          <mxGeometry x="920" y="370" width="12" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="r-act3" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#CBD5E1;strokeColor=#475569;" vertex="1" parent="1">
+          <mxGeometry x="1170" y="480" width="12" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="rm1" value="1. Click 'Đặt ngay qua Booking.com' / 'Đặt bàn'" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=10;jumpStyle=arc;jumpSize=6;strokeColor=#0F172A;strokeWidth=1.5;labelBackgroundColor=#FFFFFF;fontSize=11;" edge="1" parent="1" source="r-trav" target="r-catalog">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="rm2" value="2. Mở Modal thông báo chuyển tiếp đối tác chính hãng" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=10;jumpStyle=arc;jumpSize=6;strokeColor=#0F172A;strokeWidth=1.5;labelBackgroundColor=#FFFFFF;fontSize=11;" edge="1" parent="1" source="r-catalog" target="r-modal">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="rm3" value="3. Khách bấm 'Tiếp tục chuyển trang'" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=10;jumpStyle=arc;jumpSize=6;strokeColor=#0F172A;strokeWidth=1.5;labelBackgroundColor=#FFFFFF;fontSize=11;" edge="1" parent="1" source="r-trav" target="r-modal">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="rm4" value="4. navigator.sendBeacon() gửi tracking ngầm không nghẽn" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=10;jumpStyle=arc;jumpSize=6;strokeColor=#0F172A;strokeWidth=1.5;labelBackgroundColor=#FFFFFF;fontSize=11;" edge="1" parent="1" source="r-modal" target="r-api">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="rm5" value="5. Lưu Booking record ('accommodation_referral')" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=10;jumpStyle=arc;jumpSize=6;strokeColor=#0F172A;strokeWidth=1.5;labelBackgroundColor=#FFFFFF;fontSize=11;" edge="1" parent="1" source="r-api" target="r-outbox">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="rm6" value="6. Đẩy sự kiện CRM Lead sang Odoo 18 [REFERRAL_LEAD]" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=10;jumpStyle=arc;jumpSize=6;strokeColor=#0F172A;strokeWidth=1.5;labelBackgroundColor=#FFFFFF;fontSize=11;" edge="1" parent="1" source="r-outbox" target="r-outbox">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="rm7" value="7. Chuyển hướng trình duyệt sang URL đối tác sau 1.5s" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=10;jumpStyle=arc;jumpSize=6;strokeColor=#0F172A;strokeWidth=1.5;labelBackgroundColor=#FFFFFF;fontSize=11;" edge="1" parent="1" source="r-modal" target="r-partner">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
