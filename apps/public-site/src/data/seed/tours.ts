@@ -1,41 +1,7 @@
 import { VIETNAM_IMAGES } from "@/lib/assets";
+import type { TourItem, TourItineraryDay } from "@/lib/types";
 
-export interface TourItineraryDay {
-  day: number;
-  title: string;
-  morning: string;
-  afternoon: string;
-  evening: string;
-}
-
-export interface TourItem {
-  id: string;
-  slug: string;
-  aliases?: string[];
-  title: string;
-  title_en?: string;
-  destination: string;
-  destination_en?: string;
-  region: "north" | "central" | "south";
-  duration: string;
-  duration_en?: string;
-  departure: string;
-  departure_en?: string;
-  price: number;
-  originalPrice?: number;
-  rating: number;
-  reviewCount: number;
-  image: string;
-  gallery?: string[];
-  overview: string;
-  overview_en?: string;
-  highlights: string[];
-  itinerary: TourItineraryDay[];
-  inclusions: string[];
-  exclusions: string[];
-  transport: string;
-  hotel: string;
-}
+export type { TourItem, TourItineraryDay };
 
 export const VIETNAM_TOURS: TourItem[] = [
   {

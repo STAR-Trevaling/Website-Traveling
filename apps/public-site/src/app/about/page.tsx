@@ -3,7 +3,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { cookies } from "next/headers";
 import { ShieldCheck, HeartHandshake, Compass, Award, CheckCircle, ArrowRight } from "lucide-react";
-import { PageHero } from "@/components/layout/page-hero";
+import { SiteHeader } from "@/components/layout/site-header";
+import { Breadcrumb } from "@/components/shared/breadcrumb";
 import { VIETNAM_IMAGES } from "@/lib/assets";
 import { DICTIONARY } from "@/lib/i18n/dictionary";
 import type { Locale } from "@/lib/i18n/types";
@@ -33,17 +34,39 @@ export default async function AboutPage() {
 
   return (
     <>
-      <PageHero
-        title={ab.heroTitle}
-        titleEn="About Star Travels Vietnam"
-        subtitle={ab.heroSubtitle}
-        subtitleEn="Connecting discerning travellers with authentic culture and living heritage across Vietnam."
-        image={VIETNAM_IMAGES.hero}
-      />
+      <SiteHeader overlay={false} />
 
       <main className="template-page-bg min-h-screen text-[#282828]">
+        {/* HEADER & INTRO */}
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 pt-8 sm:pt-12 md:px-12 lg:px-16">
+          {/* Breadcrumb Navigation */}
+          <div className="mb-6 sm:mb-8">
+            <Breadcrumb
+              items={[
+                { label: isEn ? "Home" : "Trang Chủ", href: "/" },
+                { label: isEn ? "About Us" : "Về Chúng Tôi" },
+              ]}
+            />
+          </div>
+
+          {/* Page Title Card */}
+          <div className="rounded-[2px] bg-white/85 backdrop-blur-md p-6 sm:p-8 md:p-10 shadow-[0_4px_24px_rgba(0,152,162,0.06)] border border-white/90 mb-8 sm:mb-12">
+            <span className="inline-block px-3 py-1 rounded-[2px] bg-[#0098a2]/15 text-[#007a82] border border-[#0098a2]/25 text-[11px] font-bold uppercase tracking-[0.2em] mb-2">
+              {isEn ? "About Us" : "Về Chúng Tôi"}
+            </span>
+            <h1 className="script-title mt-1 text-4xl sm:text-5xl md:text-6xl text-[#0f172a] leading-tight">
+              {isEn ? "About Star Travels Vietnam" : ab.heroTitle}
+            </h1>
+            <p className="mt-2 text-sm sm:text-base md:text-[17px] text-slate-800 font-medium max-w-3xl leading-relaxed">
+              {isEn
+                ? "Connecting discerning travellers with authentic culture and living heritage across Vietnam."
+                : ab.heroSubtitle}
+            </p>
+          </div>
+        </div>
+
         {/* SECTION 1: THE STORY */}
-        <section className="relative w-full px-4 sm:px-6 py-10 sm:py-16 md:py-20 md:px-12 lg:px-16">
+        <section className="relative w-full px-4 sm:px-6 pb-10 sm:pb-16 md:pb-20 md:px-12 lg:px-16">
           <div className="mx-auto max-w-7xl">
             <div className="grid gap-8 sm:gap-12 lg:grid-cols-2 lg:gap-16 items-center">
               <div>
@@ -145,27 +168,6 @@ export default async function AboutPage() {
                   </div>
                 );
               })}
-            </div>
-          </div>
-        </section>
-
-        {/* SECTION 3: METRICS COUNTER BAR */}
-        <section className="relative w-full py-10 sm:py-16 bg-[#1e293b] text-white">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-12">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 md:gap-12 text-center">
-              {ab.metrics.map((m, idx) => (
-                <div key={idx} className="p-3 sm:p-4 rounded bg-white/5 md:bg-transparent">
-                  <div className="display-title text-3xl sm:text-4xl md:text-5xl font-black text-amber-400">
-                    {m.value}
-                  </div>
-                  <div className="mt-1.5 sm:mt-2 text-xs sm:text-sm md:text-base font-semibold tracking-wide text-white">
-                    {m.label}
-                  </div>
-                  <div className="mt-0.5 sm:mt-1 text-[11px] sm:text-xs text-white/60 font-light">
-                    {m.sublabel}
-                  </div>
-                </div>
-              ))}
             </div>
           </div>
         </section>

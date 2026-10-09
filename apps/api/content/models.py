@@ -18,6 +18,12 @@ class Article(models.Model):
     excerpt = models.TextField(blank=True)
     body = models.TextField()
     cover_image = models.URLField(blank=True)
+    read_time = models.CharField(max_length=50, blank=True)
+    category = models.CharField(max_length=80, blank=True)
+    author_name = models.CharField(max_length=120, blank=True)
+    author_role = models.CharField(max_length=160, blank=True)
+    author_avatar = models.URLField(blank=True)
+    tags = models.JSONField(default=list, blank=True)
     destination = models.ForeignKey(
         Destination, on_delete=models.SET_NULL, null=True, blank=True, related_name="articles"
     )

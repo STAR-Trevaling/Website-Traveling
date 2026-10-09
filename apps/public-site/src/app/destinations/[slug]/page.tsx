@@ -86,7 +86,7 @@ export default async function DestinationDetail({ params }: DestinationDetailPro
           unoptimized
           className="object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/65 to-black/45" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/25 to-black/20" />
         <SiteHeader overlay />
 
         <div className="relative z-10 mx-auto flex min-h-[620px] max-w-7xl items-end px-6 pb-16 md:px-12">

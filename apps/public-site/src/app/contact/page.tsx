@@ -147,7 +147,7 @@ export default async function ContactPage() {
                   <div className="mt-5 sm:mt-6 pt-4 sm:pt-5 border-t border-slate-100 text-center">
                     <Link
                       href="/partner"
-                      className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-[#0098a2] hover:text-[#008f99] hover:underline"
+                      className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-[#da251d] hover:text-[#c92018] hover:underline"
                     >
                       <span>
                         {isEn

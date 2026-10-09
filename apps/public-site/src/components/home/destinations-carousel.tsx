@@ -19,10 +19,22 @@ export function DestinationsCarousel({ initialDestinations }: DestinationsCarous
   const [currentPage, setCurrentPage] = useState(0);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
-  const totalPages = VIETNAM_DESTINATIONS_PAGES.length;
 
-  // Current page items
-  const currentItems = VIETNAM_DESTINATIONS_PAGES[currentPage];
+  // Filter out any invalid test items and ensure valid image presence
+  const validDestinations = (initialDestinations || []).filter(
+    (d) => !d.slug.startsWith("test-") && !d.name.includes("E2E") && Boolean(d.image_url?.trim())
+  );
+
+  const pages: Destination[][] =
+    validDestinations.length > 0
+      ? Array.from(
+          { length: Math.ceil(validDestinations.length / 4) },
+          (_, i) => validDestinations.slice(i * 4, i * 4 + 4)
+        )
+      : VIETNAM_DESTINATIONS_PAGES;
+
+  const totalPages = pages.length;
+  const currentItems = pages[currentPage] || pages[0] || [];
 
   const handlePrev = () => {
     setCurrentPage((prev) => (prev - 1 + totalPages) % totalPages);
@@ -89,6 +101,7 @@ export function DestinationsCarousel({ initialDestinations }: DestinationsCarous
             const displayName = isEn && d.name_en ? d.name_en : d.name;
             const displaySummary = isEn && d.summary_en ? d.summary_en : d.summary;
             const delayClass = idx === 0 ? "" : idx === 1 ? "animation-delay-100" : idx === 2 ? "animation-delay-200" : "animation-delay-300";
+            const imageUrl = d.image_url?.trim() || "https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=800&q=80";
 
             return (
               <Link
@@ -101,7 +114,7 @@ export function DestinationsCarousel({ initialDestinations }: DestinationsCarous
                   <div>
                     <div className="relative h-[220px] sm:h-[230px] md:h-[240px] w-full overflow-hidden bg-slate-100">
                       <Image
-                        src={d.image_url}
+                        src={imageUrl}
                         alt={displayName}
                         fill
                         unoptimized
@@ -144,7 +157,7 @@ export function DestinationsCarousel({ initialDestinations }: DestinationsCarous
                 onClick={() => setCurrentPage(idx)}
                 aria-label={`Page ${idx + 1}`}
                 className={`h-1.5 rounded-full transition-all duration-300 ${
-                  idx === currentPage ? "w-5 bg-[#0098a2]" : "w-1.5 bg-slate-300"
+                  idx === currentPage ? "w-5 bg-[#da251d]" : "w-1.5 bg-slate-300"
                 }`}
               />
             ))}

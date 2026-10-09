@@ -7,7 +7,7 @@ import { VIETNAM_IMAGES } from "@/lib/assets";
 import { useLanguage } from "@/lib/i18n/context";
 
 export function HeroSlider() {
-  const { t, locale } = useLanguage();
+  const { t } = useLanguage();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [touchStart, setTouchStart] = useState<number | null>(null);
@@ -85,8 +85,8 @@ export function HeroSlider() {
         );
       })}
 
-      {/* Dark gradient overlays */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/65 via-black/35 to-black/70 pointer-events-none" />
+      {/* Subtle modern cinematic overlay keeping landmark photos bright, sunny and vibrant while text remains crystal-clear */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-black/10 to-black/55 pointer-events-none" />
 
       {/* Hero Content (Positioned with generous breathing room and optical centering) */}
       <div className="relative z-10 flex min-h-[680px] sm:min-h-[720px] md:min-h-[750px] lg:min-h-[780px] w-full flex-col items-center justify-center px-4 pt-24 sm:pt-26 md:pt-28 pb-12 sm:pb-16 text-white">
@@ -97,7 +97,7 @@ export function HeroSlider() {
             key={`hero-title-${currentSlide}`}
             className="display-title template-shadow-text leading-tight text-4xl sm:text-5xl md:text-6xl lg:text-[68px] xl:text-[72px] animate-fade-in-up text-balance drop-shadow-[0_4px_16px_rgba(0,0,0,0.65)]"
           >
-            {t.hero.slides[currentSlide]?.title || slides[currentSlide].title}
+            {t.hero.slides[currentSlide]?.title || slides[currentSlide]?.title}
           </h1>
 
           {/* Animated Hero Script Subtitle */}
@@ -105,7 +105,7 @@ export function HeroSlider() {
             key={`hero-sub-${currentSlide}`}
             className="script-title mt-2 sm:mt-3 leading-normal text-white/95 [-webkit-text-stroke:.3px_#fff] text-2xl sm:text-3xl md:text-4xl lg:text-5xl animate-fade-in-up animation-delay-100 text-balance drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)]"
           >
-            {t.hero.slides[currentSlide]?.subtitle || slides[currentSlide].subtitle}
+            {t.hero.slides[currentSlide]?.subtitle || slides[currentSlide]?.subtitle}
           </p>
 
           {/* Search Bar immediately below text in the middle of the page */}

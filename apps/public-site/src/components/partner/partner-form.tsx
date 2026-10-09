@@ -48,7 +48,7 @@ export function PartnerForm() {
             setSuccess(false);
             setMsg("");
           }}
-          className="mt-6 bg-[#0098a2] text-white px-6 py-2.5 text-xs font-semibold tracking-widest uppercase rounded-[2px] shadow-sm transition-all duration-200 hover:bg-[#008f99] hover:shadow-[0px_8px_25px_rgba(0,152,162,0.35)] hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
+          className="mt-6 bg-[#da251d] text-white px-6 py-2.5 text-xs font-semibold tracking-widest uppercase rounded-[2px] shadow-sm transition-all duration-200 hover:bg-[#c92018] hover:shadow-[0px_8px_25px_rgba(218,37,29,0.35)] hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
         >
           {isEnglish ? "Submit Another Application" : "Gửi Thêm Hồ Sơ Khác"}
         </button>
@@ -67,7 +67,7 @@ export function PartnerForm() {
             name="business_name"
             required
             placeholder={f.companyNamePlaceholder}
-            className="w-full bg-white border border-slate-200 px-4 py-3 text-sm text-slate-800 placeholder:text-slate-400 outline-none transition focus:border-[#0098a2] focus:ring-1 focus:ring-[#0098a2] rounded-[2px]"
+            className="w-full bg-white border border-slate-200 px-4 py-3 text-sm text-slate-800 placeholder:text-slate-400 outline-none transition focus:border-[#da251d] focus:ring-1 focus:ring-[#da251d] rounded-[2px]"
           />
         </div>
       </div>
@@ -82,7 +82,7 @@ export function PartnerForm() {
             type="email"
             required
             placeholder={f.emailPlaceholder}
-            className="w-full bg-white border border-slate-200 px-4 py-3 text-sm text-slate-800 placeholder:text-slate-400 outline-none transition focus:border-[#0098a2] focus:ring-1 focus:ring-[#0098a2] rounded-[2px]"
+            className="w-full bg-white border border-slate-200 px-4 py-3 text-sm text-slate-800 placeholder:text-slate-400 outline-none transition focus:border-[#da251d] focus:ring-1 focus:ring-[#da251d] rounded-[2px]"
           />
         </div>
 
@@ -94,7 +94,7 @@ export function PartnerForm() {
             name="phone"
             required
             placeholder={f.phonePlaceholder}
-            className="w-full bg-white border border-slate-200 px-4 py-3 text-sm text-slate-800 placeholder:text-slate-400 outline-none transition focus:border-[#0098a2] focus:ring-1 focus:ring-[#0098a2] rounded-[2px]"
+            className="w-full bg-white border border-slate-200 px-4 py-3 text-sm text-slate-800 placeholder:text-slate-400 outline-none transition focus:border-[#da251d] focus:ring-1 focus:ring-[#da251d] rounded-[2px]"
           />
         </div>
       </div>
@@ -107,7 +107,7 @@ export function PartnerForm() {
           name="website"
           type="url"
           placeholder={f.portfolioLinkPlaceholder}
-          className="w-full bg-white border border-slate-200 px-4 py-3 text-sm text-slate-800 placeholder:text-slate-400 outline-none transition focus:border-[#0098a2] focus:ring-1 focus:ring-[#0098a2] rounded-[2px]"
+          className="w-full bg-white border border-slate-200 px-4 py-3 text-sm text-slate-800 placeholder:text-slate-400 outline-none transition focus:border-[#da251d] focus:ring-1 focus:ring-[#da251d] rounded-[2px]"
         />
       </div>
 
@@ -120,14 +120,14 @@ export function PartnerForm() {
           required
           rows={4}
           placeholder={f.notesPlaceholder}
-          className="w-full bg-white border border-slate-200 px-4 py-3 text-sm text-slate-800 placeholder:text-slate-400 outline-none transition focus:border-[#0098a2] focus:ring-1 focus:ring-[#0098a2] rounded-[2px]"
+          className="w-full bg-white border border-slate-200 px-4 py-3 text-sm text-slate-800 placeholder:text-slate-400 outline-none transition focus:border-[#da251d] focus:ring-1 focus:ring-[#da251d] rounded-[2px]"
         />
       </div>
 
       <button
         type="submit"
         disabled={pending}
-        className="w-full bg-[#0098a2] text-white py-3.5 text-xs md:text-sm font-semibold tracking-widest uppercase rounded-[2px] shadow-sm transition-all duration-200 hover:bg-[#008f99] hover:shadow-[0px_8px_25px_rgba(0,152,162,0.35)] hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-70 flex items-center justify-center gap-2 cursor-pointer"
+        className="w-full bg-[#da251d] text-white py-3.5 text-xs md:text-sm font-semibold tracking-widest uppercase rounded-[2px] shadow-sm transition-all duration-200 hover:bg-[#c92018] hover:shadow-[0px_8px_25px_rgba(218,37,29,0.35)] hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-70 flex items-center justify-center gap-2 cursor-pointer"
       >
         <Building2 className="size-4" />
         <span>

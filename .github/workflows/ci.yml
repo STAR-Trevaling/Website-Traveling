@@ -51,16 +51,30 @@ jobs:
       - run: pip install -r apps/api/requirements.txt
       - run: python scripts/validate_context.py
       - run: python scripts/static_sanity.py
-      - working-directory: apps/api
-        run: |
-          python manage.py makemigrations --check --dry-run
-          python manage.py migrate
-          ruff check .
-          ruff format --check .
-          mypy .
-          bandit -r . -x ./tests,./core/management/commands/seed_demo.py -ll
-          pytest
-          python manage.py check --deploy
+      - name: Check database migrations
+        working-directory: apps/api
+        run: python manage.py makemigrations --check --dry-run
+      - name: Run database migrations
+        working-directory: apps/api
+        run: python manage.py migrate
+      - name: Lint backend (Ruff)
+        working-directory: apps/api
+        run: ruff check .
+      - name: Format backend check (Ruff)
+        working-directory: apps/api
+        run: ruff format --check .
+      - name: Typecheck backend (Mypy)
+        working-directory: apps/api
+        run: mypy .
+      - name: Security audit (Bandit)
+        working-directory: apps/api
+        run: bandit -r . -x ./tests,./core/management/commands/seed_demo.py -ll
+      - name: Run backend test suite (Pytest)
+        working-directory: apps/api
+        run: pytest
+      - name: Django deployment check
+        working-directory: apps/api
+        run: python manage.py check --deploy
   frontend:
     runs-on: ubuntu-latest
     steps:

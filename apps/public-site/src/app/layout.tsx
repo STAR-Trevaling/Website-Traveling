@@ -6,6 +6,7 @@ import { cookies, headers } from "next/headers";
 import type { Locale } from "@/lib/i18n/types";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { LanguageProvider } from "@/lib/i18n/context";
+import { AITripAssistant } from "@/components/assistant/ai-trip-assistant";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://startravels.vn";
 const SITE_NAME = "Star Travels Vietnam";
@@ -177,6 +178,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <LanguageProvider initialLocale={initialLocale} initialConfirmed={true}>
           <div className="flex-1 relative z-0">{children}</div>
           <SiteFooter />
+          <AITripAssistant />
         </LanguageProvider>
       </body>
     </html>

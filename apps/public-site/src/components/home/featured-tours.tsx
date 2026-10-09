@@ -80,7 +80,7 @@ export function FeaturedTours({ initialTours }: FeaturedToursProps) {
                 type="button"
                 onClick={handlePrev}
                 aria-label={isEn ? "Previous tours" : "Tour trước"}
-                className="hidden md:flex absolute -left-12 lg:-left-16 top-1/2 z-20 -translate-y-1/2 text-slate-800 hover:text-[#0098a2] transition drop-shadow-[0_2px_8px_rgba(0,0,0,0.15)] hover:scale-110 active:scale-95 cursor-pointer"
+                className="hidden md:flex absolute -left-12 lg:-left-16 top-1/2 z-20 -translate-y-1/2 text-slate-800 hover:text-[#da251d] transition drop-shadow-[0_2px_8px_rgba(0,0,0,0.15)] hover:scale-110 active:scale-95 cursor-pointer"
               >
                 <ChevronLeft className="size-12 md:size-16 stroke-[1.2]" />
               </button>
@@ -89,7 +89,7 @@ export function FeaturedTours({ initialTours }: FeaturedToursProps) {
                 type="button"
                 onClick={handleNext}
                 aria-label={isEn ? "Next tours" : "Tour tiếp theo"}
-                className="hidden md:flex absolute -right-12 lg:-right-16 top-1/2 z-20 -translate-y-1/2 text-slate-800 hover:text-[#0098a2] transition drop-shadow-[0_2px_8px_rgba(0,0,0,0.15)] hover:scale-110 active:scale-95 cursor-pointer"
+                className="hidden md:flex absolute -right-12 lg:-right-16 top-1/2 z-20 -translate-y-1/2 text-slate-800 hover:text-[#da251d] transition drop-shadow-[0_2px_8px_rgba(0,0,0,0.15)] hover:scale-110 active:scale-95 cursor-pointer"
               >
                 <ChevronRight className="size-12 md:size-16 stroke-[1.2]" />
               </button>
@@ -176,7 +176,7 @@ export function FeaturedTours({ initialTours }: FeaturedToursProps) {
                     onClick={() => setCurrentPage(idx)}
                     aria-label={`Page ${idx + 1}`}
                     className={`h-1.5 rounded-full transition-all duration-300 ${
-                      idx === currentPage ? "w-5 bg-[#0098a2]" : "w-1.5 bg-slate-300"
+                      idx === currentPage ? "w-5 bg-[#da251d]" : "w-1.5 bg-slate-300"
                     }`}
                   />
                 ))}

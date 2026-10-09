@@ -5,22 +5,38 @@ from rest_framework.response import Response
 from rest_framework.routers import DefaultRouter
 
 from accounts.serializers import CurrentUserSerializer, RegisterSerializer
+from assistant.views import (
+    AssistantConversationViewSet,
+    AssistantKnowledgeChunkViewSet,
+    AssistantLeadCaptureViewSet,
+)
+from bookings.views import BookingViewSet
 from content.views import ArticleViewSet
 from destinations.views import DestinationViewSet
 from partners.views import MyPartnerMembershipViewSet, PartnerApplicationViewSet
 from places.views import CategoryViewSet, PlaceViewSet
 from reviews.views import FavoriteViewSet, ReviewViewSet
+from tours.views import TourViewSet
 
 router = DefaultRouter()
 router.register("destinations", DestinationViewSet, basename="destination")
 router.register("place-categories", CategoryViewSet, basename="place-category")
 router.register("places", PlaceViewSet, basename="place")
+router.register("tours", TourViewSet, basename="tour")
+router.register("bookings", BookingViewSet, basename="booking")
 router.register("articles", ArticleViewSet, basename="article")
 router.register("reviews", ReviewViewSet, basename="review")
 router.register("favorites", FavoriteViewSet, basename="favorite")
 router.register("partner-applications", PartnerApplicationViewSet, basename="partner-application")
 router.register(
     "my-partner-memberships", MyPartnerMembershipViewSet, basename="my-partner-membership"
+)
+router.register(
+    "assistant/conversations", AssistantConversationViewSet, basename="assistant-conversation"
+)
+router.register("assistant/leads", AssistantLeadCaptureViewSet, basename="assistant-lead")
+router.register(
+    "assistant/knowledge", AssistantKnowledgeChunkViewSet, basename="assistant-knowledge"
 )
 
 

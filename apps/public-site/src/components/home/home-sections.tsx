@@ -8,7 +8,11 @@ import { DestinationsCarousel } from "./destinations-carousel";
 import { StaggerRevealGroup, ScrollReveal } from "@/components/shared/scroll-reveal";
 
 // ─── Popular Destinations Section ──────────────────────────────────
-export function PopularDestinationsSection() {
+interface PopularDestinationsSectionProps {
+  destinations?: any[];
+}
+
+export function PopularDestinationsSection({ destinations }: PopularDestinationsSectionProps = {}) {
   const { t } = useLanguage();
 
   return (
@@ -26,7 +30,7 @@ export function PopularDestinationsSection() {
         </ScrollReveal>
 
         <ScrollReveal direction="up" distance={32} duration={1150} delay={180} threshold={0.06}>
-          <DestinationsCarousel />
+          <DestinationsCarousel initialDestinations={destinations} />
         </ScrollReveal>
       </div>
     </section>
@@ -65,13 +69,13 @@ export function WhyUsAndAdventuresSection() {
                 key={item.title}
                 className="group travel-card-lift bg-white/95 p-6 sm:p-8 md:p-10 text-center border border-white/80 rounded-[2px] flex flex-col items-center justify-center min-h-[220px] sm:min-h-[260px] cursor-default shadow-sm hover:shadow-md"
               >
-                <div className="mx-auto flex size-14 items-center justify-center rounded-full bg-slate-50 border border-slate-100 text-[#1e293b] group-hover:bg-[#0098a2]/10 group-hover:text-[#0098a2] group-hover:border-[#0098a2]/30 group-hover:scale-110 transition-all duration-300 shadow-sm">
+                <div className="mx-auto flex size-14 items-center justify-center rounded-full bg-slate-50 border border-slate-100 text-[#1e293b] group-hover:bg-[#da251d]/10 group-hover:text-[#da251d] group-hover:border-[#da251d]/30 group-hover:scale-110 transition-all duration-300 shadow-sm">
                   <IconComponent className="size-7 stroke-[1.5] transition-transform duration-300 group-hover:rotate-6" />
                 </div>
-                <h3 className="display-title mt-4 sm:mt-5 text-base sm:text-lg md:text-xl font-bold tracking-wider text-[#1e293b] uppercase group-hover:text-[#0098a2] transition-colors duration-200">
+                <h3 className="display-title mt-4 sm:mt-5 text-base sm:text-lg md:text-xl font-bold tracking-wider text-[#1e293b] uppercase group-hover:text-[#da251d] transition-colors duration-200">
                   {item.title}
                 </h3>
-                <div className="w-8 h-[2px] bg-[#0098a2]/30 my-2.5 transition-all duration-300 group-hover:w-16 group-hover:bg-[#0098a2]" />
+                <div className="w-8 h-[2px] bg-[#da251d]/30 my-2.5 transition-all duration-300 group-hover:w-16 group-hover:bg-[#da251d]" />
                 <p className="text-xs sm:text-sm font-light leading-relaxed text-[#555] max-w-xs">
                   {item.desc}
                 </p>

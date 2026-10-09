@@ -81,7 +81,7 @@ export function ExperienceBookingCard({ place }: ExperienceBookingCardProps) {
                 required
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
-                className="w-full rounded-[2px] border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-xs text-slate-800 outline-none focus:border-[#0098a2] focus:bg-white"
+                className="w-full rounded-[2px] border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-xs text-slate-800 outline-none focus:border-[#da251d] focus:bg-white"
               />
               <Calendar className="pointer-events-none absolute right-3 top-2.5 size-4 text-slate-400" />
             </div>
@@ -166,7 +166,7 @@ export function ExperienceBookingCard({ place }: ExperienceBookingCardProps) {
 
           <button
             type="submit"
-            className="w-full bg-[#0098a2] text-white py-3.5 text-xs font-semibold tracking-widest uppercase rounded-[2px] shadow-sm transition-all duration-200 hover:bg-[#008f99] hover:shadow-[0px_8px_25px_rgba(0,152,162,0.35)] hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2 cursor-pointer"
+            className="w-full bg-[#da251d] text-white py-3.5 text-xs font-semibold tracking-widest uppercase rounded-[2px] shadow-sm transition-all duration-200 hover:bg-[#c92018] hover:shadow-[0px_8px_25px_rgba(218,37,29,0.35)] hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2 cursor-pointer"
           >
             <Sparkles className="size-4" />
             <span>{b.bookBtn}</span>

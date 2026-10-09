@@ -19,10 +19,15 @@ const nextConfig: NextConfig = {
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;"
   },
   async rewrites() {
+    const backendUrl = process.env.BACKEND_URL ?? "http://localhost:8000/api/v1";
     return [
       {
         source: "/packages",
         destination: "/experiences",
+      },
+      {
+        source: "/api/v1/:path*",
+        destination: `${backendUrl}/:path*`,
       },
     ];
   },

@@ -16,7 +16,13 @@ interface StoryDetailPageProps {
 
 export async function generateMetadata({ params }: StoryDetailPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const story = getStoryBySlug(slug);
+  let story: any = getStoryBySlug(slug);
+  try {
+    const backendArticle = await publicApi.article(slug);
+    if (backendArticle) {
+      story = { ...story, ...backendArticle };
+    }
+  } catch {}
 
   if (!story) {
     return { title: "Không tìm thấy bài viết | Star Travels Vietnam" };
@@ -40,22 +46,27 @@ export default async function StoryDetailPage({ params }: StoryDetailPageProps) 
   const dict = DICTIONARY[isEn ? "en" : "vi"];
   const t = dict.storiesPage;
 
-  let story = getStoryBySlug(slug);
+  let story: any;
+
+  try {
+    const backendArticle = await publicApi.article(slug);
+    const seedFallback = getStoryBySlug(slug);
+    story = {
+      ...seedFallback,
+      ...backendArticle,
+      readTime: (backendArticle as any).readTime || (backendArticle as any).read_time || seedFallback?.readTime || (isEn ? "5 min read" : "5 phút đọc"),
+      category: (backendArticle as any).category || seedFallback?.category || (isEn ? "Curated Perspective" : "Góc Nhìn Khám Phá"),
+      authorName: (backendArticle as any).authorName || (backendArticle as any).author_name || seedFallback?.authorName || (isEn ? "Star Travels Editorial" : "Ban Biên Tập Star Travels"),
+      authorRole: (backendArticle as any).authorRole || (backendArticle as any).author_role || seedFallback?.authorRole || (isEn ? "Local Destination Experts" : "Đội ngũ chuyên gia du lịch bản địa"),
+      tags: (backendArticle as any).tags || seedFallback?.tags || (isEn ? ["Vietnam Travel", "Exploration", "Culture"] : ["Du lịch Việt Nam", "Khám phá", "Văn hóa"]),
+      destination: seedFallback?.destination,
+    };
+  } catch {
+    story = getStoryBySlug(slug);
+  }
 
   if (!story) {
-    try {
-      const backendArticle = await publicApi.article(slug);
-      story = {
-        ...backendArticle,
-        readTime: isEn ? "5 min read" : "5 phút đọc",
-        category: isEn ? "Curated Perspective" : "Góc Nhìn Khám Phá",
-        authorName: isEn ? "Star Travels Editorial" : "Ban Biên Tập Star Travels",
-        authorRole: isEn ? "Local Destination Experts" : "Đội ngũ chuyên gia du lịch bản địa",
-        tags: isEn ? ["Vietnam Travel", "Exploration", "Culture"] : ["Du lịch Việt Nam", "Khám phá", "Văn hóa"],
-      };
-    } catch {
-      notFound();
-    }
+    notFound();
   }
 
   if (!story) {
@@ -85,7 +96,7 @@ export default async function StoryDetailPage({ params }: StoryDetailPageProps) 
         <div className="relative z-10 mx-auto flex min-h-[620px] max-w-7xl items-end px-6 pb-16 md:px-12">
           <div className="max-w-4xl bg-black/40 backdrop-blur-[2px] p-6 sm:p-8 rounded-[2px] border border-white/15 shadow-xl">
             <div className="flex flex-wrap items-center gap-3">
-              <span className="rounded-[2px] bg-[#0098a2] px-3.5 py-1.5 text-xs sm:text-sm font-bold uppercase tracking-wider text-white shadow-sm">
+              <span className="rounded-[2px] bg-[#da251d] px-3.5 py-1.5 text-xs sm:text-sm font-bold uppercase tracking-wider text-white shadow-sm">
                 {story.category}
               </span>
               <span className="flex items-center gap-1.5 text-xs sm:text-sm font-medium text-white/90 bg-black/50 px-3 py-1 rounded-[2px] backdrop-blur-sm border border-white/20">
@@ -104,7 +115,7 @@ export default async function StoryDetailPage({ params }: StoryDetailPageProps) 
 
             {/* Author bar */}
             <div className="mt-8 flex items-center gap-4 pt-6 border-t border-white/20">
-              <div className="flex size-11 items-center justify-center rounded-full bg-[#0098a2] text-sm font-bold text-white shadow-sm">
+              <div className="flex size-11 items-center justify-center rounded-full bg-[#da251d] text-sm font-bold text-white shadow-sm">
                 {story.authorName.charAt(0)}
               </div>
               <div>
@@ -131,7 +142,7 @@ export default async function StoryDetailPage({ params }: StoryDetailPageProps) 
             </div>
 
             <div className="prose prose-slate max-w-none space-y-6 text-base md:text-lg font-light leading-9 text-slate-700">
-              {story.body.split("\n\n").map((para, i) => {
+              {story.body.split("\n\n").map((para: string, i: number) => {
                 if (para.startsWith("### ")) {
                   return (
                     <h2
@@ -143,10 +154,10 @@ export default async function StoryDetailPage({ params }: StoryDetailPageProps) 
                   );
                 }
                 if (para.startsWith("- ")) {
-                  const items = para.split("\n- ").map((item) => item.replace("- ", ""));
+                  const items = para.split("\n- ").map((item: string) => item.replace("- ", ""));
                   return (
                     <ul key={i} className="my-6 space-y-2.5 list-disc list-inside">
-                      {items.map((it, idx) => (
+                      {items.map((it: string, idx: number) => (
                         <li key={idx} className="text-slate-700">
                           {it}
                         </li>
@@ -168,7 +179,7 @@ export default async function StoryDetailPage({ params }: StoryDetailPageProps) 
                 <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider mr-2">
                   {isEn ? "Tags:" : "Chủ đề:"}
                 </span>
-                {story.tags.map((tg) => (
+                {story.tags.map((tg: string) => (
                   <span
                     key={tg}
                     className="rounded-[2px] bg-slate-100 px-3 py-1 text-xs font-medium text-slate-600"
@@ -184,7 +195,7 @@ export default async function StoryDetailPage({ params }: StoryDetailPageProps) 
           <aside className="space-y-8">
             {/* Author Profile Card */}
             <div className="rounded-[2px] bg-white p-7 shadow-sm border border-slate-100 text-center">
-              <div className="mx-auto flex size-16 items-center justify-center rounded-full bg-[#0098a2] text-xl font-bold text-white shadow-sm mb-4">
+              <div className="mx-auto flex size-16 items-center justify-center rounded-full bg-[#da251d] text-xl font-bold text-white shadow-sm mb-4">
                 {story.authorName.charAt(0)}
               </div>
               <h3 className="display-title text-lg font-bold text-slate-900">

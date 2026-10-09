@@ -8,6 +8,7 @@ from destinations.models import Destination
 class Category(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=100, unique=True)
+    name_en = models.CharField(max_length=100, blank=True)
     slug = models.SlugField(max_length=120, unique=True)
 
     class Meta:
@@ -24,11 +25,15 @@ class Place(models.Model):
     destination = models.ForeignKey(Destination, on_delete=models.CASCADE, related_name="places")
     category = models.ForeignKey(Category, on_delete=models.PROTECT, related_name="places")
     name = models.CharField(max_length=180)
+    name_en = models.CharField(max_length=180, blank=True)
     short_description = models.CharField(max_length=280, blank=True)
+    short_description_en = models.CharField(max_length=280, blank=True)
     description = models.TextField(blank=True)
+    description_en = models.TextField(blank=True)
     image_url = models.URLField(blank=True)
     overlay_image_url = models.URLField(blank=True)
     address = models.CharField(max_length=255, blank=True)
+    address_en = models.CharField(max_length=255, blank=True)
     website_url = models.URLField(blank=True)
     location = models.PointField(geography=True, srid=4326)
     is_published = models.BooleanField(default=False, db_index=True)

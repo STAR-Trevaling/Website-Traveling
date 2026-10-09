@@ -22,9 +22,17 @@ export default async function StoriesPage() {
   const nl = dict.newsletter;
 
   const backendArticles = await safe(publicApi.articles(), []);
-  const allStories = backendArticles.length > 0 ? backendArticles : VIETNAM_STORIES;
-  const featuredStory = VIETNAM_STORIES[0];
-  const remainingStories = VIETNAM_STORIES.slice(1);
+  const rawStories = backendArticles.length > 0 ? backendArticles : VIETNAM_STORIES;
+  const allStories = rawStories.map((s: any) => ({
+    ...s,
+    category: s.category || (isEn ? "Travel Perspective" : "Góc Nhìn Du Lịch"),
+    authorName: s.authorName || s.author_name || (isEn ? "Star Travels Editorial" : "Ban Biên Tập Star Travels"),
+    authorRole: s.authorRole || s.author_role || (isEn ? "Destination Expert" : "Chuyên gia du lịch bản địa"),
+    readTime: s.readTime || s.read_time || (isEn ? "5 min read" : "5 phút đọc"),
+    destinationName: typeof s.destination === "object" ? s.destination?.name : (s.destination_slug || "Việt Nam"),
+  }));
+  const featuredStory = allStories[0] || VIETNAM_STORIES[0];
+  const remainingStories = allStories.slice(1);
 
   const formatReadTime = (rt: string) =>
     isEn ? rt.replace(/phút đọc/gi, "min read") : rt;
@@ -36,7 +44,7 @@ export default async function StoriesPage() {
         titleEn="Stories & Travel Insights"
         subtitle="Những câu chuyện truyền cảm hứng, cẩm nang trải nghiệm và chiều sâu văn hóa bản địa."
         subtitleEn="Inspiring narratives, insider guides, and authentic cultural journeys across Vietnam."
-        image={VIETNAM_IMAGES.hero}
+        image={VIETNAM_IMAGES.hoiAn}
       />
 
       <main className="template-page-bg min-h-screen px-4 sm:px-6 py-10 sm:py-16 md:px-12 lg:px-16">
@@ -56,7 +64,7 @@ export default async function StoriesPage() {
                   unoptimized
                   className="object-cover transition duration-500 group-hover:scale-105"
                 />
-                <div className="absolute top-3 left-3 sm:top-4 sm:left-4 rounded-[2px] bg-[#0098a2] px-2.5 sm:px-3 py-1 text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-white shadow-sm">
+                <div className="absolute top-3 left-3 sm:top-4 sm:left-4 rounded-[2px] bg-[#da251d] px-2.5 sm:px-3 py-1 text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-white shadow-sm">
                   {featuredStory.category}
                 </div>
               </div>
@@ -89,7 +97,7 @@ export default async function StoriesPage() {
                     {isEn ? "READ FULL STORY" : "ĐỌC TIẾP CÂU CHUYỆN"} <ArrowUpRight className="size-3.5 sm:size-4" />
                   </span>
                   <span className="text-[11px] sm:text-xs text-slate-400 font-light">
-                    {featuredStory.destination?.name}
+                    {featuredStory.destinationName || (featuredStory as any).destination?.name}
                   </span>
                 </div>
               </div>
@@ -151,7 +159,7 @@ export default async function StoriesPage() {
                     {isEn ? "Discover" : "Khám phá"} <ChevronRight className="size-3 sm:size-3.5" />
                   </span>
                   <span className="text-[10px] sm:text-[11px] text-slate-400 font-light">
-                    {story.destination?.name}
+                    {story.destinationName || (story as any).destination?.name}
                   </span>
                 </div>
               </Link>
@@ -159,15 +167,15 @@ export default async function StoriesPage() {
           </div>
 
           {/* 3. NEWSLETTER BANNER MATCHING TEMPLATE */}
-          <div className="mt-14 sm:mt-20 rounded-[2px] bg-[#1e293b] p-6 sm:p-10 md:p-14 text-center text-white shadow-xl relative overflow-hidden">
+          <div className="mt-14 sm:mt-20 rounded-[2px] bg-white/90 backdrop-blur-md p-6 sm:p-10 md:p-14 text-center shadow-[0_4px_24px_rgba(0,152,162,0.06)] border border-white/90 relative overflow-hidden">
             <div className="relative z-10 max-w-2xl mx-auto">
-              <span className="text-[10px] sm:text-xs font-bold uppercase tracking-[0.25em] text-amber-400">
+              <span className="text-[10px] sm:text-xs font-bold uppercase tracking-[0.25em] text-amber-700">
                 {isEn ? "HERITAGE NEWSLETTER" : "ĐĂNG KÝ BẢN TIN DI SẢN"}
               </span>
-              <h3 className="script-title text-3xl sm:text-4xl md:text-5xl mt-2.5 sm:mt-3 text-white">
+              <h3 className="script-title text-3xl sm:text-4xl md:text-5xl mt-2.5 sm:mt-3 text-[#1e293b]">
                 {nl.heading}
               </h3>
-              <p className="mt-3 sm:mt-4 text-xs md:text-sm text-slate-300 font-light leading-relaxed">
+              <p className="mt-3 sm:mt-4 text-xs md:text-sm text-[#4b5563] font-light leading-relaxed">
                 {nl.subheading}
               </p>
 
@@ -175,11 +183,11 @@ export default async function StoriesPage() {
                 <input
                   type="email"
                   placeholder={nl.emailPlaceholder}
-                  className="flex-1 rounded-[2px] bg-white/10 border border-white/20 px-3.5 sm:px-4 py-2.5 sm:py-3 text-xs md:text-sm text-white placeholder-slate-400 focus:outline-none focus:border-[#00c2cb]"
+                  className="flex-1 rounded-[2px] bg-white border border-slate-300 px-3.5 sm:px-4 py-2.5 sm:py-3 text-xs md:text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-[#da251d] focus:ring-1 focus:ring-[#da251d] shadow-sm"
                 />
                 <button
                   type="button"
-                  className="rounded-[2px] bg-[#0098a2] text-white px-5 sm:px-6 py-2.5 sm:py-3 text-xs md:text-sm font-bold uppercase tracking-wider shadow-sm transition-all duration-200 hover:bg-[#008f99] hover:shadow-[0px_8px_25px_rgba(0,152,162,0.35)] hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
+                  className="rounded-[2px] bg-[#da251d] text-white px-5 sm:px-6 py-2.5 sm:py-3 text-xs md:text-sm font-bold uppercase tracking-wider shadow-sm transition-all duration-200 hover:bg-[#c92018] hover:shadow-[0px_8px_25px_rgba(218,37,29,0.35)] hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
                 >
                   {nl.submitBtn}
                 </button>

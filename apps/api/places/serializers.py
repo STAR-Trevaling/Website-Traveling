@@ -8,7 +8,7 @@ from .models import Category, Place
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = ("id", "name", "slug")
+        fields = ("id", "name", "name_en", "slug")
 
 
 class PlaceSerializer(serializers.ModelSerializer):
@@ -22,11 +22,15 @@ class PlaceSerializer(serializers.ModelSerializer):
             "id",
             "slug",
             "name",
+            "name_en",
             "short_description",
+            "short_description_en",
             "description",
+            "description_en",
             "image_url",
             "overlay_image_url",
             "address",
+            "address_en",
             "website_url",
             "location",
             "destination",

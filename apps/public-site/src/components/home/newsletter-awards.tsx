@@ -62,7 +62,7 @@ export function NewsletterAwards() {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder={t.newsletter.namePlaceholder}
-                    className="h-11 sm:h-12 w-full bg-white px-4 text-xs sm:text-sm text-slate-800 placeholder:text-slate-400 outline-none shadow-sm transition focus:ring-2 focus:ring-[#0098a2]"
+                    className="h-11 sm:h-12 w-full bg-white px-4 text-xs sm:text-sm text-slate-800 placeholder:text-slate-400 outline-none shadow-sm transition focus:ring-2 focus:ring-[#da251d]"
                   />
                 </div>
                 <div>
@@ -72,7 +72,7 @@ export function NewsletterAwards() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder={t.newsletter.emailPlaceholder}
-                    className="h-11 sm:h-12 w-full bg-white px-4 text-xs sm:text-sm text-slate-800 placeholder:text-slate-400 outline-none shadow-sm transition focus:ring-2 focus:ring-[#0098a2]"
+                    className="h-11 sm:h-12 w-full bg-white px-4 text-xs sm:text-sm text-slate-800 placeholder:text-slate-400 outline-none shadow-sm transition focus:ring-2 focus:ring-[#da251d]"
                   />
                 </div>
 
