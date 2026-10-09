@@ -27,6 +27,6 @@ class OdooWebhookEventSerializer(serializers.Serializer):
     event_id = serializers.CharField(required=True)
     event_type = serializers.CharField(required=True)
     event_version = serializers.IntegerField(default=1)
-    source = serializers.CharField(default="odoo")
+    source = serializers.CharField(default="odoo")  # type: ignore[assignment]
     occurred_at = serializers.CharField(required=False)
-    data = serializers.DictField(required=True)
+    data = serializers.DictField(required=True)  # type: ignore[assignment]
