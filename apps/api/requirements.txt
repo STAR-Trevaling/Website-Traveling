@@ -14,3 +14,4 @@ mypy==1.18.2
 django-stubs==5.2.5
 djangorestframework-stubs==3.16.4
 bandit==1.9.4
+sentry-sdk[django,celery]>=2.0.0

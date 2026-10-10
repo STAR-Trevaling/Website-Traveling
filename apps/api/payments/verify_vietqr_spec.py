@@ -10,17 +10,30 @@ Verifies:
      - Amount mismatch warning tolerance (per Odoo decision contract).
   5. Expiration auto-sweep logic.
 """
+# ruff: noqa: E402
 
 import hashlib
 import hmac
 import json
+import os
 import sys
 from datetime import datetime, timedelta, timezone
 from decimal import Decimal
 from pathlib import Path
 
 # Add apps/api directory to sys.path
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+BASE_API = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(BASE_API))
+
+for _candidate in (BASE_API.parent.parent / ".env", BASE_API / ".env"):
+    if _candidate.exists():
+        with open(_candidate, encoding="utf-8") as _f:
+            for _line in _f:
+                _line = _line.strip()
+                if _line and not _line.startswith("#") and "=" in _line:
+                    _k, _v = _line.split("=", 1)
+                    os.environ.setdefault(_k.strip(), _v.strip())
+        break
 
 from payments.adapters.vietqr import VietQRAdapter, crc16_ccitt
 
@@ -100,7 +113,7 @@ def run_tests():
     # TEST 2: HMAC-SHA256 INBOUND WEBHOOK SECURITY (ODOO)
     # -------------------------------------------------------------
     print("\n[TEST 2] Testing Odoo Inbound Webhook HMAC-SHA256 Security...")
-    secret = "star_travels_super_secret_webhook_key_2026"
+    secret = os.getenv("ODOO_WEBHOOK_SECRET", "mock_unit_test_webhook_secret_key_2026")
     test_payload = {
         "payment_id": "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d",
         "confirmed_by": "accounting_user_1",

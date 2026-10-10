@@ -4,6 +4,7 @@ import { useState, useTransition } from "react";
 import { CheckCircle2, Building2 } from "lucide-react";
 import { submitPartnerApplication } from "@/app/actions";
 import { useLanguage } from "@/lib/i18n/context";
+import { getStoredUtm } from "@/lib/utm";
 
 export function PartnerForm() {
   const { t, isEnglish } = useLanguage();
@@ -16,6 +17,7 @@ export function PartnerForm() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
+    const utmData = getStoredUtm();
     start(async () => {
       const res = await submitPartnerApplication({
         business_name: String(formData.get("business_name") || ""),
@@ -23,7 +25,9 @@ export function PartnerForm() {
         phone: String(formData.get("phone") || ""),
         website: String(formData.get("website") || ""),
         message: String(formData.get("message") || ""),
+        metadata: utmData ? { utm: utmData } : undefined,
       });
+
       setMsg(res.message);
       if (res.ok) {
         setSuccess(true);

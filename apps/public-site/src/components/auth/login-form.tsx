@@ -4,14 +4,20 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { LogIn } from "lucide-react";
 import { useLanguage } from "@/lib/i18n/context";
+import { useAuth } from "@/providers/auth-provider";
 
-export function LoginForm() {
+interface LoginFormProps {
+  returnUrl?: string;
+}
+
+export function LoginForm({ returnUrl }: LoginFormProps) {
   const router = useRouter();
   const { t, isEnglish } = useLanguage();
+  const { login } = useAuth();
   const a = t.authPages;
 
-  const [username, setUsername] = useState("traveler_demo");
-  const [password, setPassword] = useState("TravelerDemo123!");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [msg, setMsg] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -21,20 +27,16 @@ export function LoginForm() {
       onSubmit={async (e) => {
         e.preventDefault();
         setLoading(true);
-        const r = await fetch("/api/auth/login", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ username, password }),
-        });
+        const res = await login(username, password);
         setLoading(false);
-        if (r.ok) {
-          router.push("/account");
-          router.refresh();
+        if (res.success) {
+          router.push(returnUrl || "/account");
         } else {
           setMsg(
-            isEnglish
-              ? "Invalid username or password."
-              : "Tài khoản hoặc mật khẩu không chính xác."
+            res.error ||
+              (isEnglish
+                ? "Invalid username or password."
+                : "Tài khoản hoặc mật khẩu không chính xác.")
           );
         }
       }}

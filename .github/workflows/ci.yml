@@ -32,6 +32,10 @@ jobs:
       POSTGRES_HOST: localhost
       POSTGRES_PORT: "5432"
       REDIS_URL: redis://localhost:6379/0
+      ODOO_WEBHOOK_SECRET: star_travels_super_secret_webhook_key_2026_ci_hmac
+      ODOO_INBOUND_API_KEY: star_travels_inbound_api_token_2026_ci_token
+      VNPAY_TMN_CODE: STAR_TMN_CI_2026
+      VNPAY_HASH_SECRET: STAR_TEST_SECRET_HASH_KEY_987654321_CI_SEC_KEY
     steps:
       - uses: actions/checkout@v4
       - name: Install system geospatial dependencies

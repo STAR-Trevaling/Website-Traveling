@@ -75,7 +75,7 @@ def test_odoo_webhook_unauthorized_without_hmac(api_client):
 
 @pytest.mark.django_db(transaction=True)
 def test_odoo_webhook_destination_published_and_idempotency(api_client):
-    secret = getattr(settings, "ODOO_WEBHOOK_SECRET", "star_travels_super_secret_webhook_key_2026")
+    secret = getattr(settings, "ODOO_WEBHOOK_SECRET", "")
     event_id = str(uuid.uuid4())
     payload = {
         "event_id": event_id,

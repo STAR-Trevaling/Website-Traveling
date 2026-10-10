@@ -314,3 +314,24 @@
     transition: none !important;
   }
 }
+
+/* WebKit / Safari & Mobile Viewport Compatibility Enhancements */
+@supports (-webkit-touch-callout: none) {
+  /* iOS Safari 100vh dynamic viewport fix */
+  .min-h-screen-ios {
+    min-height: 100dvh;
+    min-height: -webkit-fill-available;
+  }
+}
+
+/* Fallback for WebKit browsers where backdrop-filter is disabled or hardware-restricted */
+@supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  .backdrop-blur-sm,
+  .backdrop-blur-md,
+  .backdrop-blur-lg,
+  .backdrop-blur-xl,
+  .backdrop-blur-2xl {
+    background-color: rgba(255, 255, 255, 0.96) !important;
+  }
+}
+

@@ -15,6 +15,10 @@ import {
   ExternalLink,
   PhoneCall,
   ArrowRight,
+  Building2,
+  Utensils,
+  Phone,
+  Star,
 } from "lucide-react";
 import { StarLogo } from "@/components/shared/star-logo";
 import { useLanguage } from "@/lib/i18n/context";
@@ -24,6 +28,10 @@ import {
   StoryCardData,
   DestinationCardData,
 } from "@/lib/assistant-engine";
+import { VIETNAM_ACCOMMODATIONS, getAccommodationBySlug } from "@/data/seed/accommodations";
+import { VIETNAM_RESTAURANTS, getRestaurantBySlug } from "@/data/seed/restaurants";
+import { publicApi } from "@/lib/api";
+import type { Accommodation, Restaurant } from "@/lib/types";
 
 interface ChatMessage {
   id: string;
@@ -33,6 +41,8 @@ interface ChatMessage {
   tours?: TourCardData[];
   stories?: StoryCardData[];
   destinations?: DestinationCardData[];
+  accommodations?: Accommodation[];
+  restaurants?: Restaurant[];
   contactRequired?: boolean;
   leadCaptured?: boolean;
 }
@@ -57,9 +67,23 @@ function getSafeHref(url: string): string {
   return "#";
 }
 
+function cleanAssistantReply(text: string): string {
+  if (!text) return "";
+  return text
+    // Strip emojis and miscellaneous pictorial symbols
+    .replace(/[\u{1F300}-\u{1F9FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{1F1E0}-\u{1F1FF}\u{1F600}-\u{1F64F}\u{1F680}-\u{1F6FF}]/gu, "")
+    // Strip specific decorative icons
+    .replace(/[✨🌟⭐✈️🛳️🏝️🏔️🏮🤿👨‍👩‍👧‍👦👨‍👩‍👧📝📞📍👉✦]/gu, "")
+    .replace(/\s{2,}/g, " ")
+    .trim();
+}
+
 function renderFormattedMessage(text: string, onLinkClick: () => void) {
-  const cleaned = text
+  const deEmoji = cleanAssistantReply(text);
+  const cleaned = deEmoji
     .replace(/\[TOUR_CARD:\s*[\w-]+\]/g, "")
+    .replace(/\[ACCOMMODATION_CARD:\s*[\w-]+\]/g, "")
+    .replace(/\[RESTAURANT_CARD:\s*[\w-]+\]/g, "")
     .replace(/\*\*\[([^\]]+)\]\(([^)]+)\)\*\*/g, "[$1]($2)");
   const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
   const parts: React.ReactNode[] = [];
@@ -189,12 +213,53 @@ export function AITripAssistant() {
     ]);
   }, [isEnglish]);
 
+  // Support opening AI Concierge from external buttons or widgets
+  useEffect(() => {
+    const handleCustomOpen = (e: Event) => {
+      const customEvent = e as CustomEvent<{ prompt?: string }>;
+      setIsOpen(true);
+      setShowTooltip(false);
+      if (customEvent.detail?.prompt) {
+        handleSendMessage(customEvent.detail.prompt);
+      }
+    };
+    window.addEventListener("star:open-ai-concierge", handleCustomOpen);
+    return () => {
+      window.removeEventListener("star:open-ai-concierge", handleCustomOpen);
+    };
+  }, []);
+
   // Scroll to bottom on new message
   useEffect(() => {
     if (isOpen) {
       messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }
   }, [messages, isOpen, isLoading]);
+
+  const handleReferralClick = async (
+    itemType: "accommodation_referral" | "restaurant_referral",
+    itemId: string,
+    targetUrl: string,
+    isPhone = false
+  ) => {
+    try {
+      await publicApi.trackReferral(
+        {
+          item_type: itemType,
+          item_id: itemId,
+        },
+        1500
+      );
+    } catch {
+      // proceed non-blocking
+    } finally {
+      if (isPhone) {
+        window.location.href = targetUrl;
+      } else {
+        window.open(targetUrl, "_blank", "noopener,noreferrer");
+      }
+    }
+  };
 
   const handleSendMessage = async (textToSend?: string) => {
     const text = (textToSend || inputMessage).trim();
@@ -227,13 +292,35 @@ export function AITripAssistant() {
 
       const data = await response.json();
 
+      const rawText = data.message || "";
+      const accMatches = Array.from(rawText.matchAll(/\[ACCOMMODATION_CARD:\s*([\w-]+)\]/g)) as RegExpMatchArray[];
+      const resMatches = Array.from(rawText.matchAll(/\[RESTAURANT_CARD:\s*([\w-]+)\]/g)) as RegExpMatchArray[];
+
+      const extractedAccs: Accommodation[] = [
+        ...(data.recommended_accommodations || []),
+        ...accMatches
+          .map((m) => getAccommodationBySlug(m[1]))
+          .filter((x): x is Accommodation => Boolean(x)),
+      ];
+      const uniqueAccs = Array.from(new Map(extractedAccs.map((a) => [a.slug, a])).values());
+
+      const extractedRess: Restaurant[] = [
+        ...(data.recommended_restaurants || []),
+        ...resMatches
+          .map((m) => getRestaurantBySlug(m[1]))
+          .filter((x): x is Restaurant => Boolean(x)),
+      ];
+      const uniqueRess = Array.from(new Map(extractedRess.map((r) => [r.slug, r])).values());
+
       const assistantMsg: ChatMessage = {
         id: `assistant_${Date.now()}`,
         role: "assistant",
-        assistantContent: data.message,
+        assistantContent: cleanAssistantReply(data.message),
         tours: data.recommended_tours || [],
         stories: data.recommended_stories || [],
         destinations: data.recommended_destinations || [],
+        accommodations: uniqueAccs,
+        restaurants: uniqueRess,
         leadCaptured: data.lead_captured || false,
         contactRequired: Boolean(data.contactRequired),
       };
@@ -243,15 +330,28 @@ export function AITripAssistant() {
       // Offline fallback: intelligent local concierge engine guarantees tour & article links
       const localData = queryAssistantKnowledge(text, isEnglish ? "en" : "vi");
 
+      const localRaw = localData.message || "";
+      const localAccMatches = Array.from(localRaw.matchAll(/\[ACCOMMODATION_CARD:\s*([\w-]+)\]/g)) as RegExpMatchArray[];
+      const localResMatches = Array.from(localRaw.matchAll(/\[RESTAURANT_CARD:\s*([\w-]+)\]/g)) as RegExpMatchArray[];
+
+      const fallbackAccs = localAccMatches
+        .map((m) => getAccommodationBySlug(m[1]))
+        .filter((x): x is Accommodation => Boolean(x));
+      const fallbackRess = localResMatches
+        .map((m) => getRestaurantBySlug(m[1]))
+        .filter((x): x is Restaurant => Boolean(x));
+
       setMessages((prev) => [
         ...prev,
         {
           id: `fallback_${Date.now()}`,
           role: "assistant",
-          assistantContent: localData.message,
+          assistantContent: cleanAssistantReply(localData.message),
           tours: localData.recommended_tours,
           stories: localData.recommended_stories,
           destinations: localData.recommended_destinations,
+          accommodations: fallbackAccs,
+          restaurants: fallbackRess,
           contactRequired: Boolean(localData.contactRequired),
         },
       ]);
@@ -262,20 +362,22 @@ export function AITripAssistant() {
 
   const quickPrompts = isEnglish
     ? [
-        "🏔️ Sa Pa & Fansipan Cloud Hunting",
-        "🏝️ Ha Long Bay 5-Star Cruise",
-        "🏮 Da Nang — Hoi An Ancient Town",
-        "🤿 Phu Quoc Coral Diving Tour",
-        "👨‍👩‍👧‍👦 Family Vacation Packages",
-        "📝 Booking & Cancellation Policies",
+        "Hotels & Resorts by Region",
+        "Dining & Restaurants by Region",
+        "Sa Pa & Fansipan Cloud Hunting",
+        "Ha Long Bay 5-Star Cruise",
+        "Da Nang — Hoi An Ancient Town",
+        "Phu Quoc Coral Diving Tour",
+        "Family Vacation Packages",
       ]
     : [
-        "🏔️ Săn mây Sa Pa & Fansipan",
-        "🏝️ Du thuyền 5 sao Hạ Long",
-        "🏮 Đà Nẵng — Phố cổ Hội An",
-        "🤿 Tour lặn san hô Phú Quốc",
-        "👨‍👩‍👧‍👦 Lịch trình gia đình 4 người",
-        "📝 Chính sách hoàn hủy & trẻ em",
+        "Gợi ý Khách sạn & Resort theo khu vực",
+        "Nhà hàng & Ẩm thực theo khu vực",
+        "Săn mây Sa Pa & Fansipan",
+        "Du thuyền 5 sao Hạ Long",
+        "Đà Nẵng — Phố cổ Hội An",
+        "Tour lặn san hô Phú Quốc",
+        "Lịch trình gia đình 4 người",
       ];
 
   return (
@@ -317,8 +419,8 @@ export function AITripAssistant() {
             <X className="size-6 text-white" />
           ) : (
             <>
-              {/* Pulsing ring đỏ */}
-              <span className="absolute -inset-1 rounded-full bg-[#da251d]/35 animate-ping opacity-75" />
+              {/* Pulsing ring đỏ tím */}
+              <span className="absolute -inset-1 rounded-full bg-[#7d1643]/35 animate-ping opacity-75" />
               <StarLogo variant="icon-only" size="md" />
             </>
           )}
@@ -328,10 +430,10 @@ export function AITripAssistant() {
       {/* ─── CHAT DRAWER / POP-UP ──────────────────────────────────── */}
       {isOpen && (
         <div className="fixed bottom-24 right-4 sm:right-6 z-50 w-[94vw] sm:w-[440px] h-[640px] max-h-[84vh] rounded-2xl bg-white/95 backdrop-blur-xl border border-slate-200/90 shadow-[0_16px_56px_rgba(0,0,0,0.22)] flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-6 duration-300">
-          {/* Header */}
-          <div className="bg-gradient-to-r from-slate-950 via-[#7f1d1d] to-slate-950 p-4 text-white flex items-center justify-between border-b border-red-900/50">
+          {/* Header - Nền đỏ tím sang trọng (Red-Purple / Bordeaux-Wine) */}
+          <div className="bg-gradient-to-r from-[#591030] via-[#7d1643] to-[#4c0c28] p-4 text-white flex items-center justify-between border-b border-[#961c50]/50 shadow-sm">
             <div className="flex items-center gap-3">
-              <div className="flex size-10 items-center justify-center rounded-xl bg-[#da251d] backdrop-blur-md border border-amber-400/40 shadow-sm">
+              <div className="flex size-10 items-center justify-center rounded-xl bg-[#8c1d48] backdrop-blur-md border border-amber-400/40 shadow-sm">
                 <StarLogo variant="icon-only" size="sm" />
               </div>
               <div>
@@ -344,7 +446,7 @@ export function AITripAssistant() {
                     Online
                   </span>
                 </div>
-                <p className="text-[11px] text-slate-300 font-light">
+                <p className="text-[11px] text-white/80 font-light">
                   {isEnglish
                     ? "AI Travel Concierge & Real-time Booking Guide"
                     : "Trợ lý du lịch thông minh STAR Travels"}
@@ -354,7 +456,7 @@ export function AITripAssistant() {
 
             <button
               onClick={() => setIsOpen(false)}
-              className="rounded-lg p-1.5 text-slate-400 hover:text-white hover:bg-white/10 transition"
+              className="rounded-lg p-1.5 text-white/70 hover:text-white hover:bg-white/10 transition cursor-pointer"
             >
               <X className="size-5" />
             </button>
@@ -500,6 +602,155 @@ export function AITripAssistant() {
                         </Link>
                       ))}
                     </div>
+                  </div>
+                )}
+
+                {/* 🏨 Direct Accommodation Referral Cards */}
+                {msg.accommodations && msg.accommodations.length > 0 && (
+                  <div className="mt-2.5 w-full space-y-2">
+                    <div className="flex items-center gap-1.5 text-[11px] font-bold text-slate-700 uppercase tracking-wider">
+                      <Building2 className="size-3.5 text-amber-600" />
+                      <span>{isEnglish ? "Recommended Luxury Stays" : "Khách Sạn & Resort Gợi Ý"}</span>
+                    </div>
+                    {msg.accommodations.map((acc) => (
+                      <div
+                        key={acc.slug}
+                        className="group flex flex-col rounded-xl bg-white p-3 shadow-sm border border-slate-200/80 hover:border-amber-400 hover:shadow-md transition-all"
+                      >
+                        <div className="flex items-center gap-3">
+                          <div className="relative size-16 shrink-0 overflow-hidden rounded-lg bg-slate-100">
+                            <Image
+                              src={acc.image_url}
+                              alt={acc.name}
+                              fill
+                              unoptimized
+                              className="object-cover group-hover:scale-105 transition duration-300"
+                            />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-1 text-[10px] text-amber-600 font-bold mb-0.5">
+                              <Star className="size-3 fill-amber-400 text-amber-400" />
+                              <span>{Number(acc.rating_average || 5).toFixed(1)}</span>
+                              <span className="text-slate-400 font-normal">• {acc.category}</span>
+                            </div>
+                            <Link
+                              href={`/accommodations/${acc.slug}`}
+                              onClick={() => setIsOpen(false)}
+                              className="text-xs font-bold text-slate-900 line-clamp-1 hover:text-[#da251d] transition"
+                            >
+                              {acc.name}
+                            </Link>
+                            <p className="text-[10px] text-slate-500 truncate mt-0.5">
+                              {acc.address}
+                            </p>
+                          </div>
+                        </div>
+
+                        {/* 1-Click Referral CTA */}
+                        <div className="mt-2.5 pt-2 border-t border-slate-100 flex items-center justify-between gap-2">
+                          <span className="text-[11px] font-bold text-[#da251d]">
+                            {acc.price_from
+                              ? `${Number(acc.price_from).toLocaleString("vi-VN")} đ/đêm`
+                              : "Liên hệ giá"}
+                          </span>
+                          <button
+                            type="button"
+                            onClick={() =>
+                              handleReferralClick(
+                                "accommodation_referral",
+                                acc.id,
+                                acc.partner_booking_url
+                              )
+                            }
+                            className="inline-flex items-center gap-1 rounded-[2px] bg-[#da251d] px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-white hover:bg-[#b01b14] transition shadow-sm cursor-pointer"
+                          >
+                            <span>Đặt trên {acc.partner_name || "Đối tác"}</span>
+                            <ExternalLink className="size-3" />
+                          </button>
+                        </div>
+                        <span className="mt-1 text-[9px] text-slate-400 italic text-center">
+                          STAR Travels giới thiệu, việc đặt phòng thực hiện qua đối tác
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {/* 🍽️ Direct Restaurant Referral Cards */}
+                {msg.restaurants && msg.restaurants.length > 0 && (
+                  <div className="mt-2.5 w-full space-y-2">
+                    <div className="flex items-center gap-1.5 text-[11px] font-bold text-slate-700 uppercase tracking-wider">
+                      <Utensils className="size-3.5 text-emerald-600" />
+                      <span>{isEnglish ? "Recommended Dining" : "Nhà Hàng & Ẩm Thực Gợi Ý"}</span>
+                    </div>
+                    {msg.restaurants.map((resItem) => {
+                      const isPhone = resItem.contact_type === "phone";
+                      return (
+                        <div
+                          key={resItem.slug}
+                          className="group flex flex-col rounded-xl bg-white p-3 shadow-sm border border-slate-200/80 hover:border-emerald-400 hover:shadow-md transition-all"
+                        >
+                          <div className="flex items-center gap-3">
+                            <div className="relative size-16 shrink-0 overflow-hidden rounded-lg bg-slate-100">
+                              <Image
+                                src={resItem.image_url}
+                                alt={resItem.name}
+                                fill
+                                unoptimized
+                                className="object-cover group-hover:scale-105 transition duration-300"
+                              />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-center gap-1 text-[10px] text-emerald-700 font-bold mb-0.5">
+                                <span className="rounded bg-emerald-50 px-1 py-0.2 border border-emerald-200">
+                                  {resItem.price_range}
+                                </span>
+                                <span className="text-slate-400 font-normal">• {resItem.cuisine_type}</span>
+                              </div>
+                              <Link
+                                href={`/restaurants/${resItem.slug}`}
+                                onClick={() => setIsOpen(false)}
+                                className="text-xs font-bold text-slate-900 line-clamp-1 hover:text-[#da251d] transition"
+                              >
+                                {resItem.name}
+                              </Link>
+                              <p className="text-[10px] text-slate-500 truncate mt-0.5">
+                                {resItem.address}
+                              </p>
+                            </div>
+                          </div>
+
+                          {/* 1-Click Referral CTA */}
+                          <div className="mt-2.5 pt-2 border-t border-slate-100 flex items-center justify-between gap-2">
+                            <span className="text-[10px] text-slate-500 font-medium">
+                              Đánh giá: ⭐ {Number(resItem.rating_average || 5).toFixed(1)}
+                            </span>
+                            <button
+                              type="button"
+                              onClick={() =>
+                                handleReferralClick(
+                                  "restaurant_referral",
+                                  resItem.id,
+                                  resItem.contact_value,
+                                  isPhone
+                                )
+                              }
+                              className={`inline-flex items-center gap-1 rounded-[2px] px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-white transition shadow-sm cursor-pointer ${
+                                isPhone
+                                  ? "bg-[#0098a2] hover:bg-[#007f87]"
+                                  : "bg-[#da251d] hover:bg-[#b01b14]"
+                              }`}
+                            >
+                              {isPhone ? <Phone className="size-3" /> : <ExternalLink className="size-3" />}
+                              <span>{isPhone ? "Gọi Đặt Bàn" : "Đặt Bàn Ngay"}</span>
+                            </button>
+                          </div>
+                          <span className="mt-1 text-[9px] text-slate-400 italic text-center">
+                            STAR Travels giới thiệu, việc đặt chỗ thực hiện trực tiếp cùng đối tác
+                          </span>
+                        </div>
+                      );
+                    })}
                   </div>
                 )}
 

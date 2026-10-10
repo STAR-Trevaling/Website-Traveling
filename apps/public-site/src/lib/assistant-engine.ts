@@ -159,6 +159,296 @@ export function queryAssistantKnowledge(message: string, locale: "vi" | "en" = "
     };
   }
 
+  // 0.15 Smart Geolocation / "Near Me" / Định vị vị trí hiện tại
+  const isGeoQuery =
+    q.includes("dinh vi") ||
+    q.includes("truy vet") ||
+    q.includes("vi tri cua toi") ||
+    q.includes("vi tri hien tai") ||
+    q.includes("gan toi") ||
+    q.includes("quanh day") ||
+    q.includes("gan day") ||
+    q.includes("near me") ||
+    q.includes("nearby") ||
+    q.includes("my location");
+
+  if (isGeoQuery) {
+    const isFoodIntent =
+      q.includes("quan") ||
+      q.includes("an") ||
+      q.includes("nha hang") ||
+      q.includes("am thuc") ||
+      q.includes("food") ||
+      q.includes("dining") ||
+      q.includes("restaurant");
+
+    const isHotelIntent =
+      q.includes("khach san") ||
+      q.includes("resort") ||
+      q.includes("noi o") ||
+      q.includes("cho o") ||
+      q.includes("hotel") ||
+      q.includes("stay") ||
+      q.includes("nghi duong");
+
+    if (isFoodIntent && !isHotelIntent) {
+      const msgVi =
+        "Dạ STAR Travels hỗ trợ tính năng **Định vị GPS thông minh** để đề xuất quán ăn uống gần bạn nhất!\n\n" +
+        "Quý khách vui lòng mở trang [Nhà Hàng & Ẩm Thực](/restaurants) và bấm nút **'Tìm gần vị trí của tôi'** trên thanh công cụ:\n" +
+        "• Hệ thống sẽ tự động đo đạc khoảng cách thực tế (ví dụ: ~850 m, ~1.2 km) bằng thuật toán định vị vệ tinh.\n" +
+        "• Tự động sắp xếp các quán ăn, nhà hàng Michelin và ẩm thực đặc sản gần bạn nhất lên đầu danh sách.\n\n" +
+        "Ngoài ra, Quý khách cũng có thể nhắn cho em biết bạn đang ở khu vực hoặc thành phố nào (Hà Nội, TP.HCM, Đà Nẵng, Hội An, Hạ Long...) để em gợi ý danh sách món ngon cụ thể ngay tại đây ạ!";
+
+      const msgEn =
+        "STAR Travels features **Smart GPS Geolocation** to suggest the closest restaurants and gourmet dining spots!\n\n" +
+        "Simply navigate to our [Restaurants & Dining](/restaurants) page and click **'Find Near Me'** on the toolbar:\n" +
+        "• Our system calculates real-time distances (e.g. ~850 m, ~1.2 km) using satellite geolocation.\n" +
+        "• Nearest Michelin-selected venues, seafood, and authentic eateries are automatically sorted on top.\n\n" +
+        "Alternatively, tell me which city or area you are currently staying in, and I will recommend our top dining choices immediately!";
+
+      return {
+        message: isEn ? msgEn : msgVi,
+        recommended_tours: [],
+        recommended_stories: [],
+        recommended_destinations: [],
+        contactRequired: false,
+      };
+    }
+
+    if (isHotelIntent && !isFoodIntent) {
+      const msgVi =
+        "Dạ STAR Travels hỗ trợ tính năng **Định vị GPS thông minh** để đề xuất khách sạn và khu nghỉ dưỡng gần bạn nhất!\n\n" +
+        "Quý khách vui lòng mở trang [Khách Sạn & Nghỉ Dưỡng](/accommodations) và bấm nút **'Tìm gần vị trí của tôi'** trên thanh công cụ:\n" +
+        "• Hệ thống sẽ tự động tính toán khoảng cách và ưu tiên các resort 5 sao, khách sạn boutique hoặc ecolodge gần bạn nhất.\n" +
+        "• Hiển thị cự ly cụ thể (ví dụ: ~1.5 km, ~4.2 km) và huy hiệu gợi ý thông minh.\n\n" +
+        "Quý khách cũng có thể nhắn tên điểm đến bạn dự định lưu trú để em gửi thẻ gợi ý phòng nghỉ ưu đãi tức thì nhé!";
+
+      const msgEn =
+        "STAR Travels features **Smart GPS Geolocation** to help you discover the closest luxury hotels and resorts!\n\n" +
+        "Head to our [Hotels & Accommodations](/accommodations) page and click **'Find Near Me'**:\n" +
+        "• The system calculates your distance and ranks the nearest 5-star resorts and boutique retreats.\n" +
+        "• Displays precise distances (e.g. ~1.5 km, ~4.2 km) alongside curated recommendation badges.\n\n" +
+        "You can also share your current destination city, and I will pull up the finest retreats for you right away!";
+
+      return {
+        message: isEn ? msgEn : msgVi,
+        recommended_tours: [],
+        recommended_stories: [],
+        recommended_destinations: [],
+        contactRequired: false,
+      };
+    }
+
+    // Both or general geo query
+    const msgVi =
+      "Dạ STAR Travels đã phát triển tính năng **Định vị vệ tinh GPS (Geolocation)** để phát hiện cự ly và gợi ý quán ăn, nơi ở gần Quý khách nhất:\n\n" +
+      "1. **Tìm quán ăn gần bạn:** Mở trang [Nhà Hàng & Ẩm Thực](/restaurants) ➔ Bấm **'Tìm gần vị trí của tôi'** để xem các nhà hàng Michelin và quán ngon địa phương gần nhất kèm cự ly chi tiết (~850 m, ~1.2 km).\n" +
+      "2. **Tìm khách sạn gần bạn:** Mở trang [Khách Sạn & Nghỉ Dưỡng](/accommodations) ➔ Bấm **'Tìm gần vị trí của tôi'** để khám phá các khu nghỉ dưỡng 5 sao và khách sạn di sản gần nhất.\n\n" +
+      "🔒 *Cam kết bảo mật:* Hệ thống tuân thủ Nghị định 13/2023/NĐ-CP (chỉ truy cập vị trí khi bạn bấm cho phép trên trình duyệt, không lưu vết ngầm).\n\n" +
+      "Quý khách cũng có thể nhắn cho em biết bạn đang ở thành phố nào (Hà Nội, TP.HCM, Đà Nẵng, Hội An, Phú Quốc...) để em tư vấn trực tiếp ngay tại đây nhé!";
+
+    const msgEn =
+      "STAR Travels provides **Smart GPS Geolocation** to detect distances and recommend the closest dining and accommodation venues:\n\n" +
+      "1. **Dining near you:** Visit [Restaurants & Dining](/restaurants) ➔ Click **'Find Near Me'** to view the nearest Michelin-selected restaurants and local delicacies with exact distance indicators (~850 m, ~1.2 km).\n" +
+      "2. **Hotels near you:** Visit [Hotels & Accommodations](/accommodations) ➔ Click **'Find Near Me'** to discover luxury 5-star resorts and heritage retreats nearby.\n\n" +
+      "🔒 *Privacy Protection:* Fully compliant with Vietnamese privacy laws (accessed only with explicit user browser permission, never tracked silently).\n\n" +
+      "You can also tell me your current city or region, and I will gladly provide direct recommendations right here!";
+
+    return {
+      message: isEn ? msgEn : msgVi,
+      recommended_tours: [],
+      recommended_stories: [],
+      recommended_destinations: [],
+      contactRequired: false,
+    };
+  }
+
+  // 0.2 Smart Accommodations / Hotels / Resorts Recommendation
+  const isAccQuery =
+    q.includes("khach san") ||
+    q.includes("resort") ||
+    q.includes("hotel") ||
+    q.includes("luu tru") ||
+    q.includes("nghi duong") ||
+    q.includes("ecolodge") ||
+    q.includes("homestay") ||
+    q.includes("dat phong") ||
+    q.includes("cho o");
+
+  if (isAccQuery) {
+    // Check specific region
+    if (q.includes("phu quoc")) {
+      const msg = isEn
+        ? "For **Phu Quoc Island**, STAR Travels proudly recommends **JW Marriott Phu Quoc Emerald Bay Resort & Spa** at Bai Khem beach. World-renowned architecture by Bill Bensley with whimsical college campus design, 5-star private beach, shell-shaped infinity pool and Michelin-caliber dining.\n\n[ACCOMMODATION_CARD: jw-marriott-phu-quoc-emerald-bay]"
+        : "Dạ tại đảo ngọc **Phú Quốc**, STAR Travels trân trọng gợi ý tuyệt tác nghỉ dưỡng 5 sao **JW Marriott Phu Quoc Emerald Bay Resort & Spa** tại Bãi Khem. Khu nghỉ dưỡng mang phong cách đại học giả tưởng độc bản của KTS Bill Bensley với bãi biển riêng cát trắng mịn, hồ bơi vỏ sò lừng danh và ẩm thực thượng hạng.\n\n[ACCOMMODATION_CARD: jw-marriott-phu-quoc-emerald-bay]";
+      return { message: msg, recommended_tours: [], recommended_stories: [], recommended_destinations: [], contactRequired: false };
+    }
+    if (q.includes("da nang") || q.includes("son tra")) {
+      const msg = isEn
+        ? "In **Da Nang**, our top luxury recommendation is the world-renowned **InterContinental Danang Sun Peninsula Resort** nestled on Son Tra Peninsula with private secluded bay and Michelin 3-star culinary artistry.\n\n[ACCOMMODATION_CARD: intercontinental-danang-sun-peninsula-resort]"
+        : "Dạ tại **Đà Nẵng**, điểm dừng chân thượng lưu hàng đầu không thể bỏ qua là **InterContinental Danang Sun Peninsula Resort** nép mình bên bán đảo Sơn Trà hoang sơ, với vịnh biển riêng tư biệt lập và nhà hàng Pháp La Maison 1888 đỉnh cao.\n\n[ACCOMMODATION_CARD: intercontinental-danang-sun-peninsula-resort]";
+      return { message: msg, recommended_tours: [], recommended_stories: [], recommended_destinations: [], contactRequired: false };
+    }
+    if (q.includes("hoi an")) {
+      const msg = isEn
+        ? "In **Hoi An**, STAR Travels recommends **Four Seasons Resort The Nam Hai** along pristine Ha My Beach, blending Feng Shui philosophy with tranquil heritage villa architecture.\n\n[ACCOMMODATION_CARD: four-seasons-resort-the-nam-hai-hoi-an]"
+        : "Dạ tại **Hội An**, lựa chọn nghỉ dưỡng thanh tịnh và đẳng cấp nhất là **Four Seasons Resort The Nam Hai** bên bờ biển Hà My, kết hợp hài hòa triết lý phong thủy và kiến trúc nhà vườn di sản xứ Quảng.\n\n[ACCOMMODATION_CARD: four-seasons-resort-the-nam-hai-hoi-an]";
+      return { message: msg, recommended_tours: [], recommended_stories: [], recommended_destinations: [], contactRequired: false };
+    }
+    if (q.includes("nha trang") || q.includes("ninh van")) {
+      const msg = isEn
+        ? "In **Nha Trang**, experience ultimate eco-luxury seclusion at **Six Senses Ninh Van Bay**, accessible only by boat amidst dramatic rock formations and emerald waters.\n\n[ACCOMMODATION_CARD: six-senses-ninh-van-bay]"
+        : "Dạ tại **Nha Trang**, khu nghỉ dưỡng ẩn mình độc bản số 1 là **Six Senses Ninh Van Bay**, chỉ tiếp cận bằng tàu thủy giữa vịnh biển nguyên sơ, biệt thự ghềnh đá và dịch vụ chăm sóc sức khỏe hữu cơ đỉnh cao.\n\n[ACCOMMODATION_CARD: six-senses-ninh-van-bay]";
+      return { message: msg, recommended_tours: [], recommended_stories: [], recommended_destinations: [], contactRequired: false };
+    }
+    if (q.includes("sa pa") || q.includes("sapa") || q.includes("fansipan")) {
+      const msg = isEn
+        ? "In **Sa Pa**, retreat to **Topas Ecolodge Sapa** perched atop a conical hill in Muong Hoa Valley with iconic heated infinity pools looking over cascading rice terraces.\n\n[ACCOMMODATION_CARD: topas-ecolodge-sapa]"
+        : "Dạ tại **Sa Pa**, điểm nghỉ dưỡng sinh thái đẹp nhất Tây Bắc là **Topas Ecolodge Sapa** trên đỉnh đồi hình nón thung lũng Mường Hoa với 2 hồ bơi vô cực nước ấm ngắm trọn ruộng bậc thang kỳ vĩ.\n\n[ACCOMMODATION_CARD: topas-ecolodge-sapa]";
+      return { message: msg, recommended_tours: [], recommended_stories: [], recommended_destinations: [], contactRequired: false };
+    }
+    if (q.includes("ha noi") || q.includes("hanoi")) {
+      const msg = isEn
+        ? "In **Hanoi**, discover French colonial elegance at **Sofitel Legend Metropole Hanoi** (established in 1901) or operatic boutique artistry at **Capella Hanoi**.\n\n[ACCOMMODATION_CARD: sofitel-legend-metropole-hanoi] [ACCOMMODATION_CARD: capella-hanoi]"
+        : "Dạ tại **Hà Nội**, hai kiệt tác lưu trú sang trọng bậc nhất là khách sạn di sản **Sofitel Legend Metropole Hanoi** (thành lập từ năm 1901) và khách sạn boutique nghệ thuật Opera **Capella Hanoi**.\n\n[ACCOMMODATION_CARD: sofitel-legend-metropole-hanoi] [ACCOMMODATION_CARD: capella-hanoi]";
+      return { message: msg, recommended_tours: [], recommended_stories: [], recommended_destinations: [], contactRequired: false };
+    }
+    if (q.includes("ha long") || q.includes("halong")) {
+      const msg = isEn
+        ? "In **Ha Long Bay**, immerse yourself in luxury aboard the 5-star **Paradise Vietnam Grand Cruise & Hotel** navigating the mystical limestone karsts.\n\n[ACCOMMODATION_CARD: paradise-vietnam-cruises-halong]"
+        : "Dạ tại **Hạ Long**, trải nghiệm nghỉ dưỡng vịnh biển 5 sao sang trọng nhất là hải trình du thuyền khách sạn **Paradise Vietnam Grand Cruise & Hotel** với ban công riêng view vịnh kỳ quan.\n\n[ACCOMMODATION_CARD: paradise-vietnam-cruises-halong]";
+      return { message: msg, recommended_tours: [], recommended_stories: [], recommended_destinations: [], contactRequired: false };
+    }
+    if (q.includes("hue") || q.includes("song huong")) {
+      const msg = isEn
+        ? "In **Hue**, relax by the Perfume River at **Azerai La Residence Hue**, a historic 1930s Art Deco mansion facing the ancient Imperial Citadel.\n\n[ACCOMMODATION_CARD: azerai-la-residence-hue]"
+        : "Dạ tại **Huế**, điểm dừng chân di sản thơ mộng nhất là **Azerai La Residence Hue**, dinh thự Art Deco thập niên 1930 soi bóng bên bờ sông Hương đối diện Cố đô.\n\n[ACCOMMODATION_CARD: azerai-la-residence-hue]";
+      return { message: msg, recommended_tours: [], recommended_stories: [], recommended_destinations: [], contactRequired: false };
+    }
+    if (q.includes("ninh binh") || q.includes("tam coc") || q.includes("trang an")) {
+      const msg = isEn
+        ? "In **Ninh Binh**, enjoy the peaceful countryside sanctuary at **Tam Coc Garden Resort** nestled among emerald rice fields and limestone karsts.\n\n[ACCOMMODATION_CARD: tam-coc-garden-resort-ninh-binh]"
+        : "Dạ tại **Ninh Bình**, viên ngọc ẩn mình giữa đồng lúa và núi đá vôi non nước Tràng An là **Tam Coc Garden Resort** đậm chất làng quê Bắc Bộ thanh bình.\n\n[ACCOMMODATION_CARD: tam-coc-garden-resort-ninh-binh]";
+      return { message: msg, recommended_tours: [], recommended_stories: [], recommended_destinations: [], contactRequired: false };
+    }
+
+    // General query without region -> Ask customer for region
+    const askRegionVi =
+      "Dạ Quý khách đang tìm kiếm **Khách Sạn & Resort** tại khu vực nào ạ? STAR Travels tuyển chọn sẵn các điểm dừng chân 5 sao & di sản đẳng cấp tại:\n\n" +
+      "• **Phú Quốc:** JW Marriott Emerald Bay (Bãi Khem)\n" +
+      "• **Đà Nẵng & Sơn Trà:** InterContinental Danang Sun Peninsula\n" +
+      "• **Hội An:** Four Seasons The Nam Hai (Hà My)\n" +
+      "• **Nha Trang:** Six Senses Ninh Van Bay (Vịnh Ninh Vân)\n" +
+      "• **Sa Pa:** Topas Ecolodge (Thung lũng Mường Hoa)\n" +
+      "• **Hà Nội:** Sofitel Legend Metropole & Capella Hà Nội\n" +
+      "• **Hạ Long:** Du thuyền khách sạn 5 sao Paradise Grand\n" +
+      "• **Ninh Bình:** Tam Cốc Garden sinh thái bình yên\n" +
+      "• **Huế:** Azerai La Residence Hue bên sông Hương\n\n" +
+      "Quý khách chỉ cần nhắn tên khu vực hoặc phong cách mong muốn (resort biển, di sản, núi rừng, gia đình...), em sẽ gợi ý chính xác và gửi thẻ đặt chỗ ưu đãi ngay ạ!";
+
+    const askRegionEn =
+      "Which destination are you looking for luxury **Hotels & Resorts** in? STAR Travels features curated 5-star heritage retreats across Vietnam:\n\n" +
+      "• **Phu Quoc:** JW Marriott Emerald Bay\n" +
+      "• **Da Nang:** InterContinental Danang Sun Peninsula\n" +
+      "• **Hoi An:** Four Seasons The Nam Hai\n" +
+      "• **Nha Trang:** Six Senses Ninh Van Bay\n" +
+      "• **Sa Pa:** Topas Ecolodge Sapa\n" +
+      "• **Hanoi:** Sofitel Legend Metropole & Capella Hanoi\n" +
+      "• **Ha Long:** Paradise Grand 5-Star Cruise\n" +
+      "• **Ninh Binh:** Tam Coc Garden Resort\n" +
+      "• **Hue:** Azerai La Residence Hue\n\n" +
+      "Please let me know your preferred region or vacation style (beachfront, mountain, heritage, family...), and I will provide tailored recommendations!";
+
+    return {
+      message: isEn ? askRegionEn : askRegionVi,
+      recommended_tours: [],
+      recommended_stories: [],
+      recommended_destinations: [],
+      contactRequired: false,
+    };
+  }
+
+  // 0.3 Smart Restaurants / Dining / Gourmet Recommendation
+  const isResQuery =
+    q.includes("nha hang") ||
+    q.includes("an uong") ||
+    q.includes("am thuc") ||
+    q.includes("quan an") ||
+    q.includes("an gi") ||
+    q.includes("dining") ||
+    q.includes("restaurant") ||
+    q.includes("michelin") ||
+    q.includes("dat ban") ||
+    q.includes("mon ngon");
+
+  if (isResQuery) {
+    if (q.includes("ha noi") || q.includes("hanoi")) {
+      const msg = isEn
+        ? "In **Hanoi**, indulge in 1-Michelin-starred seasonal tasting menus at **Gia Restaurant**, authentic Northern home-style feasts at **Tam Vi (Michelin 1*)**, or French-Asian gastronomy at **La Badiane**.\n\n[RESTAURANT_CARD: gia-restaurant-hanoi] [RESTAURANT_CARD: tam-vi-restaurant-hanoi]"
+        : "Dạ tại **Hà Nội**, STAR Travels trân trọng gợi ý thực đơn Tasting Menu đương đại tại **Gia Restaurant (Michelin 1 Sao)** đối diện Văn Miếu, mâm cơm gia đình Bắc Bộ chuẩn vị tại **Tầm Vị (Michelin 1 Sao)**, và phong vị Pháp - Á tại **La Badiane**.\n\n[RESTAURANT_CARD: gia-restaurant-hanoi] [RESTAURANT_CARD: tam-vi-restaurant-hanoi]";
+      return { message: msg, recommended_tours: [], recommended_stories: [], recommended_destinations: [], contactRequired: false };
+    }
+    if (q.includes("sai gon") || q.includes("ho chi minh") || q.includes("tp hcm") || q.includes("tphcm")) {
+      const msg = isEn
+        ? "In **Ho Chi Minh City**, experience Michelin-starred modern Vietnamese gastronomy at **Anan Saigon** or sunset riverfront pan-Asian dining at **The Deck Saigon**.\n\n[RESTAURANT_CARD: anan-saigon] [RESTAURANT_CARD: the-deck-saigon]"
+        : "Dạ tại **TP. Hồ Chí Minh**, hai điểm hẹn ẩm thực đỉnh cao là **Ănăn Saigon (Michelin 1 Sao)** của Bếp trưởng Peter Cường Franklin và nhà hàng ngắm hoàng hôn ven sông lãng mạn **The Deck Saigon** tại Thảo Điền.\n\n[RESTAURANT_CARD: anan-saigon] [RESTAURANT_CARD: the-deck-saigon]";
+      return { message: msg, recommended_tours: [], recommended_stories: [], recommended_destinations: [], contactRequired: false };
+    }
+    if (q.includes("hoi an")) {
+      const msg = isEn
+        ? "In **Hoi An**, do not miss **Morning Glory Original** in the ancient town, renowned for authentic Cao Lau noodles, white rose dumplings, and crispy wontons.\n\n[RESTAURANT_CARD: morning-glory-original-hoi-an]"
+        : "Dạ tại **Hội An**, điểm hẹn ẩm thực trứ danh phố cổ là **Morning Glory Original** của đầu bếp Vy với đặc sản Cao lầu thịt xíu, bánh hoa hồng trắng và hoành thánh chiên giòn chính gốc.\n\n[RESTAURANT_CARD: morning-glory-original-hoi-an]";
+      return { message: msg, recommended_tours: [], recommended_stories: [], recommended_destinations: [], contactRequired: false };
+    }
+    if (q.includes("da nang")) {
+      const msg = isEn
+        ? "In **Da Nang**, savor authentic central Vietnamese heritage dishes along the Han River at **Madame Lan Restaurant**.\n\n[RESTAURANT_CARD: madame-lan-danang]"
+        : "Dạ tại **Đà Nẵng**, điểm hẹn ẩm thực 3 miền và đặc sản xứ Quảng bên bờ sông Hàn thơ mộng là **Nhà Hàng Madame Lân Đà Nẵng** với bánh xèo tôm nhảy, mì Quảng và gỏi cá Nam Ô tươi ngon.\n\n[RESTAURANT_CARD: madame-lan-danang]";
+      return { message: msg, recommended_tours: [], recommended_stories: [], recommended_destinations: [], contactRequired: false };
+    }
+    if (q.includes("ha long") || q.includes("halong")) {
+      const msg = isEn
+        ? "In **Ha Long**, feast on premium ocean catch and claypot golden crab hotpot at **Golden Crab Seafood Restaurant Bai Chay**.\n\n[RESTAURANT_CARD: nha-hang-hai-san-cua-vang-halong]"
+        : "Dạ tại **Hạ Long**, nhà hàng hải sản tươi sống cao cấp hàng đầu là **Hải Sản Cua Vàng Bãi Cháy**, nổi tiếng với món lẩu cua biển niêu đất bí truyền và tôm hùm bông nướng phô mai.\n\n[RESTAURANT_CARD: nha-hang-hai-san-cua-vang-halong]";
+      return { message: msg, recommended_tours: [], recommended_stories: [], recommended_destinations: [], contactRequired: false };
+    }
+    if (q.includes("hue")) {
+      const msg = isEn
+        ? "In **Hue**, step back in time with an authentic imperial banquet experience at **Ngu Uyen Royal Hue Court Cuisine** featuring royal costumes and UNESCO court music.\n\n[RESTAURANT_CARD: ngu-uyen-co-do-hue]"
+        : "Dạ tại **Huế**, yến tiệc hoàng gia triều Nguyễn chuẩn mực nhất là **Nhà Hàng Ngự Uyển Cung Đình Huế** với nem công chả phượng, cơm lá sen và nhã nhạc cung đình.\n\n[RESTAURANT_CARD: ngu-uyen-co-do-hue]";
+      return { message: msg, recommended_tours: [], recommended_stories: [], recommended_destinations: [], contactRequired: false };
+    }
+
+    // General dining query without region -> Ask customer for region
+    const askDiningVi =
+      "Dạ Quý khách đang tìm kiếm trải nghiệm ẩm thực tại **khu vực** nào ạ? STAR Travels tuyển chọn các điểm hẹn ẩm thực tinh tuyển từ sao Michelin đến món ngon di sản tại:\n\n" +
+      "• **Hà Nội:** Gia Restaurant (Michelin 1*), Tầm Vị (Michelin 1*), Bếp Quán\n" +
+      "• **TP. Hồ Chí Minh:** Ănăn Saigon (Michelin 1*), The Deck ven sông Sài Gòn\n" +
+      "• **Hội An:** Morning Glory Original chuẩn vị phố cổ\n" +
+      "• **Đà Nẵng:** Madame Lân bên bờ sông Hàn\n" +
+      "• **Hạ Long:** Hải sản tươi sống Cua Vàng Bãi Cháy\n" +
+      "• **Huế:** Yến tiệc Hoàng gia Cung đình Ngự Uyển\n\n" +
+      "Quý khách chỉ cần nhắn tên khu vực hoặc gu thưởng thức (Michelin, hải sản tươi sống, cơm truyền thống, ven sông...), em sẽ gợi ý chính xác ngay ạ!";
+
+    const askDiningEn =
+      "Which city or region are you seeking **Dining & Restaurant** recommendations in? STAR Travels features Michelin-starred fine dining and authentic heritage eateries:\n\n" +
+      "• **Hanoi:** Gia Restaurant (Michelin 1*), Tam Vi (Michelin 1*)\n" +
+      "• **Ho Chi Minh City:** Anan Saigon (Michelin 1*), The Deck Saigon\n" +
+      "• **Hoi An:** Morning Glory Original\n" +
+      "• **Da Nang:** Madame Lan Riverside\n" +
+      "• **Ha Long:** Golden Crab Seafood\n" +
+      "• **Hue:** Ngu Uyen Royal Banquet\n\n" +
+      "Please let me know your preferred destination or dining vibe (fine dining, seafood, authentic local dishes...), and I'll send direct recommendations!";
+
+    return {
+      message: isEn ? askDiningEn : askDiningVi,
+      recommended_tours: [],
+      recommended_stories: [],
+      recommended_destinations: [],
+      contactRequired: false,
+    };
+  }
+
   // 1. Sa Pa / Fansipan / Săn mây
   if (
     q.includes("sa pa") ||

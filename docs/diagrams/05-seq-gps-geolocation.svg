@@ -1,0 +1,139 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1650 950" width="100%" height="100%" style="background:#FFFFFF; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+  <defs>
+    <!-- Drop Shadow Filter -->
+    <filter id="card-shadow" x="-5%" y="-5%" width="110%" height="115%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#0F172A" flood-opacity="0.08"/>
+    </filter>
+    
+    <!-- UML Markers -->
+    <marker id="arrow-sync" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#0F172A" />
+    </marker>
+    <marker id="arrow-open" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9" fill="none" stroke="#64748B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+    </marker>
+    <marker id="arrow-comp" viewBox="0 0 16 10" refX="1" refY="5" markerWidth="14" markerHeight="9" orient="auto-start-reverse">
+      <polygon points="1,5 8,1 15,5 8,9" fill="#0F172A" stroke="#0F172A" stroke-width="1.5" />
+    </marker>
+    <marker id="arrow-inherit" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="10" markerHeight="10" orient="auto-start-reverse">
+      <polygon points="1,1 11,6 1,11" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.8" />
+    </marker>
+    <marker id="arrow-include" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9" fill="none" stroke="#DA251D" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+    </marker>
+  </defs>
+
+  <!-- Background Grid -->
+  <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+    <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#F1F5F9" stroke-width="1"/>
+  </pattern>
+  <rect width="1650" height="950" fill="url(#grid)" />
+
+  
+    
+    <g filter="url(#card-shadow)">
+      <rect x="40" y="30" width="620" height="80" rx="8" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.2"/>
+      <text x="56" y="56" font-size="14" font-weight="700" fill="#0F172A">STAR Travels — Sơ Đồ Tuần Tự: Định Vị Vị Trí & Gợi Ý Gần Nhất (GPS Haversine)</text>
+      <text x="56" y="76" font-size="11" fill="#475569">Chuẩn: OMG UML 2.5.1 Sequence Diagram | Pháp lý: Nghị định 13/2023/NĐ-CP (PDPD)</text>
+      <text x="56" y="94" font-size="11" fill="#64748B" font-style="italic">Phạm vi: Yêu cầu quyền tường minh (Explicit Consent), tính khoảng cách Client-side, không lưu vết ngầm</text>
+    </g>
+    
+    
+    <g filter="url(#card-shadow)">
+      <rect x="1310" y="30" width="300" height="85" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+      <text x="1326" y="48" font-size="11" font-weight="700" fill="#0F172A">CHÚ GIẢI (LEGEND)</text>
+      
+        <circle cx="1328" cy="62" r="5" fill="#0F172A"/>
+        <text x="1340" y="66" font-size="11" fill="#334155">Tương tác người dùng & Xử lý Web</text>
+        
+
+        <circle cx="1328" cy="80" r="5" fill="#0284C7"/>
+        <text x="1340" y="84" font-size="11" fill="#334155">Trình duyệt kiểm tra quyền riêng tư</text>
+        
+
+        <circle cx="1328" cy="98" r="5" fill="#DA251D"/>
+        <text x="1340" y="102" font-size="11" fill="#334155">Huy hiệu Gợi ý STAR Hàng đầu</text>
+        
+    </g>
+    
+    
+        <rect x="65" y="140" width="150" height="42" rx="6" fill="#1E293B" stroke="#0F172A" stroke-width="1.5" filter="url(#card-shadow)"/>
+        <text x="140" y="157" text-anchor="middle" font-size="11.5" font-weight="700" fill="#FFFFFF">Traveler</text>
+        <text x="140" y="172" text-anchor="middle" font-size="10" fill="#E2E8F0">(Người dùng)</text>
+        <line x1="140" y1="182" x2="140" y2="880" stroke="#94A3B8" stroke-width="1.5" stroke-dasharray="6,4"/>
+        
+        <rect x="365" y="140" width="150" height="42" rx="6" fill="#1E293B" stroke="#0F172A" stroke-width="1.5" filter="url(#card-shadow)"/>
+        <text x="440" y="157" text-anchor="middle" font-size="11.5" font-weight="700" fill="#FFFFFF">Catalog Wizard UI</text>
+        <text x="440" y="172" text-anchor="middle" font-size="10" fill="#E2E8F0">(accommodations-catalog)</text>
+        <line x1="440" y1="182" x2="440" y2="880" stroke="#94A3B8" stroke-width="1.5" stroke-dasharray="6,4"/>
+        
+        <rect x="675" y="140" width="150" height="42" rx="6" fill="#1E293B" stroke="#0F172A" stroke-width="1.5" filter="url(#card-shadow)"/>
+        <text x="750" y="157" text-anchor="middle" font-size="11.5" font-weight="700" fill="#FFFFFF">Browser Geolocation</text>
+        <text x="750" y="172" text-anchor="middle" font-size="10" fill="#E2E8F0">(navigator.geolocation)</text>
+        <line x1="750" y1="182" x2="750" y2="880" stroke="#94A3B8" stroke-width="1.5" stroke-dasharray="6,4"/>
+        
+        <rect x="995" y="140" width="150" height="42" rx="6" fill="#1E293B" stroke="#0F172A" stroke-width="1.5" filter="url(#card-shadow)"/>
+        <text x="1070" y="157" text-anchor="middle" font-size="11.5" font-weight="700" fill="#FFFFFF">Geo Utilities</text>
+        <text x="1070" y="172" text-anchor="middle" font-size="10" fill="#E2E8F0">(@/lib/geo-utils.ts)</text>
+        <line x1="1070" y1="182" x2="1070" y2="880" stroke="#94A3B8" stroke-width="1.5" stroke-dasharray="6,4"/>
+        
+        <rect x="1315" y="140" width="150" height="42" rx="6" fill="#1E293B" stroke="#0F172A" stroke-width="1.5" filter="url(#card-shadow)"/>
+        <text x="1390" y="157" text-anchor="middle" font-size="11.5" font-weight="700" fill="#FFFFFF">Catalog Cards</text>
+        <text x="1390" y="172" text-anchor="middle" font-size="10" fill="#E2E8F0">(AccommodationCard)</text>
+        <line x1="1390" y1="182" x2="1390" y2="880" stroke="#94A3B8" stroke-width="1.5" stroke-dasharray="6,4"/>
+        
+
+    <!-- Activations -->
+    <rect x="434" y="210" width="12" height="100" fill="#CBD5E1" stroke="#475569" stroke-width="1"/>
+    <rect x="744" y="270" width="12" height="150" fill="#CBD5E1" stroke="#475569" stroke-width="1"/>
+    <rect x="1064" y="470" width="12" height="120" fill="#CBD5E1" stroke="#475569" stroke-width="1"/>
+    <rect x="1384" y="630" width="12" height="90" fill="#CBD5E1" stroke="#475569" stroke-width="1"/>
+
+    <!-- Messages -->
+    
+        <line x1="140" y1="220" x2="434" y2="220" stroke="#0F172A" stroke-width="1.5" marker-end="url(#arrow-sync)"/>
+        <rect x="137.0" y="204" width="300" height="14" fill="#FFFFFF" rx="3"/>
+        <text x="287.0" y="215" text-anchor="middle" font-size="10.5" font-weight="600" fill="#0F172A">1. Bấm nút 'Tìm gần vị trí của tôi'</text>
+        
+    
+        <line x1="446" y1="270" x2="744" y2="270" stroke="#0284C7" stroke-width="1.5" marker-end="url(#arrow-sync)"/>
+        <rect x="445.0" y="254" width="300" height="14" fill="#FFFFFF" rx="3"/>
+        <text x="595.0" y="265" text-anchor="middle" font-size="10.5" font-weight="600" fill="#0284C7">2. Gọi getCurrentPosition() (Tuân thủ NĐ 13/2023)</text>
+        
+    
+        <line x1="744" y1="320" x2="140" y2="320" stroke="#0F172A" stroke-width="1.5" marker-end="url(#arrow-sync)"/>
+        <rect x="292.0" y="304" width="300" height="14" fill="#FFFFFF" rx="3"/>
+        <text x="442.0" y="315" text-anchor="middle" font-size="10.5" font-weight="600" fill="#0F172A">3. Trình duyệt hiển thị popup xin quyền vị trí</text>
+        
+    
+        <line x1="140" y1="370" x2="744" y2="370" stroke="#0F172A" stroke-width="1.5" marker-end="url(#arrow-sync)"/>
+        <rect x="292.0" y="354" width="300" height="14" fill="#FFFFFF" rx="3"/>
+        <text x="442.0" y="365" text-anchor="middle" font-size="10.5" font-weight="600" fill="#0F172A">4. Người dùng bấm Cho phép (Allow)</text>
+        
+    
+        <line x1="744" y1="440" x2="1064" y2="440" stroke="#64748B" stroke-width="1.3" stroke-dasharray="6,4" marker-end="url(#arrow-open)"/>
+        <rect x="774.0" y="424" width="260" height="14" fill="#FFFFFF" rx="3"/>
+        <text x="904.0" y="435" text-anchor="middle" font-size="10.5" fill="#475569">5. Trả về tọa độ thực {latitude, longitude}</text>
+        
+    
+        <line x1="1076" y1="490" x2="1076" y2="490" stroke="#0F172A" stroke-width="1.5" marker-end="url(#arrow-sync)"/>
+        <rect x="926.0" y="474" width="300" height="14" fill="#FFFFFF" rx="3"/>
+        <text x="1076.0" y="485" text-anchor="middle" font-size="10.5" font-weight="600" fill="#0F172A">6. findNearestDestination() nhận diện thành phố gần nhất</text>
+        
+    
+        <line x1="1064" y1="550" x2="446" y2="550" stroke="#0F172A" stroke-width="1.5" marker-end="url(#arrow-sync)"/>
+        <rect x="605.0" y="534" width="300" height="14" fill="#FFFFFF" rx="3"/>
+        <text x="755.0" y="545" text-anchor="middle" font-size="10.5" font-weight="600" fill="#0F172A">7. calculateDistanceKm() tính công thức Haversine từng item</text>
+        
+    
+        <line x1="446" y1="620" x2="1384" y2="620" stroke="#0F172A" stroke-width="1.5" marker-end="url(#arrow-sync)"/>
+        <rect x="765.0" y="604" width="300" height="14" fill="#FFFFFF" rx="3"/>
+        <text x="915.0" y="615" text-anchor="middle" font-size="10.5" font-weight="600" fill="#0F172A">8. formatDistance() định dạng mét/km & Sắp xếp gần nhất</text>
+        
+    
+        <line x1="1384" y1="700" x2="140" y2="700" stroke="#DA251D" stroke-width="1.5" marker-end="url(#arrow-sync)"/>
+        <rect x="612.0" y="684" width="300" height="14" fill="#FFFFFF" rx="3"/>
+        <text x="762.0" y="695" text-anchor="middle" font-size="10.5" font-weight="600" fill="#DA251D">9. Gắn huy hiệu '✦ GỢI Ý STAR HÀNG ĐẦU (~850 m)' lên card đầu tiên</text>
+        
+    
+</svg>

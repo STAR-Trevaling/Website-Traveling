@@ -1,0 +1,98 @@
+<?xml version="1.0" ?>
+<mxfile host="app.diagrams.net" modified="2026-10-09T00:00:00.000Z" agent="STAR-Travels-Drawio-Master-Suite" version="24.0.0" type="device">
+  <diagram name="2. Domain Class Diagram" id="page-2-class">
+    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1750" pageHeight="1150" background="#FFFFFF">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="p2-title-block" value="&amp;lt;b style=&amp;quot;font-size:14px; color:#0F172A;&amp;quot;&amp;gt;STAR Travels — Sơ Đồ Lớp Miền Nghiệp Vụ (Domain Class Diagram)&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;font color=&amp;quot;#475569&amp;quot; style=&amp;quot;font-size:11px;&amp;quot;&amp;gt;Chuẩn: OMG UML 2.5.1 | Bounded Contexts: 13 Mô-đun Clean Architecture&amp;lt;br&amp;gt;&amp;lt;i&amp;gt;Phạm vi:&amp;lt;/i&amp;gt; 10 Thực thể chính, Multiplicities chuẩn, Ký hiệu Composition/Association/Aggregation&amp;lt;/font&amp;gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=#94A3B8;strokeWidth=1.2;align=left;spacingLeft=14;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="30" width="580" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="p2-legend-block" value="&amp;lt;b style=&amp;quot;font-size:11px; color:#0F172A;&amp;quot;&amp;gt;CHÚ GIẢI (LEGEND)&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;■ &amp;lt;font color=&amp;quot;#DA251D&amp;quot;&amp;gt;●&amp;lt;/font&amp;gt; Core Domain (Tour, Booking)&amp;lt;br&amp;gt;■ &amp;lt;font color=&amp;quot;#0F766E&amp;quot;&amp;gt;●&amp;lt;/font&amp;gt; Spatial &amp; Catalog (Destinations)&amp;lt;br&amp;gt;■ &amp;lt;font color=&amp;quot;#1D4ED8&amp;quot;&amp;gt;●&amp;lt;/font&amp;gt; Hospitality Referral (Hotel, Dining)&amp;lt;br&amp;gt;■ &amp;lt;font color=&amp;quot;#C2410C&amp;quot;&amp;gt;●&amp;lt;/font&amp;gt; Financial Transactions (VNPay, VietQR)&amp;lt;br&amp;gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CBD5E1;strokeWidth=1;align=left;spacingLeft=10;fontSize=10;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="1420" y="30" width="280" height="95" as="geometry"/>
+        </mxCell>
+        <mxCell id="cls-user" value="User&#10;«accounts_user»" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;html=1;shadow=1;fillColor=#1E293B;strokeColor=#0F172A;fontColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="60" y="140" width="240" height="190" as="geometry"/>
+        </mxCell>
+        <mxCell id="cls-user-body" value="- id: UUID&#10;- email: String (Unique)&#10;- phone: String (Indexed)&#10;- role: RoleEnum&#10;- is_active: Boolean&#10;- date_joined: DateTime&#10;--&#10;+ check_password(raw): bool&#10;+ is_partner_owner(): bool" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=6;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;fontColor=#0F172A;" vertex="1" parent="1">
+          <mxGeometry x="60" y="170" width="240" height="160" as="geometry"/>
+        </mxCell>
+        <mxCell id="cls-dest" value="Destination&#10;«destinations_destination»" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;html=1;shadow=1;fillColor=#0F766E;strokeColor=#115E59;fontColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="380" y="140" width="250" height="180" as="geometry"/>
+        </mxCell>
+        <mxCell id="cls-dest-body" value="- id: UUID&#10;- slug: String (Unique)&#10;- name: String / name_en: String&#10;- region: RegionEnum&#10;- location: PointField (SRID 4326)&#10;- is_published: Boolean&#10;--&#10;+ get_published_tours(): QuerySet&#10;+ calculate_nearby_places(rad): List" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=6;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;fontColor=#0F172A;" vertex="1" parent="1">
+          <mxGeometry x="380" y="170" width="250" height="150" as="geometry"/>
+        </mxCell>
+        <mxCell id="cls-tour" value="Tour&#10;«tours_tour»" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;html=1;shadow=1;fillColor=#DA251D;strokeColor=#B91C1C;fontColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="710" y="140" width="270" height="200" as="geometry"/>
+        </mxCell>
+        <mxCell id="cls-tour-body" value="- id: UUID&#10;- destination_id: UUID (FK)&#10;- slug: String (Unique)&#10;- title: String / title_en: String&#10;- price: Decimal (Authority)&#10;- duration_days: Integer&#10;- itinerary: JSONB&#10;- is_active: Boolean&#10;--&#10;+ calculate_total(pax): Decimal&#10;+ verify_slot_availability(date): bool" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=6;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;fontColor=#0F172A;" vertex="1" parent="1">
+          <mxGeometry x="710" y="170" width="270" height="170" as="geometry"/>
+        </mxCell>
+        <mxCell id="cls-booking" value="Booking&#10;«bookings_booking»" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;html=1;shadow=1;fillColor=#B91C1C;strokeColor=#991B1B;fontColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="1070" y="140" width="290" height="230" as="geometry"/>
+        </mxCell>
+        <mxCell id="cls-booking-body" value="- id: UUID&#10;- code: String (STAR-YYYYMM-XXXX)&#10;- user_id: UUID (FK Nullable)&#10;- item_type: BookingItemTypeEnum&#10;- item_id: UUID&#10;- status: BookingStatusEnum&#10;- total_price: Decimal (Server-calc)&#10;- metadata: JSONB&#10;- created_at: DateTime&#10;--&#10;+ transition_to(status): void&#10;+ mark_paid_and_emit_outbox(): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=6;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;fontColor=#0F172A;" vertex="1" parent="1">
+          <mxGeometry x="1070" y="170" width="290" height="200" as="geometry"/>
+        </mxCell>
+        <mxCell id="cls-payment" value="PaymentTransaction&#10;«payments_transaction»" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;html=1;shadow=1;fillColor=#C2410C;strokeColor=#9A3412;fontColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="1440" y="140" width="260" height="200" as="geometry"/>
+        </mxCell>
+        <mxCell id="cls-payment-body" value="- id: UUID&#10;- booking_id: UUID (FK)&#10;- gateway: GatewayEnum&#10;- amount: Decimal&#10;- transaction_code: String&#10;- status: TxStatusEnum&#10;- raw_ipn_payload: JSONB&#10;--&#10;+ verify_signature(secret): bool&#10;+ reconcile_with_booking(): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=6;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;fontColor=#0F172A;" vertex="1" parent="1">
+          <mxGeometry x="1440" y="170" width="260" height="170" as="geometry"/>
+        </mxCell>
+        <mxCell id="cls-acc" value="Accommodation&#10;«Hospitality Referral»" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;html=1;shadow=1;fillColor=#1D4ED8;strokeColor=#1E40AF;fontColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="60" y="480" width="240" height="180" as="geometry"/>
+        </mxCell>
+        <mxCell id="cls-acc-body" value="- id: UUID&#10;- slug: String (Unique)&#10;- destination_id: UUID (FK)&#10;- name: String&#10;- category: String&#10;- location: {lat: Float, lng: Float}&#10;- partner_name: String&#10;- referral_url: URLString&#10;--&#10;+ distance_to(coords): Float&#10;+ generate_referral_payload(): dict" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=6;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;fontColor=#0F172A;" vertex="1" parent="1">
+          <mxGeometry x="60" y="510" width="240" height="150" as="geometry"/>
+        </mxCell>
+        <mxCell id="cls-res" value="Restaurant&#10;«Dining Referral»" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;html=1;shadow=1;fillColor=#4338CA;strokeColor=#3730A3;fontColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="380" y="480" width="250" height="180" as="geometry"/>
+        </mxCell>
+        <mxCell id="cls-res-body" value="- id: UUID&#10;- slug: String (Unique)&#10;- destination_id: UUID (FK)&#10;- name: String&#10;- cuisine_type: String&#10;- location: {lat: Float, lng: Float}&#10;- partner_name: String&#10;- booking_url: URLString&#10;--&#10;+ distance_to(coords): Float&#10;+ generate_referral_payload(): dict" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=6;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;fontColor=#0F172A;" vertex="1" parent="1">
+          <mxGeometry x="380" y="510" width="250" height="150" as="geometry"/>
+        </mxCell>
+        <mxCell id="cls-partner" value="PartnerApplication&#10;«partners_partnerapplication»" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;html=1;shadow=1;fillColor=#475569;strokeColor=#334155;fontColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="710" y="480" width="270" height="200" as="geometry"/>
+        </mxCell>
+        <mxCell id="cls-partner-body" value="- id: UUID&#10;- user_id: UUID (FK)&#10;- business_name: String&#10;- tax_id: String (MST)&#10;- license_number: String&#10;- status: PartnerStatusEnum&#10;- reviewed_by_id: UUID (FK)&#10;--&#10;+ approve_and_create_org(adm): Org&#10;+ reject(reason): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=6;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;fontColor=#0F172A;" vertex="1" parent="1">
+          <mxGeometry x="710" y="510" width="270" height="170" as="geometry"/>
+        </mxCell>
+        <mxCell id="cls-rag" value="KnowledgeChunk&#10;«assistant_knowledge_chunk»" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;html=1;shadow=1;fillColor=#854D0E;strokeColor=#713F12;fontColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="1070" y="480" width="270" height="180" as="geometry"/>
+        </mxCell>
+        <mxCell id="cls-rag-body" value="- id: UUID&#10;- title: String&#10;- category: String&#10;- content: Text&#10;- embedding: Vector(1536)&#10;- metadata: JSONB&#10;--&#10;+ hybrid_search(vec, text): List&#10;+ extract_citations(): List" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=6;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;fontColor=#0F172A;" vertex="1" parent="1">
+          <mxGeometry x="1070" y="510" width="270" height="150" as="geometry"/>
+        </mxCell>
+        <mxCell id="cls-audit" value="AuditEvent&#10;«audit_auditevent»" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;html=1;shadow=1;fillColor=#374151;strokeColor=#1F2937;fontColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="1440" y="480" width="250" height="170" as="geometry"/>
+        </mxCell>
+        <mxCell id="cls-audit-body" value="- id: UUID&#10;- actor_id: UUID&#10;- action: String&#10;- entity_type: String&#10;- entity_id: UUID&#10;- change_diff: JSONB&#10;- timestamp: DateTime&#10;--&#10;+ log_privileged_transition(): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;spacingRight=6;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;fontColor=#0F172A;" vertex="1" parent="1">
+          <mxGeometry x="1440" y="510" width="250" height="140" as="geometry"/>
+        </mxCell>
+        <mxCell id="rel1" value="1  ---&lt;*&gt;  1..*" style="startArrow=diamond;startFill=1;endArrow=none;html=1;edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=10;jumpStyle=arc;jumpSize=6;strokeColor=#0F172A;strokeWidth=1.5;labelBackgroundColor=#FFFFFF;fontSize=11;" edge="1" parent="1" source="cls-dest" target="cls-tour">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="rel2" value="1  ---  0..*" style="endArrow=none;html=1;edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=10;jumpStyle=arc;jumpSize=6;strokeColor=#475569;strokeWidth=1.5;" edge="1" parent="1" source="cls-tour" target="cls-booking">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="rel3" value="1  ---&lt;*&gt;  1" style="startArrow=diamond;startFill=1;endArrow=none;html=1;edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=10;jumpStyle=arc;jumpSize=6;strokeColor=#0F172A;strokeWidth=1.5;labelBackgroundColor=#FFFFFF;fontSize=11;" edge="1" parent="1" source="cls-booking" target="cls-payment">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="rel4" value="1  ---  0..*" style="endArrow=none;html=1;edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=10;jumpStyle=arc;jumpSize=6;strokeColor=#475569;strokeWidth=1.5;" edge="1" parent="1" source="cls-user" target="cls-booking">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="rel5" value="1  ---&lt;*&gt;  1..*" style="startArrow=diamond;startFill=1;endArrow=none;html=1;edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=10;jumpStyle=arc;jumpSize=6;strokeColor=#0F172A;strokeWidth=1.5;labelBackgroundColor=#FFFFFF;fontSize=11;" edge="1" parent="1" source="cls-dest" target="cls-acc">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="rel6" value="1  ---&lt;*&gt;  1..*" style="startArrow=diamond;startFill=1;endArrow=none;html=1;edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=10;jumpStyle=arc;jumpSize=6;strokeColor=#0F172A;strokeWidth=1.5;labelBackgroundColor=#FFFFFF;fontSize=11;" edge="1" parent="1" source="cls-dest" target="cls-res">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="rel7" value="1  ---  0..1" style="endArrow=none;html=1;edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=10;jumpStyle=arc;jumpSize=6;strokeColor=#475569;strokeWidth=1.5;" edge="1" parent="1" source="cls-user" target="cls-partner">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

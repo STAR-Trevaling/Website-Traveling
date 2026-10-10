@@ -18,8 +18,10 @@ class InquiryCreateSerializer(serializers.ModelSerializer):
             "message",
             "inquiry_type",
             "source",
+            "metadata",
             "created_at",
         ]
+
         read_only_fields = ["id", "created_at"]
 
 

@@ -104,6 +104,65 @@ class AssistantConversationViewSet(viewsets.ModelViewSet):
                     }
                 )
 
+        # 4.1 Fetch Accommodation Referral Cards
+        found_acc_slugs = re.findall(r"\[ACCOMMODATION_CARD:\s*([\w-]+)\]", reply_text)
+        accommodation_cards = []
+        if found_acc_slugs:
+            try:
+                from accommodations.models import Accommodation
+
+                matched_accs = Accommodation.objects.filter(
+                    slug__in=found_acc_slugs, is_active=True
+                )
+                for acc in matched_accs:
+                    accommodation_cards.append(
+                        {
+                            "id": str(acc.id),
+                            "slug": acc.slug,
+                            "name": acc.name_en if locale == "en" and acc.name_en else acc.name,
+                            "category": acc.category,
+                            "star_rating": acc.star_rating,
+                            "price_from": str(acc.price_from) if acc.price_from else None,
+                            "image_url": acc.image_url,
+                            "partner_name": acc.partner_name,
+                            "partner_booking_url": acc.partner_booking_url,
+                            "rating_average": float(acc.rating_average),
+                            "rating_count": acc.rating_count,
+                            "address": acc.address,
+                        }
+                    )
+            except Exception:
+                pass
+
+        # 4.2 Fetch Restaurant Referral Cards
+        found_res_slugs = re.findall(r"\[RESTAURANT_CARD:\s*([\w-]+)\]", reply_text)
+        restaurant_cards = []
+        if found_res_slugs:
+            try:
+                from restaurants.models import Restaurant
+
+                matched_ress = Restaurant.objects.filter(slug__in=found_res_slugs, is_active=True)
+                for res_item in matched_ress:
+                    restaurant_cards.append(
+                        {
+                            "id": str(res_item.id),
+                            "slug": res_item.slug,
+                            "name": res_item.name_en
+                            if locale == "en" and res_item.name_en
+                            else res_item.name,
+                            "cuisine_type": res_item.cuisine_type,
+                            "price_range": res_item.price_range,
+                            "image_url": res_item.image_url,
+                            "contact_type": res_item.contact_type,
+                            "contact_value": res_item.contact_value,
+                            "rating_average": float(res_item.rating_average),
+                            "rating_count": res_item.rating_count,
+                            "address": res_item.address,
+                        }
+                    )
+            except Exception:
+                pass
+
         # 5. Lead Information Capture & Odoo CRM Sync
         lead_info = extract_lead_info(message)
         lead_captured = False
@@ -134,6 +193,17 @@ class AssistantConversationViewSet(viewsets.ModelViewSet):
                         "email": lead.email,
                         "estimated_pax": lead.estimated_pax,
                         "chat_summary": lead.chat_summary,
+                        "customer": {
+                            "name": lead.contact_name or "Khách hàng AI Concierge",
+                            "phone": lead.phone_number,
+                            "email": lead.email,
+                            "identity_provider": "ai_assistant",
+                        },
+                        "interest": {
+                            "type": "ai_consultation",
+                            "traveler_count": lead.estimated_pax,
+                            "message": lead.chat_summary,
+                        },
                     },
                 }
                 outbox = IntegrationOutbox.objects.create(
@@ -153,7 +223,11 @@ class AssistantConversationViewSet(viewsets.ModelViewSet):
             conversation=conversation,
             role=AssistantMessage.Role.ASSISTANT,
             content=reply_text,
-            structured_payload={"tours": tour_cards},
+            structured_payload={
+                "tours": tour_cards,
+                "accommodations": accommodation_cards,
+                "restaurants": restaurant_cards,
+            },
         )
 
         return Response(
@@ -161,6 +235,8 @@ class AssistantConversationViewSet(viewsets.ModelViewSet):
                 "session_token": conversation.session_token,
                 "message": reply_text,
                 "recommended_tours": tour_cards,
+                "recommended_accommodations": accommodation_cards,
+                "recommended_restaurants": restaurant_cards,
                 "lead_captured": lead_captured,
             }
         )

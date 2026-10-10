@@ -1,0 +1,192 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1650 1050" width="100%" height="100%" style="background:#FFFFFF; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+  <defs>
+    <!-- Drop Shadow Filter -->
+    <filter id="card-shadow" x="-5%" y="-5%" width="110%" height="115%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#0F172A" flood-opacity="0.08"/>
+    </filter>
+    
+    <!-- UML Markers -->
+    <marker id="arrow-sync" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#0F172A" />
+    </marker>
+    <marker id="arrow-open" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9" fill="none" stroke="#64748B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+    </marker>
+    <marker id="arrow-comp" viewBox="0 0 16 10" refX="1" refY="5" markerWidth="14" markerHeight="9" orient="auto-start-reverse">
+      <polygon points="1,5 8,1 15,5 8,9" fill="#0F172A" stroke="#0F172A" stroke-width="1.5" />
+    </marker>
+    <marker id="arrow-inherit" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="10" markerHeight="10" orient="auto-start-reverse">
+      <polygon points="1,1 11,6 1,11" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.8" />
+    </marker>
+    <marker id="arrow-include" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9" fill="none" stroke="#DA251D" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+    </marker>
+  </defs>
+
+  <!-- Background Grid -->
+  <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+    <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#F1F5F9" stroke-width="1"/>
+  </pattern>
+  <rect width="1650" height="1050" fill="url(#grid)" />
+
+  
+    
+    <g filter="url(#card-shadow)">
+      <rect x="40" y="30" width="610" height="80" rx="8" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.2"/>
+      <text x="56" y="56" font-size="14" font-weight="700" fill="#0F172A">STAR Travels — Sơ Đồ Triển Khai Hạ Tầng (Deployment Diagram)</text>
+      <text x="56" y="76" font-size="11" fill="#475569">Chuẩn: OMG UML 2.5.1 Deployment | Phân loại: Devices, Execution Environments & Artifacts</text>
+      <text x="56" y="94" font-size="11" fill="#64748B" font-style="italic">Phạm vi: Edge CDN (Cloudflare), Node.js Runtime (Vercel), Production VM (Docker Pod)</text>
+    </g>
+    
+    
+    <g filter="url(#card-shadow)">
+      <rect x="1310" y="30" width="300" height="85" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+      <text x="1326" y="48" font-size="11" font-weight="700" fill="#0F172A">CHÚ GIẢI (LEGEND)</text>
+      
+        <circle cx="1328" cy="62" r="5" fill="#475569"/>
+        <text x="1340" y="66" font-size="11" fill="#334155">Hộp Nút 3D: Thiết bị & Môi trường thực thi</text>
+        
+
+        <circle cx="1328" cy="80" r="5" fill="#2563EB"/>
+        <text x="1340" y="84" font-size="11" fill="#334155">Mô-đun Artifact Container nội bộ</text>
+        
+
+        <circle cx="1328" cy="98" r="5" fill="#0F172A"/>
+        <text x="1340" y="102" font-size="11" fill="#334155">Giao thức kết nối mạng bảo mật (TLS/TCP)</text>
+        
+    </g>
+    
+
+    <!-- 1. Client Node -->
+    
+        <g filter="url(#card-shadow)">
+          <!-- Top face -->
+          <polygon points="60,156 76,140 406,140 390,156" fill="#CBD5E1" stroke="#475569" stroke-width="1.5"/>
+          <!-- Right face -->
+          <polygon points="390,156 406,140 406,444 390,460" fill="#94A3B8" stroke="#475569" stroke-width="1.5"/>
+          <!-- Front face -->
+          <rect x="60" y="156" width="330" height="304" fill="#F8FAFC" stroke="#475569" stroke-width="1.5"/>
+          <text x="225.0" y="178" text-anchor="middle" font-size="12" font-weight="700" fill="#1E293B">Client Device Node</text>
+          <text x="225.0" y="192" text-anchor="middle" font-size="10" font-style="italic" fill="#475569">«device (Desktop/Mobile)»</text>
+        </g>
+        
+    
+        <g filter="url(#card-shadow)">
+          <rect x="90" y="230" width="270" height="190" rx="6" fill="#EFF6FF" stroke="#2563EB" stroke-width="1.5"/>
+          <rect x="82" y="240" width="16" height="10" rx="2" fill="#EFF6FF" stroke="#2563EB" stroke-width="1.5"/>
+          <rect x="82" y="256" width="16" height="10" rx="2" fill="#EFF6FF" stroke="#2563EB" stroke-width="1.5"/>
+          <text x="114" y="252" font-size="11.5" font-weight="700" fill="#0F172A">Modern Web Browser</text>
+          <text x="114" y="268" font-size="10.5" fill="#1E3A8A">- Chrome, Safari, Edge, Firefox</text><text x="114" y="284" font-size="10.5" fill="#1E3A8A">- Geolocation API (NĐ 13/2023)</text><text x="114" y="300" font-size="10.5" fill="#1E3A8A">- SendBeacon Non-blocking tracking</text><text x="114" y="316" font-size="10.5" fill="#1E3A8A">- LocalStorage & Cookie Store</text>
+        </g>
+        
+
+    <!-- 2. Edge / Web Server Node -->
+    
+        <g filter="url(#card-shadow)">
+          <!-- Top face -->
+          <polygon points="460,156 476,140 836,140 820,156" fill="#CBD5E1" stroke="#475569" stroke-width="1.5"/>
+          <!-- Right face -->
+          <polygon points="820,156 836,140 836,504 820,520" fill="#94A3B8" stroke="#475569" stroke-width="1.5"/>
+          <!-- Front face -->
+          <rect x="460" y="156" width="360" height="364" fill="#F8FAFC" stroke="#475569" stroke-width="1.5"/>
+          <text x="640.0" y="178" text-anchor="middle" font-size="12" font-weight="700" fill="#1E293B">Vercel / Next.js Server</text>
+          <text x="640.0" y="192" text-anchor="middle" font-size="10" font-style="italic" fill="#475569">«execution environment»</text>
+        </g>
+        
+    
+        <g filter="url(#card-shadow)">
+          <rect x="490" y="230" width="300" height="120" rx="6" fill="#EFF6FF" stroke="#2563EB" stroke-width="1.5"/>
+          <rect x="482" y="240" width="16" height="10" rx="2" fill="#EFF6FF" stroke="#2563EB" stroke-width="1.5"/>
+          <rect x="482" y="256" width="16" height="10" rx="2" fill="#EFF6FF" stroke="#2563EB" stroke-width="1.5"/>
+          <text x="514" y="252" font-size="11.5" font-weight="700" fill="#0F172A">Node.js 20 LTS Runtime</text>
+          <text x="514" y="268" font-size="10.5" fill="#1E3A8A">- Next.js 15.5 App Router</text><text x="514" y="284" font-size="10.5" fill="#1E3A8A">- SSR & React Server Components</text><text x="514" y="300" font-size="10.5" fill="#1E3A8A">- BFF Cookie Proxy (/api/auth)</text>
+        </g>
+        
+    
+        <g filter="url(#card-shadow)">
+          <rect x="490" y="380" width="300" height="95" rx="6" fill="#EFF6FF" stroke="#2563EB" stroke-width="1.5"/>
+          <rect x="482" y="390" width="16" height="10" rx="2" fill="#EFF6FF" stroke="#2563EB" stroke-width="1.5"/>
+          <rect x="482" y="406" width="16" height="10" rx="2" fill="#EFF6FF" stroke="#2563EB" stroke-width="1.5"/>
+          <text x="514" y="402" font-size="11.5" font-weight="700" fill="#0F172A">Cloudflare Anycast CDN</text>
+          <text x="514" y="418" font-size="10.5" fill="#1E3A8A">- Edge SSL TLS 1.3 Termination</text><text x="514" y="434" font-size="10.5" fill="#1E3A8A">- Static Assets Cache & WAF Guard</text>
+        </g>
+        
+
+    <!-- 3. Production VM Node -->
+    
+        <g filter="url(#card-shadow)">
+          <!-- Top face -->
+          <polygon points="890,146 906,130 1616,130 1600,146" fill="#CBD5E1" stroke="#475569" stroke-width="1.5"/>
+          <!-- Right face -->
+          <polygon points="1600,146 1616,130 1616,964 1600,980" fill="#94A3B8" stroke="#475569" stroke-width="1.5"/>
+          <!-- Front face -->
+          <rect x="890" y="146" width="710" height="834" fill="#F8FAFC" stroke="#475569" stroke-width="1.5"/>
+          <text x="1245.0" y="168" text-anchor="middle" font-size="12" font-weight="700" fill="#1E293B">Production VM / Cloud Host Node</text>
+          <text x="1245.0" y="182" text-anchor="middle" font-size="10" font-style="italic" fill="#475569">«device (Linux Ubuntu 24.04 LTS)»</text>
+        </g>
+        
+
+    
+        <g filter="url(#card-shadow)">
+          <rect x="930" y="220" width="420" height="115" rx="6" fill="#EFF6FF" stroke="#2563EB" stroke-width="1.5"/>
+          <rect x="922" y="230" width="16" height="10" rx="2" fill="#EFF6FF" stroke="#2563EB" stroke-width="1.5"/>
+          <rect x="922" y="246" width="16" height="10" rx="2" fill="#EFF6FF" stroke="#2563EB" stroke-width="1.5"/>
+          <text x="954" y="242" font-size="11.5" font-weight="700" fill="#0F172A">Docker: backend (api)</text>
+          <text x="954" y="258" font-size="10.5" fill="#1E3A8A">- Python 3.12 + Django 5.2 Gunicorn</text><text x="954" y="274" font-size="10.5" fill="#1E3A8A">- DRF REST API (Port 8000)</text><text x="954" y="290" font-size="10.5" fill="#1E3A8A">- Spatial Query Engine & Outbox Publisher</text>
+        </g>
+        
+
+    
+        <g filter="url(#card-shadow)">
+          <rect x="930" y="360" width="420" height="110" rx="6" fill="#EFF6FF" stroke="#2563EB" stroke-width="1.5"/>
+          <rect x="922" y="370" width="16" height="10" rx="2" fill="#EFF6FF" stroke="#2563EB" stroke-width="1.5"/>
+          <rect x="922" y="386" width="16" height="10" rx="2" fill="#EFF6FF" stroke="#2563EB" stroke-width="1.5"/>
+          <text x="954" y="382" font-size="11.5" font-weight="700" fill="#0F172A">Docker: worker (celery)</text>
+          <text x="954" y="398" font-size="10.5" fill="#1E3A8A">- Celery 5 Async Task Engine</text><text x="954" y="414" font-size="10.5" fill="#1E3A8A">- Outbox Dispatcher to Odoo ERP</text><text x="954" y="430" font-size="10.5" fill="#1E3A8A">- Dead Letter Queue (DLQ) Alerting</text>
+        </g>
+        
+
+    
+        <g filter="url(#card-shadow)">
+          <rect x="930" y="495" width="420" height="105" rx="6" fill="#EFF6FF" stroke="#2563EB" stroke-width="1.5"/>
+          <rect x="922" y="505" width="16" height="10" rx="2" fill="#EFF6FF" stroke="#2563EB" stroke-width="1.5"/>
+          <rect x="922" y="521" width="16" height="10" rx="2" fill="#EFF6FF" stroke="#2563EB" stroke-width="1.5"/>
+          <text x="954" y="517" font-size="11.5" font-weight="700" fill="#0F172A">Docker: redis (cache & broker)</text>
+          <text x="954" y="533" font-size="10.5" fill="#1E3A8A">- Redis 7 Alpine (Port 6379)</text><text x="954" y="549" font-size="10.5" fill="#1E3A8A">- Shared Session & Performance Cache</text><text x="954" y="565" font-size="10.5" fill="#1E3A8A">- Celery Message Queue Broker</text>
+        </g>
+        
+
+    
+        <g filter="url(#card-shadow)">
+          <rect x="930" y="625" width="420" height="135" rx="6" fill="#EFF6FF" stroke="#2563EB" stroke-width="1.5"/>
+          <rect x="922" y="635" width="16" height="10" rx="2" fill="#EFF6FF" stroke="#2563EB" stroke-width="1.5"/>
+          <rect x="922" y="651" width="16" height="10" rx="2" fill="#EFF6FF" stroke="#2563EB" stroke-width="1.5"/>
+          <text x="954" y="647" font-size="11.5" font-weight="700" fill="#0F172A">Docker: db (primary store)</text>
+          <text x="954" y="663" font-size="10.5" fill="#1E3A8A">- PostgreSQL 17 + PostGIS 3.5 (Port 5432)</text><text x="954" y="679" font-size="10.5" fill="#1E3A8A">- Geography SRID 4326 Spatial Index</text><text x="954" y="695" font-size="10.5" fill="#1E3A8A">- pgvector Embeddings (1536 dim)</text>
+        </g>
+        
+
+    
+        <g filter="url(#card-shadow)">
+          <rect x="930" y="785" width="420" height="95" rx="6" fill="#EFF6FF" stroke="#2563EB" stroke-width="1.5"/>
+          <rect x="922" y="795" width="16" height="10" rx="2" fill="#EFF6FF" stroke="#2563EB" stroke-width="1.5"/>
+          <rect x="922" y="811" width="16" height="10" rx="2" fill="#EFF6FF" stroke="#2563EB" stroke-width="1.5"/>
+          <text x="954" y="807" font-size="11.5" font-weight="700" fill="#0F172A">Automated Backup Scripts</text>
+          <text x="954" y="823" font-size="10.5" fill="#1E3A8A">- scripts/backup_db.ps1 / .sh</text><text x="954" y="839" font-size="10.5" fill="#1E3A8A">- Daily Compressed Dump (30 days retention)</text>
+        </g>
+        
+
+    <!-- Connectors -->
+    <path d="M 360 320 L 490 280" stroke="#0F172A" stroke-width="2" marker-end="url(#arrow-sync)" fill="none"/>
+    <text x="420" y="295" font-size="10.5" font-weight="700" fill="#0F172A">HTTPS 443</text>
+
+    <path d="M 790 280 L 930 280" stroke="#0F172A" stroke-width="2" marker-end="url(#arrow-sync)" fill="none"/>
+    <text x="850" y="272" font-size="10.5" font-weight="700" fill="#0F172A">HTTP 8000</text>
+
+    <path d="M 1350 280 L 1400 280 L 1400 690 L 1350 690" stroke="#0F172A" stroke-width="1.8" marker-end="url(#arrow-sync)" fill="none"/>
+    <text x="1410" y="480" font-size="10" font-weight="700" fill="#0F172A">TCP 5432</text>
+
+    <path d="M 1350 540 L 1380 540 L 1380 415 L 1350 415" stroke="#0F172A" stroke-width="1.8" marker-end="url(#arrow-sync)" fill="none"/>
+    <text x="1390" y="480" font-size="10" font-weight="700" fill="#0F172A">TCP 6379</text>
+    
+</svg>

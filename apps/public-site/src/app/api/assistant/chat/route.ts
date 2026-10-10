@@ -39,6 +39,8 @@ export async function POST(request: Request) {
           recommended_tours: contactRequired
             ? []
             : (data.recommended_tours?.length ? data.recommended_tours : localKnowledge.recommended_tours),
+          recommended_accommodations: data.recommended_accommodations || [],
+          recommended_restaurants: data.recommended_restaurants || [],
           recommended_stories: contactRequired ? [] : localKnowledge.recommended_stories,
           recommended_destinations: contactRequired ? [] : localKnowledge.recommended_destinations,
           contactRequired,

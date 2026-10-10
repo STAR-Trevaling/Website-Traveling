@@ -2,6 +2,7 @@ from decimal import Decimal
 from unittest.mock import patch
 
 import pytest
+from django.conf import settings
 from rest_framework.test import APIClient
 
 from bookings.models import Booking
@@ -20,7 +21,7 @@ def api_client():
 def vnpay_adapter():
     return VNPayAdapter(
         tmn_code="TEST_TMN",
-        hash_secret="TEST_HASH_SECRET_KEY_1234567890",
+        hash_secret=getattr(settings, "VNPAY_HASH_SECRET", "mock_unit_test_hash_secret"),
         payment_url="https://sandbox.vnpayment.vn/paymentv2/vpcpay.html",
         return_url="http://localhost:3000/payment/return",
     )

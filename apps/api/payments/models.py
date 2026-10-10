@@ -8,6 +8,7 @@ class PaymentTransaction(models.Model):
     class Provider(models.TextChoices):
         VNPAY = "vnpay", "VNPay"
         VIETQR = "vietqr", "VietQR"
+        CASH = "cash", "Tiền mặt"
         MOMO = "momo", "MoMo"
         ZALOPAY = "zalopay", "ZaloPay"
         STRIPE = "stripe", "Stripe"

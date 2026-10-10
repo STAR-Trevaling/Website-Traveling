@@ -5,19 +5,32 @@ import { useRouter } from "next/navigation";
 import { UserPlus } from "lucide-react";
 import { useLanguage } from "@/lib/i18n/context";
 
-export function RegisterForm() {
+interface RegisterFormProps {
+  returnUrl?: string;
+}
+
+export function RegisterForm({ returnUrl }: RegisterFormProps) {
   const router = useRouter();
   const { t, isEnglish } = useLanguage();
   const a = t.authPages;
 
   const [msg, setMsg] = useState("");
   const [loading, setLoading] = useState(false);
+  const [consentAgreed, setConsentAgreed] = useState(false);
 
   return (
     <form
       className="space-y-5"
       onSubmit={async (e) => {
         e.preventDefault();
+        if (!consentAgreed) {
+          setMsg(
+            isEnglish
+              ? "Please agree to the Terms of Service and Privacy Policy to register."
+              : "Vui lòng đồng ý với Điều khoản dịch vụ và Chính sách bảo mật để đăng ký."
+          );
+          return;
+        }
         setLoading(true);
         const f = new FormData(e.currentTarget);
         const payload = {
@@ -32,7 +45,7 @@ export function RegisterForm() {
         });
         setLoading(false);
         if (r.ok) {
-          router.push("/login");
+          router.push(returnUrl ? `/login?returnUrl=${encodeURIComponent(returnUrl)}` : "/login");
         } else {
           const body = await r.json();
           setMsg(
@@ -78,9 +91,48 @@ export function RegisterForm() {
         />
       </label>
 
+      <div className="pt-1">
+        <label className="flex items-start gap-2.5 text-xs text-slate-600 cursor-pointer select-none">
+          <input
+            type="checkbox"
+            required
+            checked={consentAgreed}
+            onChange={(e) => setConsentAgreed(e.target.checked)}
+            className="mt-0.5 size-4 rounded-[2px] border-slate-300 text-[#da251d] focus:ring-[#da251d] cursor-pointer"
+          />
+          <span className="leading-snug">
+            {isEnglish ? (
+              <>
+                I agree to the{" "}
+                <a href="/terms" target="_blank" rel="noopener noreferrer" className="font-semibold text-[#da251d] underline hover:text-[#b81d16]">
+                  Terms of Service
+                </a>{" "}
+                and consent to data processing per{" "}
+                <a href="/privacy" target="_blank" rel="noopener noreferrer" className="font-semibold text-[#da251d] underline hover:text-[#b81d16]">
+                  Decree 13/2023/ND-CP
+                </a>
+                . *
+              </>
+            ) : (
+              <>
+                Tôi đồng ý với{" "}
+                <a href="/terms" target="_blank" rel="noopener noreferrer" className="font-semibold text-[#da251d] underline hover:text-[#b81d16]">
+                  Điều khoản dịch vụ
+                </a>{" "}
+                và cho phép xử lý dữ liệu cá nhân theo{" "}
+                <a href="/privacy" target="_blank" rel="noopener noreferrer" className="font-semibold text-[#da251d] underline hover:text-[#b81d16]">
+                  Nghị định 13/2023/NĐ-CP
+                </a>
+                . *
+              </>
+            )}
+          </span>
+        </label>
+      </div>
+
       <button
-        disabled={loading}
-        className="w-full bg-[#da251d] text-white py-3.5 text-xs md:text-sm font-bold uppercase tracking-wider rounded-[2px] shadow-sm transition-all duration-200 hover:bg-[#c92018] hover:shadow-[0px_8px_25px_rgba(218,37,29,0.35)] hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer"
+        disabled={loading || !consentAgreed}
+        className="w-full bg-[#da251d] text-white py-3.5 text-xs md:text-sm font-bold uppercase tracking-wider rounded-[2px] shadow-sm transition-all duration-200 hover:bg-[#c92018] hover:shadow-[0px_8px_25px_rgba(218,37,29,0.35)] hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 cursor-pointer"
       >
         <UserPlus className="size-4" />
         <span>

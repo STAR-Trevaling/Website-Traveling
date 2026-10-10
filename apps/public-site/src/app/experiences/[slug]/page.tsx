@@ -9,6 +9,7 @@ import { FavoriteButton } from "@/components/experience/favorite-button";
 import { ReviewForm } from "@/components/experience/review-form";
 import { ExperienceBookingCard } from "@/components/experience/experience-booking-card";
 import { PlaceCard } from "@/components/shared/place-card";
+import { getCurrentUser } from "@/lib/auth";
 import { publicApi, safe } from "@/lib/api";
 import { VIETNAM_IMAGES } from "@/lib/assets";
 import { VIETNAM_EXPERIENCES } from "@/data/seed";
@@ -19,7 +20,26 @@ interface ExperienceDetailProps {
   params: Promise<{ slug: string }>;
 }
 
+export async function generateMetadata({ params }: ExperienceDetailProps): Promise<Metadata> {
+  const { slug } = await params;
+  const experience = VIETNAM_EXPERIENCES.find((e) => e.slug === slug);
+  const title = experience?.name ? `${experience.name} - Trải Nghiệm Độc Bản | STAR Travels` : "Trải Nghiệm | STAR Travels";
+  const description = experience?.description || "Khám phá các hoạt động và trải nghiệm văn hóa, ẩm thực, nghỉ dưỡng tại Việt Nam.";
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      images: (experience?.image_url || (experience as any)?.image)
+        ? [{ url: experience?.image_url || (experience as any)?.image }]
+        : [],
+    },
+  };
+}
+
 export default async function ExperienceDetail({ params }: ExperienceDetailProps) {
+  const user = await getCurrentUser();
   const cookieStore = await cookies();
   const isEn = cookieStore.get("star_travels_locale")?.value === "en";
   const locale: Locale = isEn ? "en" : "vi";
@@ -55,8 +75,31 @@ export default async function ExperienceDetail({ params }: ExperienceDetailProps
   const displayDesc = isEn && place.description_en ? place.description_en : place.description;
   const displayAddress = isEn && place.address_en ? place.address_en : place.address;
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "TouristAttraction",
+    name: displayName,
+    description: displayDesc,
+    image: place.image_url || VIETNAM_IMAGES.cruise,
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: displayAddress,
+      addressCountry: "VN",
+    },
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: Number(place.average_rating || 5.0).toFixed(1),
+      reviewCount: place.review_count || 1,
+    },
+    url: `https://startravels.vn/experiences/${slug}`,
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <PageHero
         title={displayName}
         subtitle={`${displayCategory} · ${displayDestination}`}
@@ -321,7 +364,7 @@ export default async function ExperienceDetail({ params }: ExperienceDetailProps
 
             {/* RIGHT SIDEBAR: BOOKING & FAVORITE */}
             <aside className="space-y-6 sticky top-24">
-              <ExperienceBookingCard place={place} />
+              <ExperienceBookingCard place={place} user={user} />
 
               <div className="rounded-[2px] bg-white p-6 shadow-sm border border-slate-100 text-center">
                 <h4 className="display-title text-base font-bold text-[#1e293b]">

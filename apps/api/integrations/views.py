@@ -2,6 +2,7 @@ import hashlib
 import hmac
 import logging
 import uuid
+from typing import Any, cast
 
 from django.conf import settings
 from django.contrib.gis.geos import Point
@@ -39,6 +40,30 @@ class InquiryCreateView(APIView):
 
         inquiry = serializer.save()
 
+        # Extract UTM attribution from request payload or inquiry metadata
+        raw_utm = (
+            request.data.get("utm")
+            or request.data.get("metadata", {}).get("utm")
+            or (inquiry.metadata.get("utm") if isinstance(inquiry.metadata, dict) else {})
+            or {}
+        )
+        if raw_utm and isinstance(inquiry.metadata, dict) and "utm" not in inquiry.metadata:
+            inquiry.metadata["utm"] = raw_utm
+            inquiry.save(update_fields=["metadata"])
+
+        marketing_meta = {
+            "channel": inquiry.source,
+            "utm_source": raw_utm.get("utm_source", ""),
+            "utm_medium": raw_utm.get("utm_medium", ""),
+            "utm_campaign": raw_utm.get("utm_campaign", ""),
+            "utm_content": raw_utm.get("utm_content", ""),
+            "utm_term": raw_utm.get("utm_term", ""),
+            "gclid": raw_utm.get("gclid", ""),
+            "fbclid": raw_utm.get("fbclid", ""),
+            "landing_page": raw_utm.get("landing_page", ""),
+            "referrer": raw_utm.get("referrer", ""),
+        }
+
         # Build canonical payload envelope
         event_id = str(uuid.uuid4())
         envelope = {
@@ -63,6 +88,7 @@ class InquiryCreateView(APIView):
                     "traveler_count": inquiry.guests,
                     "message": inquiry.message,
                 },
+                "marketing": marketing_meta,
                 "source_metadata": {
                     "channel": inquiry.source,
                     "ip": request.META.get("REMOTE_ADDR"),
@@ -82,7 +108,7 @@ class InquiryCreateView(APIView):
 
         # Trigger Celery asynchronous dispatch
         try:
-            dispatch_outbox_event.delay(str(outbox.id))
+            cast(Any, dispatch_outbox_event).delay(str(outbox.id))
         except Exception as e:
             logger.warning(f"Could not immediately dispatch Celery task: {e}")
 
@@ -106,9 +132,11 @@ class OdooWebhookReceiverView(APIView):
     permission_classes = [AllowAny]
 
     def _verify_hmac(self, request):
-        secret = getattr(
-            settings, "ODOO_WEBHOOK_SECRET", "star_travels_super_secret_webhook_key_2026"
-        )
+        secret = getattr(settings, "ODOO_WEBHOOK_SECRET", "")
+        if not secret:
+            logger.error("ODOO_WEBHOOK_SECRET is not configured.")
+            return False
+
         sig_header = request.headers.get("X-Signature-SHA256")
         if not sig_header:
             return False
@@ -197,7 +225,11 @@ class OdooWebhookReceiverView(APIView):
             name = dest_info.get("name", "")
             lat = float(dest_info.get("latitude") or 0.0)
             lng = float(dest_info.get("longitude") or 0.0)
-            center = Point(lng, lat, srid=4326) if (lat and lng) else None
+            try:
+                center = Point(lng, lat, srid=4326) if (lat and lng) else None
+            except Exception as geo_err:
+                logger.warning(f"GEOS Point creation failed for {slug}: {geo_err}")
+                center = None
 
             dest, created = Destination.objects.update_or_create(
                 slug=slug,
@@ -232,7 +264,11 @@ class OdooWebhookReceiverView(APIView):
 
             lat = float(place_info.get("latitude") or 0.0)
             lng = float(place_info.get("longitude") or 0.0)
-            location = Point(lng, lat, srid=4326)
+            try:
+                location = Point(lng, lat, srid=4326) if (lat and lng) else None
+            except Exception as geo_err:
+                logger.warning(f"GEOS Point creation failed for place {slug}: {geo_err}")
+                location = None
 
             if not dest or not category:
                 raise ValueError(f"Destination '{dest_slug}' or Category '{cat_slug}' not found.")

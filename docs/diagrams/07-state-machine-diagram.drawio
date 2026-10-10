@@ -1,0 +1,95 @@
+<?xml version="1.0" ?>
+<mxfile host="app.diagrams.net" modified="2026-10-09T00:00:00.000Z" agent="STAR-Travels-Drawio-Master-Suite" version="24.0.0" type="device">
+  <diagram name="7. State Machine Diagram" id="page-7-state-machine">
+    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1650" pageHeight="1000" background="#FFFFFF">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="p7-title-block" value="&amp;lt;b style=&amp;quot;font-size:14px; color:#0F172A;&amp;quot;&amp;gt;STAR Travels — Sơ Đồ Máy Trạng Thái (State Machine Diagram)&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;font color=&amp;quot;#475569&amp;quot; style=&amp;quot;font-size:11px;&amp;quot;&amp;gt;Chuẩn: OMG UML 2.5.1 State Machine | Quy chuẩn: Trigger [Guard] / Action&amp;lt;br&amp;gt;&amp;lt;i&amp;gt;Phạm vi:&amp;lt;/i&amp;gt; 1. Vòng đời Trạng thái Booking | 2. Vòng đời Xét duyệt Đối tác Lữ hành B2B&amp;lt;/font&amp;gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=#94A3B8;strokeWidth=1.2;align=left;spacingLeft=14;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="30" width="590" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="p7-legend-block" value="&amp;lt;b style=&amp;quot;font-size:11px; color:#0F172A;&amp;quot;&amp;gt;CHÚ GIẢI (LEGEND)&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;■ &amp;lt;font color=&amp;quot;#0F172A&amp;quot;&amp;gt;●&amp;lt;/font&amp;gt; Điểm bắt đầu (Initial) / Kết thúc (Final)&amp;lt;br&amp;gt;■ &amp;lt;font color=&amp;quot;#DA251D&amp;quot;&amp;gt;●&amp;lt;/font&amp;gt; Trạng thái hợp lệ (Active State Box)&amp;lt;br&amp;gt;■ &amp;lt;font color=&amp;quot;#475569&amp;quot;&amp;gt;●&amp;lt;/font&amp;gt; Chuyển tiếp có điều kiện: Trigger [Guard] / Action&amp;lt;br&amp;gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CBD5E1;strokeWidth=1;align=left;spacingLeft=10;fontSize=10;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="1300" y="30" width="310" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="box-sm1" value="1. Booking Lifecycle State Machine (bookings_booking)" style="swimlane;startSize=30;html=1;fillColor=#F8FAFC;strokeColor=#475569;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="60" y="130" width="700" height="820" as="geometry"/>
+        </mxCell>
+        <mxCell id="b-init" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#1E293B;strokeColor=#0F172A;" vertex="1" parent="1">
+          <mxGeometry x="390" y="190" width="30" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="b-pending" value="Pending Payment&#10;(Chờ thanh toán VNPay/VietQR)" style="rounded=1;arcSize=30;whiteSpace=wrap;html=1;fillColor=#FEF2F2;strokeColor=#DA251D;strokeWidth=1.5;fontStyle=1;fontSize=11;fontColor=#7F1D1D;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="290" y="270" width="230" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="b-confirmed" value="Confirmed / Paid&#10;(Đã xác nhận &amp; Thanh toán)" style="rounded=1;arcSize=30;whiteSpace=wrap;html=1;fillColor=#FEF2F2;strokeColor=#DA251D;strokeWidth=1.5;fontStyle=1;fontSize=11;fontColor=#7F1D1D;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="140" y="450" width="220" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="b-failed" value="Failed / Cancelled&#10;(Thất bại / Hủy giữ chỗ)" style="rounded=1;arcSize=30;whiteSpace=wrap;html=1;fillColor=#FEF2F2;strokeColor=#DA251D;strokeWidth=1.5;fontStyle=1;fontSize=11;fontColor=#7F1D1D;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="460" y="450" width="220" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="b-completed" value="Completed&#10;(Tour hoàn thành)" style="rounded=1;arcSize=30;whiteSpace=wrap;html=1;fillColor=#FEF2F2;strokeColor=#DA251D;strokeWidth=1.5;fontStyle=1;fontSize=11;fontColor=#7F1D1D;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="140" y="630" width="220" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="b-end" value="" style="ellipse;html=1;shape=endState;fillColor=#1E293B;strokeColor=#0F172A;" vertex="1" parent="1">
+          <mxGeometry x="390" y="800" width="30" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="be1" value="Create Booking [valid tour]" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=10;jumpStyle=arc;jumpSize=6;strokeColor=#0F172A;strokeWidth=1.5;labelBackgroundColor=#FFFFFF;fontSize=11;" edge="1" parent="1" source="b-init" target="b-pending">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="be2" value="IPN Success [valid HMAC] / emit_outbox()" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=10;jumpStyle=arc;jumpSize=6;strokeColor=#0F172A;strokeWidth=1.5;labelBackgroundColor=#FFFFFF;fontSize=11;" edge="1" parent="1" source="b-pending" target="b-confirmed">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="be3" value="Timeout [&gt;15m] / Gateway Failed" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=10;jumpStyle=arc;jumpSize=6;strokeColor=#0F172A;strokeWidth=1.5;labelBackgroundColor=#FFFFFF;fontSize=11;" edge="1" parent="1" source="b-pending" target="b-failed">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="be4" value="Trip Finished / create_review_token()" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=10;jumpStyle=arc;jumpSize=6;strokeColor=#0F172A;strokeWidth=1.5;labelBackgroundColor=#FFFFFF;fontSize=11;" edge="1" parent="1" source="b-confirmed" target="b-completed">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="be5" value="Close Ledger / archive()" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=10;jumpStyle=arc;jumpSize=6;strokeColor=#0F172A;strokeWidth=1.5;labelBackgroundColor=#FFFFFF;fontSize=11;" edge="1" parent="1" source="b-completed" target="b-end">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="be6" value="Release Slot Lock" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=10;jumpStyle=arc;jumpSize=6;strokeColor=#0F172A;strokeWidth=1.5;labelBackgroundColor=#FFFFFF;fontSize=11;" edge="1" parent="1" source="b-failed" target="b-end">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="box-sm2" value="2. Partner Application State Machine (partners_partnerapplication)" style="swimlane;startSize=30;html=1;fillColor=#F8FAFC;strokeColor=#475569;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="840" y="130" width="700" height="820" as="geometry"/>
+        </mxCell>
+        <mxCell id="p-init" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#1E293B;strokeColor=#0F172A;" vertex="1" parent="1">
+          <mxGeometry x="1170" y="190" width="30" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="p-submitted" value="Submitted&#10;(Đã nộp hồ sơ trực tuyến)" style="rounded=1;arcSize=30;whiteSpace=wrap;html=1;fillColor=#FEF2F2;strokeColor=#DA251D;strokeWidth=1.5;fontStyle=1;fontSize=11;fontColor=#7F1D1D;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="1070" y="270" width="230" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="p-review" value="Under Review&#10;(Đang thẩm định giấy phép)" style="rounded=1;arcSize=30;whiteSpace=wrap;html=1;fillColor=#FEF2F2;strokeColor=#DA251D;strokeWidth=1.5;fontStyle=1;fontSize=11;fontColor=#7F1D1D;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="1070" y="430" width="230" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="p-approved" value="Approved&#10;(Tạo Organization &amp; Nâng quyền)" style="rounded=1;arcSize=30;whiteSpace=wrap;html=1;fillColor=#FEF2F2;strokeColor=#DA251D;strokeWidth=1.5;fontStyle=1;fontSize=11;fontColor=#7F1D1D;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="910" y="610" width="230" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="p-rejected" value="Rejected&#10;(Từ chối có lý do cụ thể)" style="rounded=1;arcSize=30;whiteSpace=wrap;html=1;fillColor=#FEF2F2;strokeColor=#DA251D;strokeWidth=1.5;fontStyle=1;fontSize=11;fontColor=#7F1D1D;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="1230" y="610" width="220" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="p-end" value="" style="ellipse;html=1;shape=endState;fillColor=#1E293B;strokeColor=#0F172A;" vertex="1" parent="1">
+          <mxGeometry x="1170" y="800" width="30" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="pe1" value="POST /partner/ [valid MST]" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=10;jumpStyle=arc;jumpSize=6;strokeColor=#0F172A;strokeWidth=1.5;labelBackgroundColor=#FFFFFF;fontSize=11;" edge="1" parent="1" source="p-init" target="p-submitted">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="pe2" value="Admin opens review" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=10;jumpStyle=arc;jumpSize=6;strokeColor=#0F172A;strokeWidth=1.5;labelBackgroundColor=#FFFFFF;fontSize=11;" edge="1" parent="1" source="p-submitted" target="p-review">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="pe3" value="Approve [atomic transaction] / create_org()" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=10;jumpStyle=arc;jumpSize=6;strokeColor=#0F172A;strokeWidth=1.5;labelBackgroundColor=#FFFFFF;fontSize=11;" edge="1" parent="1" source="p-review" target="p-approved">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="pe4" value="Reject [reason provided] / notify()" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=10;jumpStyle=arc;jumpSize=6;strokeColor=#0F172A;strokeWidth=1.5;labelBackgroundColor=#FFFFFF;fontSize=11;" edge="1" parent="1" source="p-review" target="p-rejected">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="pe5" value="Audit Logged" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=10;jumpStyle=arc;jumpSize=6;strokeColor=#0F172A;strokeWidth=1.5;labelBackgroundColor=#FFFFFF;fontSize=11;" edge="1" parent="1" source="p-approved" target="p-end">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="pe6" value="Notify Partner Email" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=10;jumpStyle=arc;jumpSize=6;strokeColor=#0F172A;strokeWidth=1.5;labelBackgroundColor=#FFFFFF;fontSize=11;" edge="1" parent="1" source="p-rejected" target="p-end">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

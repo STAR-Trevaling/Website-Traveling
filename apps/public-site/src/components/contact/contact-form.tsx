@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Send, CheckCircle2 } from "lucide-react";
 import { useLanguage } from "@/lib/i18n/context";
 import { submitInquiry } from "@/app/actions";
+import { getStoredUtm } from "@/lib/utm";
 
 export function ContactForm() {
   const { t, isEnglish } = useLanguage();
@@ -21,10 +22,20 @@ export function ContactForm() {
 
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [consentAgreed, setConsentAgreed] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!consentAgreed) {
+      alert(
+        isEnglish
+          ? "Please accept terms and data consent per Decree 13/2023/ND-CP to proceed."
+          : "Vui lòng đồng ý với điều khoản và đồng thuận xử lý dữ liệu theo NĐ 13/2023/NĐ-CP để tiếp tục."
+      );
+      return;
+    }
     setLoading(true);
+    const utmData = getStoredUtm();
     const res = await submitInquiry({
       name: formData.name,
       email: formData.email,
@@ -34,8 +45,11 @@ export function ContactForm() {
       guests: formData.guests,
       message: formData.message,
       inquiry_type: "consultation",
+      utm: utmData || undefined,
+      metadata: utmData ? { utm: utmData } : undefined,
     });
     setLoading(false);
+
     if (res.ok) {
       setSubmitted(true);
     } else {
@@ -195,10 +209,49 @@ export function ContactForm() {
         />
       </div>
 
+      <div>
+        <label className="flex items-start gap-2.5 text-xs text-slate-600 cursor-pointer select-none">
+          <input
+            type="checkbox"
+            required
+            checked={consentAgreed}
+            onChange={(e) => setConsentAgreed(e.target.checked)}
+            className="mt-0.5 size-4 rounded-[2px] border-slate-300 text-[#da251d] focus:ring-[#da251d] cursor-pointer"
+          />
+          <span className="leading-snug">
+            {isEnglish ? (
+              <>
+                I agree to the{" "}
+                <a href="/terms" target="_blank" rel="noopener noreferrer" className="font-semibold text-[#da251d] underline hover:text-[#b81d16]">
+                  Terms of Service
+                </a>{" "}
+                and consent to processing my personal contact information per{" "}
+                <a href="/privacy" target="_blank" rel="noopener noreferrer" className="font-semibold text-[#da251d] underline hover:text-[#b81d16]">
+                  Decree 13/2023/ND-CP
+                </a>
+                . *
+              </>
+            ) : (
+              <>
+                Tôi đồng ý với{" "}
+                <a href="/terms" target="_blank" rel="noopener noreferrer" className="font-semibold text-[#da251d] underline hover:text-[#b81d16]">
+                  Điều khoản dịch vụ
+                </a>{" "}
+                và cho phép STAR Travels xử lý thông tin liên hệ theo{" "}
+                <a href="/privacy" target="_blank" rel="noopener noreferrer" className="font-semibold text-[#da251d] underline hover:text-[#b81d16]">
+                  Nghị định 13/2023/NĐ-CP
+                </a>
+                . *
+              </>
+            )}
+          </span>
+        </label>
+      </div>
+
       <button
         type="submit"
-        disabled={loading}
-        className="w-full bg-[#da251d] text-white py-4 text-xs md:text-sm font-semibold tracking-widest uppercase rounded-[2px] shadow-sm transition-all duration-200 hover:bg-[#c92018] hover:shadow-[0px_8px_25px_rgba(218,37,29,0.35)] hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-70 flex items-center justify-center gap-2 cursor-pointer"
+        disabled={loading || !consentAgreed}
+        className="w-full bg-[#da251d] text-white py-4 text-xs md:text-sm font-semibold tracking-widest uppercase rounded-[2px] shadow-sm transition-all duration-200 hover:bg-[#c92018] hover:shadow-[0px_8px_25px_rgba(218,37,29,0.35)] hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 cursor-pointer"
       >
         <Send className="size-4" />
         <span>

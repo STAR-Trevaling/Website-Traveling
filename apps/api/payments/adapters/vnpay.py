@@ -35,8 +35,8 @@ class VNPayAdapter:
         payment_url: str | None = None,
         return_url: str | None = None,
     ):
-        self.tmn_code = tmn_code or _get_setting("VNPAY_TMN_CODE", "DEMO_TMN")
-        self.hash_secret = hash_secret or _get_setting("VNPAY_HASH_SECRET", "DEMO_HASH_SECRET_KEY")
+        self.tmn_code = tmn_code or _get_setting("VNPAY_TMN_CODE", "")
+        self.hash_secret = hash_secret or _get_setting("VNPAY_HASH_SECRET", "")
         self.payment_url = payment_url or _get_setting(
             "VNPAY_PAYMENT_URL",
             "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html",

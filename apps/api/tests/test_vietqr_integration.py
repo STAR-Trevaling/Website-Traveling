@@ -124,7 +124,7 @@ def test_vietqr_confirm_success_and_idempotency(api_client, sample_booking):
         format="json",
     )
     payment_id = create_res.json()["payment_id"]
-    secret = getattr(settings, "ODOO_WEBHOOK_SECRET", "star_travels_super_secret_webhook_key_2026")
+    secret = getattr(settings, "ODOO_WEBHOOK_SECRET", "")
 
     confirm_payload = {
         "payment_id": payment_id,

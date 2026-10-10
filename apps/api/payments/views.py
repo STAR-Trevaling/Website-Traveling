@@ -38,6 +38,12 @@ class PaymentCreateView(APIView):
             )
             return Response(result, status=status.HTTP_201_CREATED)
 
+        if gateway == "cash":
+            result = service.create_cash_payment(
+                booking_code=data["booking_code"],
+            )
+            return Response(result, status=status.HTTP_201_CREATED)
+
         if gateway == "vnpay":
             client_ip = VNPayAdapter.get_client_ip(request)
             result = service.create_vnpay_payment(
@@ -53,7 +59,7 @@ class PaymentCreateView(APIView):
             {
                 "gateway": (
                     f"Cổng thanh toán '{gateway}' chưa được hỗ trợ. "
-                    "Vui lòng chọn 'vnpay' hoặc 'vietqr'."
+                    "Vui lòng chọn 'vietqr', 'cash' hoặc 'vnpay'."
                 )
             },
             status=status.HTTP_400_BAD_REQUEST,
@@ -93,9 +99,11 @@ class VietQRConfirmView(APIView):
     permission_classes = (permissions.AllowAny,)
 
     def _verify_hmac(self, request) -> bool:
-        secret = getattr(
-            settings, "ODOO_WEBHOOK_SECRET", "star_travels_super_secret_webhook_key_2026"
-        )
+        secret = getattr(settings, "ODOO_WEBHOOK_SECRET", "")
+        if not secret:
+            logger.error("ODOO_WEBHOOK_SECRET is not configured.")
+            return False
+
         sig_header = request.headers.get("X-Signature-SHA256")
         if not sig_header:
             return False

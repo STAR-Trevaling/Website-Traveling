@@ -2,24 +2,26 @@
 
 > **Tài liệu hợp nhất toàn diện giao diện người dùng (Customer-Facing Public Site)**  
 > **Dự án:** STAR Travels Vietnam — Nền tảng Du lịch & Trải nghiệm Bản địa  
-> **Ứng dụng:** `apps/public-site` (Next.js 15 App Router, React 19, Tailwind CSS v3, TypeScript)  
-> **Trạng thái:** Hoàn thiện 100% tính năng Public, Song ngữ Việt - Anh, Dữ liệu Seed 100% Việt Nam, Parity chuẩn Anima  
-> **Phạm vi hợp nhất:** Tổng quan kiến trúc + Danh mục thành phần UI Inventory + Quy chuẩn Parity Checklist & Responsive  
+> **Ứng dụng:** `apps/public-site` (Next.js 15.5 App Router, React 19, Tailwind CSS v3, TypeScript 5.9)  
+> **Trạng thái:** Hoàn thiện 100% tính năng Public & Thanh toán (VNPay / VietQR), Trợ lý AI Concierge, Song ngữ Việt - Anh, Dữ liệu Seed 100% Việt Nam, Parity chuẩn Anima  
+> **Phạm vi hợp nhất:** Tổng quan kiến trúc + Danh mục thành phần UI Inventory (23 Routes) + Chuẩn Giao diện Cờ Đỏ Sao Vàng + Quy chuẩn Parity Checklist & Responsive  
 
 ---
 
 ## 1. Giới Thiệu & Ngăn Xếp Kỹ Thuật (Tech Stack & Architecture)
 
-Cổng thông tin người dùng công khai (`apps/public-site`) được thiết kế theo ngôn ngữ thẩm mỹ sang trọng, kết hợp giữa tinh thần di sản Việt Nam và trải nghiệm lữ hành chuẩn quốc tế. Toàn bộ giao diện bám sát phong cách **Anima Travel Company / STAR Travels**, nổi bật với gam màu cẩm thạch ngọc bích, điểm nhấn cờ đỏ sao vàng Việt Nam / xanh ngọc lục bảo (#0098a2), typography nghệ thuật Yellowtail và chất liệu kính mờ (glassmorphism).
+Cổng thông tin người dùng công khai (`apps/public-site`) được thiết kế theo ngôn ngữ thẩm mỹ sang trọng, kết hợp giữa tinh thần di sản Việt Nam và trải nghiệm lữ hành chuẩn quốc tế. Toàn bộ giao diện bám sát phong cách **Anima Travel Company / STAR Travels**, nổi bật với tông màu cẩm thạch ngọc bích, điểm nhấn chủ đạo **Cờ Đỏ Sao Vàng Việt Nam (`#DA251D`, hover `#C92018`, dark red `#991B1B` / `#B91C1C`)**, typography nghệ thuật Yellowtail/Playfair và chất liệu kính mờ (glassmorphism).
 
 | Hạng mục | Công nghệ / Tiêu chuẩn sử dụng | Mô tả & Vai trò |
 |---|---|---|
-| **Framework** | Next.js 15 (App Router) & React 19 | Server Components (RSC) kết hợp Client Components chọn lọc, Server Actions |
-| **Styling** | Tailwind CSS v3 & Vanilla CSS tokens | Custom utilities, thiết kế `rounded-[2px]`, hiệu ứng kính mờ `backdrop-blur` |
+| **Framework** | Next.js 15.5 (App Router) & React 19 | Server Components (RSC) kết hợp Client Components chọn lọc, Server Actions |
+| **Styling** | Tailwind CSS v3 & Vanilla CSS tokens | Custom utilities, thiết kế `rounded-[2px]`, hiệu ứng kính mờ `backdrop-blur`, theme Đỏ Quốc Kỳ `#DA251D` |
 | **Typography** | Inter, Playfair Display & Yellowtail Script | Font chữ cân bằng, tiêu đề uốn lượn sang trọng, `text-balance` chống rớt chữ |
 | **Đa ngôn ngữ** | Hệ thống i18n Song ngữ độc quyền | Context API, Cookies (`star_travels_locale`), Banner chọn ngôn ngữ quốc tế |
 | **Dữ liệu Seed** | Kho dữ liệu tập trung `@/data/seed` | 100% danh lam thắng cảnh Việt Nam, đầy đủ fallback khi chưa kết nối CMS/API |
 | **BFF & Auth** | Next.js Route Handlers + HTTP-Only Cookies | Bảo vệ token JWT, proxy an toàn đến backend Django REST Framework |
+| **Thanh toán** | Cổng VNPay Sandbox & VietQR NAPAS 247 | Thanh toán trực tuyến tức thì, quét mã QR ngân hàng, polling trạng thái thời gian thực |
+| **Trợ lý AI** | Floating AI Concierge "Nền đỏ sao vàng" | Widget chat tư vấn RAG, đề xuất thẻ tour tương tác, thu thập lead CRM |
 | **SEO & Chia sẻ** | Next.js Metadata, Dynamic Sitemap & Robots | OpenGraph, Twitter Cards, Semantic HTML5, Schema.org Organization |
 | **Asset Delivery** | Tối ưu hóa CDN & Self-hosted scripts | Hỗ trợ tự lưu trữ Anima assets với `scripts/download_anima_assets.py` |
 
@@ -33,6 +35,7 @@ Theo quy chuẩn thương hiệu tại `.agents/skills/brand-identity-and-logo`:
 - **Cấu trúc logo bắt buộc:** Bao gồm 2 thành tố không thể tách rời:
   1. **Chữ thương hiệu:** Kiểu chữ script cổ điển, phóng khoáng và sang trọng.
   2. **Biểu tượng Ngôi sao (Star Emblem):** Ngôi sao vector 5 cánh đối xứng màu vàng kim (`#EAB308`), tỷ lệ chuẩn vàng $0.382$, tạo hiệu ứng chiều sâu phía sau chữ *Star*.
+- **Màu sắc thương hiệu Quốc kỳ:** Nền cờ đỏ Crimson Red (`#DA251D`), Ngôi sao vàng kim (`#EAB308`), Điểm nhấn phụ Slate trầm (`#1E293B`, `#0F172A`).
 - **Component dùng chung:** `<StarLogo />` (`src/components/shared/star-logo.tsx`) hỗ trợ linh hoạt 4 biến thể (`integrated`, `horizontal`, `stacked`, `icon-only`) và 4 cấp độ kích thước (`sm`, `md`, `lg`, `xl`).
 
 ### 2.2. Hệ Thống Song Ngữ Liền Mạch (Bilingual i18n System)
@@ -53,7 +56,7 @@ Toàn bộ dữ liệu mẫu được gom về một thư mục duy nhất `apps
   - *Miền Bắc:* Vịnh Hạ Long, Sa Pa, Tràng An - Ninh Bình, Hà Giang.
   - *Miền Trung:* Phố Cổ Hội An, Cố Đô Huế, Đà Nẵng, Vườn Quốc Gia Phong Nha - Kẻ Bàng.
   - *Miền Nam & Duyên Hải:* Đảo Ngọc Phú Quốc, Đà Lạt, Côn Đảo, Đồi Cát Mũi Né.
-  - Toàn bộ dữ liệu đều có thông số tọa độ, thời điểm lý tưởng, mô tả song ngữ và ảnh sắc nét.
+  - Toàn bộ dữ liệu đều có thông số tọa độ, thời điểm lý tưởng, mô tả song ngữ và ảnh sắc nét 100% Unsplash CDN.
 - **`tours.ts` (8 Tour du lịch trọn gói cao cấp):**
   - Hành trình Hạ Long - Cát Bà (2N1Đ, 3N2Đ), Đà Lạt Mộng Mơ (3N2Đ), Sa Pa Chinh Phục Fansipan (3N2Đ), Tràng An - Bái Đính (1 Ngày), Phú Quốc Nghỉ Dưỡng Biển (4N3Đ), Con Đường Di Sản Miền Trung (4N3Đ), Đệ Nhất Kỳ Quan Phong Nha (3N2Đ), Khám Phá Cát Trắng Mũi Né (2N1Đ).
   - Đi kèm bảng lịch trình chi tiết từng ngày (itinerary timeline), danh mục dịch vụ bao gồm & không bao gồm, giá vé trọn gói.
@@ -61,7 +64,9 @@ Toàn bộ dữ liệu mẫu được gom về một thư mục duy nhất `apps
   - Du thuyền kênh rạch Bến Tre, thuyền buồm Lan Hạ, leo núi Fansipan, cắm trại săn mây Tà Xùa, lặn ngắm san hô An Thới, kayak động Phong Nha, tour ẩm thực xe jeep Hội An, chèo SUP bình minh Nha Trang, lái môtô cát Bàu Trắng.
 - **`stories.ts` (5 Bài viết cẩm nang & góc nhìn văn hóa):**
   - Cẩm nang khám phá vịnh Lan Hạ, nghệ thuật ẩm thực đường phố Hà Nội, kinh nghiệm săn mây đỉnh Tà Xùa, di sản lụa làng nghề Hội An, hành trình lặn biển san hô Nam Đảo Phú Quốc.
-- **`index.ts` & `README.md`:** Cung cấp đối tượng xuất master `SEED_DATA`, các hàm tiện ích tra cứu nhanh (`getTourBySlug`, `getDestinationBySlug`, `getStoryBySlug`, `getExperienceBySlug`) và tài liệu hướng dẫn quản trị dữ liệu.
+- **`history.ts` (11 Hồ sơ lịch sử & di sản văn hóa Việt Nam):**
+  - Dữ liệu nghiên cứu sâu về 11 địa danh danh thắng (Hạ Long, Hội An, Tràng An, Huế, Đồng Văn, Sa Pa, Đà Lạt, Phú Quốc, Đà Nẵng, Nha Trang, Mũi Né) kèm thông số mùa lễ hội, ẩm thực đặc trưng và liên kết tour thực tế.
+- **`index.ts` & `README.md`:** Cung cấp đối tượng xuất master `SEED_DATA`, các hàm tiện ích tra cứu nhanh (`getTourBySlug`, `getDestinationBySlug`, `getStoryBySlug`, `getExperienceBySlug`, `getHistoryBySlug`) và tài liệu hướng dẫn quản trị dữ liệu.
 
 ---
 
@@ -88,16 +93,20 @@ Toàn bộ dữ liệu mẫu được gom về một thư mục duy nhất `apps
    - Định dạng viên capsule kính mờ nổi (`bg-white/85 backdrop-blur-md border border-white/90 shadow-sm`), độ tương phản sắc nét đạt chuẩn WCAG 2.1 AA trên mọi hình nền.
 
 ### 3.2. Chi Tiết Các Khối Trên Trang Chủ (Home Page Sections)
-1. **Hero Slider Banner (Trình Chiếu Kỳ Quan):**
-   - Trình chiếu 3 kỳ quan Việt Nam (Hạ Long, Đà Lạt, Tràng An), tự động chuyển slide sau mỗi 7 giây (tự tạm dừng khi hover chuột hoặc đang chọn tìm kiếm). Hỗ trợ vuốt chạm cảm ứng (swipe).
-   - Tiêu đề nghệ thuật 4 chữ đối xứng (*"Non Sông Gấm Vóc"*, *"Xứ Sở Ngàn Hoa"*, *"Non Nước Hữu Tình"*), áp dụng `text-balance`.
-   - Thanh đếm số lượng slide siêu mờ sang trọng (`bg-black/35 backdrop-blur-md border border-white/15`).
-2. **Thanh Tìm Kiếm & Khám Phá (Discovery Search Bar) — Chế Độ On/Off:**
-   - *Chế độ BẬT (Mode ON):* 3 Tab `ĐIỂM ĐẾN` | `TRẢI NGHIỆM` | `CÂU CHUYỆN` (hoặc Chuyến bay / Khách sạn / Gói tour). Khung tìm kiếm 5 cột kính mờ: Điểm xuất phát, Điểm đến / Chủ đề, Ngày khởi hành, Ngày về, Số lượng khách, Nút Tìm kiếm ngọc bích. Nút `[ ✕ Tắt tìm kiếm ]` thu gọn thanh nhanh chóng.
-   - *Chế độ TẮT (Mode OFF):* Tự động thu gọn thành capsule kính mờ sang trọng (`bg-black/45 backdrop-blur-xl border border-white/25`), giải phóng >200px chiều cao khung hình để ngắm cảnh, ghi nhớ qua `localStorage` (`star_travels_search_open`).
+1. **Hero Slider Banner (Trình Chiếu Kỳ Quan Rực Nắng):**
+   - Trình chiếu 4 danh thắng biểu tượng ngập tràn ánh nắng tự nhiên: Vịnh Hạ Long (di sản thiên nhiên thế giới), Cầu Vàng Bà Nà Hills - Đà Nẵng, Ruộng bậc thang Mùa Vàng Sa Pa, và Quần thể non nước Tràng An Ninh Bình.
+   - Lớp phủ gradient điện ảnh mềm mại giảm từ 65%-95% xuống mức 10%-35% cinematic tint, giúp cảnh quan thiên nhiên bừng sáng rực rỡ mà vẫn đảm bảo độ tương phản chữ hoàn hảo nhờ `drop-shadow-[0_4px_20px_rgba(0,0,0,0.85)]` và huy hiệu danh thắng (`✦ UNESCO / Biểu tượng du lịch`).
+   - Cặp nút điều hướng mũi tên tròn kính mờ và hệ thống chấm chỉ báo màu vàng kim với hiệu ứng chuyển động Ken Burns êm ái.
+2. **Thanh Tìm Kiếm & Khám Phá — Viên Capsule Kính Mờ Tối (Dark Glassmorphic Capsule Search Bar):**
+   - *Khung chứa Container:* Viên con nhộng bo tròn toàn diện (`rounded-full` trên desktop, `rounded-3xl` trên mobile), nền kính mờ bóng đêm (`bg-black/50 backdrop-blur-2xl`), viền sáng tinh tế (`border border-white/25 hover:border-white/35`), đổ bóng sâu (`shadow-[0_12px_45px_rgba(0,0,0,0.5)]`).
+   - *Dải Tab Phân Loại:* Viên capsule kính tối với tab đang chọn nổi bật sắc đỏ cờ Việt Nam (`bg-[#da251d] text-white font-bold rounded-full shadow-md`).
+   - *5 Cột Thông Tin Tinh Gọn:* Điểm khởi hành, Điểm đến, Ngày đi, Ngày về, Số lượng khách. Ngăn cách bởi đường phân cách mờ (`border-white/15`), icon trắng mờ (`text-white/70`), nhãn tiêu đề mờ và giá trị trắng sắc nét.
+   - *Nút Tìm Kiếm:* Nút bấm tròn màu đỏ cờ Việt Nam chuyên biệt (`bg-[#da251d] hover:bg-[#c92018] rounded-full size-11 sm:size-12`) với icon kính lúp trắng nổi bật.
+   - *Bảng Chọn Lịch & Điểm Đến (Popovers):* Nền kính mờ tối sang trọng (`bg-slate-950/95 backdrop-blur-2xl border border-white/20 text-white`) với điểm nhấn màu đỏ cho ngày/địa điểm được chọn.
+   - *Chế Độ Thu Gọn (Collapsed Mode):* Capsule tối giản thanh lịch `[ 🔍 Tìm kiếm hành trình | Hà Nội → Nha Trang ∨ ]` với hiệu ứng đóng mở tức thì.
 3. **Danh Thắng Tuyển Chọn (Popular Destinations Carousel):**
    - Tiêu đề uốn lượn *"Điểm Đến Nổi Tiếng"*.
-   - Thanh trượt 4 thẻ điểm đến (230x290 reference proportions) với hiệu ứng zoom ảnh nhẹ khi hover và dải tóm tắt chân thẻ cao chuẩn `92px`.
+   - Thanh trượt 4 thẻ điểm đến (230x290 reference proportions) với hiệu ứng zoom ảnh nhẹ khi hover và dải tóm tắt chân thẻ cao chuẩn `92px`. 100% sử dụng hình ảnh chất lượng cao từ CDN Unsplash, loại bỏ hoàn toàn ảnh lỗi hay dữ liệu rác.
 4. **Vì Sao Chọn Star Travels? (Why Choose Us):**
    - 3 khối giá trị cốt lõi kính mờ viền sáng: *Cam kết chất lượng* (Khiên bảo vệ), *Dịch vụ tận tâm* (Bắt tay trái tim), *Trải nghiệm độc bản* (La bàn phong cách).
 5. **Trải Nghiệm Bản Địa Hôm Nay (Adventures Collage):**
@@ -110,39 +119,53 @@ Toàn bộ dữ liệu mẫu được gom về một thư mục duy nhất `apps
    - Cột phải: Lưới 2x3 vinh danh 6 danh lam thắng cảnh UNESCO / giải thưởng quốc tế.
 8. **Mục Kêu Gọi Khám Phá (Looking for an Experience CTA):**
    - Khung nền sáng bóng mờ giữa 2 dải viền trang nhã với nút bấm viền đen cổ điển dẫn tới danh mục trải nghiệm.
+9. **Trợ Lý AI Du Lịch STAR (Floating AI Concierge "Nền đỏ sao vàng"):**
+   - Nút kích hoạt cố định góc dưới bên phải: Gradient đỏ quốc kỳ (`from-[#991b1b] via-[#da251d] to-[#dc2626]`), vầng hào quang phát sáng nhẹ (`bg-[#da251d]/35`), ngôi sao vàng kim 5 cánh (`<StarLogo variant="icon-only" size="md" />` màu `#EAB308`).
+   - Chu kỳ hiển thị Tooltip thông minh: Xuất hiện 5 giây mỗi 20 giây một lần với lời chào *"✦ Trợ lý AI Du Lịch STAR — Tư vấn lịch trình di sản 24/7"*, tự động ẩn khi mở chat.
+   - Hộp thoại trò chuyện Streaming: Trả lời theo văn phong sang trọng, kết nối tri thức lịch sử di sản, trích xuất thẻ Tour tương tác và hỗ trợ thu thập lead tự động đẩy về CRM.
 
 ---
 
-## 4. Danh Mục 19 Tuyến Đường & Khối Giao Diện (Route Inventory)
+## 4. Danh Mục 23 Tuyến Đường & Khối Giao Diện (Route Inventory)
 
 | Tuyến Đường (Route) | Tên Trang | Các Khối UI Chính Thể Hiện |
 |---|---|---|
-| `/` | Trang Chủ | Hero Slider, Discovery Search Bar, Destinations Carousel, Why Us, Adventures Collage, Featured Tours, Newsletter & Awards, Looking for CTA. |
-| `/destinations` | Danh Sách Điểm Đến | Bộ lọc vùng miền (Bắc, Trung, Nam), lưới danh thắng 12 kỳ quan toàn quốc, giá khởi điểm. |
+| `/` | Trang Chủ | Hero Slider (4 danh thắng rực nắng), Dark Capsule Search Bar (tích hợp tab Nơi Ở & Ẩm Thực), Destinations Carousel, Why Us, Adventures Collage, Featured Tours, Newsletter & Awards, Looking for CTA, AI Concierge Bubble. |
+| `/destinations` | Danh Sách Điểm Đến | Bộ lọc vùng miền (Bắc, Trung, Nam), lưới danh thắng 12 kỳ quan 100% Việt Nam, giá khởi điểm tham khảo. |
 | `/destinations/[slug]` | Chi Tiết Điểm Đến | Banner toàn cảnh, tổng quan di sản, thời điểm lý tưởng, bản đồ toạ độ, danh sách tour & trải nghiệm liên kết. |
 | `/tours` | Danh Mục Tour Trọn Gói | Bộ lọc vùng miền, lọc mức giá (<3tr, 3-6tr, >6tr), sắp xếp thời lượng/giá, lưới thẻ tour trọn gói. |
-| `/tours/[slug]` | Chi Tiết Tour | Gallery ảnh thực tế, lịch trình Day-by-day Itinerary, bảng Dịch vụ Bao Gồm & Không Bao Gồm, Thẻ đặt tour trực tuyến `TourBookingCard`. |
+| `/tours/[slug]` | Chi Tiết Tour | Gallery ảnh thực tế, lịch trình Day-by-day Itinerary, bảng Dịch vụ Bao Gồm & Không Bao Gồm, Thẻ đặt tour trực tuyến `TourBookingCard` với tính năng phòng vệ giá server-side. |
+| `/accommodations` | Khách Sạn & Nghỉ Dưỡng | Smart Concierge Wizard hỏi khu vực nghỉ dưỡng, Bộ lọc Vibe (resort biển, di sản, núi rừng, boutique), Nút định vị GPS "Tìm gần vị trí của tôi", Sắp xếp khoảng cách gần nhất, Lưới thẻ `AccommodationCard` hiển thị cự ly Haversine (`~850 m`, `~1.2 km`), Referral Booking tới đối tác (Booking.com, Agoda...). |
+| `/restaurants` | Nhà Hàng & Ẩm Thực | Smart Gourmet Wizard hỏi khu vực ẩm thực, Bộ lọc phong vị (Michelin 1 Sao, hải sản cao cấp, 3 miền, ven sông lãng mạn), Nút định vị GPS "Tìm gần vị trí của tôi", Sắp xếp cự ly gần nhất, Lưới thẻ `RestaurantCard` hiển thị cự ly Haversine, Referral Booking đặt bàn đối tác uy tín. |
 | `/experiences` | Gói Trải Nghiệm | Phân loại hoạt động (Du thuyền, Trekking, Lặn biển, Văn hóa), bộ lọc địa lý GPS, lưới thẻ `PlaceCard`. |
 | `/experiences/[slug]` | Chi Tiết Trải Nghiệm | Banner trải nghiệm, nút Yêu thích (`FavoriteButton`), thông số đoàn khách, thẻ đặt chỗ tương tác `ExperienceBookingCard`, biểu mẫu đánh giá `ReviewForm`. |
 | `/stories` | Cẩm Nang & Hành Trình | Bài viết tâm điểm (Featured Hero Story), danh sách cẩm nang du lịch, thời gian đọc ước tính, đăng ký nhận bài. |
 | `/stories/[slug]` | Chi Tiết Bài Viết | Dàn trang chuẩn tạp chí lữ hành, tác giả, ảnh minh họa chất lượng cao kèm chú thích, thẻ từ khóa phân loại. |
 | `/about` | Về Chúng Tôi | Câu chuyện thương hiệu STAR, 3 trụ cột triết lý dịch vụ, lưới 6 giải thưởng vinh danh di sản. |
-| `/contact` | Liên Hệ & Hỗ Trợ 24/7 | Hotline, email, giờ tư vấn, biểu mẫu `ContactForm`, bản đồ trụ sở Hà Nội & TP.HCM, Accordion giải đáp FAQ. |
+| `/contact` | Liên Hệ & Hỗ Trợ 24/7 | Hotline, email, giờ tư vấn, biểu mẫu `ContactForm` tích hợp checkbox đồng ý xử lý dữ liệu NĐ 13/2023, bản đồ trụ sở Hà Nội & TP.HCM, Accordion FAQ. |
 | `/partner` | Cổng Hợp Tác Đối Tác | 4 giá trị đồng hành, quy trình hợp tác 4 bước, biểu mẫu đăng ký đại lý/khách sạn trực tuyến `PartnerForm`. |
-| `/login` | Đăng Nhập | Biểu mẫu `LoginForm` xử lý xác thực bảo mật, điều hướng theo vai trò (Customer hoặc Partner). |
-| `/register` | Đăng Ký | Biểu mẫu `RegisterForm` đăng ký tài khoản thành viên mới trong hệ sinh thái STAR Travels. |
-| `/account` | Trang Quản Lý Cá Nhân | Kiểm tra phiên server-side, thông tin cá nhân, phân quyền tài khoản, lịch sử đặt chỗ, nút `LogoutButton`. |
+| `/login` | Đăng Nhập | Biểu mẫu `LoginForm` xử lý xác thực an toàn, điều hướng theo vai trò (Customer hoặc Partner). |
+| `/register` | Đăng Ký | Biểu mẫu `RegisterForm` đăng ký thành viên mới kèm checkbox đồng ý Điều khoản & Chính sách quyền riêng tư. |
+| `/account` | Trang Quản Lý Cá Nhân | Kiểm tra phiên server-side, thông tin cá nhân, phân quyền tài khoản, liên kết xem đơn hàng, nút `LogoutButton`. |
+| `/account/bookings` | Quản Lý Đơn Đặt Chỗ | Dashboard danh sách đơn đặt tour & referral bookings, bộ lọc trạng thái, huy hiệu cảnh báo chờ thanh toán VietQR (`pending_payment`), nút chuyển tiếp thanh toán nhanh. |
+| `/booking/[id]/payment` | Cổng Thanh Toán Đa Kênh | Bộ chọn cổng thanh toán (VietQR Chuyển khoản ngân hàng / VNPay Thẻ & QR), mã QR EMVCo cỡ lớn, nút 1-click sao chép STK/Số tiền/Nội dung, đồng hồ đếm ngược 15 phút, tự động polling trạng thái mỗi 5 giây. |
+| `/booking/[id]/success` | Xác Nhận Đặt Chỗ | Màn hình chúc mừng thanh toán thành công, mã đặt chỗ, thông tin tour, hướng dẫn liên hệ và chuẩn bị hành lý. |
+| `/payment/return` | Callback Cổng VNPay | Trang tiếp nhận kết quả trả về từ VNPay Sandbox, tự động polling backend mỗi 3 giây (tối đa 21s) xác nhận trạng thái IPN, hiển thị biên lai giao dịch. |
+| `/privacy` | Chính Sách Bảo Mật | Quy chế bảo vệ dữ liệu cá nhân theo Nghị định 13/2023/NĐ-CP (quyền chủ thể dữ liệu, mục đích thu thập, bảo mật tọa độ GPS, thời hạn lưu trữ, liên hệ DPO). |
+| `/terms` | Điều Khoản Dịch Vụ | Quy chế sàn thương mại điện tử theo Nghị định 52/2013/NĐ-CP (quy định giao dịch tour, giới hạn trách nhiệm giới thiệu đối tác referral, giải quyết tranh chấp). |
+| `/unauthorized` | Báo Lỗi Quyền Hạn (403) | Trang thông báo không đủ quyền hạn truy cập tài nguyên bảo mật với điều hướng an toàn về Trang chủ. |
 | `/not-found` | Trang Báo Lỗi 404 | Thiết kế Anima với biểu tượng La bàn mờ, thông điệp song ngữ lịch sự, điều hướng nhanh về Trang chủ & Tour. |
-| `/sitemap.xml` | XML Sitemap | Tự động sinh danh mục 34+ liên kết bao gồm mọi static pages, 12 điểm đến, 8 tour, 9 trải nghiệm, 5 bài viết. |
+| `error.tsx` | Client Error Boundary | Giao diện phục hồi lỗi runtime phong cách sang trọng Anima với nút "Thử tải lại trang" an toàn. |
+| `/sitemap.xml` | XML Sitemap | Tự động sinh danh mục 40+ liên kết bao gồm mọi static pages, điểm đến, tour, trải nghiệm, cẩm nang, khách sạn, nhà hàng. |
 | `/robots.txt` | Robots.txt | Cấu hình chỉ dẫn crawler Googlebot, Bingbot trỏ chính xác về sitemap. |
-| `/api/auth/*` | Auth API Handlers | Các Route Handler quản lý đăng nhập, đăng ký, đăng xuất qua HTTP-Only JWT cookies. |
+| `/api/assistant/chat` | AI Proxy Route Handler | Route Handler Next.js chuyển tiếp yêu cầu chat an toàn tới Django backend trong container Docker. |
 
 ---
 
 ## 5. Quy Chuẩn Parity Anima & Thích Ứng Đáp Ứng (Anima Parity & Responsive Adaptation)
 
 ### 5.1. Desktop Reference Baseline (Bám sát thiết kế Anima gốc)
-Visual baseline: 5 ảnh chụp màn hình trong `docs/design-reference/` và nguồn dựng lại tại `docs/reference/anima-original/`:
+Visual baseline: 5 ảnh chụp màn hình thiết kế gốc đối chiếu được lưu trữ trong `docs/design-reference/`:
 - **Canvas target:** Khung hiển thị chuẩn desktop 1197px (hoặc container `max-w-[1240px]` mở rộng).
 - **Hero Banner:** Bố cục tỉ lệ tương đương `rectangle-3.svg`, hiển thị thông điệp sang trọng Abril Fatface + Grape Nuts / Yellowtail script.
 - **Dải liên hệ & mạng xã hội:** Nằm trên thanh điều hướng chính, căn chỉnh cân xứng.
@@ -304,4 +327,55 @@ Trong Giai đoạn 1 (Phase 1), khi cổng thanh toán trực tuyến tự độ
   - Outbox sinh sự kiện `inquiry.created` -> Celery đẩy thẳng sang Odoo ERP `crm.lead` với Tag `[FAST_BOOKING]` và mức ưu tiên cao nhất (3 sao).
   - Trả về mã yêu cầu giữ chỗ tạm thời (ví dụ: `REQ-202610-8912`).
   - Giao diện hiển thị màn hình chúc mừng trang trọng kèm các nút tiện ích: **"Chat Zalo với tư vấn viên"** hoặc **"Gọi Hotline 0903 846 568"**.
+
+---
+
+## 11. Hệ Thống Gợi Ý Thông Minh & Định Vị Khoảng Cách GPS (Smart Concierge Wizard & Haversine Geolocation)
+
+Nhằm nâng cao trải nghiệm khách hàng tìm kiếm địa điểm lưu trú (`/accommodations`) và ẩm thực (`/restaurants`), hệ thống tích hợp công nghệ tương tác thông minh kết hợp định vị vệ tinh GPS:
+
+### 11.1. Bộ Hỏi Nhu Cầu Tương Tác (Smart Concierge Wizard)
+- **Gợi ý theo Vùng miền:** Hỏi trực diện khách muốn trải nghiệm tại khu vực nào (Phú Quốc, Đà Nẵng, Hội An, Hạ Long, Sa Pa, Hà Nội, Huế, Nha Trang, Ninh Bình, TP.HCM) kèm bộ đếm số lượng cơ sở thực tế.
+- **Lọc theo Phong vị & Phong cách (Vibe Chips):**
+  - Khách sạn: Resort ven biển & Bãi riêng, Khách sạn di sản & Cổ điển, Ecolodge & Núi rừng, Boutique sang trọng, Đánh giá xuất sắc (4.9+).
+  - Nhà hàng: Michelin Guide & Fine Dining, Hải sản tươi sống cao cấp, Cơm truyền thống & Món quê 3 miền, Ven sông & Hẹn hò lãng mạn, Đặc sản phố cổ & Cung đình.
+- **Huy hiệu Gợi ý Hàng đầu (`✦ GỢI Ý STAR HÀNG ĐẦU`):** Tự động phát sáng và ghim lên đầu cơ sở phù hợp nhất kèm lý do tư vấn tường minh (ví dụ: *"Được đánh giá cao nhất tại Đà Nẵng"* hoặc *"Gần vị trí của bạn nhất (~850 m)"*).
+- **Hỏi Trợ lý AI 1-Click:** Nút bấm phát sự kiện `star:open-ai-concierge` nạp sẵn ngữ cảnh khu vực đang chọn để mở hộp thoại trò chuyện tư vấn tức thì.
+
+### 11.2. Động Cơ Định Vị GPS & Khoảng Cách Haversine (`@/lib/geo-utils.ts`)
+- **Tuân thủ quyền riêng tư:** Nút bấm **"Tìm gần vị trí của tôi"** chỉ kích hoạt khi người dùng bấm trực tiếp; không thu thập dữ liệu ngầm.
+- **Công thức tính khoảng cách Haversine:**
+  $$\Delta\sigma = 2 \arcsin \sqrt{\sin^2\left(\frac{\Delta\phi}{2}\right) + \cos(\phi_1)\cos(\phi_2)\sin^2\left(\frac{\Delta\lambda}{2}\right)}$$
+  $$d = R \cdot \Delta\sigma \quad (R = 6371\text{ km})$$
+- **Quy đổi cự ly thân thiện:** Cự ly < 1 km hiển thị dạng mét (`850 m`), cự ly >= 1 km hiển thị kilômét (`1.2 km`, `3.5 km`).
+- **Tùy chọn sắp xếp:** Bổ sung tùy chọn **"Khoảng cách gần nhất"** trong menu sắp xếp khi tọa độ GPS người dùng khả dụng.
+
+---
+
+## 12. Mô Hình Đặt Chỗ Giới Thiệu Đối Tác (Affiliate Referral Booking Architecture)
+
+Áp dụng cho 2 phân hệ Khách Sạn (`/accommodations`) và Nhà Hàng (`/restaurants`):
+
+### 12.1. Bản Chất Nghiệp Vụ
+- **Không thanh toán qua STAR:** STAR Travels đóng vai trò cổng tuyển chọn và giới thiệu độc quyền tới các đối tác uy tín (Booking.com, Agoda, Traveloka, TableCheck, Hotline đặt bàn riêng).
+- **Ghi nhận chuyển đổi (Referral Tracking):** Mỗi lượt khách bấm nút **"Đặt phòng qua Booking.com"** hoặc **"Đặt bàn đối tác"** BẮT BUỘC được lưu lại thành 1 bản ghi `bookings_booking` với `item_type = 'accommodation_referral'` hoặc `'restaurant_referral'`.
+
+### 12.2. Kỹ Thuật Tracking Ngầm Không Nghẽn (Non-blocking 1.5s Beacon)
+- Khi khách bấm đặt chỗ, hiển thị modal thông báo chuyển tiếp đối tác chính thức (`ReferralAdvisoryModal`).
+- Thực hiện gửi beacon ngầm bằng `navigator.sendBeacon` hoặc `fetch(keepalive)` tới API `POST /api/v1/referrals/track/`.
+- Không tạo giao dịch tiền mặt `payments_transaction`.
+- Đồng bộ thông tin chuyển đổi sang Odoo CRM dưới dạng Lead tiềm năng phục vụ đàm phán hoa hồng và báo cáo đối tác.
+
+---
+
+## 13. Tuân Thủ Pháp Lý & An Toàn Dữ Liệu (Legal & Privacy Compliance)
+
+1. **Nghị định 13/2023/NĐ-CP về Bảo vệ Dữ liệu Cá nhân:**
+   - Trang `/privacy` công bố chi tiết quyền của chủ thể dữ liệu, mục đích xử lý thông tin, và đầu mối DPO.
+   - Các biểu mẫu Đăng ký (`/register`), Liên hệ (`/contact`), Giữ chỗ (`TourBookingCard`) đều tích hợp checkbox đồng ý bắt buộc.
+   - Tọa độ GPS chỉ xử lý cục bộ trên trình duyệt để tính cự ly, không lưu trữ hồ sơ theo dõi vị trí cá nhân.
+2. **Nghị định 52/2013/NĐ-CP & Nghị định 85/2021/NĐ-CP về Thương mại Điện tử:**
+   - Chân trang `SiteFooter` hiển thị đầy đủ thông tin pháp nhân: MST `0110896868`, Giấy phép Lữ hành Quốc tế số `01-2026/TCDL-GP LHQT`, trụ sở, hotline hỗ trợ 24/7.
+   - Trang `/terms` quy định rõ quyền và nghĩa vụ khách hàng, quy chế thanh toán tour, và miễn trừ trách nhiệm pháp lý đối với các dịch vụ referral chuyển tiếp tới bên thứ ba.
+   - Huy hiệu Đã Thông Báo Bộ Công Thương hiển thị trang trọng tại footer.
 

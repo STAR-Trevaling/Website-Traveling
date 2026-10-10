@@ -7,6 +7,7 @@
     "build": "pnpm --filter travel-platform-web build",
     "start": "pnpm --filter travel-platform-web start",
     "lint": "pnpm --filter travel-platform-web lint",
-    "typecheck": "pnpm --filter travel-platform-web typecheck"
+    "typecheck": "pnpm --filter travel-platform-web typecheck",
+    "test:e2e": "pnpm --filter travel-platform-web test:e2e"
   }
 }

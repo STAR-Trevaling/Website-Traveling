@@ -18,12 +18,14 @@ import {
   Sparkles,
   BookOpen,
   Building2,
+  Utensils,
   Handshake,
   ChevronDown,
 } from "lucide-react";
 import type { CurrentUser } from "@/lib/types";
 import { useLanguage } from "@/lib/i18n/context";
 import { StarLogo } from "@/components/shared/star-logo";
+import { LanguageSwitcher } from "./language-switcher";
 
 interface MobileNavProps {
   user: CurrentUser | null;
@@ -33,7 +35,8 @@ interface MobileNavProps {
 export function MobileNav({ user, overlay = false }: MobileNavProps) {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
-  const { t } = useLanguage();
+  const { t, locale } = useLanguage();
+  const isEn = locale === "en";
 
   const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({
     [t.nav.explore]: true,
@@ -56,6 +59,16 @@ export function MobileNav({ user, overlay = false }: MobileNavProps) {
         { label: t.nav.tours, href: "/tours", icon: Compass },
         { label: t.nav.packages, href: "/experiences", icon: Sparkles },
         { label: t.nav.destinations, href: "/destinations", icon: MapPin },
+        {
+          label: isEn ? "Accommodations" : "Khách sạn & Resort",
+          href: "/accommodations",
+          icon: Building2,
+        },
+        {
+          label: isEn ? "Restaurants" : "Nhà hàng & Ẩm thực",
+          href: "/restaurants",
+          icon: Utensils,
+        },
         { label: t.nav.stories, href: "/stories", icon: BookOpen },
       ],
     },
@@ -118,7 +131,7 @@ export function MobileNav({ user, overlay = false }: MobileNavProps) {
         }`}
       >
         <div>
-          {/* Header row: Brand + Close button */}
+          {/* Header row: Brand + Language Switcher + Close button */}
           <div className="flex items-center justify-between pb-4 border-b border-slate-100">
             <Link
               href="/"
@@ -127,13 +140,16 @@ export function MobileNav({ user, overlay = false }: MobileNavProps) {
             >
               <StarLogo variant="horizontal" size="sm" asLink={false} />
             </Link>
-            <button
-              type="button"
-              onClick={() => setIsOpen(false)}
-              className="p-1.5 text-slate-500 hover:text-slate-900 rounded hover:bg-slate-100 cursor-pointer"
-            >
-              <X className="size-5" />
-            </button>
+            <div className="flex items-center gap-2">
+              <LanguageSwitcher overlay={false} showIcon={false} />
+              <button
+                type="button"
+                onClick={() => setIsOpen(false)}
+                className="p-1.5 text-slate-500 hover:text-slate-900 rounded hover:bg-slate-100 cursor-pointer"
+              >
+                <X className="size-5" />
+              </button>
+            </div>
           </div>
 
           {/* Navigation Links */}

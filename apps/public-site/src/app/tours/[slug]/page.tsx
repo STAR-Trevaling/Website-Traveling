@@ -18,6 +18,7 @@ import { SiteHeader } from "@/components/layout/site-header";
 import { Breadcrumb } from "@/components/shared/breadcrumb";
 import { getTourBySlug, VIETNAM_TOURS } from "@/data/seed";
 import { TourBookingCard } from "@/components/tours";
+import { getCurrentUser } from "@/lib/auth";
 import { publicApi } from "@/lib/api";
 import { DICTIONARY } from "@/lib/i18n/dictionary";
 import type { Locale } from "@/lib/i18n/types";
@@ -64,6 +65,7 @@ export async function generateMetadata({ params }: TourDetailPageProps): Promise
 }
 
 export default async function TourDetailPage({ params }: TourDetailPageProps) {
+  const user = await getCurrentUser();
   const cookieStore = await cookies();
   const isEn = cookieStore.get("star_travels_locale")?.value === "en";
   const locale: Locale = isEn ? "en" : "vi";
@@ -101,8 +103,38 @@ export default async function TourDetailPage({ params }: TourDetailPageProps) {
 
   const relatedTours = VIETNAM_TOURS.filter((t) => t.id !== tour.id).slice(0, 3);
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "TouristTrip",
+    name: displayTitle,
+    description: displayOverview,
+    image: tour.image,
+    touristType: ["Family", "Couple", "Solo", "Luxury"],
+    offers: {
+      "@type": "Offer",
+      price: tour.price,
+      priceCurrency: "VND",
+      availability: "https://schema.org/InStock",
+      seller: {
+        "@type": "Organization",
+        name: "STAR Travels Vietnam",
+        url: "https://startravels.vn",
+      },
+    },
+    itinerary: tour.itinerary?.map((item: any, idx: number) => ({
+      "@type": "Day",
+      name: `Day ${item.day || idx + 1}: ${item.title || ""}`,
+      description: item.description || "",
+    })),
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+
       {/* 1. HERO HEADER WITH TEMPLATE VIBE */}
       <section className="relative min-h-[480px] sm:min-h-[560px] md:min-h-[680px] w-full overflow-hidden text-white flex items-end">
         <Image
@@ -110,7 +142,7 @@ export default async function TourDetailPage({ params }: TourDetailPageProps) {
           alt={displayTitle}
           fill
           priority
-          unoptimized
+          sizes="100vw"
           className="object-cover animate-ken-burns"
         />
         {/* Light cinematic gradient overlay ensuring bright landmark imagery while text remains clear */}
@@ -350,7 +382,7 @@ export default async function TourDetailPage({ params }: TourDetailPageProps) {
 
           {/* RIGHT: Booking Sidebar */}
           <aside className="space-y-6">
-            <TourBookingCard tour={tour} />
+            <TourBookingCard tour={tour} user={user} />
 
             {/* Direct Support Card */}
             <div className="rounded-[2px] bg-white/90 p-5 sm:p-6 text-slate-800 shadow-sm border border-slate-100">

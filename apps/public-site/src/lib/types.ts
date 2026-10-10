@@ -238,3 +238,76 @@ export interface TourItem {
   hotel?: string;
   featured?: boolean;
 }
+
+// ─── Accommodations & Restaurants (Referral Model) ──────────
+export interface Accommodation {
+  id: string;
+  slug: string;
+  destination_id: string;
+  destination_name?: string;
+  destination_slug?: string;
+  name: string;
+  name_en?: string;
+  category: string;
+  star_rating?: number | null;
+  address: string;
+  location?: GeoPoint | null;
+  description?: string;
+  description_en?: string;
+  amenities: string[];
+  price_from?: number | string | null;
+  image_url: string;
+  gallery: string[];
+  partner_booking_url: string;
+  partner_name: string;
+  partner_commission_rate?: number | string | null;
+  rating_average: number | string;
+  rating_count: number;
+  is_active: boolean;
+  created_at?: string;
+  updated_at?: string;
+}
+
+export interface Restaurant {
+  id: string;
+  slug: string;
+  destination_id: string;
+  destination_name?: string;
+  destination_slug?: string;
+  name: string;
+  name_en?: string;
+  cuisine_type: string;
+  price_range: string;
+  address: string;
+  location?: GeoPoint | null;
+  description?: string;
+  description_en?: string;
+  signature_dishes: string[];
+  opening_hours: Record<string, string>;
+  image_url: string;
+  gallery: string[];
+  contact_type: "url" | "phone" | string;
+  contact_value: string;
+  partner_commission_rate?: number | string | null;
+  rating_average: number | string;
+  rating_count: number;
+  is_active: boolean;
+  created_at?: string;
+  updated_at?: string;
+}
+
+export interface ReferralTrackPayload {
+  item_type: "accommodation_referral" | "restaurant_referral";
+  item_id: string;
+  contact_name?: string | null;
+  contact_phone?: string | null;
+  contact_email?: string | null;
+}
+
+export interface ReferralTrackResponse {
+  booking_id: string;
+  booking_code: string;
+  redirect_url: string;
+  item_type?: string;
+  partner_name?: string;
+}

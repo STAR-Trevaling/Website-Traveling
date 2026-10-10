@@ -14,6 +14,8 @@ import {
 } from "lucide-react";
 import type { CurrentUser } from "@/lib/types";
 import { useLanguage } from "@/lib/i18n/context";
+import { LanguageSwitcher } from "./language-switcher";
+import { UserAccountMenu } from "./user-account-menu";
 import { MobileNav } from "./mobile-nav";
 
 interface SiteHeaderClientProps {
@@ -83,11 +85,26 @@ export function SiteHeaderClient({ user, overlay = false }: SiteHeaderClientProp
       type: "dropdown" as const,
       label: t.nav.explore,
       categoryTitle: isEn ? "EXPLORE" : "KHÁM PHÁ",
-      basePath: ["/destinations", "/tours", "/experiences", "/stories"],
+      basePath: [
+        "/destinations",
+        "/tours",
+        "/experiences",
+        "/stories",
+        "/accommodations",
+        "/restaurants",
+      ],
       items: [
         { label: t.nav.destinations, href: "/destinations" },
         { label: t.nav.packages, href: "/experiences" },
         { label: t.nav.tours, href: "/tours" },
+        {
+          label: isEn ? "Accommodations" : "Khách sạn & Resort",
+          href: "/accommodations",
+        },
+        {
+          label: isEn ? "Restaurants" : "Nhà hàng & Ẩm thực",
+          href: "/restaurants",
+        },
         { label: t.nav.stories, href: "/stories" },
       ],
     },
@@ -115,47 +132,60 @@ export function SiteHeaderClient({ user, overlay = false }: SiteHeaderClientProp
       <div className="w-full px-6 sm:px-10 md:px-14 lg:px-18 xl:px-24">
         {/* Row 1: Top Bar with Left Social Icons and Right Contact Info */}
         <div className="flex h-11 sm:h-12 md:h-13 items-center justify-between pt-1 sm:pt-2">
-          {/* Top Left: 3 Social Media Icons (Instagram, Twitter, Facebook) */}
-          <div className="flex items-center gap-3.5 sm:gap-4.5 shrink-0 z-10">
-            <a
-              href="https://instagram.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Instagram"
-              className={
-                overlay
-                  ? "text-white/90 hover:text-white transition-opacity duration-150 p-1"
-                  : "text-slate-600 hover:text-slate-900 transition-colors duration-150 p-1"
-              }
-            >
-              <Instagram className="size-4 sm:size-[17px]" strokeWidth={1.8} />
-            </a>
-            <a
-              href="https://twitter.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Twitter"
-              className={
-                overlay
-                  ? "text-white/90 hover:text-white transition-opacity duration-150 p-1"
-                  : "text-slate-600 hover:text-slate-900 transition-colors duration-150 p-1"
-              }
-            >
-              <Twitter className="size-4 sm:size-[17px]" strokeWidth={1.8} />
-            </a>
-            <a
-              href="https://facebook.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Facebook"
-              className={
-                overlay
-                  ? "text-white/90 hover:text-white transition-opacity duration-150 p-1"
-                  : "text-slate-600 hover:text-slate-900 transition-colors duration-150 p-1"
-              }
-            >
-              <Facebook className="size-4 sm:size-[17px]" strokeWidth={1.8} />
-            </a>
+          {/* Top Left: 3 Social Media Icons & 2-Mode Language Switcher */}
+          <div className="flex items-center gap-3 sm:gap-4 shrink-0 z-10">
+            <div className="flex items-center gap-2 sm:gap-3">
+              <a
+                href="https://instagram.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram"
+                className={
+                  overlay
+                    ? "text-white/90 hover:text-white transition-opacity duration-150 p-1"
+                    : "text-slate-600 hover:text-slate-900 transition-colors duration-150 p-1"
+                }
+              >
+                <Instagram className="size-4 sm:size-[17px]" strokeWidth={1.8} />
+              </a>
+              <a
+                href="https://twitter.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Twitter"
+                className={
+                  overlay
+                    ? "text-white/90 hover:text-white transition-opacity duration-150 p-1"
+                    : "text-slate-600 hover:text-slate-900 transition-colors duration-150 p-1"
+                }
+              >
+                <Twitter className="size-4 sm:size-[17px]" strokeWidth={1.8} />
+              </a>
+              <a
+                href="https://facebook.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Facebook"
+                className={
+                  overlay
+                    ? "text-white/90 hover:text-white transition-opacity duration-150 p-1"
+                    : "text-slate-600 hover:text-slate-900 transition-colors duration-150 p-1"
+                }
+              >
+                <Facebook className="size-4 sm:size-[17px]" strokeWidth={1.8} />
+              </a>
+            </div>
+
+            {/* Subtle Divider */}
+            <span
+              className={`h-3.5 w-[1px] ${
+                overlay ? "bg-white/30" : "bg-slate-300"
+              }`}
+              aria-hidden="true"
+            />
+
+            {/* 2-Mode Language Switcher (VI / EN) */}
+            <LanguageSwitcher overlay={overlay} />
           </div>
 
           {/* Top Right: Phone, Email, User & Mobile Navigation Drawer Toggle */}
@@ -186,19 +216,8 @@ export function SiteHeaderClient({ user, overlay = false }: SiteHeaderClientProp
               <span>{t.nav.emailLabel}</span>
             </a>
 
-            {/* User Account Icon */}
-            <Link
-              href={user ? "/account" : "/login"}
-              aria-label={user ? user.username : t.nav.login}
-              title={user ? user.username : t.nav.login}
-              className={
-                overlay
-                  ? "flex items-center justify-center p-1.5 rounded-full text-white/80 hover:text-white hover:bg-white/10 transition"
-                  : "flex items-center justify-center p-1.5 rounded-full text-slate-600 hover:text-slate-950 hover:bg-slate-100 transition"
-              }
-            >
-              <UserRound className="size-4" />
-            </Link>
+            {/* User Account Trigger (Icon-only with hover/click profile menu) */}
+            <UserAccountMenu user={user} overlay={overlay} />
 
             {/* Mobile Navigation Drawer Toggle */}
             <MobileNav user={user} overlay={overlay} />

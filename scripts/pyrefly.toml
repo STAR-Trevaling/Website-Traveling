@@ -1,0 +1,11 @@
+# Pyrefly Configuration for scripts directory
+search-path = [
+    "../apps/api",
+    "."
+]
+python-interpreter-path = "../apps/api/.venv/Scripts/python.exe"
+python-version = "3.13"
+disable-search-path-heuristics = false
+
+[errors]
+missing-import = "ignore"

@@ -2,7 +2,7 @@ import json
 import logging
 import uuid
 from decimal import Decimal
-from typing import Any
+from typing import Any, cast
 
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db import transaction
@@ -54,6 +54,10 @@ class PaymentService:
         if booking.status == Booking.Status.CANCELLED:
             raise ValidationError({"booking_code": "Đơn đặt tour đã bị hủy, không thể thanh toán."})
 
+        total_amount = booking.total_amount
+        if total_amount is None or total_amount <= 0:
+            raise ValidationError({"total_amount": "Số tiền thanh toán không hợp lệ."})
+
         now = timezone.now()
         timestamp = int(now.timestamp())
         txn_ref = f"{booking.booking_code}_{timestamp}"
@@ -62,7 +66,7 @@ class PaymentService:
         # Generate payment URL via adapter
         gen_result = self.vnpay.generate_payment_url(
             txn_ref=txn_ref,
-            amount=float(booking.total_amount),
+            amount=float(total_amount),
             order_info=order_info,
             client_ip=client_ip,
             bank_code=bank_code,
@@ -77,7 +81,7 @@ class PaymentService:
             booking=booking,
             transaction_code=txn_ref,
             provider=PaymentTransaction.Provider.VNPAY,
-            amount=booking.total_amount,
+            amount=total_amount,
             currency=booking.currency,
             status=PaymentTransaction.Status.PENDING,
             idempotency_key=f"vnpay:{txn_ref}",
@@ -89,7 +93,7 @@ class PaymentService:
             "payment_url": gen_result["payment_url"],
             "transaction_code": txn.transaction_code,
             "booking_code": booking.booking_code,
-            "amount": str(booking.total_amount),
+            "amount": str(total_amount),
             "currency": booking.currency,
             "gateway": "vnpay",
             "expires_at": gen_result["expires_at"].isoformat(),
@@ -118,6 +122,10 @@ class PaymentService:
         if booking.status == Booking.Status.CANCELLED:
             raise ValidationError({"booking_code": "Đơn đặt tour đã bị hủy, không thể thanh toán."})
 
+        total_amount = booking.total_amount
+        if total_amount is None or total_amount <= 0:
+            raise ValidationError({"total_amount": "Số tiền thanh toán không hợp lệ."})
+
         now = timezone.now()
         timestamp = int(now.timestamp())
         txn_ref = f"{booking.booking_code}_{timestamp}"
@@ -126,7 +134,7 @@ class PaymentService:
         qr_res = self.vietqr.generate_qr_payload(
             txn_ref=txn_ref,
             booking_code=booking.booking_code,
-            amount=booking.total_amount,
+            amount=total_amount,
             expires_minutes=expires_minutes,
             created_at=now,
         )
@@ -140,7 +148,7 @@ class PaymentService:
             booking=booking,
             transaction_code=txn_ref,
             provider=PaymentTransaction.Provider.VIETQR,
-            amount=booking.total_amount,
+            amount=total_amount,
             currency=booking.currency,
             status=PaymentTransaction.Status.PENDING,
             idempotency_key=f"vietqr:{txn_ref}",
@@ -152,7 +160,7 @@ class PaymentService:
             "payment_id": str(txn.id),
             "transaction_code": txn.transaction_code,
             "booking_code": booking.booking_code,
-            "amount": str(booking.total_amount),
+            "amount": str(total_amount),
             "currency": booking.currency,
             "gateway": "vietqr",
             "status": txn.status,
@@ -160,6 +168,67 @@ class PaymentService:
             "qr_code_url": qr_res["quicklink_url"],
             "emvco_payload": qr_res["emvco_payload"],
             "bank_info": qr_res["bank_info"],
+        }
+
+    @transaction.atomic
+    def create_cash_payment(
+        self,
+        booking_code: str,
+    ) -> dict[str, Any]:
+        """
+        Registers cash payment preference for a booking and creates pending PaymentTransaction.
+        Sets booking payment_method to 'cash'.
+        """
+        booking = Booking.objects.filter(booking_code=booking_code).first()
+        if not booking:
+            raise ValidationError(
+                {"booking_code": f"Không tìm thấy đơn đặt tour với mã {booking_code}."}
+            )
+
+        if booking.status in (Booking.Status.PAID, Booking.Status.COMPLETED):
+            raise ValidationError(
+                {"booking_code": "Đơn đặt tour đã được thanh toán thành công trước đó."}
+            )
+
+        if booking.status == Booking.Status.CANCELLED:
+            raise ValidationError({"booking_code": "Đơn đặt tour đã bị hủy, không thể thanh toán."})
+
+        total_amount = booking.total_amount
+        if total_amount is None or total_amount <= 0:
+            raise ValidationError({"total_amount": "Số tiền thanh toán không hợp lệ."})
+
+        now = timezone.now()
+        timestamp = int(now.timestamp())
+        txn_ref = f"{booking.booking_code}_CASH_{timestamp}"
+
+        # Update booking payment method to cash
+        booking.payment_method = "cash"
+        booking.save(update_fields=["payment_method", "updated_at"])
+
+        # Create or update PaymentTransaction record
+        txn, _ = PaymentTransaction.objects.get_or_create(
+            booking=booking,
+            transaction_code=txn_ref,
+            defaults={
+                "provider": PaymentTransaction.Provider.CASH,
+                "amount": total_amount,
+                "currency": booking.currency,
+                "status": PaymentTransaction.Status.PENDING,
+                "idempotency_key": f"cash:{txn_ref}",
+                "request_payload": {"method": "cash", "registered_at": now.isoformat()},
+            },
+        )
+
+        return {
+            "payment_id": str(txn.id),
+            "transaction_code": txn.transaction_code,
+            "booking_code": booking.booking_code,
+            "amount": str(total_amount),
+            "currency": booking.currency,
+            "gateway": "cash",
+            "status": txn.status,
+            "payment_method": "cash",
+            "message": "Đã ghi nhận phương thức thanh toán tiền mặt. Quý khách vui lòng nộp tiền tại văn phòng hoặc cho HDV khi khởi hành.",
         }
 
     @transaction.atomic
@@ -230,6 +299,13 @@ class PaymentService:
                 # Emit Transactional Outbox Event for Odoo ERP sync
                 try:
                     event_id = str(uuid.uuid4())
+                    tour = getattr(booking, "tour", None)
+                    pax_adults = getattr(booking, "pax_adults", 1) or 1
+                    pax_children = getattr(booking, "pax_children", 0) or 0
+                    total_amt = booking.total_amount or Decimal(0)
+                    unit_price = float(
+                        getattr(booking, "unit_price", None) or (total_amt / max(1, pax_adults))
+                    )
                     envelope = {
                         "event_id": event_id,
                         "event_type": "booking.paid",
@@ -240,10 +316,33 @@ class PaymentService:
                             "booking_id": str(booking.id),
                             "booking_code": booking.booking_code,
                             "transaction_code": txn.transaction_code,
-                            "gateway_transaction_no": txn.provider_ref,
+                            "gateway_transaction_no": txn.provider_ref or txn.transaction_code,
                             "amount": float(txn.amount),
+                            "total_amount": float(txn.amount),
                             "currency": txn.currency,
                             "paid_at": now.isoformat(),
+                            "customer": {
+                                "name": booking.contact_name or "Khách hàng STAR Travels",
+                                "email": booking.contact_email or "",
+                                "phone": booking.contact_phone or "",
+                            },
+                            "payment": {
+                                "gateway": txn.provider or "vnpay",
+                                "gateway_transaction_id": txn.provider_ref or txn.transaction_code,
+                                "amount": float(txn.amount),
+                                "currency": txn.currency,
+                                "paid_at": now.isoformat(),
+                            },
+                            "items": [
+                                {
+                                    "title": tour.title if tour else "STAR Travels Curated Tour",
+                                    "tour_slug": tour.slug if tour else "tour-general",
+                                    "adults": pax_adults,
+                                    "children": pax_children,
+                                    "price_adult": unit_price,
+                                    "price_child": round(unit_price * 0.75, 2),
+                                }
+                            ],
                         },
                     }
                     outbox = IntegrationOutbox.objects.create(
@@ -254,7 +353,7 @@ class PaymentService:
                         payload=envelope,
                         state=IntegrationOutbox.State.PENDING,
                     )
-                    dispatch_outbox_event.delay(str(outbox.id))
+                    cast(Any, dispatch_outbox_event).delay(str(outbox.id))
                 except Exception as exc:
                     logger.warning(f"Failed to enqueue booking.paid outbox event: {exc}")
 
@@ -344,6 +443,13 @@ class PaymentService:
             # Emit Transactional Outbox Event for Odoo ERP sync
             try:
                 event_id = str(uuid.uuid4())
+                tour = getattr(booking, "tour", None)
+                pax_adults = getattr(booking, "pax_adults", 1) or 1
+                pax_children = getattr(booking, "pax_children", 0) or 0
+                total_amt = booking.total_amount or Decimal(0)
+                unit_price = float(
+                    getattr(booking, "unit_price", None) or (total_amt / max(1, pax_adults))
+                )
                 envelope = {
                     "event_id": event_id,
                     "event_type": "booking.paid",
@@ -354,11 +460,34 @@ class PaymentService:
                         "booking_id": str(booking.id),
                         "booking_code": booking.booking_code,
                         "transaction_code": txn.transaction_code,
-                        "gateway_transaction_no": txn.provider_ref,
+                        "gateway_transaction_no": txn.provider_ref or txn.transaction_code,
                         "amount": float(txn.amount),
+                        "total_amount": float(txn.amount),
                         "currency": txn.currency,
                         "paid_at": now.isoformat(),
                         "source": payload.get("source", "manual_odoo_ui"),
+                        "customer": {
+                            "name": booking.contact_name or "Khách hàng STAR Travels",
+                            "email": booking.contact_email or "",
+                            "phone": booking.contact_phone or "",
+                        },
+                        "payment": {
+                            "gateway": "vietqr",
+                            "gateway_transaction_id": txn.provider_ref or txn.transaction_code,
+                            "amount": float(txn.amount),
+                            "currency": txn.currency,
+                            "paid_at": now.isoformat(),
+                        },
+                        "items": [
+                            {
+                                "title": tour.title if tour else "STAR Travels Curated Tour",
+                                "tour_slug": tour.slug if tour else "tour-general",
+                                "adults": pax_adults,
+                                "children": pax_children,
+                                "price_adult": unit_price,
+                                "price_child": round(unit_price * 0.75, 2),
+                            }
+                        ],
                     },
                 }
                 outbox = IntegrationOutbox.objects.create(
@@ -369,7 +498,7 @@ class PaymentService:
                     payload=envelope,
                     state=IntegrationOutbox.State.PENDING,
                 )
-                dispatch_outbox_event.delay(str(outbox.id))
+                cast(Any, dispatch_outbox_event).delay(str(outbox.id))
             except Exception as exc:
                 logger.warning(f"Failed to enqueue booking.paid outbox event for VietQR: {exc}")
 

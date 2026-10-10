@@ -1,19 +1,24 @@
 "use client";
 
 import { useState } from "react";
-import { Calendar, ShieldCheck, Check, Clock, Sparkles } from "lucide-react";
-import type { Place } from "@/lib/types";
+import { useRouter } from "next/navigation";
+import { Calendar, ShieldCheck, Check, Clock, Sparkles, QrCode, Banknote, ArrowRight } from "lucide-react";
+import type { Place, CurrentUser } from "@/lib/types";
 import { useLanguage } from "@/lib/i18n/context";
 
 interface ExperienceBookingCardProps {
   place: Place;
+  user?: CurrentUser | null;
 }
 
-export function ExperienceBookingCard({ place }: ExperienceBookingCardProps) {
+export function ExperienceBookingCard({ place, user }: ExperienceBookingCardProps) {
+  const router = useRouter();
   const { t, isEnglish } = useLanguage();
   const [guests, setGuests] = useState(2);
   const [date, setDate] = useState("2026-10-15");
   const [session, setSession] = useState("morning");
+  const [paymentMethod, setPaymentMethod] = useState<"vietqr" | "cash">("vietqr");
+  const [submitting, setSubmitting] = useState(false);
   const [booked, setBooked] = useState(false);
 
   const basePrice = Number(place.destination?.starting_price || 650000);
@@ -28,7 +33,14 @@ export function ExperienceBookingCard({ place }: ExperienceBookingCardProps) {
 
   const handleBooking = (e: React.FormEvent) => {
     e.preventDefault();
-    setBooked(true);
+    if (!user) {
+      const currentUrl = `/experiences/${encodeURIComponent(place.slug || String(place.id))}`;
+      router.push(`/login?returnUrl=${encodeURIComponent(currentUrl)}&reason=booking`);
+      return;
+    }
+    setSubmitting(true);
+    const bookingCode = `STAR-EXP-${String(place.id || "ACT").slice(0, 4).toUpperCase()}-${Math.random().toString(36).substring(2, 7).toUpperCase()}`;
+    router.push(`/booking/${encodeURIComponent(bookingCode)}/payment?gateway=${paymentMethod}&amount=${totalPrice}`);
   };
 
   return (
@@ -147,6 +159,68 @@ export function ExperienceBookingCard({ place }: ExperienceBookingCardProps) {
             </div>
           </div>
 
+          {/* PHƯƠNG THỨC THANH TOÁN (2 TRƯỜNG HỢP: QR HOẶC TIỀN MẶT) */}
+          <div className="pt-3 border-t border-slate-100">
+            <label className="block text-xs font-bold uppercase tracking-wider text-slate-800 mb-2">
+              {isEnglish ? "Payment Method *" : "Phương Thức Thanh Toán *"}
+            </label>
+            <div className="grid grid-cols-2 gap-2">
+              {/* TRƯỜNG HỢP 1: CHUYỂN KHOẢN QR */}
+              <button
+                type="button"
+                onClick={() => setPaymentMethod("vietqr")}
+                className={`p-2.5 rounded-[2px] border text-left transition cursor-pointer flex items-center gap-2 ${
+                  paymentMethod === "vietqr"
+                    ? "border-[#0098a2] bg-[#0098a2]/5 ring-1 ring-[#0098a2] shadow-sm"
+                    : "border-slate-200 bg-white hover:border-slate-300"
+                }`}
+              >
+                <div
+                  className={`p-1.5 rounded shrink-0 ${
+                    paymentMethod === "vietqr" ? "bg-[#0098a2] text-white" : "bg-slate-100 text-slate-600"
+                  }`}
+                >
+                  <QrCode className="size-4" />
+                </div>
+                <div className="min-w-0">
+                  <span className="text-xs font-bold text-slate-900 block truncate">
+                    {isEnglish ? "QR Transfer" : "Chuyển khoản QR"}
+                  </span>
+                  <span className="text-[10px] text-emerald-700 block">
+                    {isEnglish ? "Auto 24/7" : "Tự động 24/7"}
+                  </span>
+                </div>
+              </button>
+
+              {/* TRƯỜNG HỢP 2: TIỀN MẶT */}
+              <button
+                type="button"
+                onClick={() => setPaymentMethod("cash")}
+                className={`p-2.5 rounded-[2px] border text-left transition cursor-pointer flex items-center gap-2 ${
+                  paymentMethod === "cash"
+                    ? "border-[#0098a2] bg-[#0098a2]/5 ring-1 ring-[#0098a2] shadow-sm"
+                    : "border-slate-200 bg-white hover:border-slate-300"
+                }`}
+              >
+                <div
+                  className={`p-1.5 rounded shrink-0 ${
+                    paymentMethod === "cash" ? "bg-amber-600 text-white" : "bg-slate-100 text-slate-600"
+                  }`}
+                >
+                  <Banknote className="size-4" />
+                </div>
+                <div className="min-w-0">
+                  <span className="text-xs font-bold text-slate-900 block truncate">
+                    {isEnglish ? "Cash Payment" : "Tiền mặt"}
+                  </span>
+                  <span className="text-[10px] text-amber-700 block">
+                    {isEnglish ? "Office / Guide" : "Tại quầy / HDV"}
+                  </span>
+                </div>
+              </button>
+            </div>
+          </div>
+
           <div className="pt-2 border-t border-slate-100">
             <div className="flex items-center justify-between text-xs text-slate-600 mb-1">
               <span>
@@ -166,11 +240,28 @@ export function ExperienceBookingCard({ place }: ExperienceBookingCardProps) {
 
           <button
             type="submit"
-            className="w-full bg-[#da251d] text-white py-3.5 text-xs font-semibold tracking-widest uppercase rounded-[2px] shadow-sm transition-all duration-200 hover:bg-[#c92018] hover:shadow-[0px_8px_25px_rgba(218,37,29,0.35)] hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2 cursor-pointer"
+            disabled={submitting}
+            className="w-full bg-[#da251d] text-white py-3.5 text-xs font-bold tracking-widest uppercase rounded-[2px] shadow-sm transition-all duration-200 hover:bg-[#c92018] hover:shadow-[0px_8px_25px_rgba(218,37,29,0.35)] hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60"
           >
-            <Sparkles className="size-4" />
-            <span>{b.bookBtn}</span>
+            <span>
+              {submitting
+                ? (isEnglish ? "PROCESSING..." : "ĐANG XỬ LÝ...")
+                : !user
+                ? (isEnglish ? "SIGN IN TO RESERVE" : "ĐĂNG NHẬP ĐỂ ĐẶT CHỖ")
+                : paymentMethod === "vietqr"
+                ? (isEnglish ? "PAY WITH QR CODE" : "TIẾN HÀNH THANH TOÁN QR")
+                : (isEnglish ? "CONFIRM CASH RESERVATION" : "GIỮ CHỖ & NỘP TIỀN MẶT")}
+            </span>
+            <ArrowRight className="size-4" />
           </button>
+
+          {!user && (
+            <p className="mt-2 text-center text-[11px] text-slate-500 font-light">
+              {isEnglish
+                ? "Browsing as guest. Sign in required to complete reservation."
+                : "Đang xem với tư cách khách vãng lai. Vui lòng đăng nhập để đặt chỗ."}
+            </p>
+          )}
         </form>
       )}
 

@@ -32,13 +32,20 @@ PostgreSQL + PostGIS    Redis <-> Celery worker
 ```
 
 ## Bounded contexts
-- `accounts`: identity and platform role.
-- `destinations`: destination editorial entity.
-- `places`: local places, categories, geospatial discovery.
-- `partners`: partnership application, organization and membership workflow.
-- `content`: travel articles/editorial content.
-- `reviews`: reviews and favorites.
-- `audit`: immutable privileged operational events.
+- `accounts`: identity, RBAC roles (Traveler, Partner, Staff), and JWT authentication.
+- `destinations`: destination editorial entities and regional groupings.
+- `places`: local attractions, categories, and PostGIS geospatial discovery.
+- `tours`: curated tour packages, daily itinerary timelines, and pricing invariants.
+- `experiences`: localized activities, adventure slots, and booking metadata.
+- `bookings`: transactional tour reservations and affiliate referral bookings (`item_type='tour'|'accommodation_referral'|'restaurant_referral'`).
+- `payments`: payment ledger and gateway integrations (VNPay Sandbox, VietQR NAPAS 247, Cash on Arrival) with price tampering protection.
+- `assistant`: AI Concierge RAG engine (pgvector semantic search, prompt injection defense, lead extraction).
+- `accommodations`: luxury hotel/resort catalog, amenities, and affiliate referral partner mapping.
+- `restaurants`: dining venues, Michelin Guide spotlights, culinary styles, and table reservation referral mapping.
+- `partners`: B2B partner application state machine (`submitted` -> `under_review` -> `approved`/`rejected`) with row-level locks.
+- `content`: editorial travel stories and cultural cẩm nang.
+- `reviews`: verified traveler ratings and saved favorites.
+- `audit`: immutable privileged operational logs.
 
 ## Dependency rules
 - API views/serializers orchestrate HTTP concerns; they do not own privileged workflow invariants.
