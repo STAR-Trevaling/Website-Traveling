@@ -4,15 +4,26 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('payments', '0001_initial'),
+        ("payments", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='paymenttransaction',
-            name='provider',
-            field=models.CharField(choices=[('vnpay', 'VNPay'), ('vietqr', 'VietQR'), ('cash', 'Tiền mặt'), ('momo', 'MoMo'), ('zalopay', 'ZaloPay'), ('stripe', 'Stripe')], db_index=True, default='vnpay', max_length=32),
+            model_name="paymenttransaction",
+            name="provider",
+            field=models.CharField(
+                choices=[
+                    ("vnpay", "VNPay"),
+                    ("vietqr", "VietQR"),
+                    ("cash", "Tiền mặt"),
+                    ("momo", "MoMo"),
+                    ("zalopay", "ZaloPay"),
+                    ("stripe", "Stripe"),
+                ],
+                db_index=True,
+                default="vnpay",
+                max_length=32,
+            ),
         ),
     ]

@@ -287,10 +287,11 @@ CELERY_BEAT_SCHEDULE = {
 
 # Sentry APM & Error Tracking
 SENTRY_DSN = os.getenv("SENTRY_DSN")
-SENTRY_ENVIRONMENT = os.getenv("SENTRY_ENVIRONMENT", os.getenv("ENVIRONMENT", "production" if not DEBUG else "development"))
+SENTRY_ENVIRONMENT = os.getenv(
+    "SENTRY_ENVIRONMENT", os.getenv("ENVIRONMENT", "production" if not DEBUG else "development")
+)
 SENTRY_TRACES_SAMPLE_RATE = float(os.getenv("SENTRY_TRACES_SAMPLE_RATE", "0.2"))
 ALERT_WEBHOOK_URL = os.getenv("ALERT_WEBHOOK_URL", "")
-
 
 
 def _sentry_before_send(event, hint):
@@ -332,7 +333,9 @@ def _sentry_before_send(event, hint):
             req["headers"] = _scrub(req["headers"])
         if "data" in req:
             req["data"] = _scrub(req["data"])
-        if "query_string" in req and any(s in str(req["query_string"]).lower() for s in sensitive_keys):
+        if "query_string" in req and any(
+            s in str(req["query_string"]).lower() for s in sensitive_keys
+        ):
             req["query_string"] = "[REDACTED]"
 
     if "extra" in event and isinstance(event["extra"], dict):
@@ -341,7 +344,6 @@ def _sentry_before_send(event, hint):
         event["contexts"] = _scrub(event["contexts"])
 
     return event
-
 
 
 if SENTRY_DSN:
@@ -368,6 +370,5 @@ if SENTRY_DSN:
         )
     except Exception as _sentry_init_err:
         import sys
+
         sys.stderr.write(f"Warning: Sentry initialization failed: {_sentry_init_err}\n")
-
-

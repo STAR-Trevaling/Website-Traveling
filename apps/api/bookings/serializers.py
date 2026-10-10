@@ -71,7 +71,9 @@ class BookingSerializer(serializers.ModelSerializer):
         if tour:
             validated_data["unit_price"] = tour.price
             child_price = (tour.price * Decimal("0.7")).quantize(Decimal("1"))
-            validated_data["total_amount"] = (tour.price * pax_adults) + (child_price * pax_children)
+            validated_data["total_amount"] = (tour.price * pax_adults) + (
+                child_price * pax_children
+            )
             validated_data["currency"] = "VND"
             code_prefix = tour.slug.replace("-", "").upper()[:4]
         else:

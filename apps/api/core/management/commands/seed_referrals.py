@@ -23,12 +23,19 @@ ACCOMMODATION_SEED = [
         "lng": 105.8562,
         "description": "Khách sạn di sản huyền thoại sang trọng bậc nhất Đông Dương thành lập từ năm 1901, mang phong cách Pháp cổ điển kết hợp nét thanh lịch Hà Nội.",
         "description_en": "Legendary luxury heritage hotel in the heart of Hanoi since 1901, blending neoclassical grandeur with authentic Vietnamese hospitality.",
-        "amenities": ["Hồ bơi nước ấm", "Le Spa du Metropole", "Nhà hàng Pháp Le Beaulieu", "Hầm trú ẩn lịch sử", "Bar Bamboo", "Dịch vụ quản gia"],
+        "amenities": [
+            "Hồ bơi nước ấm",
+            "Le Spa du Metropole",
+            "Nhà hàng Pháp Le Beaulieu",
+            "Hầm trú ẩn lịch sử",
+            "Bar Bamboo",
+            "Dịch vụ quản gia",
+        ],
         "price_from": Decimal("7500000"),
         "image_url": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=80",
         "gallery": [
             "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=800&q=80",
-            "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=800&q=80"
+            "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=800&q=80",
         ],
         "partner_name": "Booking.com",
         "partner_booking_url": "https://www.booking.com/hotel/vn/sofitel-legend-metropole-hanoi.vi.html?aid=startravels",
@@ -48,10 +55,17 @@ ACCOMMODATION_SEED = [
         "lng": 105.8576,
         "description": "Kiệt tác thiết kế của kiến trúc sư Bill Bensley lấy cảm hứng từ thời kỳ hoàng kim của nghệ thuật Opera những năm 1920.",
         "description_en": "Art-deco masterpiece by Bill Bensley celebrating the roaring 1920s Opera era, located steps away from Hanoi Opera House.",
-        "amenities": ["Nhà hàng Hibana by Koki Michelin 1*", "Auriga Spa", "Hồ bơi La Grotta", "Quầy bar Diva's Lounge"],
+        "amenities": [
+            "Nhà hàng Hibana by Koki Michelin 1*",
+            "Auriga Spa",
+            "Hồ bơi La Grotta",
+            "Quầy bar Diva's Lounge",
+        ],
         "price_from": Decimal("9200000"),
         "image_url": "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1200&q=80",
-        "gallery": ["https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80"],
+        "gallery": [
+            "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80"
+        ],
         "partner_name": "Agoda",
         "partner_booking_url": "https://www.agoda.com/capella-hanoi/hotel/hanoi-vn.html?cid=startravels",
         "partner_commission_rate": Decimal("9.00"),
@@ -70,10 +84,18 @@ ACCOMMODATION_SEED = [
         "lng": 108.3075,
         "description": "Khu nghỉ dưỡng sang trọng bậc nhất thế giới nép mình bên sườn đồi bán đảo Sơn Trà với vịnh biển riêng tư tuyệt mỹ.",
         "description_en": "World-acclaimed luxury hillside resort designed by Bill Bensley, sprawling across four levels: Heaven, Sky, Earth and Sea.",
-        "amenities": ["Nhà hàng La Maison 1888", "Bãi biển riêng 700m", "Mi Sol Spa", "Tàu điện Nam Tram", "Hồ bơi LGO"],
+        "amenities": [
+            "Nhà hàng La Maison 1888",
+            "Bãi biển riêng 700m",
+            "Mi Sol Spa",
+            "Tàu điện Nam Tram",
+            "Hồ bơi LGO",
+        ],
         "price_from": Decimal("11500000"),
         "image_url": "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1200&q=80",
-        "gallery": ["https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=800&q=80"],
+        "gallery": [
+            "https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=800&q=80"
+        ],
         "partner_name": "Agoda",
         "partner_booking_url": "https://www.agoda.com/intercontinental-danang-sun-peninsula-resort/hotel/da-nang-vn.html?cid=startravels",
         "partner_commission_rate": Decimal("10.00"),
@@ -92,10 +114,17 @@ ACCOMMODATION_SEED = [
         "lng": 108.3184,
         "description": "Quần thể biệt thự ven biển tuyệt mỹ lấy cảm hứng từ triết lý phong thủy và kiến trúc nhà vườn truyền thống xứ Quảng.",
         "description_en": "Tranquil beachfront sanctuary of luxurious villas set amidst 35 hectares of tropical coconut palms along pristine Ha My Beach.",
-        "amenities": ["Biệt thự hồ bơi riêng", "The Heart of the Earth Spa", "3 hồ bơi vô cực tràn biển", "Lớp học nấu ăn Cooking Academy"],
+        "amenities": [
+            "Biệt thự hồ bơi riêng",
+            "The Heart of the Earth Spa",
+            "3 hồ bơi vô cực tràn biển",
+            "Lớp học nấu ăn Cooking Academy",
+        ],
         "price_from": Decimal("16800000"),
         "image_url": "https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=1200&q=80",
-        "gallery": ["https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=800&q=80"],
+        "gallery": [
+            "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=800&q=80"
+        ],
         "partner_name": "Booking.com",
         "partner_booking_url": "https://www.booking.com/hotel/vn/the-nam-hai.vi.html?aid=startravels",
         "partner_commission_rate": Decimal("8.00"),
@@ -114,10 +143,17 @@ ACCOMMODATION_SEED = [
         "lng": 109.2801,
         "description": "Nằm trên bán đảo biệt lập chỉ có thể tiếp cận bằng đường thủy, hòa mình tuyệt đối giữa biển xanh ngọc bích và ghềnh đá nguyên sơ.",
         "description_en": "Iconic secluded sanctuary accessible only by boat, boasting stunning rock villas and organic wellness experiences.",
-        "amenities": ["Biệt thự ghềnh đá (Rock Villa)", "Six Senses Wellness Spa", "Chèo thuyền kayak vịnh riêng", "Rạp chiếu phim ngoài trời"],
+        "amenities": [
+            "Biệt thự ghềnh đá (Rock Villa)",
+            "Six Senses Wellness Spa",
+            "Chèo thuyền kayak vịnh riêng",
+            "Rạp chiếu phim ngoài trời",
+        ],
         "price_from": Decimal("18500000"),
         "image_url": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80",
-        "gallery": ["https://images.unsplash.com/photo-1544551763-77ef2d0cfc6c?auto=format&fit=crop&w=800&q=80"],
+        "gallery": [
+            "https://images.unsplash.com/photo-1544551763-77ef2d0cfc6c?auto=format&fit=crop&w=800&q=80"
+        ],
         "partner_name": "Traveloka",
         "partner_booking_url": "https://www.traveloka.com/vi-vn/hotel/vietnam/six-senses-ninh-van-bay-100000021345?aid=startravels",
         "partner_commission_rate": Decimal("11.00"),
@@ -136,10 +172,17 @@ ACCOMMODATION_SEED = [
         "lng": 104.0322,
         "description": "Khu nghỉ dưỡng giả tưởng đại học Lamarck University bên bờ cát trắng mịn Bãi Khem, được mệnh danh là kiệt tác kiến trúc của đảo ngọc.",
         "description_en": "Whimsical luxury masterpiece conceptualized around a mythical university academy by designer Bill Bensley on Bai Khem beach.",
-        "amenities": ["Hồ bơi hình vỏ sò Shell Pool", "Chanterelle Spa by JW", "Nhà hàng Pink Pearl fine-dining", "Bãi biển Bãi Khem riêng"],
+        "amenities": [
+            "Hồ bơi hình vỏ sò Shell Pool",
+            "Chanterelle Spa by JW",
+            "Nhà hàng Pink Pearl fine-dining",
+            "Bãi biển Bãi Khem riêng",
+        ],
         "price_from": Decimal("7800000"),
         "image_url": "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=1200&q=80",
-        "gallery": ["https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80"],
+        "gallery": [
+            "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80"
+        ],
         "partner_name": "Agoda",
         "partner_booking_url": "https://www.agoda.com/jw-marriott-phu-quoc-emerald-bay-resort-spa/hotel/phu-quoc-island-vn.html?cid=startravels",
         "partner_commission_rate": Decimal("8.50"),
@@ -158,10 +201,17 @@ ACCOMMODATION_SEED = [
         "lng": 103.9015,
         "description": "Khu nghỉ dưỡng sinh thái nằm trên đỉnh đồi hình nón với hồ bơi vô cực hướng trọn thung lũng Mường Hoa và ruộng bậc thang hùng vĩ.",
         "description_en": "Certified National Geographic Unique Lodge perched on a scenic hilltop with iconic infinity pools overlooking Muong Hoa Valley.",
-        "amenities": ["2 hồ bơi vô cực nước ấm ngắm thung lũng", "Tắm lá thuốc người Dao Đỏ", "Bungalow đá granite bản địa", "Tour trekking bản làng"],
+        "amenities": [
+            "2 hồ bơi vô cực nước ấm ngắm thung lũng",
+            "Tắm lá thuốc người Dao Đỏ",
+            "Bungalow đá granite bản địa",
+            "Tour trekking bản làng",
+        ],
         "price_from": Decimal("5200000"),
         "image_url": "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=1200&q=80",
-        "gallery": ["https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=800&q=80"],
+        "gallery": [
+            "https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=800&q=80"
+        ],
         "partner_name": "Agoda",
         "partner_booking_url": "https://www.agoda.com/topas-ecolodge/hotel/sapa-vn.html?cid=startravels",
         "partner_commission_rate": Decimal("9.50"),
@@ -180,10 +230,17 @@ ACCOMMODATION_SEED = [
         "lng": 107.5786,
         "description": "Biệt thự Art Deco lịch sử thời thuộc địa soi bóng bên dòng sông Hương thơ mộng, đối diện Cố đô Huế.",
         "description_en": "Classic 1930s Art Deco mansion set on two and a half hectares along the fabled Perfume River facing the ancient Hue Citadel.",
-        "amenities": ["Hồ bơi nước mặn hướng sông Hương", "Le Spa", "Du thuyền riêng ngắm hoàng hôn", "Nhà hàng ẩm thực cung đình Le Parfum"],
+        "amenities": [
+            "Hồ bơi nước mặn hướng sông Hương",
+            "Le Spa",
+            "Du thuyền riêng ngắm hoàng hôn",
+            "Nhà hàng ẩm thực cung đình Le Parfum",
+        ],
         "price_from": Decimal("4600000"),
         "image_url": "https://images.unsplash.com/photo-1583417319070-4a69db38a482?auto=format&fit=crop&w=1200&q=80",
-        "gallery": ["https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80"],
+        "gallery": [
+            "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80"
+        ],
         "partner_name": "Booking.com",
         "partner_booking_url": "https://www.booking.com/hotel/vn/azerai-la-residence-hue.vi.html?aid=startravels",
         "partner_commission_rate": Decimal("8.00"),
@@ -202,10 +259,17 @@ ACCOMMODATION_SEED = [
         "lng": 106.9942,
         "description": "Hải trình du thuyền ngủ đêm 5 sao cao cấp khám phá kỳ quan thiên nhiên thế giới Vịnh Hạ Long và Vịnh Lan Hạ.",
         "description_en": "Premier 5-star wooden junk & steel grand cruise fleet exploring the limestone karsts of UNESCO World Heritage Halong Bay.",
-        "amenities": ["Cabin ban công riêng view vịnh", "Bể sục Jacuzzi bốn mùa", "Bữa tối hải sản thượng hạng", "Chèo thuyền kayak đảo Ti Tốp"],
+        "amenities": [
+            "Cabin ban công riêng view vịnh",
+            "Bể sục Jacuzzi bốn mùa",
+            "Bữa tối hải sản thượng hạng",
+            "Chèo thuyền kayak đảo Ti Tốp",
+        ],
         "price_from": Decimal("6800000"),
         "image_url": "https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=1200&q=80",
-        "gallery": ["https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?auto=format&fit=crop&w=800&q=80"],
+        "gallery": [
+            "https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?auto=format&fit=crop&w=800&q=80"
+        ],
         "partner_name": "Booking.com",
         "partner_booking_url": "https://www.booking.com/hotel/vn/paradise-luxury-cruises.vi.html?aid=startravels",
         "partner_commission_rate": Decimal("10.00"),
@@ -224,10 +288,17 @@ ACCOMMODATION_SEED = [
         "lng": 105.9327,
         "description": "Viên ngọc ẩn mình giữa cánh đồng lúa và những rặng núi đá vôi Tam Cốc, kết hợp tinh hoa làng quê Bắc Bộ và tiện nghi sang trọng.",
         "description_en": "Exclusive eco-chic oasis nestled among limestone karsts and emerald rice paddies in the tranquil Ninh Binh countryside.",
-        "amenities": ["Hồ bơi ngoài trời giữa vườn cây", "Xe đạp dạo đồng lúa miễn phí", "Vườn rau hữu cơ", "Dịch vụ massage chân thảo dược"],
+        "amenities": [
+            "Hồ bơi ngoài trời giữa vườn cây",
+            "Xe đạp dạo đồng lúa miễn phí",
+            "Vườn rau hữu cơ",
+            "Dịch vụ massage chân thảo dược",
+        ],
         "price_from": Decimal("3800000"),
         "image_url": "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?auto=format&fit=crop&w=1200&q=80",
-        "gallery": ["https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80"],
+        "gallery": [
+            "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80"
+        ],
         "partner_name": "Agoda",
         "partner_booking_url": "https://www.agoda.com/tam-coc-garden-resort/hotel/ninh-binh-vn.html?cid=startravels",
         "partner_commission_rate": Decimal("9.00"),
@@ -249,10 +320,16 @@ RESTAURANT_SEED = [
         "lng": 105.8364,
         "description": "Nhà hàng đạt 1 sao Michelin lấy cảm hứng từ kiến trúc Văn Miếu, sáng tạo thực đơn Tasting Menu theo mùa tôn vinh ẩm thực Việt Nam đương đại.",
         "description_en": "1-Michelin-starred fine dining culinary gem across from the Temple of Literature, offering seasonal tasting menus celebrating Vietnamese gastronomy.",
-        "signature_dishes": ["Bò H'Mông sốt tương bần", "Bánh tráng cuốn cá tầm Sapa", "Kem cốm Làng Vòng & sương sáo"],
+        "signature_dishes": [
+            "Bò H'Mông sốt tương bần",
+            "Bánh tráng cuốn cá tầm Sapa",
+            "Kem cốm Làng Vòng & sương sáo",
+        ],
         "opening_hours": {"tue_sun": "18:00 - 22:30", "monday": "Đóng cửa"},
         "image_url": "https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?auto=format&fit=crop&w=1200&q=80",
-        "gallery": ["https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=800&q=80"],
+        "gallery": [
+            "https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=800&q=80"
+        ],
         "contact_type": "url",
         "contact_value": "https://gia-hanoi.com/reservation?ref=startravels",
         "partner_commission_rate": Decimal("5.00"),
@@ -271,10 +348,17 @@ RESTAURANT_SEED = [
         "lng": 105.8385,
         "description": "Ngôi nhà gỗ cổ kính đậm chất Bắc Bộ xưa, nổi tiếng với những mâm cơm gia đình chuẩn vị Hà Nội truyền thống đạt 1 sao Michelin.",
         "description_en": "Michelin-starred Northern Vietnamese home-cooking served in a charming antique wooden house reminiscent of old Hanoi.",
-        "signature_dishes": ["Canh cua mồng tơi & cà pháo", "Thịt kho tàu nước dừa", "Chả ốc chiên giòn lá lốt", "Đậu phụ rán chấm mắm tôm"],
+        "signature_dishes": [
+            "Canh cua mồng tơi & cà pháo",
+            "Thịt kho tàu nước dừa",
+            "Chả ốc chiên giòn lá lốt",
+            "Đậu phụ rán chấm mắm tôm",
+        ],
         "opening_hours": {"mon_sun": "11:00 - 14:00, 17:30 - 21:30"},
         "image_url": "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1200&q=80",
-        "gallery": ["https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80"],
+        "gallery": [
+            "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80"
+        ],
         "contact_type": "phone",
         "contact_value": "tel:+84986323123",
         "partner_commission_rate": Decimal("5.00"),
@@ -293,10 +377,17 @@ RESTAURANT_SEED = [
         "lng": 106.7032,
         "description": "Nhà hàng tiên phong phong cách Cuisine Échappée của Bếp trưởng Peter Cường Franklin nằm giữa khu chợ ướt Chợ Cũ lịch sử Sài Gòn.",
         "description_en": "Ranked among Asia's 50 Best Restaurants and awarded 1 Michelin Star, Anan transforms Vietnamese street food into haute cuisine.",
-        "signature_dishes": ["Bánh xèo taco trứng cá tầm", "Phở bò Wagyu thố đá", "Pizza Đà Lạt nướng than hoa", "Bánh mì One-Bite"],
+        "signature_dishes": [
+            "Bánh xèo taco trứng cá tầm",
+            "Phở bò Wagyu thố đá",
+            "Pizza Đà Lạt nướng than hoa",
+            "Bánh mì One-Bite",
+        ],
         "opening_hours": {"tue_sun": "17:00 - 23:00", "monday": "Đóng cửa"},
         "image_url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1200&q=80",
-        "gallery": ["https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?auto=format&fit=crop&w=800&q=80"],
+        "gallery": [
+            "https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?auto=format&fit=crop&w=800&q=80"
+        ],
         "contact_type": "url",
         "contact_value": "https://anansaigon.com/booking?ref=startravels",
         "partner_commission_rate": Decimal("6.00"),
@@ -315,10 +406,17 @@ RESTAURANT_SEED = [
         "lng": 108.2238,
         "description": "Không gian phố cổ thu nhỏ bên bờ sông Hàn thơ mộng, quy tụ hơn 200 món ăn tinh hoa ẩm thực 3 miền và đặc sản xứ Quảng.",
         "description_en": "Charming riverside restaurant reminiscent of ancient Hoi An streets, serving over 200 traditional delicacies across Vietnam.",
-        "signature_dishes": ["Bánh xèo tôm nhảy giòn rụm", "Mì Quảng gà ta rau Trà Quế", "Gỏi cá Nam Ô", "Bún chả cá Đà Nẵng"],
+        "signature_dishes": [
+            "Bánh xèo tôm nhảy giòn rụm",
+            "Mì Quảng gà ta rau Trà Quế",
+            "Gỏi cá Nam Ô",
+            "Bún chả cá Đà Nẵng",
+        ],
         "opening_hours": {"mon_sun": "06:30 - 22:00"},
         "image_url": "https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1200&q=80",
-        "gallery": ["https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80"],
+        "gallery": [
+            "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80"
+        ],
         "contact_type": "url",
         "contact_value": "https://madamelan.vn/dat-ban?ref=startravels",
         "partner_commission_rate": Decimal("5.00"),
@@ -337,10 +435,17 @@ RESTAURANT_SEED = [
         "lng": 108.3283,
         "description": "Điểm hẹn ẩm thực nổi tiếng bậc nhất phố cổ Hội An của đầu bếp Vy, chuyên phục vụ cao lầu, hoành thánh và bánh hoa hồng trắng chính gốc.",
         "description_en": "Celebrated culinary institution by Chef Ms. Vy, famous for authentic Cao Lau noodles, white rose dumplings, and crispy wontons.",
-        "signature_dishes": ["Cao lầu thịt xíu Hội An", "Bánh bao bánh vạc (White Rose)", "Hoành thánh chiên sốt tôm thịt", "Cơm gà phố Hội"],
+        "signature_dishes": [
+            "Cao lầu thịt xíu Hội An",
+            "Bánh bao bánh vạc (White Rose)",
+            "Hoành thánh chiên sốt tôm thịt",
+            "Cơm gà phố Hội",
+        ],
         "opening_hours": {"mon_sun": "10:00 - 22:30"},
         "image_url": "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1200&q=80",
-        "gallery": ["https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80"],
+        "gallery": [
+            "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80"
+        ],
         "contact_type": "phone",
         "contact_value": "tel:+842353241555",
         "partner_commission_rate": Decimal("5.00"),
@@ -359,10 +464,16 @@ RESTAURANT_SEED = [
         "lng": 105.8437,
         "description": "Ngôi biệt thự Pháp thanh lịch tràn ngập ánh sáng tự nhiên với giếng trời và cây xanh, giao thoa tinh tế giữa ẩm thực Pháp và gia vị nhiệt đới Á Đông.",
         "description_en": "Sophisticated French colonial villa offering creative fusion gastronomy infused with exotic spices and fine wines.",
-        "signature_dishes": ["Gan ngỗng áp chảo sốt quả sung", "Cá chẽm nướng thảo mộc hồi quế", "Bò nướng tảng sốt tiêu đen Phú Quốc"],
+        "signature_dishes": [
+            "Gan ngỗng áp chảo sốt quả sung",
+            "Cá chẽm nướng thảo mộc hồi quế",
+            "Bò nướng tảng sốt tiêu đen Phú Quốc",
+        ],
         "opening_hours": {"mon_sat": "11:30 - 14:00, 18:00 - 22:00", "sunday": "Đóng cửa"},
         "image_url": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=80",
-        "gallery": ["https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?auto=format&fit=crop&w=800&q=80"],
+        "gallery": [
+            "https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?auto=format&fit=crop&w=800&q=80"
+        ],
         "contact_type": "url",
         "contact_value": "https://labadiane-hanoi.com/booking?ref=startravels",
         "partner_commission_rate": Decimal("6.50"),
@@ -381,10 +492,16 @@ RESTAURANT_SEED = [
         "lng": 106.7351,
         "description": "Nhà hàng ngắm hoàng hôn bên bờ sông Sài Gòn lãng mạn nhất miền Nam, phục vụ ẩm thực Á đương đại và cocktail nhiệt đới tinh tế.",
         "description_en": "Stunning riverside retreat on the banks of Saigon River, renowned for sensational sunsets, pan-Asian flavors and craft cocktails.",
-        "signature_dishes": ["Hàu Nha Trang sốt ponzu", "Cua lột chiên giòn sốt ớt cay", "Bò Úc nướng than hoa sốt tương mè"],
+        "signature_dishes": [
+            "Hàu Nha Trang sốt ponzu",
+            "Cua lột chiên giòn sốt ớt cay",
+            "Bò Úc nướng than hoa sốt tương mè",
+        ],
         "opening_hours": {"mon_sun": "08:00 - 23:00"},
         "image_url": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=80",
-        "gallery": ["https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=800&q=80"],
+        "gallery": [
+            "https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=800&q=80"
+        ],
         "contact_type": "url",
         "contact_value": "https://thedecksaigon.com/reservation?ref=startravels",
         "partner_commission_rate": Decimal("7.00"),
@@ -403,10 +520,17 @@ RESTAURANT_SEED = [
         "lng": 107.0398,
         "description": "Nhà hàng hải sản tươi sống cao cấp bậc nhất vịnh Hạ Long, nổi danh với lẩu cua biển nấu niêu đất và hải sản đánh bắt trong ngày.",
         "description_en": "Premier premium seafood destination in Halong Bay, famed for claypot golden crab hotpot and fresh ocean delicacies.",
-        "signature_dishes": ["Lẩu cua vàng niêu đất bí truyền", "Tôm hùm bông nướng phô mai", "Tu hài nướng mỡ hành", "Mực sim xào chua ngọt"],
+        "signature_dishes": [
+            "Lẩu cua vàng niêu đất bí truyền",
+            "Tôm hùm bông nướng phô mai",
+            "Tu hài nướng mỡ hành",
+            "Mực sim xào chua ngọt",
+        ],
         "opening_hours": {"mon_sun": "10:00 - 22:30"},
         "image_url": "https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1200&q=80",
-        "gallery": ["https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80"],
+        "gallery": [
+            "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80"
+        ],
         "contact_type": "phone",
         "contact_value": "tel:+842033819919",
         "partner_commission_rate": Decimal("5.00"),
@@ -425,10 +549,17 @@ RESTAURANT_SEED = [
         "lng": 107.5852,
         "description": "Trải nghiệm yến tiệc cung đình triều Nguyễn với trang phục hoàng gia, nhã nhạc cung đình và nghệ thuật tỉa củ hoa long phụng tinh xảo.",
         "description_en": "Royal court banquet dining experience showcasing imperial Nguyen Dynasty gastronomy, royal costumes, and UNESCO Court Music.",
-        "signature_dishes": ["Nem công chả phượng hoàng cung", "Cơm cung đình gói lá sen", "Bánh bèo chén tôm cháy", "Chè hạt sen long nhãn"],
+        "signature_dishes": [
+            "Nem công chả phượng hoàng cung",
+            "Cơm cung đình gói lá sen",
+            "Bánh bèo chén tôm cháy",
+            "Chè hạt sen long nhãn",
+        ],
         "opening_hours": {"mon_sun": "10:30 - 14:00, 17:30 - 21:30"},
         "image_url": "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1200&q=80",
-        "gallery": ["https://images.unsplash.com/photo-1583417319070-4a69db38a482?auto=format&fit=crop&w=800&q=80"],
+        "gallery": [
+            "https://images.unsplash.com/photo-1583417319070-4a69db38a482?auto=format&fit=crop&w=800&q=80"
+        ],
         "contact_type": "phone",
         "contact_value": "tel:+842343888999",
         "partner_commission_rate": Decimal("6.00"),
@@ -447,10 +578,17 @@ RESTAURANT_SEED = [
         "lng": 105.8465,
         "description": "Không gian ẩm thực ấm cúng với hơn 80 món ngon tinh túy khắp mọi miền quê Việt Nam, từ cơm niêu đến hải sản xào thơm nức.",
         "description_en": "Cozy heritage bistro celebrated for comforting family feasts, claypot rice and fragrant specialties from all Vietnamese regions.",
-        "signature_dishes": ["Cơm niêu cá kho tộ", "Bắp bò ngâm mắm nhĩ", "Lẩu riêu cua bắp bò sườn sụn", "Chè bưởi An Giang"],
+        "signature_dishes": [
+            "Cơm niêu cá kho tộ",
+            "Bắp bò ngâm mắm nhĩ",
+            "Lẩu riêu cua bắp bò sườn sụn",
+            "Chè bưởi An Giang",
+        ],
         "opening_hours": {"mon_sun": "10:00 - 14:30, 17:00 - 22:30"},
         "image_url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1200&q=80",
-        "gallery": ["https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=800&q=80"],
+        "gallery": [
+            "https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=800&q=80"
+        ],
         "contact_type": "phone",
         "contact_value": "tel:+841900636932",
         "partner_commission_rate": Decimal("5.00"),
@@ -550,15 +688,45 @@ class Command(BaseCommand):
         self.stdout.write("Seeding demo referral tracking bookings for analytics dashboard...")
         demo_referrals = [
             # Capella Hanoi
-            {"acc": created_accs[1], "count": 18, "has_lead": 6, "lead_name": "Trần Hải Đăng", "lead_phone": "0912345678"},
+            {
+                "acc": created_accs[1],
+                "count": 18,
+                "has_lead": 6,
+                "lead_name": "Trần Hải Đăng",
+                "lead_phone": "0912345678",
+            },
             # InterContinental Danang
-            {"acc": created_accs[2], "count": 24, "has_lead": 8, "lead_name": "Nguyễn Mai Phương", "lead_phone": "0987654321"},
+            {
+                "acc": created_accs[2],
+                "count": 24,
+                "has_lead": 8,
+                "lead_name": "Nguyễn Mai Phương",
+                "lead_phone": "0987654321",
+            },
             # Metropole Hanoi
-            {"acc": created_accs[0], "count": 15, "has_lead": 4, "lead_name": "Lê Hoàng Quân", "lead_phone": "0903123456"},
+            {
+                "acc": created_accs[0],
+                "count": 15,
+                "has_lead": 4,
+                "lead_name": "Lê Hoàng Quân",
+                "lead_phone": "0903123456",
+            },
             # Gia Restaurant
-            {"res": created_ress[0], "count": 22, "has_lead": 9, "lead_name": "Vũ Minh Tâm", "lead_phone": "0934567890"},
+            {
+                "res": created_ress[0],
+                "count": 22,
+                "has_lead": 9,
+                "lead_name": "Vũ Minh Tâm",
+                "lead_phone": "0934567890",
+            },
             # Anan Saigon
-            {"res": created_ress[2], "count": 30, "has_lead": 11, "lead_name": "Đỗ Thu Trang", "lead_phone": "0978901234"},
+            {
+                "res": created_ress[2],
+                "count": 30,
+                "has_lead": 11,
+                "lead_name": "Đỗ Thu Trang",
+                "lead_phone": "0978901234",
+            },
         ]
 
         seeded_booking_count = 0
@@ -573,11 +741,15 @@ class Command(BaseCommand):
                 Booking.objects.get_or_create(
                     booking_code=booking_code,
                     defaults={
-                        "item_type": Booking.ItemType.ACCOMMODATION_REFERRAL if acc else Booking.ItemType.RESTAURANT_REFERRAL,
+                        "item_type": Booking.ItemType.ACCOMMODATION_REFERRAL
+                        if acc
+                        else Booking.ItemType.RESTAURANT_REFERRAL,
                         "accommodation": acc,
                         "restaurant": res,
                         "referral_partner_name": acc.partner_name if acc else res.name,
-                        "referral_target_url": acc.partner_booking_url if acc else res.contact_value,
+                        "referral_target_url": acc.partner_booking_url
+                        if acc
+                        else res.contact_value,
                         "contact_name": item["lead_name"] if is_lead else "",
                         "contact_phone": item["lead_phone"] if is_lead else "",
                         "status": Booking.Status.REFERRED,
@@ -590,4 +762,6 @@ class Command(BaseCommand):
                 )
                 seeded_booking_count += 1
 
-        self.stdout.write(f"Seeded {seeded_booking_count} demo referral bookings for admin analytics.")
+        self.stdout.write(
+            f"Seeded {seeded_booking_count} demo referral bookings for admin analytics."
+        )

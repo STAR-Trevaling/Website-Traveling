@@ -153,9 +153,7 @@ class BookingAdmin(admin.ModelAdmin):
             item_type=Booking.ItemType.RESTAURANT_REFERRAL
         ).count()
         total_leads_captured = (
-            referrals_qs.exclude(contact_phone="")
-            .exclude(contact_phone__isnull=True)
-            .count()
+            referrals_qs.exclude(contact_phone="").exclude(contact_phone__isnull=True).count()
         )
 
         # Accommodation stats
@@ -166,9 +164,7 @@ class BookingAdmin(admin.ModelAdmin):
             total_clicks = acc_bookings.count()
             clicks_30d = acc_bookings.filter(created_at__gte=thirty_days_ago).count()
             leads_count = (
-                acc_bookings.exclude(contact_phone="")
-                .exclude(contact_phone__isnull=True)
-                .count()
+                acc_bookings.exclude(contact_phone="").exclude(contact_phone__isnull=True).count()
             )
             acc_stats.append(
                 {
@@ -190,9 +186,7 @@ class BookingAdmin(admin.ModelAdmin):
             total_clicks = res_bookings.count()
             clicks_30d = res_bookings.filter(created_at__gte=thirty_days_ago).count()
             leads_count = (
-                res_bookings.exclude(contact_phone="")
-                .exclude(contact_phone__isnull=True)
-                .count()
+                res_bookings.exclude(contact_phone="").exclude(contact_phone__isnull=True).count()
             )
             res_stats.append(
                 {

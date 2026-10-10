@@ -111,7 +111,9 @@ class AssistantConversationViewSet(viewsets.ModelViewSet):
             try:
                 from accommodations.models import Accommodation
 
-                matched_accs = Accommodation.objects.filter(slug__in=found_acc_slugs, is_active=True)
+                matched_accs = Accommodation.objects.filter(
+                    slug__in=found_acc_slugs, is_active=True
+                )
                 for acc in matched_accs:
                     accommodation_cards.append(
                         {
@@ -145,7 +147,9 @@ class AssistantConversationViewSet(viewsets.ModelViewSet):
                         {
                             "id": str(res_item.id),
                             "slug": res_item.slug,
-                            "name": res_item.name_en if locale == "en" and res_item.name_en else res_item.name,
+                            "name": res_item.name_en
+                            if locale == "en" and res_item.name_en
+                            else res_item.name,
                             "cuisine_type": res_item.cuisine_type,
                             "price_range": res_item.price_range,
                             "image_url": res_item.image_url,

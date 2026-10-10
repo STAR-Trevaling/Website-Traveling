@@ -101,7 +101,9 @@ def dispatch_outbox_event(self, outbox_id):
                                 lead.odoo_lead_id = returned_lead_id
                                 lead.save(update_fields=["sync_state", "odoo_lead_id"])
                         except Exception as lead_err:
-                            logger.warning(f"Could not update AssistantLeadCapture status: {lead_err}")
+                            logger.warning(
+                                f"Could not update AssistantLeadCapture status: {lead_err}"
+                            )
 
                     # 3. Booking sync update (both Referral Lead and Confirmed Sale Order)
                     booking_id = outbox.payload.get("data", {}).get("booking_id")

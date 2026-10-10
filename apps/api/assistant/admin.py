@@ -104,7 +104,6 @@ class AssistantLeadCaptureAdmin(admin.ModelAdmin):
         )
 
 
-
 @admin.register(AssistantKnowledgeChunk)
 class AssistantKnowledgeChunkAdmin(admin.ModelAdmin):
     list_display = ("title", "entity_type", "entity_slug", "updated_at")

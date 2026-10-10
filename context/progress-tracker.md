@@ -459,5 +459,7 @@
     - Cơ chế kiểm tra môi trường trong `settings.py`: khi chạy ở chế độ Production (`DJANGO_DEBUG=0`), hệ thống bắt buộc ném `RuntimeError` ngay lập tức nếu thiếu bất kỳ biến secret quan trọng nào (`DJANGO_SECRET_KEY`, `POSTGRES_PASSWORD`, `ODOO_WEBHOOK_SECRET`, `ODOO_INBOUND_API_KEY`, `VNPAY_HASH_SECRET`).
     - Tất cả 6 bộ kiểm thử và xác minh E2E (`verify_public_to_erp_e2e.py`, `verify_lead_sync.py`, `verify_vietqr_spec.py`, `verify_vnpay_spec.py`, `verify_marketing_and_hold_sweep.py`, `verify_monitoring_setup.py`) đạt 100% GREEN.
 
-
-
+- CI Pipeline & PR Build Stabilization:
+  - Khắc phục lỗi Mypy typecheck trong `apps/api/core/alerts.py` (`set_level` Literal type casting và `payload` dictionary type annotation).
+  - Chuẩn hóa format toàn bộ mã nguồn backend bằng Ruff (`ruff format .`), đảm bảo kiểm tra `ruff format --check .` và `ruff check .` đạt 100% GREEN không có vi phạm.
+  - Kiểm thử toàn diện các bước CI: `scripts/validate_context.py` (ok), `scripts/static_sanity.py` (165 files ok), Frontend Typecheck & Next.js production build (`npm run build` 59 static/dynamic routes ok).

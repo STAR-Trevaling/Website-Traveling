@@ -77,5 +77,3 @@ def monitoring_status(request):
             },
         }
     )
-
-

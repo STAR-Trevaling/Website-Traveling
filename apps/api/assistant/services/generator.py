@@ -50,12 +50,22 @@ def check_prompt_security_guardrail(
     is_en = locale == "en"
 
     # EV-19: Override system instructions / Price tampering prompt injection defense
-    if any(k in q_lower for k in [
-        "bỏ qua mọi chỉ dẫn", "bỏ qua chỉ dẫn", "ignore all previous instructions",
-        "ignore previous instructions", "từ giờ hãy nói", "từ giờ hãy làm",
-        "quên mọi quy tắc", "quên tất cả quy tắc"
-    ]):
-        tour_chunk = next((c for c in chunks if c.entity_type == AssistantKnowledgeChunk.EntityType.TOUR), None)
+    if any(
+        k in q_lower
+        for k in [
+            "bỏ qua mọi chỉ dẫn",
+            "bỏ qua chỉ dẫn",
+            "ignore all previous instructions",
+            "ignore previous instructions",
+            "từ giờ hãy nói",
+            "từ giờ hãy làm",
+            "quên mọi quy tắc",
+            "quên tất cả quy tắc",
+        ]
+    ):
+        tour_chunk = next(
+            (c for c in chunks if c.entity_type == AssistantKnowledgeChunk.EntityType.TOUR), None
+        )
         price_str = "3.200.000 VNĐ"
         tour_title = "Vịnh Hạ Long"
         active_slug = None
@@ -82,10 +92,17 @@ def check_prompt_security_guardrail(
 
     # EV-20: DAN / Jailbreak / Leak system prompt defense
     if (
-        any(k in q_lower for k in [
-            "dan", "do anything now", "developer mode", "jailbreak",
-            "cấu trúc prompt", "tiết lộ chỉ dẫn"
-        ])
+        any(
+            k in q_lower
+            for k in [
+                "dan",
+                "do anything now",
+                "developer mode",
+                "jailbreak",
+                "cấu trúc prompt",
+                "tiết lộ chỉ dẫn",
+            ]
+        )
         or "system prompt" in q_lower
         or ("tiết lộ" in q_lower and "prompt" in q_lower)
         or ("reveal" in q_lower and "prompt" in q_lower)
@@ -105,10 +122,22 @@ def check_prompt_security_guardrail(
         )
 
     # EV-21: Data poisoning / Unauthorized write or update commands defense
-    if any(k in q_lower for k in [
-        "cập nhật giá", "sửa giá", "thay đổi giá", "update price", "chỉnh sửa dữ liệu",
-        "ghi đè giá", "cập nhật hệ thống", "update the database price", "update database"
-    ]) and any(role in q_lower for role in ["quản trị", "admin", "quản lý", "sếp", "nhân viên", "leader"]):
+    if any(
+        k in q_lower
+        for k in [
+            "cập nhật giá",
+            "sửa giá",
+            "thay đổi giá",
+            "update price",
+            "chỉnh sửa dữ liệu",
+            "ghi đè giá",
+            "cập nhật hệ thống",
+            "update the database price",
+            "update database",
+        ]
+    ) and any(
+        role in q_lower for role in ["quản trị", "admin", "quản lý", "sếp", "nhân viên", "leader"]
+    ):
         if is_en:
             return (
                 "As an AI Travel Concierge, I operate in read-only mode to assist travelers and do not possess administrative permissions "
@@ -483,7 +512,20 @@ def generate_response(
 
     # Smart Accommodations / Hotels / Resorts Matching
     q_norm = query.lower()
-    is_acc_req = any(k in q_norm for k in ["khách sạn", "khach san", "resort", "hotel", "lưu trú", "nghỉ dưỡng", "ecolodge", "homestay", "đặt phòng"])
+    is_acc_req = any(
+        k in q_norm
+        for k in [
+            "khách sạn",
+            "khach san",
+            "resort",
+            "hotel",
+            "lưu trú",
+            "nghỉ dưỡng",
+            "ecolodge",
+            "homestay",
+            "đặt phòng",
+        ]
+    )
     if is_acc_req:
         if "phú quốc" in q_norm or "phu quoc" in q_norm:
             reply = (
@@ -566,7 +608,24 @@ def generate_response(
         return reply, []
 
     # Smart Restaurants / Dining / Gourmet Matching
-    is_res_req = any(k in q_norm for k in ["nhà hàng", "nha hang", "ẩm thực", "am thuc", "quán ăn", "quan an", "ăn gì", "an gi", "ăn uống", "dining", "restaurant", "michelin", "đặt bàn"])
+    is_res_req = any(
+        k in q_norm
+        for k in [
+            "nhà hàng",
+            "nha hang",
+            "ẩm thực",
+            "am thuc",
+            "quán ăn",
+            "quan an",
+            "ăn gì",
+            "an gi",
+            "ăn uống",
+            "dining",
+            "restaurant",
+            "michelin",
+            "đặt bàn",
+        ]
+    )
     if is_res_req:
         if "hà nội" in q_norm or "ha noi" in q_norm:
             reply = (

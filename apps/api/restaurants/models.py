@@ -29,9 +29,7 @@ class Restaurant(models.Model):
     partner_commission_rate = models.DecimalField(
         max_digits=5, decimal_places=2, null=True, blank=True
     )
-    rating_average = models.DecimalField(
-        max_digits=3, decimal_places=2, default=Decimal("5.00")
-    )
+    rating_average = models.DecimalField(max_digits=3, decimal_places=2, default=Decimal("5.00"))
     rating_count = models.IntegerField(default=0)
     is_active = models.BooleanField(default=True, db_index=True)
     created_at = models.DateTimeField(auto_now_add=True)

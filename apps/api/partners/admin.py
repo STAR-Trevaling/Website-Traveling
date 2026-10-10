@@ -10,7 +10,11 @@ class PartnerApplicationAdmin(admin.ModelAdmin):
     list_filter = ("status",)
     search_fields = ("business_name", "email", "applicant__username")
     readonly_fields = ("status", "reviewed_by", "reviewed_at", "created_at", "updated_at")
-    actions = ["approve_applications_action", "mark_under_review_action", "reject_applications_action"]
+    actions = [
+        "approve_applications_action",
+        "mark_under_review_action",
+        "reject_applications_action",
+    ]
 
     @admin.action(description="✓ Phê duyệt hồ sơ đối tác (Approve & Tạo Tổ Chức)")
     def approve_applications_action(self, request, queryset):
@@ -20,9 +24,13 @@ class PartnerApplicationAdmin(admin.ModelAdmin):
                 approve_application(application_id=app.id, reviewer=request.user)
                 success += 1
             except Exception as e:
-                self.message_user(request, f"Lỗi phê duyệt {app.business_name}: {e}", messages.WARNING)
+                self.message_user(
+                    request, f"Lỗi phê duyệt {app.business_name}: {e}", messages.WARNING
+                )
         if success:
-            self.message_user(request, f"Đã phê duyệt thành công {success} hồ sơ đối tác.", messages.SUCCESS)
+            self.message_user(
+                request, f"Đã phê duyệt thành công {success} hồ sơ đối tác.", messages.SUCCESS
+            )
 
     @admin.action(description="⏳ Chuyển trạng thái đang thẩm định (Under Review)")
     def mark_under_review_action(self, request, queryset):
@@ -32,9 +40,15 @@ class PartnerApplicationAdmin(admin.ModelAdmin):
                 mark_under_review(application_id=app.id, reviewer=request.user)
                 success += 1
             except Exception as e:
-                self.message_user(request, f"Lỗi chuyển thẩm định {app.business_name}: {e}", messages.WARNING)
+                self.message_user(
+                    request, f"Lỗi chuyển thẩm định {app.business_name}: {e}", messages.WARNING
+                )
         if success:
-            self.message_user(request, f"Đã chuyển {success} hồ sơ sang trạng thái Under Review.", messages.SUCCESS)
+            self.message_user(
+                request,
+                f"Đã chuyển {success} hồ sơ sang trạng thái Under Review.",
+                messages.SUCCESS,
+            )
 
     @admin.action(description="✕ Từ chối hồ sơ đối tác (Reject)")
     def reject_applications_action(self, request, queryset):
@@ -48,10 +62,11 @@ class PartnerApplicationAdmin(admin.ModelAdmin):
                 )
                 success += 1
             except Exception as e:
-                self.message_user(request, f"Lỗi từ chối {app.business_name}: {e}", messages.WARNING)
+                self.message_user(
+                    request, f"Lỗi từ chối {app.business_name}: {e}", messages.WARNING
+                )
         if success:
             self.message_user(request, f"Đã từ chối {success} hồ sơ đối tác.", messages.INFO)
-
 
 
 @admin.register(PartnerOrganization)

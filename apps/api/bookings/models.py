@@ -62,12 +62,8 @@ class Booking(models.Model):
     departure_date = models.DateField(null=True, blank=True)
     pax_adults = models.PositiveIntegerField(default=1)
     pax_children = models.PositiveIntegerField(default=0)
-    unit_price = models.DecimalField(
-        max_digits=12, decimal_places=2, null=True, blank=True
-    )
-    total_amount = models.DecimalField(
-        max_digits=12, decimal_places=2, null=True, blank=True
-    )
+    unit_price = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
+    total_amount = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
     currency = models.CharField(max_length=8, default="VND")
     status = models.CharField(
         max_length=32,
@@ -82,7 +78,6 @@ class Booking(models.Model):
     odoo_order_id = models.IntegerField(null=True, blank=True, db_index=True)
     created_at = models.DateTimeField(auto_now_add=True, db_index=True)
     updated_at = models.DateTimeField(auto_now=True)
-
 
     class Meta:
         ordering = ["-created_at"]

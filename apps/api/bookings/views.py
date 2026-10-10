@@ -70,7 +70,9 @@ class BookingViewSet(viewsets.ModelViewSet):
                     "interest": {
                         "type": "tour_booking",
                         "tour_slug": booking.tour.slug if booking.tour else None,
-                        "travel_date": booking.departure_date.isoformat() if booking.departure_date else None,
+                        "travel_date": booking.departure_date.isoformat()
+                        if booking.departure_date
+                        else None,
                         "traveler_count": booking.pax_adults + booking.pax_children,
                         "message": booking.special_requests or "",
                     },
@@ -109,9 +111,7 @@ class ReferralTrackView(APIView):
         referral_target_url = ""
 
         if item_type == Booking.ItemType.ACCOMMODATION_REFERRAL:
-            accommodation_obj = Accommodation.objects.filter(
-                id=item_id, is_active=True
-            ).first()
+            accommodation_obj = Accommodation.objects.filter(id=item_id, is_active=True).first()
             if not accommodation_obj:
                 return Response(
                     {"detail": "Khách sạn không tồn tại hoặc đã ngừng hoạt động."},
@@ -122,9 +122,7 @@ class ReferralTrackView(APIView):
             code_prefix = "ACC"
             item_title = accommodation_obj.name
         elif item_type == Booking.ItemType.RESTAURANT_REFERRAL:
-            restaurant_obj = Restaurant.objects.filter(
-                id=item_id, is_active=True
-            ).first()
+            restaurant_obj = Restaurant.objects.filter(id=item_id, is_active=True).first()
             if not restaurant_obj:
                 return Response(
                     {"detail": "Nhà hàng không tồn tại hoặc đã ngừng hoạt động."},
@@ -170,19 +168,25 @@ class ReferralTrackView(APIView):
             event_id = str(uuid.uuid4())
             now = timezone.now()
             has_contact = bool(
-                booking.contact_name
-                or booking.contact_phone
-                or booking.contact_email
+                booking.contact_name or booking.contact_phone or booking.contact_email
             )
             destination_slug = ""
             commission_rate = 0.0
             estimated_val = 1000000.0
             if accommodation_obj:
-                destination_slug = accommodation_obj.destination.slug if getattr(accommodation_obj, "destination", None) else ""
+                destination_slug = (
+                    accommodation_obj.destination.slug
+                    if getattr(accommodation_obj, "destination", None)
+                    else ""
+                )
                 commission_rate = float(accommodation_obj.partner_commission_rate or 0.0)
                 estimated_val = float(accommodation_obj.price_from or 2000000.0)
             elif restaurant_obj:
-                destination_slug = restaurant_obj.destination.slug if getattr(restaurant_obj, "destination", None) else ""
+                destination_slug = (
+                    restaurant_obj.destination.slug
+                    if getattr(restaurant_obj, "destination", None)
+                    else ""
+                )
                 commission_rate = float(restaurant_obj.partner_commission_rate or 0.0)
                 estimated_val = 1000000.0
 

@@ -11,7 +11,6 @@ urlpatterns = [
     path("api/v1/health/", health),
     path("api/v1/health/monitoring/", monitoring_status, name="health-monitoring"),
     path("api/v1/ready/", ready),
-
     path("api/v1/auth/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
     path("api/v1/auth/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
     path("api/v1/schema/", SpectacularAPIView.as_view(), name="schema"),

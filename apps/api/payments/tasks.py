@@ -27,7 +27,11 @@ def sweep_expired_payments() -> int:
         txn.save(update_fields=["status"])
 
         booking = txn.booking
-        if booking and booking.status == "pending" and booking.payment_status in ("unpaid", "pending"):
+        if (
+            booking
+            and booking.status == "pending"
+            and booking.payment_status in ("unpaid", "pending")
+        ):
             booking.status = "cancelled"
             booking.payment_status = "expired"
             booking.save(update_fields=["status", "payment_status", "updated_at"])
@@ -39,4 +43,3 @@ def sweep_expired_payments() -> int:
     if count > 0:
         logger.info(f"Swept {count} expired payment transactions and released booking hold slots.")
     return count
-

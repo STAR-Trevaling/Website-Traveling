@@ -3,7 +3,7 @@ import logging
 import os
 import urllib.error
 import urllib.request
-from typing import Any
+from typing import Any, Literal, cast
 
 from django.conf import settings
 from django.utils import timezone
@@ -40,7 +40,6 @@ def mask_sensitive_data(data: Any) -> Any:
     return data
 
 
-
 def send_critical_alert(
     title: str,
     message: str,
@@ -68,7 +67,16 @@ def send_critical_alert(
 
         if sentry_sdk.is_initialized():
             with sentry_sdk.push_scope() as scope:
-                scope.set_level(effective_severity if effective_severity in ("info", "warning", "error", "fatal") else "error")
+                sentry_level: Literal["fatal", "critical", "error", "warning", "info", "debug"] = (
+                    cast(
+                        Literal["fatal", "critical", "error", "warning", "info", "debug"],
+                        effective_severity,
+                    )
+                    if effective_severity
+                    in ("fatal", "critical", "error", "warning", "info", "debug")
+                    else "error"
+                )
+                scope.set_level(sentry_level)
                 scope.set_tag("alert_title", title)
                 for k, v in clean_context.items():
                     scope.set_extra(k, v)
@@ -77,7 +85,11 @@ def send_critical_alert(
         logger.debug(f"Sentry alert capture skipped: {e}")
 
     # 3. Forward to Alert Webhook (Telegram / Slack / Discord / Generic Webhook)
-    target_webhook = webhook_url or getattr(settings, "ALERT_WEBHOOK_URL", None) or os.getenv("ALERT_WEBHOOK_URL")
+    target_webhook = (
+        webhook_url
+        or getattr(settings, "ALERT_WEBHOOK_URL", None)
+        or os.getenv("ALERT_WEBHOOK_URL")
+    )
     if not target_webhook:
         return True
 
@@ -86,6 +98,7 @@ def send_critical_alert(
 
         # Format depending on destination platform
         lower_url = target_webhook.lower()
+        payload: dict[str, Any]
 
         if "slack" in lower_url:
             payload = {
@@ -122,12 +135,17 @@ def send_critical_alert(
             }
 
         body_bytes = json.dumps(payload).encode("utf-8")
-        req = urllib.request.Request(target_webhook, data=body_bytes, headers=headers, method="POST")
+        req = urllib.request.Request(
+            target_webhook, data=body_bytes, headers=headers, method="POST"
+        )
         with urllib.request.urlopen(req, timeout=3) as resp:  # nosec B310
-            code = resp.getcode() if callable(getattr(resp, "getcode", None)) else getattr(resp, "status", 200)
+            code = (
+                resp.getcode()
+                if callable(getattr(resp, "getcode", None))
+                else getattr(resp, "status", 200)
+            )
             return 200 <= code < 300
 
     except Exception as webhook_err:
         logger.warning(f"Failed to deliver alert to webhook: {webhook_err}")
         return False
-

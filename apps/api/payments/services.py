@@ -303,7 +303,9 @@ class PaymentService:
                     pax_adults = getattr(booking, "pax_adults", 1) or 1
                     pax_children = getattr(booking, "pax_children", 0) or 0
                     total_amt = booking.total_amount or Decimal(0)
-                    unit_price = float(getattr(booking, "unit_price", None) or (total_amt / max(1, pax_adults)))
+                    unit_price = float(
+                        getattr(booking, "unit_price", None) or (total_amt / max(1, pax_adults))
+                    )
                     envelope = {
                         "event_id": event_id,
                         "event_type": "booking.paid",
@@ -445,7 +447,9 @@ class PaymentService:
                 pax_adults = getattr(booking, "pax_adults", 1) or 1
                 pax_children = getattr(booking, "pax_children", 0) or 0
                 total_amt = booking.total_amount or Decimal(0)
-                unit_price = float(getattr(booking, "unit_price", None) or (total_amt / max(1, pax_adults)))
+                unit_price = float(
+                    getattr(booking, "unit_price", None) or (total_amt / max(1, pax_adults))
+                )
                 envelope = {
                     "event_id": event_id,
                     "event_type": "booking.paid",

@@ -97,7 +97,6 @@ class InquiryCreateView(APIView):
             },
         }
 
-
         outbox = IntegrationOutbox.objects.create(
             event_id=event_id,
             event_type="inquiry.created",
