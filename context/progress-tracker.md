@@ -465,5 +465,6 @@
   - Triệt tiêu 4 cảnh báo bảo mật CodeQL (Clear-text logging of sensitive information) trong `apps/api/assistant/verify_prompt_injection_spec.py` bằng cách loại bỏ việc in dữ liệu nhạy cảm và thông tin PII khách hàng ra stdout.
   - Khởi tạo migration ban đầu `0001_initial.py` cho hai app `accommodations` và `restaurants`, giải quyết triệt để lỗi dependency graph `NodeNotFoundError: ('accommodations', '__first__')` trong bước `python manage.py migrate` của CI.
   - Bổ sung giá trị môi trường dự phòng an toàn cho `ODOO_WEBHOOK_SECRET`, `ODOO_INBOUND_API_KEY`, `VNPAY_TMN_CODE`, `VNPAY_HASH_SECRET` khi chạy test và khai báo tường minh trong `ci.yml`, đảm bảo các bài test xác thực chữ ký số HMAC và IPN thanh toán hoạt động chính xác 100%.
+  - Bổ sung trường 'item_type' và 'partner_name' vào payload phản hồi của `ReferralTrackView` (`/api/v1/referrals/track/`), đảm bảo hợp đồng dữ liệu chuẩn với frontend và giúp 100% bộ kiểm thử `test_referrals.py` đạt GREEN.
   - Kiểm thử toàn diện các bước CI: `scripts/validate_context.py` (ok), `scripts/static_sanity.py` (169 files ok), Mypy (160 files ok), Ruff (160 files ok), Frontend Typecheck & Next.js production build (`npm run build` 59 static/dynamic routes ok).
 

@@ -233,6 +233,8 @@ class ReferralTrackView(APIView):
                 "booking_id": str(booking.id),
                 "booking_code": booking.booking_code,
                 "redirect_url": referral_target_url,
+                "item_type": booking.item_type,
+                "partner_name": booking.referral_partner_name,
             },
             status=status.HTTP_201_CREATED,
         )

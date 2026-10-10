@@ -113,6 +113,8 @@ def test_referral_tracking_restaurant():
     assert response.status_code == 201
     data = response.json()
     assert data["redirect_url"] == res.contact_value
+    assert data["item_type"] == "restaurant_referral"
+    assert data["partner_name"] == res.name
 
     booking = Booking.objects.get(id=data["booking_id"])
     assert booking.item_type == Booking.ItemType.RESTAURANT_REFERRAL
