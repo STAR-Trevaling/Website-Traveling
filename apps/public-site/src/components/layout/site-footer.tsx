@@ -21,6 +21,7 @@ export function SiteFooter() {
   const legalLinks = [
     { label: isEnglish ? "Terms of Service" : "Điều Khoản Dịch Vụ", href: "/terms" },
     { label: isEnglish ? "Privacy Policy (Decree 13)" : "Chính Sách Bảo Mật (Nghị Định 13)", href: "/privacy" },
+    { label: isEnglish ? "UML System Architecture" : "Sơ Đồ Kiến Trúc UML", href: "/diagrams" },
   ];
 
   return (

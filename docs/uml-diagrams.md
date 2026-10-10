@@ -17,6 +17,8 @@ Tài liệu này tổng hợp **toàn bộ 8 biểu đồ UML chuẩn hóa (OMG 
 
 Phân định ranh giới hệ thống **STAR Travels Platform**, 5 tác nhân (Actors) và 11 Use Case cốt lõi.
 
+![01. Use Case Diagram](diagrams/01-use-case-diagram.svg)
+
 ```mermaid
 flowchart LR
     subgraph ACTORS_LEFT [Tác Nhân Phía Người Dùng]
@@ -65,6 +67,8 @@ flowchart LR
 ## 2. Biểu Đồ Lớp Miền Nghiệp Vụ (Domain Class Diagram)
 
 Cấu trúc 10 thực thể dữ liệu chính thuộc 13 Bounded Contexts trong kiến trúc Monolith mô-đun:
+
+![02. Domain Class Diagram](diagrams/02-domain-class-diagram.svg)
 
 ```mermaid
 classDiagram
@@ -200,6 +204,8 @@ classDiagram
 
 Luồng đặt Tour trực tuyến với cơ chế bảo vệ giá độc quyền từ phía Server (Server-side price protection) và xác thực chữ ký số HMAC-SHA512:
 
+![03. Sequence Tour Booking](diagrams/03-seq-tour-booking.svg)
+
 ```mermaid
 sequenceDiagram
     autonumber
@@ -239,6 +245,8 @@ sequenceDiagram
 
 Mô hình tiếp thị liên kết (Booking.com, Agoda, TableCheck) sử dụng `navigator.sendBeacon()` không gây gián đoạn và đồng bộ CRM Lead sang Odoo 18:
 
+![04. Sequence Referral Tracking](diagrams/04-seq-referral-tracking.svg)
+
 ```mermaid
 sequenceDiagram
     autonumber
@@ -268,6 +276,8 @@ sequenceDiagram
 
 Quy trình phát hiện vị trí địa lý tuân thủ **Nghị định 13/2023/NĐ-CP** (bảo vệ dữ liệu cá nhân), tính khoảng cách phía Client bằng công thức Haversine:
 
+![05. Sequence GPS Geolocation](diagrams/05-seq-gps-geolocation.svg)
+
 ```mermaid
 sequenceDiagram
     autonumber
@@ -295,6 +305,8 @@ sequenceDiagram
 ## 6. Biểu Đồ Thành Phần Kiến Trúc (Component Architecture)
 
 Cấu trúc phân tầng Monolith mô-đun phân định rõ ràng giữa **Presentation**, **Contracts**, **13 Bounded Contexts**, và **Persistence**:
+
+![06. Component Architecture](diagrams/06-component-architecture.svg)
 
 ```mermaid
 flowchart TD
@@ -352,6 +364,9 @@ flowchart TD
 ## 7. Biểu Đồ Máy Trạng Thái (UML State Machine Diagram)
 
 ### 7.1. Vòng Đời Trạng Thái Booking (`bookings_booking`)
+
+![07. State Machine Diagram](diagrams/07-state-machine-diagram.svg)
+
 ```mermaid
 stateDiagram-v2
     [*] --> PendingPayment : Khởi tạo Booking [Tour hợp lệ]
@@ -378,6 +393,8 @@ stateDiagram-v2
 ## 8. Biểu Đồ Triển Khai Hạ Tầng (UML Deployment Diagram)
 
 Kiến trúc phân bổ trên phần cứng vật lý, môi trường thực thi và các Container Docker:
+
+![08. Deployment Diagram](diagrams/08-deployment-diagram.svg)
 
 ```mermaid
 flowchart TB

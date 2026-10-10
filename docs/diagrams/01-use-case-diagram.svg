@@ -1,0 +1,215 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1650 1050" width="100%" height="100%" style="background:#FFFFFF; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+  <defs>
+    <!-- Drop Shadow Filter -->
+    <filter id="card-shadow" x="-5%" y="-5%" width="110%" height="115%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#0F172A" flood-opacity="0.08"/>
+    </filter>
+    
+    <!-- UML Markers -->
+    <marker id="arrow-sync" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#0F172A" />
+    </marker>
+    <marker id="arrow-open" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9" fill="none" stroke="#64748B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+    </marker>
+    <marker id="arrow-comp" viewBox="0 0 16 10" refX="1" refY="5" markerWidth="14" markerHeight="9" orient="auto-start-reverse">
+      <polygon points="1,5 8,1 15,5 8,9" fill="#0F172A" stroke="#0F172A" stroke-width="1.5" />
+    </marker>
+    <marker id="arrow-inherit" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="10" markerHeight="10" orient="auto-start-reverse">
+      <polygon points="1,1 11,6 1,11" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.8" />
+    </marker>
+    <marker id="arrow-include" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9" fill="none" stroke="#DA251D" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+    </marker>
+  </defs>
+
+  <!-- Background Grid -->
+  <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+    <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#F1F5F9" stroke-width="1"/>
+  </pattern>
+  <rect width="1650" height="1050" fill="url(#grid)" />
+
+  
+    
+    <g filter="url(#card-shadow)">
+      <rect x="40" y="30" width="580" height="80" rx="8" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.2"/>
+      <text x="56" y="56" font-size="14" font-weight="700" fill="#0F172A">STAR Travels — Sơ Đồ Use Case Tổng Thể (OMG UML 2.5)</text>
+      <text x="56" y="76" font-size="11" fill="#475569">Chuẩn: OMG UML 2.5.1 | Ranh giới: STAR Monolith & Cổng Ngoại vi</text>
+      <text x="56" y="94" font-size="11" fill="#64748B" font-style="italic">Phạm vi: Đặt Tour, Thanh toán, Tiếp thị liên kết Đối tác, AI Concierge, B2B Onboarding</text>
+    </g>
+    
+    
+    <g filter="url(#card-shadow)">
+      <rect x="1310" y="30" width="300" height="85" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+      <text x="1326" y="48" font-size="11" font-weight="700" fill="#0F172A">CHÚ GIẢI (LEGEND)</text>
+      
+        <circle cx="1328" cy="62" r="5" fill="#DA251D"/>
+        <text x="1340" y="66" font-size="11" fill="#334155">Use Case Trọng Tâm (STAR Red)</text>
+        
+
+        <circle cx="1328" cy="80" r="5" fill="#0284C7"/>
+        <text x="1340" y="84" font-size="11" fill="#334155">Use Case Cơ Bản (Catalogs & Auth)</text>
+        
+
+        <circle cx="1328" cy="98" r="5" fill="#D97706"/>
+        <text x="1340" y="102" font-size="11" fill="#334155">Use Case Tích Hợp Ngoại Vi (Payment/ERP)</text>
+        
+    </g>
+    
+
+    <!-- System Boundary -->
+    <rect x="280" y="130" width="980" height="880" rx="10" fill="#F8FAFC" stroke="#475569" stroke-width="1.8" filter="url(#card-shadow)"/>
+    <rect x="280" y="130" width="980" height="34" rx="10" fill="#E2E8F0"/>
+    <text x="770" y="152" text-anchor="middle" font-size="13" font-weight="700" fill="#1E293B">STAR Travels Platform System Boundary</text>
+
+    <!-- Actors -->
+    
+        <g transform="translate(80, 270)">
+          <circle cx="25" cy="20" r="14" fill="#1E293B" stroke="#0F172A" stroke-width="2"/>
+          <line x1="25" y1="34" x2="25" y2="70" stroke="#0F172A" stroke-width="3"/>
+          <line x1="0" y1="48" x2="50" y2="48" stroke="#0F172A" stroke-width="3"/>
+          <line x1="25" y1="70" x2="5" y2="105" stroke="#0F172A" stroke-width="3"/>
+          <line x1="25" y1="70" x2="45" y2="105" stroke="#0F172A" stroke-width="3"/>
+          <text x="25" y="125" text-anchor="middle" font-size="12" font-weight="700" fill="#0F172A">Traveler</text>
+          <text x="25" y="140" text-anchor="middle" font-size="11" fill="#475569">(Du khách)</text>
+        </g>
+        
+    
+        <g transform="translate(80, 700)">
+          <circle cx="25" cy="20" r="14" fill="#1E293B" stroke="#0F172A" stroke-width="2"/>
+          <line x1="25" y1="34" x2="25" y2="70" stroke="#0F172A" stroke-width="3"/>
+          <line x1="0" y1="48" x2="50" y2="48" stroke="#0F172A" stroke-width="3"/>
+          <line x1="25" y1="70" x2="5" y2="105" stroke="#0F172A" stroke-width="3"/>
+          <line x1="25" y1="70" x2="45" y2="105" stroke="#0F172A" stroke-width="3"/>
+          <text x="25" y="125" text-anchor="middle" font-size="12" font-weight="700" fill="#0F172A">Merchant Partner</text>
+          <text x="25" y="140" text-anchor="middle" font-size="11" fill="#475569">(Đối tác dịch vụ)</text>
+        </g>
+        
+    
+        <g transform="translate(1400, 250)">
+          <circle cx="25" cy="20" r="14" fill="#1E293B" stroke="#0F172A" stroke-width="2"/>
+          <line x1="25" y1="34" x2="25" y2="70" stroke="#0F172A" stroke-width="3"/>
+          <line x1="0" y1="48" x2="50" y2="48" stroke="#0F172A" stroke-width="3"/>
+          <line x1="25" y1="70" x2="5" y2="105" stroke="#0F172A" stroke-width="3"/>
+          <line x1="25" y1="70" x2="45" y2="105" stroke="#0F172A" stroke-width="3"/>
+          <text x="25" y="125" text-anchor="middle" font-size="12" font-weight="700" fill="#0F172A">System Admin</text>
+          <text x="25" y="140" text-anchor="middle" font-size="11" fill="#475569">(Quản trị viên)</text>
+        </g>
+        
+    
+        <g transform="translate(1400, 490)">
+          <circle cx="25" cy="20" r="14" fill="#1E293B" stroke="#0F172A" stroke-width="2"/>
+          <line x1="25" y1="34" x2="25" y2="70" stroke="#0F172A" stroke-width="3"/>
+          <line x1="0" y1="48" x2="50" y2="48" stroke="#0F172A" stroke-width="3"/>
+          <line x1="25" y1="70" x2="5" y2="105" stroke="#0F172A" stroke-width="3"/>
+          <line x1="25" y1="70" x2="45" y2="105" stroke="#0F172A" stroke-width="3"/>
+          <text x="25" y="125" text-anchor="middle" font-size="12" font-weight="700" fill="#0F172A">Payment Gateway</text>
+          <text x="25" y="140" text-anchor="middle" font-size="11" fill="#475569">(VNPay / VietQR)</text>
+        </g>
+        
+    
+        <g transform="translate(1400, 740)">
+          <circle cx="25" cy="20" r="14" fill="#1E293B" stroke="#0F172A" stroke-width="2"/>
+          <line x1="25" y1="34" x2="25" y2="70" stroke="#0F172A" stroke-width="3"/>
+          <line x1="0" y1="48" x2="50" y2="48" stroke="#0F172A" stroke-width="3"/>
+          <line x1="25" y1="70" x2="5" y2="105" stroke="#0F172A" stroke-width="3"/>
+          <line x1="25" y1="70" x2="45" y2="105" stroke="#0F172A" stroke-width="3"/>
+          <text x="25" y="125" text-anchor="middle" font-size="12" font-weight="700" fill="#0F172A">Odoo 18 ERP</text>
+          <text x="25" y="140" text-anchor="middle" font-size="11" fill="#475569">(CRM & Backoffice)</text>
+        </g>
+        
+
+    <!-- Use Cases Left Column -->
+    
+        <g filter="url(#card-shadow)">
+          <ellipse cx="455.0" cy="212.5" rx="115.0" ry="32.5" fill="#FFFFFF" stroke="#0284C7" stroke-width="1.5"/>
+          <text x="455.0" y="204.5" text-anchor="middle" font-size="11" font-weight="700" fill="#0369A1">UC-1: Khám phá Điểm đến,</text><text x="455.0" y="220.5" text-anchor="middle" font-size="11" font-weight="700" fill="#0369A1">Tour trọn gói & Cẩm nang</text>
+        </g>
+        
+    
+        <g filter="url(#card-shadow)">
+          <ellipse cx="460.0" cy="325.0" rx="120.0" ry="35.0" fill="#FEF2F2" stroke="#DA251D" stroke-width="2"/>
+          <text x="460.0" y="317.0" text-anchor="middle" font-size="11" font-weight="700" fill="#7F1D1D">UC-2: Định vị GPS & Tìm quán,</text><text x="460.0" y="333.0" text-anchor="middle" font-size="11" font-weight="700" fill="#7F1D1D">Khách sạn gần nhất (Haversine)</text>
+        </g>
+        
+    
+        <g filter="url(#card-shadow)">
+          <ellipse cx="455.0" cy="435.0" rx="115.0" ry="35.0" fill="#FEF2F2" stroke="#DA251D" stroke-width="2"/>
+          <text x="455.0" y="427.0" text-anchor="middle" font-size="11" font-weight="700" fill="#7F1D1D">UC-3: Đặt Tour Trọn Gói</text><text x="455.0" y="443.0" text-anchor="middle" font-size="11" font-weight="700" fill="#7F1D1D">& Phòng vệ giá Server-side</text>
+        </g>
+        
+    
+        <g filter="url(#card-shadow)">
+          <ellipse cx="460.0" cy="545.0" rx="120.0" ry="35.0" fill="#FEF2F2" stroke="#DA251D" stroke-width="2"/>
+          <text x="460.0" y="537.0" text-anchor="middle" font-size="11" font-weight="700" fill="#7F1D1D">UC-4: Chuyển tiếp Đặt chỗ</text><text x="460.0" y="553.0" text-anchor="middle" font-size="11" font-weight="700" fill="#7F1D1D">Đối tác (Affiliate Referral 1.5s)</text>
+        </g>
+        
+    
+        <g filter="url(#card-shadow)">
+          <ellipse cx="460.0" cy="655.0" rx="120.0" ry="35.0" fill="#FEF2F2" stroke="#DA251D" stroke-width="2"/>
+          <text x="460.0" y="647.0" text-anchor="middle" font-size="11" font-weight="700" fill="#7F1D1D">UC-5: Trò chuyện & Tư vấn</text><text x="460.0" y="663.0" text-anchor="middle" font-size="11" font-weight="700" fill="#7F1D1D">với Trợ lý STAR AI Concierge</text>
+        </g>
+        
+    
+        <g filter="url(#card-shadow)">
+          <ellipse cx="455.0" cy="762.5" rx="115.0" ry="32.5" fill="#FFFFFF" stroke="#0284C7" stroke-width="1.5"/>
+          <text x="455.0" y="754.5" text-anchor="middle" font-size="11" font-weight="700" fill="#0369A1">UC-6: Nộp Hồ sơ Hợp tác B2B</text><text x="455.0" y="770.5" text-anchor="middle" font-size="11" font-weight="700" fill="#0369A1">(Trở thành Đối tác Lữ hành)</text>
+        </g>
+        
+    
+        <g filter="url(#card-shadow)">
+          <ellipse cx="455.0" cy="862.5" rx="115.0" ry="32.5" fill="#FFFFFF" stroke="#0284C7" stroke-width="1.5"/>
+          <text x="455.0" y="854.5" text-anchor="middle" font-size="11" font-weight="700" fill="#0369A1">UC-8: Đăng nhập & Xác thực</text><text x="455.0" y="870.5" text-anchor="middle" font-size="11" font-weight="700" fill="#0369A1">Bảo mật (BFF HttpOnly JWT)</text>
+        </g>
+        
+
+    <!-- Use Cases Right Column -->
+    
+        <g filter="url(#card-shadow)">
+          <ellipse cx="825.0" cy="435.0" rx="125.0" ry="35.0" fill="#FEF3C7" stroke="#D97706" stroke-width="1.5"/>
+          <text x="825.0" y="427.0" text-anchor="middle" font-size="11" font-weight="700" fill="#78350F">UC-3.1: Thanh toán Trực tuyến</text><text x="825.0" y="443.0" text-anchor="middle" font-size="11" font-weight="700" fill="#78350F">(VNPay Thẻ/QR & VietQR NAPAS)</text>
+        </g>
+        
+    
+        <g filter="url(#card-shadow)">
+          <ellipse cx="825.0" cy="545.0" rx="125.0" ry="35.0" fill="#FEF3C7" stroke="#D97706" stroke-width="1.5"/>
+          <text x="825.0" y="537.0" text-anchor="middle" font-size="11" font-weight="700" fill="#78350F">UC-4.1: Đồng bộ Lead Chuyển đổi</text><text x="825.0" y="553.0" text-anchor="middle" font-size="11" font-weight="700" fill="#78350F">sang Odoo 18 CRM Lead</text>
+        </g>
+        
+    
+        <g filter="url(#card-shadow)">
+          <ellipse cx="820.0" cy="762.5" rx="120.0" ry="32.5" fill="#FFFFFF" stroke="#0284C7" stroke-width="1.5"/>
+          <text x="820.0" y="754.5" text-anchor="middle" font-size="11" font-weight="700" fill="#0369A1">UC-7: Xét duyệt Đối tác B2B</text><text x="820.0" y="770.5" text-anchor="middle" font-size="11" font-weight="700" fill="#0369A1">& Phân quyền Tổ chức Atomic</text>
+        </g>
+        
+    
+        <g filter="url(#card-shadow)">
+          <ellipse cx="820.0" cy="862.5" rx="120.0" ry="32.5" fill="#FFFFFF" stroke="#0284C7" stroke-width="1.5"/>
+          <text x="820.0" y="854.5" text-anchor="middle" font-size="11" font-weight="700" fill="#0369A1">UC-9: Quản trị Nội dung,</text><text x="820.0" y="870.5" text-anchor="middle" font-size="11" font-weight="700" fill="#0369A1">Kiểm toán Audit & Giám sát DLQ</text>
+        </g>
+        
+
+    <!-- Connecting Lines -->
+    <path d="M 140 330 L 340 212" stroke="#475569" stroke-width="1.5" fill="none"/>
+    <path d="M 140 330 L 340 325" stroke="#475569" stroke-width="1.5" fill="none"/>
+    <path d="M 140 330 L 340 435" stroke="#475569" stroke-width="1.5" fill="none"/>
+    <path d="M 140 330 L 340 545" stroke="#475569" stroke-width="1.5" fill="none"/>
+    <path d="M 140 330 L 340 655" stroke="#475569" stroke-width="1.5" fill="none"/>
+    <path d="M 140 330 L 340 862" stroke="#475569" stroke-width="1.5" fill="none"/>
+
+    <path d="M 140 760 L 340 762" stroke="#475569" stroke-width="1.5" fill="none"/>
+    <path d="M 140 760 L 340 862" stroke="#475569" stroke-width="1.5" fill="none"/>
+
+    <path d="M 1400 310 L 940 762" stroke="#475569" stroke-width="1.5" fill="none"/>
+    <path d="M 1400 310 L 940 862" stroke="#475569" stroke-width="1.5" fill="none"/>
+    <path d="M 1400 550 L 950 435" stroke="#475569" stroke-width="1.5" fill="none"/>
+    <path d="M 1400 800 L 950 545" stroke="#475569" stroke-width="1.5" fill="none"/>
+
+    <!-- Include connectors -->
+    <path d="M 570 435 L 700 435" stroke="#DA251D" stroke-width="1.5" stroke-dasharray="6,4" marker-end="url(#arrow-include)" fill="none"/>
+    <text x="635" y="425" text-anchor="middle" font-size="11" font-weight="700" fill="#DA251D">«include»</text>
+
+    <path d="M 580 545 L 700 545" stroke="#DA251D" stroke-width="1.5" stroke-dasharray="6,4" marker-end="url(#arrow-include)" fill="none"/>
+    <text x="640" y="535" text-anchor="middle" font-size="11" font-weight="700" fill="#DA251D">«include»</text>
+    
+</svg>
