@@ -201,20 +201,33 @@ if not IS_DEV_OR_TEST:
 # Odoo 18 ERP Integration Settings
 ODOO_BASE_URL = os.getenv("ODOO_BASE_URL", "http://host.docker.internal:8069")
 ODOO_WEBHOOK_SECRET = os.getenv("ODOO_WEBHOOK_SECRET", "")
-if not ODOO_WEBHOOK_SECRET and not IS_DEV_OR_TEST:
-    raise RuntimeError("ODOO_WEBHOOK_SECRET is required when DJANGO_DEBUG=0")
+if not ODOO_WEBHOOK_SECRET:
+    if IS_DEV_OR_TEST:
+        ODOO_WEBHOOK_SECRET = "star_travels_dev_test_webhook_secret_2026"
+    else:
+        raise RuntimeError("ODOO_WEBHOOK_SECRET is required when DJANGO_DEBUG=0")
+
 ODOO_INBOUND_API_KEY = os.getenv("ODOO_INBOUND_API_KEY", "")
-if not ODOO_INBOUND_API_KEY and not IS_DEV_OR_TEST:
-    raise RuntimeError("ODOO_INBOUND_API_KEY is required when DJANGO_DEBUG=0")
+if not ODOO_INBOUND_API_KEY:
+    if IS_DEV_OR_TEST:
+        ODOO_INBOUND_API_KEY = "star_travels_dev_test_inbound_api_key_2026"
+    else:
+        raise RuntimeError("ODOO_INBOUND_API_KEY is required when DJANGO_DEBUG=0")
 
 # VNPay Payment Gateway Settings
 VNPAY_PAYMENT_URL = os.getenv(
     "VNPAY_PAYMENT_URL", "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html"
 )
 VNPAY_TMN_CODE = os.getenv("VNPAY_TMN_CODE", "")
+if not VNPAY_TMN_CODE and IS_DEV_OR_TEST:
+    VNPAY_TMN_CODE = "STAR_TMN_DEV_TEST"
+
 VNPAY_HASH_SECRET = os.getenv("VNPAY_HASH_SECRET", "")
-if not VNPAY_HASH_SECRET and not IS_DEV_OR_TEST:
-    raise RuntimeError("VNPAY_HASH_SECRET is required when DJANGO_DEBUG=0")
+if not VNPAY_HASH_SECRET:
+    if IS_DEV_OR_TEST:
+        VNPAY_HASH_SECRET = "STAR_TEST_SECRET_HASH_KEY_987654321_TEST"
+    else:
+        raise RuntimeError("VNPAY_HASH_SECRET is required when DJANGO_DEBUG=0")
 VNPAY_RETURN_URL = os.getenv("VNPAY_RETURN_URL", "http://localhost:3000/payment/return")
 
 # VietQR Payment Gateway Settings (NAPAS 247 Standard)

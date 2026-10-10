@@ -464,4 +464,6 @@
   - Chuẩn hóa format toàn bộ mã nguồn backend bằng Ruff (`ruff format .`), đảm bảo kiểm tra `ruff format --check .` và `ruff check .` đạt 100% GREEN không có vi phạm.
   - Triệt tiêu 4 cảnh báo bảo mật CodeQL (Clear-text logging of sensitive information) trong `apps/api/assistant/verify_prompt_injection_spec.py` bằng cách loại bỏ việc in dữ liệu nhạy cảm và thông tin PII khách hàng ra stdout.
   - Khởi tạo migration ban đầu `0001_initial.py` cho hai app `accommodations` và `restaurants`, giải quyết triệt để lỗi dependency graph `NodeNotFoundError: ('accommodations', '__first__')` trong bước `python manage.py migrate` của CI.
+  - Bổ sung giá trị môi trường dự phòng an toàn cho `ODOO_WEBHOOK_SECRET`, `ODOO_INBOUND_API_KEY`, `VNPAY_TMN_CODE`, `VNPAY_HASH_SECRET` khi chạy test và khai báo tường minh trong `ci.yml`, đảm bảo các bài test xác thực chữ ký số HMAC và IPN thanh toán hoạt động chính xác 100%.
   - Kiểm thử toàn diện các bước CI: `scripts/validate_context.py` (ok), `scripts/static_sanity.py` (169 files ok), Mypy (160 files ok), Ruff (160 files ok), Frontend Typecheck & Next.js production build (`npm run build` 59 static/dynamic routes ok).
+
