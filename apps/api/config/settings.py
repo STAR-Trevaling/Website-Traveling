@@ -5,6 +5,18 @@ from datetime import timedelta
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Auto-load local .env file from root or apps/api directory if present
+for _candidate_env in (BASE_DIR.parent.parent / ".env", BASE_DIR / ".env"):
+    if _candidate_env.exists():
+        with open(_candidate_env, encoding="utf-8") as _f:
+            for _line in _f:
+                _line = _line.strip()
+                if _line and not _line.startswith("#") and "=" in _line:
+                    _k, _v = _line.split("=", 1)
+                    os.environ.setdefault(_k.strip(), _v.strip())
+        break
+
 DEBUG = os.getenv("DJANGO_DEBUG", "0") == "1"
 IS_TESTING = "pytest" in sys.modules or bool(os.getenv("PYTEST_CURRENT_TEST"))
 IS_DEV_OR_TEST = (
@@ -14,9 +26,12 @@ IS_DEV_OR_TEST = (
     or any("mypy" in arg for arg in sys.argv)
     or "mypy" in sys.modules
 )
-SECRET_KEY = os.getenv("DJANGO_SECRET_KEY") or ("dev-only-change-me" if IS_DEV_OR_TEST else "")
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "")
 if not SECRET_KEY:
-    raise RuntimeError("DJANGO_SECRET_KEY is required when DJANGO_DEBUG=0")
+    if IS_DEV_OR_TEST:
+        SECRET_KEY = "dev-only-change-me"
+    else:
+        raise RuntimeError("DJANGO_SECRET_KEY is required in .env or environment")
 
 ALLOWED_HOSTS = ["host.docker.internal", "testserver"] + [
     h.strip()
@@ -83,12 +98,19 @@ TEMPLATES = [
     }
 ]
 
+_db_password = os.getenv("POSTGRES_PASSWORD", "")
+if not _db_password:
+    if IS_DEV_OR_TEST:
+        _db_password = "travel"
+    else:
+        raise RuntimeError("POSTGRES_PASSWORD is required in .env or environment")
+
 DATABASES = {
     "default": {
         "ENGINE": os.getenv("DJANGO_DB_ENGINE", "django.contrib.gis.db.backends.postgis"),
         "NAME": os.getenv("POSTGRES_DB", "travel"),
         "USER": os.getenv("POSTGRES_USER", "travel"),
-        "PASSWORD": os.getenv("POSTGRES_PASSWORD", "travel"),
+        "PASSWORD": _db_password,
         "HOST": os.getenv("POSTGRES_HOST", "localhost"),
         "PORT": os.getenv("POSTGRES_PORT", "5432"),
         "CONN_MAX_AGE": 60,
@@ -178,18 +200,20 @@ if not IS_DEV_OR_TEST:
 
 # Odoo 18 ERP Integration Settings
 ODOO_BASE_URL = os.getenv("ODOO_BASE_URL", "http://host.docker.internal:8069")
-ODOO_WEBHOOK_SECRET = os.getenv("ODOO_WEBHOOK_SECRET") or ("star_travels_super_secret_webhook_key_2026" if IS_DEV_OR_TEST else "")
-if not ODOO_WEBHOOK_SECRET:
+ODOO_WEBHOOK_SECRET = os.getenv("ODOO_WEBHOOK_SECRET", "")
+if not ODOO_WEBHOOK_SECRET and not IS_DEV_OR_TEST:
     raise RuntimeError("ODOO_WEBHOOK_SECRET is required when DJANGO_DEBUG=0")
-ODOO_INBOUND_API_KEY = os.getenv("ODOO_INBOUND_API_KEY", "star_travels_inbound_api_token_2026")
+ODOO_INBOUND_API_KEY = os.getenv("ODOO_INBOUND_API_KEY", "")
+if not ODOO_INBOUND_API_KEY and not IS_DEV_OR_TEST:
+    raise RuntimeError("ODOO_INBOUND_API_KEY is required when DJANGO_DEBUG=0")
 
-# VNPay Payment Gateway Sandbox Settings
+# VNPay Payment Gateway Settings
 VNPAY_PAYMENT_URL = os.getenv(
     "VNPAY_PAYMENT_URL", "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html"
 )
-VNPAY_TMN_CODE = os.getenv("VNPAY_TMN_CODE", "DEMO_TMN")
-VNPAY_HASH_SECRET = os.getenv("VNPAY_HASH_SECRET") or ("DEMO_HASH_SECRET_KEY" if IS_DEV_OR_TEST else "")
-if not VNPAY_HASH_SECRET:
+VNPAY_TMN_CODE = os.getenv("VNPAY_TMN_CODE", "")
+VNPAY_HASH_SECRET = os.getenv("VNPAY_HASH_SECRET", "")
+if not VNPAY_HASH_SECRET and not IS_DEV_OR_TEST:
     raise RuntimeError("VNPAY_HASH_SECRET is required when DJANGO_DEBUG=0")
 VNPAY_RETURN_URL = os.getenv("VNPAY_RETURN_URL", "http://localhost:3000/payment/return")
 

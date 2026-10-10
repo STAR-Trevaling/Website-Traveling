@@ -16,8 +16,8 @@ export function LoginForm({ returnUrl }: LoginFormProps) {
   const { login } = useAuth();
   const a = t.authPages;
 
-  const [username, setUsername] = useState("traveler_demo");
-  const [password, setPassword] = useState("TravelerDemo123!");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [msg, setMsg] = useState("");
   const [loading, setLoading] = useState(false);
 

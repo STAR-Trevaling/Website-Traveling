@@ -99,9 +99,11 @@ class VietQRConfirmView(APIView):
     permission_classes = (permissions.AllowAny,)
 
     def _verify_hmac(self, request) -> bool:
-        secret = getattr(
-            settings, "ODOO_WEBHOOK_SECRET", "star_travels_super_secret_webhook_key_2026"
-        )
+        secret = getattr(settings, "ODOO_WEBHOOK_SECRET", "")
+        if not secret:
+            logger.error("ODOO_WEBHOOK_SECRET is not configured.")
+            return False
+
         sig_header = request.headers.get("X-Signature-SHA256")
         if not sig_header:
             return False

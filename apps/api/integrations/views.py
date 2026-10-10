@@ -2,6 +2,7 @@ import hashlib
 import hmac
 import logging
 import uuid
+from typing import Any, cast
 
 from django.conf import settings
 from django.contrib.gis.geos import Point
@@ -108,7 +109,7 @@ class InquiryCreateView(APIView):
 
         # Trigger Celery asynchronous dispatch
         try:
-            dispatch_outbox_event.delay(str(outbox.id))
+            cast(Any, dispatch_outbox_event).delay(str(outbox.id))
         except Exception as e:
             logger.warning(f"Could not immediately dispatch Celery task: {e}")
 
@@ -132,9 +133,11 @@ class OdooWebhookReceiverView(APIView):
     permission_classes = [AllowAny]
 
     def _verify_hmac(self, request):
-        secret = getattr(
-            settings, "ODOO_WEBHOOK_SECRET", "star_travels_super_secret_webhook_key_2026"
-        )
+        secret = getattr(settings, "ODOO_WEBHOOK_SECRET", "")
+        if not secret:
+            logger.error("ODOO_WEBHOOK_SECRET is not configured.")
+            return False
+
         sig_header = request.headers.get("X-Signature-SHA256")
         if not sig_header:
             return False
@@ -223,7 +226,11 @@ class OdooWebhookReceiverView(APIView):
             name = dest_info.get("name", "")
             lat = float(dest_info.get("latitude") or 0.0)
             lng = float(dest_info.get("longitude") or 0.0)
-            center = Point(lng, lat, srid=4326) if (lat and lng) else None
+            try:
+                center = Point(lng, lat, srid=4326) if (lat and lng) else None
+            except Exception as geo_err:
+                logger.warning(f"GEOS Point creation failed for {slug}: {geo_err}")
+                center = None
 
             dest, created = Destination.objects.update_or_create(
                 slug=slug,
@@ -258,7 +265,11 @@ class OdooWebhookReceiverView(APIView):
 
             lat = float(place_info.get("latitude") or 0.0)
             lng = float(place_info.get("longitude") or 0.0)
-            location = Point(lng, lat, srid=4326)
+            try:
+                location = Point(lng, lat, srid=4326) if (lat and lng) else None
+            except Exception as geo_err:
+                logger.warning(f"GEOS Point creation failed for place {slug}: {geo_err}")
+                location = None
 
             if not dest or not category:
                 raise ValueError(f"Destination '{dest_slug}' or Category '{cat_slug}' not found.")

@@ -8,14 +8,27 @@ Verifies:
   5. Failure handling preserving booking in pending state for customer retry.
   6. Expiration logic.
 """
+# ruff: noqa: E402
 
+import os
 import sys
 from datetime import datetime
 from decimal import Decimal
 from pathlib import Path
 
 # Add current apps/api directory to sys.path
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+BASE_API = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(BASE_API))
+
+for _candidate in (BASE_API.parent.parent / ".env", BASE_API / ".env"):
+    if _candidate.exists():
+        with open(_candidate, encoding="utf-8") as _f:
+            for _line in _f:
+                _line = _line.strip()
+                if _line and not _line.startswith("#") and "=" in _line:
+                    _k, _v = _line.split("=", 1)
+                    os.environ.setdefault(_k.strip(), _v.strip())
+        break
 
 from payments.adapters.vnpay import VN_TZ, VNPayAdapter
 
@@ -25,9 +38,11 @@ def run_tests():
     print("RUNNING VNPAY INTEGRATION SPECIFICATION VERIFICATION SUITE")
     print("=" * 60)
 
+    tmn_code = "TEST_SPEC_TMN"
+    hash_secret = "TEST_SPEC_SECRET_KEY"
     adapter = VNPayAdapter(
-        tmn_code="STAR_TEST_TMN",
-        hash_secret="STAR_TEST_SECRET_HASH_KEY_987654321",
+        tmn_code=tmn_code,
+        hash_secret=hash_secret,
         payment_url="https://sandbox.vnpayment.vn/paymentv2/vpcpay.html",
         return_url="http://localhost:3000/payment/return",
     )
@@ -52,7 +67,7 @@ def run_tests():
     assert "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html?" in url, "Base URL mismatch"
     assert "vnp_Version=2.1.0" in url, "Version mismatch"
     assert "vnp_Command=pay" in url, "Command mismatch"
-    assert "vnp_TmnCode=STAR_TEST_TMN" in url, "TmnCode mismatch"
+    assert f"vnp_TmnCode={tmn_code}" in url, "TmnCode mismatch"
     assert "vnp_Amount=320000000" in url, "Amount must be multiplied by 100"
     assert "vnp_CurrCode=VND" in url, "CurrCode mismatch"
     assert "vnp_TxnRef=ST-202610-A89F_1728400000" in url, "TxnRef mismatch"

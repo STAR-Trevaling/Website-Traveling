@@ -8,14 +8,17 @@ Verifies:
 4. apps.api.core.alerts send_critical_alert payload generation & multi-platform webhook formatting (Telegram, Slack, Discord).
 5. GET /api/v1/health/monitoring/ HTTP endpoint availability and schema contract.
 """
+# ruff: noqa: E402
+# pyrefly: ignore-errors[missing-import]
 
 import os
 import sys
 from pathlib import Path
 from unittest.mock import patch, MagicMock
 
-if hasattr(sys.stdout, "reconfigure"):
-    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+reconfig = getattr(sys.stdout, "reconfigure", None)
+if callable(reconfig):
+    reconfig(encoding="utf-8", errors="replace")
 
 # Set up project root and python path
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -23,14 +26,12 @@ API_DIR = BASE_DIR / "apps" / "api"
 sys.path.insert(0, str(API_DIR))
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
-os.environ.setdefault("DJANGO_SECRET_KEY", "test-secret-key-for-verification-only-1234567890")
 os.environ.setdefault("DJANGO_DEBUG", "1")
 
 import django
 django.setup()
 
 
-from django.conf import settings
 from django.test import Client
 import sentry_sdk
 from core.alerts import send_critical_alert, mask_sensitive_data
