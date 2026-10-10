@@ -53,6 +53,11 @@ class BookingViewSet(viewsets.ModelViewSet):
                     "contact_name": booking.contact_name,
                     "contact_email": booking.contact_email,
                     "contact_phone": booking.contact_phone,
+                    "customer": {
+                        "name": booking.contact_name,
+                        "email": booking.contact_email,
+                        "phone": booking.contact_phone,
+                    },
                     "tour_slug": booking.tour.slug if booking.tour else None,
                     "departure_date": booking.departure_date.isoformat()
                     if booking.departure_date
@@ -62,6 +67,13 @@ class BookingViewSet(viewsets.ModelViewSet):
                     "total_amount": str(booking.total_amount),
                     "currency": booking.currency,
                     "special_requests": booking.special_requests,
+                    "interest": {
+                        "type": "tour_booking",
+                        "tour_slug": booking.tour.slug if booking.tour else None,
+                        "travel_date": booking.departure_date.isoformat() if booking.departure_date else None,
+                        "traveler_count": booking.pax_adults + booking.pax_children,
+                        "message": booking.special_requests or "",
+                    },
                 },
             }
             outbox = IntegrationOutbox.objects.create(
@@ -157,6 +169,23 @@ class ReferralTrackView(APIView):
         try:
             event_id = str(uuid.uuid4())
             now = timezone.now()
+            has_contact = bool(
+                booking.contact_name
+                or booking.contact_phone
+                or booking.contact_email
+            )
+            destination_slug = ""
+            commission_rate = 0.0
+            estimated_val = 1000000.0
+            if accommodation_obj:
+                destination_slug = accommodation_obj.destination.slug if getattr(accommodation_obj, "destination", None) else ""
+                commission_rate = float(accommodation_obj.partner_commission_rate or 0.0)
+                estimated_val = float(accommodation_obj.price_from or 2000000.0)
+            elif restaurant_obj:
+                destination_slug = restaurant_obj.destination.slug if getattr(restaurant_obj, "destination", None) else ""
+                commission_rate = float(restaurant_obj.partner_commission_rate or 0.0)
+                estimated_val = 1000000.0
+
             envelope = {
                 "event_id": event_id,
                 "event_type": "referral.created",
@@ -170,15 +199,16 @@ class ReferralTrackView(APIView):
                     "item_id": str(item_id),
                     "item_name": item_title,
                     "partner_name": booking.referral_partner_name,
+                    "referral_partner_name": booking.referral_partner_name,
+                    "destination": destination_slug,
                     "target_url": booking.referral_target_url,
                     "contact_name": booking.contact_name or None,
                     "contact_phone": booking.contact_phone or None,
                     "contact_email": booking.contact_email or None,
-                    "has_contact_lead": bool(
-                        booking.contact_name
-                        or booking.contact_phone
-                        or booking.contact_email
-                    ),
+                    "has_contact_info": has_contact,
+                    "has_contact_lead": has_contact,
+                    "partner_commission_rate": commission_rate,
+                    "estimated_value": estimated_val,
                     "referred_at": now.isoformat(),
                 },
             }

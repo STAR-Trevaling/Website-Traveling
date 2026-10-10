@@ -1,7 +1,17 @@
 # Progress Tracker
 
 ## Completed in this artifact
-- Marketing Attribution (UTM Tracking) & VietQR Inventory Hold Slot Management (Production E-Commerce Ready):
+- Public Site to ERP E2E Workflow & Production Data Transfer Audit (100% Passed):
+  - Audited full data flows between Public Site (`apps/public-site`), Django Backend (`apps/api`), Outbox Dispatcher, and Odoo 18 ERP (`star_travels_payment_sync`, `travel_integration`, `travel_crm`, `travel_partner`).
+  - Aligned transactional data contracts and Outbox event routing:
+    - `inquiry.created` & `ai.lead.created`: Dispatched to Odoo `/api/v1/travel/inquiry` with HMAC signature and marketing UTM attribution.
+    - `booking.paid`: Dispatched to Odoo `/api/v1/travel/booking-paid` with canonical payload (`customer`, `payment`, `items`, `adults`, `children`, `price_adult`, `price_child`, `total_amount`), triggering Sale Order, Invoice, Payment, and reconciliation.
+    - `referral.created`: Routed to `/api/v1/travel/referral-created` with partner attribution (`destination`, `partner_commission_rate`, `has_contact_info`) creating tagged CRM leads (`[PARTNER_REFERRAL]`, `[WARM_REFERRAL]`).
+    - `partner.application.created`: Dispatched to `/api/v1/travel/partner-application` creating partner onboarding records.
+    - Inbound CMS publishing (`/api/v1/integrations/v1/odoo/events`): Hardened with HMAC-SHA256 verification and idempotent replay caching (0 duplicate writes).
+    - Failure resilience: Exhausted retries transition Outbox to FAILED, update source records to FAILED, and trigger multi-channel Sentry & webhook critical alerts.
+  - Implemented and verified comprehensive 7-workflow automated test suite `scripts/verify_public_to_erp_e2e.py` (100% GREEN).
+
   - Frontend (`apps/public-site`):
     - Implemented `src/lib/utm.ts` and `src/components/shared/utm-tracker.tsx` with 30-day attribution window across cookie, localStorage, and sessionStorage.
     - Captures `utm_source`, `utm_medium`, `utm_campaign`, `utm_content`, `utm_term`, `gclid`, and `fbclid` on landing and route changes.
@@ -441,6 +451,13 @@
   - **Tương thích WebKit / Safari (Item 32):**
     - Bổ sung quy tắc CSS cho dynamic viewport `100dvh` và `-webkit-fill-available` trong `apps/public-site/src/app/globals.css`.
     - Tự động bổ sung màu nền dự phòng khi trình duyệt WebKit gặp lỗi tăng tốc phần cứng đối với `backdrop-filter`.
+  - **Quản lý Bí mật (.env) & Làm sạch Toàn diện Mã nguồn (Production Secrets & Zero-Secret Codebase):**
+    - Toàn bộ secret của dự án (Django secret key, Postgres password, Odoo HMAC secret, Odoo inbound API key, VNPay hash secret, Sentry DSN, Telegram alert webhook) được tập trung tại `.env` (gốc dự án) và `apps/public-site/.env.local`.
+    - Cấu hình `.gitignore` đảm bảo nghiêm ngặt `.env`, `.env.local`, `.env.*.local`, `*.key`, `*.pem` không bao giờ bị đưa vào Git tracking.
+    - Cả 2 file mẫu `.env.example` và `apps/public-site/.env.example` được làm sạch 100%, chỉ chứa giá trị giữ chỗ trung tính (`replace_with_...`), tuyệt đối không chứa secret thực tế.
+    - Toàn bộ codebase backend (`settings.py`, `payments/`, `integrations/`, `scripts/`, `tests/`) và frontend (`login-form.tsx`) đã được loại bỏ hoàn toàn các chuỗi fallback secret/password cứng.
+    - Cơ chế kiểm tra môi trường trong `settings.py`: khi chạy ở chế độ Production (`DJANGO_DEBUG=0`), hệ thống bắt buộc ném `RuntimeError` ngay lập tức nếu thiếu bất kỳ biến secret quan trọng nào (`DJANGO_SECRET_KEY`, `POSTGRES_PASSWORD`, `ODOO_WEBHOOK_SECRET`, `ODOO_INBOUND_API_KEY`, `VNPAY_HASH_SECRET`).
+    - Tất cả 6 bộ kiểm thử và xác minh E2E (`verify_public_to_erp_e2e.py`, `verify_lead_sync.py`, `verify_vietqr_spec.py`, `verify_vnpay_spec.py`, `verify_marketing_and_hold_sweep.py`, `verify_monitoring_setup.py`) đạt 100% GREEN.
 
 
 

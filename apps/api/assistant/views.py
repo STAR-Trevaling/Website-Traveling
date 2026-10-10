@@ -189,6 +189,17 @@ class AssistantConversationViewSet(viewsets.ModelViewSet):
                         "email": lead.email,
                         "estimated_pax": lead.estimated_pax,
                         "chat_summary": lead.chat_summary,
+                        "customer": {
+                            "name": lead.contact_name or "Khách hàng AI Concierge",
+                            "phone": lead.phone_number,
+                            "email": lead.email,
+                            "identity_provider": "ai_assistant",
+                        },
+                        "interest": {
+                            "type": "ai_consultation",
+                            "traveler_count": lead.estimated_pax,
+                            "message": lead.chat_summary,
+                        },
                     },
                 }
                 outbox = IntegrationOutbox.objects.create(

@@ -2,11 +2,13 @@
 """
 Verification Script: Lead Synchronization Flow between Public Site, Django Backend, Admin, and Odoo CRM.
 """
-import io
+# ruff: noqa: E402
+# pyrefly: ignore-errors[missing-import]
 import json
 import os
 import sys
 import uuid
+from typing import Any, cast
 from unittest.mock import MagicMock, patch
 
 # Configure Django settings
@@ -19,7 +21,6 @@ import django
 django.setup()
 
 from django.contrib import admin
-from django.utils import timezone
 from integrations.models import Inquiry, IntegrationOutbox, IntegrationEvent
 from assistant.models import AssistantLeadCapture
 from partners.models import PartnerApplication
@@ -55,16 +56,19 @@ def test_admin_registrations():
     assert Booking in admin.site._registry, "Booking must be registered in Admin"
 
     inquiry_admin = admin.site._registry[Inquiry]
-    assert "dispatch_to_odoo_action" in inquiry_admin.actions
-    assert "mark_as_synced_action" in inquiry_admin.actions
+    inquiry_actions = list(inquiry_admin.actions or [])
+    assert "dispatch_to_odoo_action" in inquiry_actions
+    assert "mark_as_synced_action" in inquiry_actions
 
     lead_admin = admin.site._registry[AssistantLeadCapture]
-    assert "retry_odoo_sync_action" in lead_admin.actions
-    assert "mark_as_synced_action" in lead_admin.actions
+    lead_actions = list(lead_admin.actions or [])
+    assert "retry_odoo_sync_action" in lead_actions
+    assert "mark_as_synced_action" in lead_actions
 
     partner_admin = admin.site._registry[PartnerApplication]
-    assert "approve_applications_action" in partner_admin.actions
-    assert "reject_applications_action" in partner_admin.actions
+    partner_actions = list(partner_admin.actions or [])
+    assert "approve_applications_action" in partner_actions
+    assert "reject_applications_action" in partner_actions
 
     print("[OK] All 6 Models and their Admin Actions are registered successfully!")
 
@@ -103,7 +107,7 @@ def test_inquiry_sync_flow():
         mock_filter.return_value.first.return_value = mock_inquiry
 
         # Execute dispatch task
-        res = dispatch_outbox_event(str(mock_outbox_id))
+        res = cast(Any, dispatch_outbox_event)(str(mock_outbox_id))
         assert res is True
         assert mock_outbox.state == IntegrationOutbox.State.DELIVERED
         assert mock_inquiry.status == Inquiry.Status.SYNCED
@@ -147,7 +151,7 @@ def test_ai_lead_capture_sync_flow():
 
         mock_lead_filter.return_value.first.return_value = mock_lead
 
-        res = dispatch_outbox_event(str(mock_outbox_id))
+        res = cast(Any, dispatch_outbox_event)(str(mock_outbox_id))
         assert res is True
         assert mock_outbox.state == IntegrationOutbox.State.DELIVERED
         assert mock_lead.sync_state == AssistantLeadCapture.SyncState.SYNCED
@@ -190,7 +194,7 @@ def test_referral_booking_sync_flow():
 
         mock_booking_filter.return_value.first.return_value = mock_booking
 
-        res = dispatch_outbox_event(str(mock_outbox_id))
+        res = cast(Any, dispatch_outbox_event)(str(mock_outbox_id))
         assert res is True
         assert mock_outbox.state == IntegrationOutbox.State.DELIVERED
         assert mock_booking.odoo_order_id == 777
@@ -219,14 +223,14 @@ def test_outbox_permanent_failure_flow():
         },
     }
 
-    dispatch_outbox_event.request.retries = 3  # >= max_retries
+    cast(Any, dispatch_outbox_event).request.retries = 3  # >= max_retries
 
     with patch("integrations.models.IntegrationOutbox.objects.get", return_value=mock_outbox), \
          patch("integrations.models.Inquiry.objects.filter") as mock_inq_filter, \
          patch("assistant.models.AssistantLeadCapture.objects.filter") as mock_lead_filter, \
          patch("urllib.request.urlopen", side_effect=Exception("Connection refused")):
 
-        res = dispatch_outbox_event(str(mock_outbox_id))
+        cast(Any, dispatch_outbox_event)(str(mock_outbox_id))
 
         assert mock_outbox.state == IntegrationOutbox.State.FAILED
         mock_inq_filter.assert_called_with(id=str(mock_inquiry_id))

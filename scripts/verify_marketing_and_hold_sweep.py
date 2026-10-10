@@ -4,22 +4,22 @@ Verification Suite for:
 1. Marketing Attribution & UTM Tracking (Inquiry & Outbox Payload).
 2. Inventory Hold Slot Release & Expiration Sweep (PaymentTransaction & Booking).
 """
+# ruff: noqa: E402
+# pyrefly: ignore-errors[missing-import]
 
 import os
 import sys
-from datetime import timedelta
-from decimal import Decimal
 from pathlib import Path
 
-if hasattr(sys.stdout, "reconfigure"):
-    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+reconfig = getattr(sys.stdout, "reconfigure", None)
+if callable(reconfig):
+    reconfig(encoding="utf-8", errors="replace")
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 API_DIR = BASE_DIR / "apps" / "api"
 sys.path.insert(0, str(API_DIR))
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
-os.environ.setdefault("DJANGO_SECRET_KEY", "test-secret-key-for-verification-only-1234567890")
 os.environ.setdefault("DJANGO_DEBUG", "1")
 os.environ.setdefault("PYTEST_CURRENT_TEST", "1")
 
@@ -27,6 +27,7 @@ import django
 django.setup()
 
 
+from typing import Any, cast
 from unittest.mock import MagicMock, patch
 from rest_framework.test import APIRequestFactory
 
@@ -175,7 +176,7 @@ def test_hold_slot_expiration_sweep_logic():
     with patch("payments.models.PaymentTransaction.objects.filter") as mock_filter:
         mock_filter.return_value.select_related.return_value = mock_queryset
 
-        swept_count = sweep_expired_payments()
+        swept_count = cast(Any, sweep_expired_payments)()
 
         assert swept_count == 1
         assert mock_txn.status == PaymentTransaction.Status.EXPIRED
