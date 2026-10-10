@@ -34,6 +34,8 @@ def dispatch_outbox_event(self, outbox_id):
     endpoint_map = {
         "inquiry.created": f"{odoo_base}/api/v1/travel/inquiry",
         "lead.created": f"{odoo_base}/api/v1/travel/inquiry",
+        "ai.lead.created": f"{odoo_base}/api/v1/travel/inquiry",
+        "referral.created": f"{odoo_base}/api/v1/travel/inquiry",
         "partner.application.created": f"{odoo_base}/api/v1/travel/partner-application",
     }
     url = endpoint_map.get(outbox.event_type, f"{odoo_base}/api/v1/travel/inquiry")
@@ -63,18 +65,49 @@ def dispatch_outbox_event(self, outbox_id):
                 outbox.last_error = ""
                 outbox.save(update_fields=["state", "delivered_at", "http_status", "last_error"])
 
-                # Update linked Inquiry status if available
+                # Update linked Lead / Inquiry / Booking models upon successful Odoo CRM sync
                 try:
-                    resp_data = json.loads(resp_body)
+                    resp_data = json.loads(resp_body) if resp_body else {}
+                    returned_lead_id = resp_data.get("lead_id")
+
+                    # 1. Inquiry sync update
                     inquiry_id = outbox.payload.get("data", {}).get("inquiry_id")
                     if inquiry_id:
                         inquiry = Inquiry.objects.filter(id=inquiry_id).first()
                         if inquiry:
                             inquiry.status = Inquiry.Status.SYNCED
-                            inquiry.odoo_lead_id = resp_data.get("lead_id")
+                            inquiry.odoo_lead_id = returned_lead_id
                             inquiry.save(update_fields=["status", "odoo_lead_id"])
+
+                    # 2. AI Assistant Lead Capture sync update
+                    lead_capture_id = outbox.payload.get("data", {}).get("lead_capture_id")
+                    if lead_capture_id:
+                        try:
+                            from assistant.models import AssistantLeadCapture
+
+                            lead = AssistantLeadCapture.objects.filter(id=lead_capture_id).first()
+                            if lead:
+                                lead.sync_state = AssistantLeadCapture.SyncState.SYNCED
+                                lead.odoo_lead_id = returned_lead_id
+                                lead.save(update_fields=["sync_state", "odoo_lead_id"])
+                        except Exception as lead_err:
+                            logger.warning(f"Could not update AssistantLeadCapture status: {lead_err}")
+
+                    # 3. Referral Booking sync update
+                    booking_id = outbox.payload.get("data", {}).get("booking_id")
+                    if booking_id:
+                        try:
+                            from bookings.models import Booking
+
+                            booking = Booking.objects.filter(id=booking_id).first()
+                            if booking and returned_lead_id:
+                                booking.odoo_order_id = returned_lead_id
+                                booking.save(update_fields=["odoo_order_id"])
+                        except Exception as book_err:
+                            logger.warning(f"Could not update Booking status: {book_err}")
+
                 except Exception as update_err:
-                    logger.warning(f"Could not update inquiry status: {update_err}")
+                    logger.warning(f"Could not update entity status: {update_err}")
 
                 logger.info(
                     f"Successfully dispatched Outbox Event {outbox.event_id} to Odoo ({status_code})"
@@ -97,6 +130,22 @@ def dispatch_outbox_event(self, outbox_id):
         outbox.state = IntegrationOutbox.State.FAILED
         outbox.save(update_fields=["state", "retry_count", "last_error", "http_status"])
         logger.error(f"Permanently failed Outbox Event {outbox.event_id}: {err_msg}")
+
+        # Mark source models as FAILED on permanent outbox failure
+        try:
+            inquiry_id = outbox.payload.get("data", {}).get("inquiry_id")
+            if inquiry_id:
+                Inquiry.objects.filter(id=inquiry_id).update(status=Inquiry.Status.FAILED)
+
+            lead_capture_id = outbox.payload.get("data", {}).get("lead_capture_id")
+            if lead_capture_id:
+                from assistant.models import AssistantLeadCapture
+
+                AssistantLeadCapture.objects.filter(id=lead_capture_id).update(
+                    sync_state=AssistantLeadCapture.SyncState.FAILED
+                )
+        except Exception as fail_err:
+            logger.warning(f"Could not mark entity as failed: {fail_err}")
     else:
         # Exponential backoff countdown: 10s, 30s, 90s, 270s
         countdown = 10 * (3 ** (new_retries - 1))
