@@ -79,6 +79,28 @@ class ClientLogger {
     const sanitizedContext = context ? this.sanitize(context) : undefined;
     console.error(`[STAR][ERROR] ${message}`, error || "", sanitizedContext || "");
 
+    // 1. Send Sentry exception or message
+    try {
+      import("@sentry/nextjs").then((Sentry) => {
+        if (error) {
+          Sentry.captureException(error, {
+            extra: sanitizedContext,
+            tags: { digest: error.digest || "logger_error" },
+          });
+        } else {
+          Sentry.captureMessage(message, {
+            level: "error",
+            extra: sanitizedContext,
+          });
+        }
+      }).catch(() => {
+        // Fallback gracefully
+      });
+    } catch {
+      // Non-blocking
+    }
+
+    // 2. Transmit structured telemetry beacon
     this.sendTelemetry({
       level: "error",
       message,
@@ -94,5 +116,6 @@ class ClientLogger {
     });
   }
 }
+
 
 export const logger = new ClientLogger();

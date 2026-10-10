@@ -1,9 +1,11 @@
 import type { NextConfig } from "next";
 import path from "node:path";
+import { withSentryConfig } from "@sentry/nextjs/config";
 
 const nextConfig: NextConfig = {
-  output: "standalone",
+  output: process.env.NEXT_OUTPUT_STANDALONE === "1" || process.platform !== "win32" ? "standalone" : undefined,
   outputFileTracingRoot: path.join(__dirname, "../../"),
+
   allowedDevOrigins: ["localhost:3000", "192.168.1.6:3000", "192.168.1.6"],
   eslint: {
     // ESLint 9 uses flat config (eslint.config.mjs); lint is verified via 'pnpm lint'
@@ -62,4 +64,10 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+export default withSentryConfig(nextConfig, {
+  org: process.env.SENTRY_ORG,
+  project: process.env.SENTRY_PROJECT,
+  silent: !process.env.CI,
+  widenClientFileUpload: true,
+});
+

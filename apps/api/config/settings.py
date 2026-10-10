@@ -236,21 +236,88 @@ LOGGING = {
     },
 }
 
-# Optional Sentry APM & Error Tracking
+# Sentry APM & Error Tracking
 SENTRY_DSN = os.getenv("SENTRY_DSN")
+SENTRY_ENVIRONMENT = os.getenv("SENTRY_ENVIRONMENT", os.getenv("ENVIRONMENT", "production" if not DEBUG else "development"))
+SENTRY_TRACES_SAMPLE_RATE = float(os.getenv("SENTRY_TRACES_SAMPLE_RATE", "0.2"))
+ALERT_WEBHOOK_URL = os.getenv("ALERT_WEBHOOK_URL", "")
+
+
+def _sentry_before_send(event, hint):
+    """
+    Scrub passwords, tokens, secrets, financial hashes, and auth headers
+    before sending events to Sentry (Decree 13/2023/ND-CP compliance).
+    """
+    sensitive_keys = {
+        "password",
+        "token",
+        "secret",
+        "hash_secret",
+        "vnpay_hash_secret",
+        "vnp_hashsecret",
+        "cvv",
+        "credit_card",
+        "card_number",
+        "authorization",
+        "cookie",
+        "api_key",
+    }
+
+    def _scrub(val):
+        if isinstance(val, dict):
+            new_dict = {}
+            for k, v in val.items():
+                if any(s in str(k).lower() for s in sensitive_keys):
+                    new_dict[k] = "[REDACTED]"
+                else:
+                    new_dict[k] = _scrub(v)
+            return new_dict
+        elif isinstance(val, list):
+            return [_scrub(item) for item in val]
+        return val
+
+    if "request" in event and isinstance(event["request"], dict):
+        req = event["request"]
+        if "headers" in req and isinstance(req["headers"], dict):
+            req["headers"] = _scrub(req["headers"])
+        if "data" in req:
+            req["data"] = _scrub(req["data"])
+        if "query_string" in req and any(s in str(req["query_string"]).lower() for s in sensitive_keys):
+            req["query_string"] = "[REDACTED]"
+
+    if "extra" in event and isinstance(event["extra"], dict):
+        event["extra"] = _scrub(event["extra"])
+    if "contexts" in event and isinstance(event["contexts"], dict):
+        event["contexts"] = _scrub(event["contexts"])
+
+    return event
+
+
+
 if SENTRY_DSN:
     try:
         import sentry_sdk
         from sentry_sdk.integrations.celery import CeleryIntegration
         from sentry_sdk.integrations.django import DjangoIntegration
+        from sentry_sdk.integrations.logging import LoggingIntegration
+
+        sentry_logging = LoggingIntegration(
+            level=logging.INFO,
+            event_level=logging.ERROR,
+        )
 
         sentry_sdk.init(
             dsn=SENTRY_DSN,
-            integrations=[DjangoIntegration(), CeleryIntegration()],
-            traces_sample_rate=float(os.getenv("SENTRY_TRACES_SAMPLE_RATE", "0.1")),
+            integrations=[DjangoIntegration(), CeleryIntegration(), sentry_logging],
+            traces_sample_rate=SENTRY_TRACES_SAMPLE_RATE,
+            profiles_sample_rate=float(os.getenv("SENTRY_PROFILES_SAMPLE_RATE", "0.1")),
             send_default_pii=False,
-            environment=os.getenv("ENVIRONMENT", "production"),
+            environment=SENTRY_ENVIRONMENT,
+            before_send=_sentry_before_send,
+            release=os.getenv("RELEASE_VERSION", "star-travels-api@1.0.0"),
         )
-    except ImportError:
-        pass
+    except Exception as _sentry_init_err:
+        import sys
+        sys.stderr.write(f"Warning: Sentry initialization failed: {_sentry_init_err}\n")
+
 

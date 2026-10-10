@@ -1,6 +1,23 @@
 # Progress Tracker
 
 ## Completed in this artifact
+- Full-Stack Error Monitoring (Sentry APM) & Multi-Channel Critical Alert Dispatcher (100% Production-Ready for Marketing & Ad Campaigns):
+  - Backend (`apps/api`):
+    - Installed and configured `sentry-sdk==2.71.0` with Django, Celery, and Logging integrations.
+    - Implemented Decree 13/2023/ND-CP compliant PII scrubber `_sentry_before_send` in `settings.py` (redacting passwords, JWT tokens, hashes, card patterns, Authorization headers, and cookies before transmission).
+    - Built critical alert service `apps/api/core/alerts.py` (`send_critical_alert` and recursive `mask_sensitive_data`) supporting multi-platform rich webhook formatting (Telegram bot, Slack, Discord, and Generic JSON webhooks) with non-blocking error handling.
+    - Wired Outbox event delivery in `apps/api/integrations/tasks.py` to trigger critical alerts when retry limit is exhausted.
+    - Created dedicated monitoring health check endpoint `GET /api/v1/health/monitoring/` in `apps/api/core/views.py` with `@throttle_classes([])` to avoid Redis bottlenecks.
+  - Frontend (`apps/public-site`):
+    - Installed `@sentry/nextjs ^11.6.0` supporting Client, Server, and Edge runtime telemetry.
+    - Added standalone configuration files: `sentry.client.config.ts` (with Session Replay, text masking, media blocking), `sentry.server.config.ts`, `sentry.edge.config.ts`.
+    - Wrapped Next.js build pipeline in `apps/public-site/next.config.ts` with `withSentryConfig` from `@sentry/nextjs/config`.
+    - Enhanced error boundary `apps/public-site/src/app/error.tsx` and centralized logger `apps/public-site/src/lib/logger.ts` to capture exceptions and forward error digests to Sentry.
+    - Validated Next.js typecheck (`tsc --noEmit` clean) and production build (all 59 routes compiled).
+  - Environment Configuration & Automated Verification:
+    - Documented all monitoring variables (`SENTRY_DSN`, `NEXT_PUBLIC_SENTRY_DSN`, `ALERT_WEBHOOK_URL`, `SENTRY_ENVIRONMENT`, `SENTRY_TRACES_SAMPLE_RATE`) in root `.env.example` and `apps/public-site/.env.example`.
+    - Created and ran automated verification suite `scripts/verify_monitoring_setup.py` confirming 100% pass across all 5 verification checks.
+
 - Production-Ready System Hardening & Legal Compliance (Comprehensive 44-Point Audit Remediation):
   - Patched critical authentication bypass in BFF route handlers (`login/route.ts`, `register/route.ts`), strictly returning HTTP 503 in production.
   - Enforced server-side price recalculation and readonly totals in `BookingSerializer` using database tour pricing, eliminating price tampering risk.

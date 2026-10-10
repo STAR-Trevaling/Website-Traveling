@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import Link from "next/link";
+import * as Sentry from "@sentry/nextjs";
 import { AlertCircle, RotateCcw, Home } from "lucide-react";
 import { useLanguage } from "@/lib/i18n/context";
 import { logger } from "@/lib/logger";
@@ -16,9 +17,21 @@ export default function GlobalError({
   const { isEnglish } = useLanguage();
 
   useEffect(() => {
-    // Log unexpected runtime errors for observability and remote telemetry
+    // 1. Log unexpected runtime errors for observability and remote telemetry
     logger.error("Global application runtime error caught by error boundary", error);
+
+    // 2. Transmit directly to Sentry with error digest tag
+    try {
+      Sentry.captureException(error, {
+        tags: {
+          digest: error.digest || "unknown",
+        },
+      });
+    } catch {
+      // Sentry capture failure should never impede UI rendering
+    }
   }, [error]);
+
 
   return (
     <main className="template-page-bg flex min-h-screen items-center justify-center px-6 py-12 text-center text-[#282828]">

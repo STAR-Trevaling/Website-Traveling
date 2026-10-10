@@ -146,6 +146,27 @@ def dispatch_outbox_event(self, outbox_id):
                 )
         except Exception as fail_err:
             logger.warning(f"Could not mark entity as failed: {fail_err}")
+
+        # Dispatch critical alert to engineering & ops via Sentry and Webhook
+        try:
+            from core.alerts import send_critical_alert
+
+            send_critical_alert(
+                title=f"Outbox Sync Failed: {outbox.event_type}",
+                message=f"Sự kiện {outbox.event_type} ({outbox.event_id}) không thể đồng bộ sang Odoo ERP sau {outbox.max_retries} lần thử.\nLỗi: {err_msg}",
+                context={
+                    "event_id": outbox.event_id,
+                    "event_type": outbox.event_type,
+                    "source": outbox.source,
+                    "http_status": outbox.http_status,
+                    "retry_count": outbox.retry_count,
+                    "last_error": err_msg,
+                },
+                severity="critical",
+            )
+        except Exception as alert_err:
+            logger.warning(f"Failed to dispatch critical alert: {alert_err}")
+
     else:
         # Exponential backoff countdown: 10s, 30s, 90s, 270s
         countdown = 10 * (3 ** (new_retries - 1))
