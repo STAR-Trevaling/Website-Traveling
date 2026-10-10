@@ -39,10 +39,12 @@ class BookingSerializer(serializers.ModelSerializer):
             "currency",
             "status",
             "special_requests",
+            "metadata",
             "odoo_order_id",
             "created_at",
             "updated_at",
         )
+
         read_only_fields = (
             "id",
             "booking_code",

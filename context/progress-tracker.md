@@ -1,6 +1,18 @@
 # Progress Tracker
 
 ## Completed in this artifact
+- Marketing Attribution (UTM Tracking) & VietQR Inventory Hold Slot Management (Production E-Commerce Ready):
+  - Frontend (`apps/public-site`):
+    - Implemented `src/lib/utm.ts` and `src/components/shared/utm-tracker.tsx` with 30-day attribution window across cookie, localStorage, and sessionStorage.
+    - Captures `utm_source`, `utm_medium`, `utm_campaign`, `utm_content`, `utm_term`, `gclid`, and `fbclid` on landing and route changes.
+    - Attached UTM attribution metadata into tour booking (`TourBookingCard`), inquiry forms (`ContactForm`), and partner applications (`PartnerForm`).
+  - Backend (`apps/api`):
+    - Added `metadata` JSONField support to `Inquiry` and `Booking` models, serializers, and Outbox event dispatcher.
+    - Enriched Odoo CRM sync payload with structured `marketing` object (`utm_source`, `utm_medium`, `utm_campaign`, `gclid`, `fbclid`, `landing_page`, `referrer`).
+    - Configured periodic Celery Beat task `sweep_expired_payments` in `settings.py` (running every 60s) to automatically cancel expired VietQR bookings and release reserved capacity slots.
+    - Added LocMemCache test-fallback in `settings.py` when `IS_TESTING=True` to ensure isolated unit tests run without local Redis dependencies.
+    - Verified 100% test pass via `scripts/verify_marketing_and_hold_sweep.py` and clean `ruff` linter checks.
+
 - Full-Stack Error Monitoring (Sentry APM) & Multi-Channel Critical Alert Dispatcher (100% Production-Ready for Marketing & Ad Campaigns):
   - Backend (`apps/api`):
     - Installed and configured `sentry-sdk==2.71.0` with Django, Celery, and Logging integrations.

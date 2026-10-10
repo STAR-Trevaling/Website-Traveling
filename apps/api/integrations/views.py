@@ -39,6 +39,30 @@ class InquiryCreateView(APIView):
 
         inquiry = serializer.save()
 
+        # Extract UTM attribution from request payload or inquiry metadata
+        raw_utm = (
+            request.data.get("utm")
+            or request.data.get("metadata", {}).get("utm")
+            or (inquiry.metadata.get("utm") if isinstance(inquiry.metadata, dict) else {})
+            or {}
+        )
+        if raw_utm and isinstance(inquiry.metadata, dict) and "utm" not in inquiry.metadata:
+            inquiry.metadata["utm"] = raw_utm
+            inquiry.save(update_fields=["metadata"])
+
+        marketing_meta = {
+            "channel": inquiry.source,
+            "utm_source": raw_utm.get("utm_source", ""),
+            "utm_medium": raw_utm.get("utm_medium", ""),
+            "utm_campaign": raw_utm.get("utm_campaign", ""),
+            "utm_content": raw_utm.get("utm_content", ""),
+            "utm_term": raw_utm.get("utm_term", ""),
+            "gclid": raw_utm.get("gclid", ""),
+            "fbclid": raw_utm.get("fbclid", ""),
+            "landing_page": raw_utm.get("landing_page", ""),
+            "referrer": raw_utm.get("referrer", ""),
+        }
+
         # Build canonical payload envelope
         event_id = str(uuid.uuid4())
         envelope = {
@@ -63,6 +87,7 @@ class InquiryCreateView(APIView):
                     "traveler_count": inquiry.guests,
                     "message": inquiry.message,
                 },
+                "marketing": marketing_meta,
                 "source_metadata": {
                     "channel": inquiry.source,
                     "ip": request.META.get("REMOTE_ADDR"),
@@ -70,6 +95,7 @@ class InquiryCreateView(APIView):
                 },
             },
         }
+
 
         outbox = IntegrationOutbox.objects.create(
             event_id=event_id,

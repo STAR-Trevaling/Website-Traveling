@@ -10,6 +10,8 @@ import { AuthProvider } from "@/providers/auth-provider";
 import { getCurrentUser } from "@/lib/auth";
 import { AITripAssistant } from "@/components/assistant/ai-trip-assistant";
 import { GoogleAnalytics } from "@/components/shared/google-analytics";
+import { UtmTracker } from "@/components/shared/utm-tracker";
+
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://startravels.vn";
 const SITE_NAME = "Star Travels Vietnam";
@@ -187,7 +189,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           </LanguageProvider>
         </AuthProvider>
         <GoogleAnalytics />
+        <UtmTracker />
       </body>
     </html>
   );
 }
+

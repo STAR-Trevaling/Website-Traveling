@@ -3,7 +3,7 @@ import logging
 import os
 import urllib.error
 import urllib.request
-from typing import Any, Dict, Optional
+from typing import Any
 
 from django.conf import settings
 from django.utils import timezone
@@ -44,10 +44,10 @@ def mask_sensitive_data(data: Any) -> Any:
 def send_critical_alert(
     title: str,
     message: str,
-    context: Optional[Dict[str, Any]] = None,
+    context: dict[str, Any] | None = None,
     severity: str = "critical",
-    level: Optional[str] = None,
-    webhook_url: Optional[str] = None,
+    level: str | None = None,
+    webhook_url: str | None = None,
 ) -> bool:
     """
     Dispatch critical business & operational alerts to Sentry and optional Webhook (Telegram/Slack/Discord).

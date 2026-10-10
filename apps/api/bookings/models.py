@@ -78,9 +78,11 @@ class Booking(models.Model):
     payment_method = models.CharField(max_length=32, default="vnpay")
     payment_status = models.CharField(max_length=32, default="unpaid", db_index=True)
     special_requests = models.TextField(blank=True)
+    metadata = models.JSONField(default=dict, blank=True)
     odoo_order_id = models.IntegerField(null=True, blank=True, db_index=True)
     created_at = models.DateTimeField(auto_now_add=True, db_index=True)
     updated_at = models.DateTimeField(auto_now=True)
+
 
     class Meta:
         ordering = ["-created_at"]

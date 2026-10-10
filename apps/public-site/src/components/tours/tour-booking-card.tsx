@@ -8,6 +8,8 @@ import type { CurrentUser } from "@/lib/types";
 import { useLanguage } from "@/lib/i18n/context";
 import { submitInquiry } from "@/app/actions";
 import { publicApi } from "@/lib/api";
+import { getStoredUtm } from "@/lib/utm";
+
 
 interface TourBookingCardProps {
   tour: TourItem;
@@ -46,6 +48,7 @@ export function TourBookingCard({ tour, user }: TourBookingCardProps) {
     }
     setIsSubmitting(true);
     let bookingCode = `STAR-${tour.slug.toUpperCase().slice(0, 4)}-${Math.random().toString(36).substring(2, 7).toUpperCase()}`;
+    const utmData = getStoredUtm();
 
     try {
       const created = await publicApi.createBooking({
@@ -57,6 +60,7 @@ export function TourBookingCard({ tour, user }: TourBookingCardProps) {
         pax_adults: adults,
         pax_children: children,
         special_requests: `Preferred payment: ${paymentMethod}.`,
+        metadata: utmData ? { utm: utmData } : undefined,
       });
       if (created?.booking_code) {
         bookingCode = created.booking_code;
@@ -75,10 +79,13 @@ export function TourBookingCard({ tour, user }: TourBookingCardProps) {
         guests: adults + children,
         message: `Booking #${bookingCode} via ${paymentMethod === "vietqr" ? "VietQR (Chuyển khoản QR)" : "Tiền mặt (VP / HDV)"}. ${adults} adults, ${children} children. Total: ${totalPrice.toLocaleString()} VND.`,
         inquiry_type: "tour_booking",
+        utm: utmData || undefined,
+        metadata: utmData ? { utm: utmData } : undefined,
       });
     } catch {
       // Proceed to checkout even in offline/demo mode
     }
+
 
     setShowModal(false);
     setIsSubmitting(false);

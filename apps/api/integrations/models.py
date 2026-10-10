@@ -32,8 +32,10 @@ class Inquiry(models.Model):
         max_length=20, choices=Status.choices, default=Status.PENDING, db_index=True
     )
     odoo_lead_id = models.IntegerField(null=True, blank=True)
+    metadata = models.JSONField(default=dict, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
 
     class Meta:
         ordering = ("-created_at",)

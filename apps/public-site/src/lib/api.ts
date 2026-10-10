@@ -78,7 +78,9 @@ export const publicApi = {
     pax_adults: number;
     pax_children?: number;
     special_requests?: string;
+    metadata?: Record<string, any>;
   }) =>
+
     fetchJson<{
       id: string;
       booking_code: string;

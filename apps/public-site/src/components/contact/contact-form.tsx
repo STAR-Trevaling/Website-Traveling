@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Send, CheckCircle2 } from "lucide-react";
 import { useLanguage } from "@/lib/i18n/context";
 import { submitInquiry } from "@/app/actions";
+import { getStoredUtm } from "@/lib/utm";
 
 export function ContactForm() {
   const { t, isEnglish } = useLanguage();
@@ -34,6 +35,7 @@ export function ContactForm() {
       return;
     }
     setLoading(true);
+    const utmData = getStoredUtm();
     const res = await submitInquiry({
       name: formData.name,
       email: formData.email,
@@ -43,8 +45,11 @@ export function ContactForm() {
       guests: formData.guests,
       message: formData.message,
       inquiry_type: "consultation",
+      utm: utmData || undefined,
+      metadata: utmData ? { utm: utmData } : undefined,
     });
     setLoading(false);
+
     if (res.ok) {
       setSubmitted(true);
     } else {
