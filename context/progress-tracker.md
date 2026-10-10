@@ -462,4 +462,6 @@
 - CI Pipeline & PR Build Stabilization:
   - Khắc phục lỗi Mypy typecheck trong `apps/api/core/alerts.py` (`set_level` Literal type casting và `payload` dictionary type annotation).
   - Chuẩn hóa format toàn bộ mã nguồn backend bằng Ruff (`ruff format .`), đảm bảo kiểm tra `ruff format --check .` và `ruff check .` đạt 100% GREEN không có vi phạm.
-  - Kiểm thử toàn diện các bước CI: `scripts/validate_context.py` (ok), `scripts/static_sanity.py` (165 files ok), Frontend Typecheck & Next.js production build (`npm run build` 59 static/dynamic routes ok).
+  - Triệt tiêu 4 cảnh báo bảo mật CodeQL (Clear-text logging of sensitive information) trong `apps/api/assistant/verify_prompt_injection_spec.py` bằng cách loại bỏ việc in dữ liệu nhạy cảm và thông tin PII khách hàng ra stdout.
+  - Khởi tạo migration ban đầu `0001_initial.py` cho hai app `accommodations` và `restaurants`, giải quyết triệt để lỗi dependency graph `NodeNotFoundError: ('accommodations', '__first__')` trong bước `python manage.py migrate` của CI.
+  - Kiểm thử toàn diện các bước CI: `scripts/validate_context.py` (ok), `scripts/static_sanity.py` (169 files ok), Mypy (160 files ok), Ruff (160 files ok), Frontend Typecheck & Next.js production build (`npm run build` 59 static/dynamic routes ok).
