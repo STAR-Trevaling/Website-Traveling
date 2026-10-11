@@ -1,6 +1,7 @@
 import { VIETNAM_TOURS, TourItem } from "@/data/seed/tours";
 import { VIETNAM_STORIES, StoryItem } from "@/data/seed/stories";
 import { ALL_VIETNAM_DESTINATIONS } from "@/data/seed/destinations";
+import { GUIDE_CATEGORIES } from "@/data/seed/guide";
 import type { Destination } from "@/lib/types";
 
 export interface TourCardData {
@@ -29,11 +30,22 @@ export interface DestinationCardData {
   startingPrice?: string | null;
 }
 
+export interface GuideCardData {
+  slug: string;
+  href: string;
+  title: string;
+  category: string;
+  shortDesc: string;
+  badge: string;
+  iconName?: string;
+}
+
 export interface AssistantResponse {
   message: string;
   recommended_tours: TourCardData[];
   recommended_stories: StoryCardData[];
   recommended_destinations: DestinationCardData[];
+  recommended_guides?: GuideCardData[];
   contactRequired?: boolean;
   lead_captured?: boolean;
 }
@@ -70,6 +82,20 @@ function mapDestinationToCard(dest: Destination, isEn = false): DestinationCardD
   };
 }
 
+function mapGuideToCard(catSlug: string, isEn = false): GuideCardData | undefined {
+  const cat = GUIDE_CATEGORIES.find((c) => c.slug === catSlug);
+  if (!cat) return undefined;
+  return {
+    slug: cat.slug,
+    href: cat.href,
+    title: isEn ? cat.titleEn : cat.title,
+    category: cat.slug,
+    shortDesc: isEn ? cat.shortDescEn : cat.shortDesc,
+    badge: isEn ? cat.badgeEn : cat.badge,
+    iconName: cat.iconName,
+  };
+}
+
 export function normalizeText(str: string): string {
   return (str || "")
     .toLowerCase()
@@ -101,12 +127,12 @@ export function queryAssistantKnowledge(message: string, locale: "vi" | "en" = "
     q === "alo"
   ) {
     const greetingVi =
-      "Dạ chào Quý khách! Em là **STAR Concierge** — Trợ lý tư vấn du lịch thông minh của STAR Travels Vietnam.\n\n" +
+      "Dạ chào Quý khách! Em là **Bé Sao STAR** — Trợ lý tư vấn du lịch thông minh của STAR Travels Vietnam.\n\n" +
       "Em có thể tư vấn các điểm đến nổi tiếng tại Việt Nam, lịch trình tour trọn gói, cẩm nang du lịch và gửi đường link cụ thể để Quý khách xem trực tiếp.\n\n" +
       "Quý khách đang quan tâm đến vùng miền hay điểm đến nào (Sa Pa, Hạ Long, Đà Nẵng, Hội An, Phú Quốc, Ninh Bình...) ạ?";
 
     const greetingEn =
-      "Welcome to STAR Travels! I am **STAR Concierge**, your private AI travel advisor.\n\n" +
+      "Welcome to STAR Travels! I am **Baby STAR**, your private AI travel advisor.\n\n" +
       "I can recommend handcrafted Vietnam itineraries, luxury cruise packages, and direct links to our curated tours and articles.\n\n" +
       "Which destination are you planning to explore (Sa Pa, Ha Long Bay, Da Nang, Hoi An, Phu Quoc, Ninh Binh...)?";
 
@@ -117,6 +143,398 @@ export function queryAssistantKnowledge(message: string, locale: "vi" | "en" = "
         .map((t) => mapTourToCard(t!, isEn)),
       recommended_stories: [],
       recommended_destinations: [],
+      contactRequired: false,
+    };
+  }
+
+  // 0.05 CẨM NANG THÔNG TIN DU LỊCH (TRAVEL INFO HUB) — IN-SCOPE PRACTICAL GUIDES
+
+  // 1. VISA & ENTRY GUIDELINES
+  if (
+    q.includes("visa") ||
+    q.includes("thi thuc") ||
+    q.includes("nhap canh") ||
+    q.includes("e-visa") ||
+    q.includes("evisa") ||
+    q.includes("ho chieu") ||
+    q.includes("passport") ||
+    q.includes("mien thi thuc") ||
+    q.includes("45 ngay") ||
+    q.includes("90 ngay")
+  ) {
+    const visaVi =
+      "Dạ về **Chính sách Thị thực & E-visa Việt Nam (Cập nhật 2026)**, STAR Travels xin chia sẻ các quy định chính thức như sau ạ:\n\n" +
+      "- **Miễn thị thực đơn phương 45 ngày:** Công dân 25 quốc gia (Đức, Pháp, Ý, Tây Ban Nha, Anh, Nhật Bản, Hàn Quốc, Nga, Thụy Điển, Na Uy, Đan Mạch, Phần Lan, Bỉ, Ba Lan, Séc, Thụy Sĩ...) được miễn visa 45 ngày khi nhập cảnh (hộ chiếu còn hạn ít nhất 6 tháng).\n" +
+      "- **Miễn thị thực ASEAN:** 30 ngày cho Singapore, Malaysia, Thái Lan, Indonesia, Campuchia, Lào; 21 ngày cho Philippines; 14 ngày cho Brunei & Myanmar.\n" +
+      "- **Miễn thị thực 30 ngày Đặc khu Phú Quốc:** Áp dụng cho người nước ngoài bay trực tiếp đến đảo Phú Quốc hoặc quá cảnh mà không rời khu cách ly sân bay.\n" +
+      "- **E-visa điện tử 90 ngày:** Áp dụng cho công dân **mọi quốc gia trên thế giới**. Có giá trị 1 lần (25 USD) hoặc nhiều lần (50 USD). Thời gian xử lý từ 3-5 ngày làm việc.\n" +
+      "- **Cổng e-visa chính thức duy nhất:** [https://evisa.gov.vn](https://evisa.gov.vn).\n\n" +
+      "Quý khách có thể xem bảng tra cứu chi tiết và quy trình 4 bước tại trang cẩm nang: [Cẩm Nang Thị Thực & E-visa](/guide/visa).";
+
+    const visaEn =
+      "Regarding **Vietnam Visa & E-Visa Regulations (Updated 2026)**, STAR Travels provides verified official guidelines:\n\n" +
+      "- **45-Day Unilateral Visa Exemption:** Granted to passport holders of 25 nations including Germany, France, Italy, Spain, UK, Japan, South Korea, Russia, Sweden, Norway, Denmark, Poland, Switzerland, etc.\n" +
+      "- **ASEAN Bilateral Exemption:** 30 days for Singapore, Malaysia, Thailand, Indonesia, Cambodia, Laos; 21 days for Philippines; 14 days for Brunei & Myanmar.\n" +
+      "- **30-Day Phu Quoc Exemption:** Foreign travelers flying directly or transiting to Phu Quoc Island receive 30-day exemption.\n" +
+      "- **90-Day Universal E-Visa:** Open to citizens of **all countries & territories**. Single entry ($25 USD) or multiple entry ($50 USD), processed in 3-5 working days.\n" +
+      "- **Official National E-visa Portal:** [https://evisa.gov.vn](https://evisa.gov.vn).\n\n" +
+      "Explore the interactive lookup table and full step-by-step checklist at our [Vietnam Visa & Entry Guide](/guide/visa).";
+
+    const guideCard = mapGuideToCard("visa", isEn);
+    return {
+      message: isEn ? visaEn : visaVi,
+      recommended_tours: [findTour("tour-ha-long-cruise-2n1d")].filter(Boolean).map((t) => mapTourToCard(t!, isEn)),
+      recommended_stories: [],
+      recommended_destinations: [],
+      recommended_guides: guideCard ? [guideCard] : [],
+      contactRequired: false,
+    };
+  }
+
+  // 2. WEATHER & TRAVEL SEASONS
+  if (
+    q.includes("thoi tiet") ||
+    q.includes("khi hau") ||
+    q.includes("mua nao") ||
+    q.includes("thang may") ||
+    q.includes("mua dep nhat") ||
+    q.includes("mua mua") ||
+    q.includes("mua bao") ||
+    q.includes("mua kho") ||
+    q.includes("san may") ||
+    q.includes("bang tuyet") ||
+    q.includes("weather") ||
+    q.includes("climate") ||
+    q.includes("best time to visit")
+  ) {
+    const weatherVi =
+      "Dạ về **Thời Tiết & Mùa Du Lịch Việt Nam**, khí hậu chia rõ theo 3 miền với các thời điểm vàng lý tưởng:\n\n" +
+      "- **Miền Bắc (Hà Nội, Sa Pa, Hạ Long, Hà Giang):** Mùa Thu (tháng 9-11) là thời điểm đẹp nhất năm với nắng vàng và gió heo may mát mẻ. Sa Pa săn mây và lúa chín đẹp nhất tháng 9-10; mùa đông tháng 12-1 có thể có băng tuyết.\n" +
+      "- **Miền Trung (Đà Nẵng, Hội An, Huế, Nha Trang):** Mùa khô nắng đẹp từ tháng 1 đến tháng 8, rất lý tưởng tắm biển. Cần lưu ý mùa mưa bão ngập lụt thường rơi vào tháng 9-11 (đặc biệt Hội An hay ngập tháng 10-11).\n" +
+      "- **Miền Nam & Đảo Ngọc (TP.HCM, Cần Thơ, Phú Quốc):** Mùa khô từ tháng 11 đến tháng 4 năm sau với biển êm như gương và trời trong xanh; mùa mưa từ tháng 5 đến tháng 10 nhưng mưa rào nhanh rồi tạnh.\n\n" +
+      "Quý khách có thể xem biểu đồ nhiệt độ và lưu ý bão lũ của cả 12 danh thắng tại: [Thời Tiết & Mùa Du Lịch 12 Điểm Đến](/guide/weather).";
+
+    const weatherEn =
+      "Regarding **Vietnam Weather & Optimal Travel Seasons**, climate patterns vary distinctly across 3 regions:\n\n" +
+      "- **Northern Vietnam (Hanoi, Sa Pa, Ha Long, Ha Giang):** Autumn (Sep to Nov) is the absolute golden window with crisp dry weather. Sa Pa features golden rice terraces in Sep-Oct and cloud-hunting from Dec-Feb.\n" +
+      "- **Central Vietnam (Da Nang, Hoi An, Hue, Nha Trang):** Dry, sunny beach weather from Jan to Aug. Be mindful of storm and tidal flood season from Sep to Nov (especially Hoi An in Oct-Nov).\n" +
+      "- **Southern Vietnam & Islands (Phu Quoc, Saigon, Mekong Delta):** Dry season (Nov to Apr) is paradise with calm turquoise seas; wet season (May to Oct) features brief tropical showers.\n\n" +
+      "Review the full seasonal temperature charts for all 12 destinations at: [Vietnam Weather & Seasons Guide](/guide/weather).";
+
+    const guideCard = mapGuideToCard("weather", isEn);
+    return {
+      message: isEn ? weatherEn : weatherVi,
+      recommended_tours: [findTour("tour-sapa-fansipan-2n1d"), findTour("tour-ha-long-cruise-2n1d")].filter(Boolean).map((t) => mapTourToCard(t!, isEn)),
+      recommended_stories: [],
+      recommended_destinations: [findDest("sa-pa"), findDest("ha-long")].filter(Boolean).map((d) => mapDestinationToCard(d!, isEn)),
+      recommended_guides: guideCard ? [guideCard] : [],
+      contactRequired: false,
+    };
+  }
+
+  // 3. TRANSPORTATION & AIRPORT TRANSFERS
+  if (
+    q.includes("di chuyen") ||
+    q.includes("may bay") ||
+    q.includes("san bay") ||
+    q.includes("don san bay") ||
+    q.includes("noi bai") ||
+    q.includes("tan son nhat") ||
+    q.includes("cam ranh") ||
+    q.includes("lien khuong") ||
+    q.includes("tau hoa") ||
+    q.includes("xe lua") ||
+    q.includes("duong sat") ||
+    q.includes("limousine") ||
+    q.includes("xe khach") ||
+    q.includes("grab") ||
+    q.includes("xanh sm") ||
+    q.includes("taxi") ||
+    q.includes("transport") ||
+    q.includes("transfer")
+  ) {
+    const transVi =
+      "Dạ về **Di Chuyển Nội Địa & Chuyển Tiếp Sân Bay**, STAR Travels xin hướng dẫn chi tiết như sau ạ:\n\n" +
+      "- **Chuyển tiếp sân bay vào trung tâm:**\n" +
+      "  + **Nội Bài -> Phố Cổ Hà Nội (28 km):** Grab/Taxi khoảng 250k - 350k VNĐ (40 phút), Xe bus 86 chỉ 45k VNĐ.\n" +
+      "  + **Đà Nẵng -> Phố Cổ Hội An (30 km):** Xe riêng/Grab khoảng 280k - 380k VNĐ (45 phút).\n" +
+      "  + **Cam Ranh -> Nha Trang (35 km):** Xe buýt Đất Mới (60k VNĐ), Taxi 300k - 400k VNĐ.\n" +
+      "  + **Liên Khương -> Đà Lạt (30 km):** Taxi khoảng 250k - 300k VNĐ.\n" +
+      "- **Phương tiện liên tỉnh:** Các cung đường cao tốc có Limousine Dcar 9 chỗ đón tận nơi (Hà Nội - Hạ Long 2h, Hà Nội - Sa Pa 5h, Sài Gòn - Mũi Né 2.5h). Trải nghiệm tàu hỏa SE ngắm đèo Hải Vân rất đáng thử.\n" +
+      "- **Mẹo gọi xe:** Khuyên dùng ứng dụng Grab hoặc Xanh SM để biết trước giá cước minh bạch, không lo chặt chém.\n\n" +
+      "Quý khách có thể xem hướng dẫn chi tiết cho cả 12 điểm đến tại: [Cẩm Nang Di Chuyển Nội Địa](/guide/transport).";
+
+    const transEn =
+      "Regarding **Vietnam Domestic Transportation & Airport Transfers**, here are verified transit recommendations:\n\n" +
+      "- **Airport Transfers into City Centers:**\n" +
+      "  + **Noi Bai (HAN) to Hanoi Old Quarter (28 km):** 250k-350k VND by Grab/Taxi (40 mins), or Bus 86 (45k VND).\n" +
+      "  + **Da Nang (DAD) to Hoi An Ancient Town (30 km):** 280k-380k VND by private transfer or Grab (45 mins).\n" +
+      "  + **Cam Ranh (CXR) to Nha Trang (35 km):** Shuttle bus (60k VND) or Taxi (300k-400k VND).\n" +
+      "  + **Lien Khuong (DLI) to Da Lat (30 km):** Taxi 250k-300k VND (35 mins).\n" +
+      "- **Intercity Transit:** VIP 9-seater Dcar Limousines run expressways (Hanoi - Ha Long 2h, Hanoi - Sa Pa 5h). The SE train crossing Hai Van Pass is magnificent.\n" +
+      "- **App Recommendation:** Download Grab or Xanh SM for upfront fixed fares without haggling.\n\n" +
+      "Read the full transfer guides for 12 destinations at: [Domestic Transport & Transfers Guide](/guide/transport).";
+
+    const guideCard = mapGuideToCard("transport", isEn);
+    return {
+      message: isEn ? transEn : transVi,
+      recommended_tours: [findTour("tour-ha-long-cruise-2n1d")].filter(Boolean).map((t) => mapTourToCard(t!, isEn)),
+      recommended_stories: [],
+      recommended_destinations: [],
+      recommended_guides: guideCard ? [guideCard] : [],
+      contactRequired: false,
+    };
+  }
+
+  // 4. SAFETY, SOS & HEALTH
+  if (
+    q.includes("an toan") ||
+    q.includes("khan cap") ||
+    q.includes("cong an") ||
+    q.includes("cuu hoa") ||
+    q.includes("cap cuu") ||
+    q.includes("113") ||
+    q.includes("114") ||
+    q.includes("115") ||
+    q.includes("112") ||
+    q.includes("bao hiem") ||
+    q.includes("dong chay xa bo") ||
+    q.includes("rip current") ||
+    q.includes("duoi nuoc") ||
+    q.includes("safety") ||
+    q.includes("emergency")
+  ) {
+    const safetyVi =
+      "Dạ về **An Toàn Du Lịch & Số Khẩn Cấp Quốc Gia**, Quý khách vui lòng lưu lại các thông tin quan trọng sau:\n\n" +
+      "- **Các số điện thoại khẩn cấp quốc gia (Miễn phí 24/7):**\n" +
+      "  + **113:** Cảnh sát / Công an phản ứng nhanh (an ninh, trộm cắp, mất đồ, gây rối).\n" +
+      "  + **114:** Cảnh sát PCCC & Cứu nạn cứu hộ.\n" +
+      "  + **115:** Cấp cứu y tế & vận chuyển bệnh nhân.\n" +
+      "  + **112:** Tìm kiếm cứu nạn thiên tai quốc gia trên phạm vi toàn quốc.\n" +
+      "- **An toàn tắm biển:** Quan sát cờ báo bãi tắm, không bơi khi có cờ đỏ. Nếu gặp dòng chảy xa bờ (Rip Current), hãy bơi song song với bờ biển, tuyệt đối không cố bơi ngược dòng.\n" +
+      "- **Leo núi & Trekking (Fansipan, Tà Xùa):** Bắt buộc thuê hướng dẫn viên/porter bản địa, chuẩn bị giày bám đá, áo mưa bộ và đăng ký với Vườn Quốc Gia.\n" +
+      "- **Bảo hiểm:** Khuyến nghị du khách luôn mua bảo hiểm du lịch quốc tế chi trả viện phí khẩn cấp.\n\n" +
+      "Xem chi tiết hướng dẫn tại trang: [Cẩm Nang An Toàn & Sức Khỏe Du Lịch](/guide/safety).";
+
+    const safetyEn =
+      "Regarding **Vietnam Travel Safety & Emergency Hotlines**, please keep these vital contacts handy:\n\n" +
+      "- **National Emergency Hotlines (Toll-Free, 24/7):**\n" +
+      "  + **113:** Police / Security Emergency.\n" +
+      "  + **114:** Fire Brigade & Technical Rescue.\n" +
+      "  + **115:** Medical Ambulance & Health Emergency.\n" +
+      "  + **112:** National Disaster Search & Rescue Operations.\n" +
+      "- **Ocean Beach Safety:** Obey lifeguard flags. If caught in a rip current, stay calm and swim parallel to the shore until free of the current.\n" +
+      "- **Mountain Trekking:** Always hire licensed local porters/guides on Fansipan or Ta Xua trails and wear proper trail footwear.\n" +
+      "- **Insurance:** Always secure comprehensive travel insurance covering emergency hospital admissions.\n\n" +
+      "Review the complete safety advisory at: [Travel Safety & Health Hub](/guide/safety).";
+
+    const guideCard = mapGuideToCard("safety", isEn);
+    return {
+      message: isEn ? safetyEn : safetyVi,
+      recommended_tours: [],
+      recommended_stories: [],
+      recommended_destinations: [],
+      recommended_guides: guideCard ? [guideCard] : [],
+      contactRequired: false,
+    };
+  }
+
+  // 5. CULTURE, ETIQUETTE & TEMPLE DRESS CODE
+  if (
+    q.includes("van hoa") ||
+    q.includes("trang phuc") ||
+    q.includes("den chua") ||
+    q.includes("chua chien") ||
+    q.includes("mac gi") ||
+    q.includes("mac ca") ||
+    q.includes("tra gia") ||
+    q.includes("tien tip") ||
+    q.includes("tien boa") ||
+    q.includes("cam ky") ||
+    q.includes("cam dua") ||
+    q.includes("culture") ||
+    q.includes("etiquette") ||
+    q.includes("dress code") ||
+    q.includes("temple") ||
+    q.includes("tipping")
+  ) {
+    const cultureVi =
+      "Dạ về **Văn Hóa Ứng Xử, Trang Phục & Phép Tắc Giao Tiếp tại Việt Nam**:\n\n" +
+      "- **Trang phục khi vào Chùa/Đền/Di tích:** Bắt buộc che kín vai và đầu gối (quần dài hoặc váy qua gối, áo có tay). Cởi bỏ mũ nón, kính râm và tháo giày dép khi bước vào chánh điện. Không chạm vào tượng Phật.\n" +
+      "- **Giao tiếp:** Nụ cười thân thiện mở đầu cho mọi câu chuyện. Dùng cả hai tay khi đưa hoặc nhận đồ vật từ người lớn tuổi để thể hiện sự lễ phép.\n" +
+      "- **Mặc cả khi mua sắm:** Nên mặc cả vui vẻ tại các chợ truyền thống (Chợ Bến Thành, Đồng Xuân) khoảng 70-80% giá ban đầu. Tránh mặc cả ở siêu thị, nhà hàng có niêm yết menu và tránh ép giá gay gắt vào buổi sáng sớm.\n" +
+      "- **Tiền Tip (tiền boa):** Không bắt buộc. Nhưng một khoản tiền tip nhỏ 50.000 - 100.000 VNĐ cho hướng dẫn viên, lái xe hoặc người chèo thuyền luôn được đón nhận rất trân trọng.\n" +
+      "- **Điều cấm kỵ:** Tuyệt đối không cắm đũa thẳng đứng vào bát cơm (gợi liên tưởng đến bát hương thờ cúng), không chạm vào đầu người khác.\n\n" +
+      "Xem thêm các quy tắc văn hóa bản địa tại: [Cẩm Nang Văn Hóa & Phép Tắc](/guide/culture).";
+
+    const cultureEn =
+      "Regarding **Vietnamese Cultural Etiquette, Temple Modesty & Social Customs**:\n\n" +
+      "- **Temple & Pagoda Dress Codes:** Shoulders and knees must be covered (long trousers, maxi skirts, sleeved tops). Remove hats, sunglasses, and footwear before stepping onto sanctuary mats. Never touch Buddha statues.\n" +
+      "- **Respectful Greetings:** Greet with a friendly smile. Use both hands when giving or receiving business cards, money, or gifts.\n" +
+      "- **Market Bargaining:** Polite bargaining is natural in traditional street markets (Ben Thanh, Dong Xuan) at 70-80% of opening quotes. Do not bargain in fixed-price restaurants, boutiques, or early in the morning.\n" +
+      "- **Tipping Etiquette:** Not compulsory in Vietnam. However, leaving 50,000 - 100,000 VND for private tour guides, chauffeurs, or spa therapists is warmly appreciated.\n" +
+      "- **Cultural Taboos:** Never stick chopsticks upright into a bowl of rice (resembles funerary incense sticks). Avoid touching someone's head.\n\n" +
+      "Read full cultural dos and don'ts at: [Cultural Etiquette & Temple Dress Code Guide](/guide/culture).";
+
+    const guideCard = mapGuideToCard("culture", isEn);
+    return {
+      message: isEn ? cultureEn : cultureVi,
+      recommended_tours: [findTour("tour-da-nang-hoi-an-trail")].filter(Boolean).map((t) => mapTourToCard(t!, isEn)),
+      recommended_stories: [findStory("hoi-an-sac-mau-pho-co")].filter(Boolean).map((s) => mapStoryToCard(s!)),
+      recommended_destinations: [findDest("hoi-an")].filter(Boolean).map((d) => mapDestinationToCard(d!, isEn)),
+      recommended_guides: guideCard ? [guideCard] : [],
+      contactRequired: false,
+    };
+  }
+
+  // 6. CURRENCY, MONEY EXCHANGE & DAILY BUDGET
+  if (
+    q.includes("tien te") ||
+    q.includes("doi tien") ||
+    q.includes("tien mat") ||
+    q.includes("ngan hang") ||
+    q.includes("tiem vang") ||
+    q.includes("ty gia") ||
+    q.includes("chi phi") ||
+    q.includes("bao nhieu tien") ||
+    q.includes("500k") ||
+    q.includes("20k") ||
+    q.includes("polymer") ||
+    q.includes("vietqr") ||
+    q.includes("quet the") ||
+    q.includes("currency") ||
+    q.includes("money exchange") ||
+    q.includes("budget") ||
+    q.includes("cost per day") ||
+    q.includes("vnd")
+  ) {
+    const currVi =
+      "Dạ về **Tiền Tệ VNĐ, Đổi Tiền & Dự Toán Chi Phí Du Lịch Việt Nam**:\n\n" +
+      "- **CẢNH BÁO QUAN TRỌNG:** Tờ tiền polymer **20.000₫** (xanh dương đậm) và tờ **500.000₫** (xanh lơ nhạt) có màu sắc tương đối giống nhau khi nhìn trong bóng tối hoặc trên xe taxi. Quý khách nhớ đếm kỹ các chữ số 0 để tránh trả nhầm gấp 25 lần nhé ạ!\n" +
+      "- **Nơi đổi tiền an toàn:**\n" +
+      "  + **Ngân hàng thương mại (Vietcombank, BIDV, Techcombank):** An toàn 100%, tỷ giá niêm yết chuẩn, cần xuất trình hộ chiếu.\n" +
+      "  + **Tiệm vàng được cấp phép (Phố Hà Trung - Hà Nội, Chợ Bến Thành - TP.HCM):** Đổi nhanh, tỷ giá tốt cho tiền USD/EUR mới.\n" +
+      "  + **Quầy sân bay:** Thích hợp đổi một khoản nhỏ 1-2 triệu để đi taxi ban đầu.\n" +
+      "- **Thanh toán:** Thẻ Visa/Mastercard dùng tốt ở khách sạn, siêu thị; mã VietQR quét được ở hầu hết quán ăn; tiền mặt cần thiết khi đi chợ và ăn vỉa hè.\n" +
+      "- **Dự toán chi phí trung bình/ngày:**\n" +
+      "  + **Tiết kiệm:** 500k - 800k VNĐ/ngày (~20-32 USD).\n" +
+      "  + **Tiêu chuẩn:** 1.5tr - 2.5tr VNĐ/ngày (~60-100 USD).\n" +
+      "  + **Cao cấp:** Từ 4tr+ VNĐ/ngày (~160+ USD) với resort 5 sao và fine dining.\n\n" +
+      "Xem chi tiết bảng giá và hướng dẫn tại: [Cẩm Nang Tiền Tệ & Chi Phí](/guide/currency).";
+
+    const currEn =
+      "Regarding **Vietnam Dong (VND), Currency Exchange & Travel Budgeting**:\n\n" +
+      "- **CRITICAL WARNING:** The 20,000 VND note (dark blue) and 500,000 VND note (light cyan) share similar blue tones in dim lighting or inside taxis. Always check the number of zeroes carefully to avoid overpaying by 25 times!\n" +
+      "- **Where to Exchange Foreign Currency:**\n" +
+      "  + **Commercial Banks (Vietcombank, BIDV):** 100% legitimate, official rates, passport required.\n" +
+      "  + **Licensed Gold Shops (Ha Trung Street in Hanoi, Ben Thanh Market in Saigon):** Quick service with favorable exchange rates for crisp USD/EUR notes.\n" +
+      "  + **Airport Counters:** Convenient for exchanging $50-100 for your initial airport transfer.\n" +
+      "- **Payment Methods:** Visa/Mastercard are accepted at hotels and malls; mobile VietQR is ubiquitous; cash is essential for street vendors.\n" +
+      "- **Daily Spending Tiers:**\n" +
+      "  + **Backpacker / Budget:** 500k - 800k VND/day (~$20-32 USD).\n" +
+      "  + **Mid-range:** 1.5M - 2.5M VND/day (~$60-100 USD).\n" +
+      "  + **Luxury:** 4M+ VND/day (~$160+ USD) for 5-star beachfront resorts and fine dining.\n\n" +
+      "Read our full financial advisory at: [Vietnam Currency & Budget Guide](/guide/currency).";
+
+    const guideCard = mapGuideToCard("currency", isEn);
+    return {
+      message: isEn ? currEn : currVi,
+      recommended_tours: [],
+      recommended_stories: [],
+      recommended_destinations: [],
+      recommended_guides: guideCard ? [guideCard] : [],
+      contactRequired: false,
+    };
+  }
+
+  // 7. FESTIVALS & SEASONAL EVENTS
+  if (
+    q.includes("le hoi") ||
+    q.includes("su kien") ||
+    q.includes("tet nguyen dan") ||
+    (q.includes("tet") && !q.includes("test")) ||
+    q.includes("phao hoa") ||
+    q.includes("diff") ||
+    q.includes("chua huong") ||
+    q.includes("trung thu") ||
+    q.includes("den hung") ||
+    q.includes("festival hoa") ||
+    q.includes("dua bo") ||
+    q.includes("festival") ||
+    q.includes("calendar")
+  ) {
+    const festVi =
+      "Dạ về **Lịch Lễ Hội Truyền Thống & Sự Kiện Theo Mùa tại Việt Nam**:\n\n" +
+      "- **Tháng 1 - 2:** **Tết Nguyên Đán** (Đại lễ cổ truyền thiêng liêng nhất cả nước, hoa đào hoa mai rực rỡ; lưu ý các hàng quán đóng cửa vài ngày). Lễ hội Chùa Hương kéo dài 3 tháng mùa xuân.\n" +
+      "- **Tháng 3 - 4:** Giỗ Tổ Hùng Vương (Phú Thọ - Mùng 10/3 Âm lịch), Festival Huế với nhã nhạc cung đình.\n" +
+      "- **Tháng 5 - 7:** **Lễ hội Pháo hoa Quốc tế Đà Nẵng (DIFF)** - đại tiệc ánh sáng ngoạn mục ven sông Hàn thu hút đông đảo du khách.\n" +
+      "- **Tháng 8 - 9:** Tết Trung Thu phố cổ Hội An hoa đăng lung linh; Mùa lúa chín Mù Cang Chải & Hoàng Su Phì.\n" +
+      "- **Tháng 10 - 11:** Lễ hội Đua Bò Bảy Núi (An Giang); Lễ hội Hoa Tam Giác Mạch trên cao nguyên đá Hà Giang.\n" +
+      "- **Tháng 12:** Festival Hoa Đà Lạt với muôn sắc hoa ôn đới và không khí se lạnh đón Giáng sinh/Năm mới.\n" +
+      "- **Lưu ý thực tế:** Các dịp lễ lớn (Tết, DIFF Đà Nẵng, Festival Hoa) rất đông đúc, Quý khách nên đặt phòng khách sạn và vé máy bay trước 1-2 tháng nhé ạ!\n\n" +
+      "Xem chi tiết lịch 12 tháng tại: [Lịch Lễ Hội & Sự Kiện Du Lịch](/guide/festivals).";
+
+    const festEn =
+      "Regarding **Vietnam 12-Month Festival Calendar & Cultural Celebrations**:\n\n" +
+      "- **Jan - Feb:** **Tet Lunar New Year** (Vietnam's most cherished traditional celebration; festive peach blossoms everywhere). Huong Pagoda pilgrimage festival in Hanoi.\n" +
+      "- **Mar - Apr:** Hung Kings Temple Festival (Phu Tho), Hue Imperial Cultural Festival.\n" +
+      "- **May - Jul:** **Da Nang International Fireworks Festival (DIFF)** - world-class pyrotechnic displays along the Han River.\n" +
+      "- **Aug - Sep:** Mid-Autumn Festival in Hoi An ancient town; Golden harvest terraces in Mu Cang Chai.\n" +
+      "- **Oct - Nov:** Bay Nui Bull Racing (An Giang); Buckwheat Flower Festival in Ha Giang.\n" +
+      "- **Dec:** Da Lat Flower Festival showcasing millions of blooms amidst the cool highlands.\n" +
+      "- **Tip:** During major festivals (Tet, DIFF Da Nang), accommodations fill up quickly; reserve at least 1-2 months ahead.\n\n" +
+      "Explore the complete 12-month calendar at: [Vietnam Festivals & Events Calendar](/guide/festivals).";
+
+    const guideCard = mapGuideToCard("festivals", isEn);
+    return {
+      message: isEn ? festEn : festVi,
+      recommended_tours: [findTour("tour-da-nang-hoi-an-trail")].filter(Boolean).map((t) => mapTourToCard(t!, isEn)),
+      recommended_stories: [],
+      recommended_destinations: [findDest("da-nang"), findDest("hoi-an")].filter(Boolean).map((d) => mapDestinationToCard(d!, isEn)),
+      recommended_guides: guideCard ? [guideCard] : [],
+      contactRequired: false,
+    };
+  }
+
+  // 8. GENERAL TRAVEL INFO HUB
+  if (
+    q.includes("cam nang") ||
+    q.includes("huong dan du lich") ||
+    q.includes("thong tin can biet") ||
+    q.includes("travel hub") ||
+    q.includes("guide hub") ||
+    q.includes("travel info")
+  ) {
+    const hubVi =
+      "Dạ chào Quý khách! STAR Travels đã xây dựng chuyên trang **Thông Tin Cần Biết (Travel Info Hub)** " +
+      "với 7 nhóm thông tin thực dụng được tra cứu và kiểm chứng kỹ lưỡng dành cho du khách:\n\n" +
+      "1. [Thời Tiết & Mùa Du Lịch](/guide/weather) — Khí hậu 3 miền và chi tiết 12 điểm đến.\n" +
+      "2. [Thị Thực & Nhập Cảnh](/guide/visa) — Miễn visa 45 ngày & Hướng dẫn e-visa 90 ngày chính thức.\n" +
+      "3. [Di Chuyển Nội Địa](/guide/transport) — Hướng dẫn đón sân bay & so sánh phương tiện.\n" +
+      "4. [An Toàn & Sức Khỏe](/guide/safety) — Hotline khẩn cấp 113/114/115 & an toàn tắm biển/trekking.\n" +
+      "5. [Văn Hóa & Phép Tắc](/guide/culture) — Trang phục đền chùa, mặc cả văn minh & tiền tip.\n" +
+      "6. [Tiền Tệ & Chi Phí](/guide/currency) — Phân biệt 20k vs 500k, điểm đổi tiền uy tín & chi phí/ngày.\n" +
+      "7. [Lễ Hội & Sự Kiện](/guide/festivals) — Lịch 12 tháng sự kiện lớn khắp Việt Nam.\n\n" +
+      "Quý khách có thể truy cập trang chủ cẩm nang tại: [Thông Tin Cần Biết — STAR Travels](/guide).";
+
+    const hubEn =
+      "Welcome! STAR Travels features the **Vietnam Travel Info Hub**, " +
+      "offering 7 verified practical guides for international and domestic travelers:\n\n" +
+      "1. [Weather & Best Travel Seasons](/guide/weather) — Climate patterns across 3 regions & 12 destinations.\n" +
+      "2. [Visa & Entry Policies](/guide/visa) — 45-day visa exemption & official 90-day e-visa steps.\n" +
+      "3. [Domestic Transportation](/guide/transport) — Airport transfer costs & intercity VIP transit.\n" +
+      "4. [Safety & Emergency Contacts](/guide/safety) — Toll-free 113/114/115 hotlines & health advice.\n" +
+      "5. [Cultural Etiquette & Dress Codes](/guide/culture) — Temple modesty rules, tipping & taboos.\n" +
+      "6. [Currency & Daily Budgets](/guide/currency) — Avoiding 20k vs 500k confusion & daily spending tiers.\n" +
+      "7. [Festivals & Seasonal Events](/guide/festivals) — 12-month cultural celebrations calendar.\n\n" +
+      "Explore the full directory at our [Travel Info Hub](/guide).";
+
+    return {
+      message: isEn ? hubEn : hubVi,
+      recommended_tours: [],
+      recommended_stories: [],
+      recommended_destinations: [],
+      recommended_guides: GUIDE_CATEGORIES.map((c) => mapGuideToCard(c.slug, isEn)!).filter(Boolean),
       contactRequired: false,
     };
   }
@@ -135,10 +553,10 @@ export function queryAssistantKnowledge(message: string, locale: "vi" | "en" = "
     "nuoc uc", "australia", "sydney", "melbourne",
     "dubai", "uae", "maldives", "campuchia", "cambodia", "siem reap", "nuoc lao", "du lich lao", "vientiane",
     "nuoc nga", "russia", "moscow", "nuoc duc", "germany", "berlin", "nuoc y", "du lich y", "italy", "italia", "roma", "rome",
-    // Out-of-scope transportation / administrative requests
-    "truc thang", "helicopter", "ve may bay", "flight ticket", "air ticket", "dat ve may bay",
-    "visa", "ho chieu", "passport", "schengen",
-    "tau hoa", "xe lua", "train ticket", "thue xe tu lai"
+    // Out-of-scope external non-tour requests
+    "truc thang", "helicopter", "ve may bay quoc te",
+    "schengen", "visa my", "visa chau au",
+    "thue xe tu lai"
   ];
 
   if (OUT_OF_SCOPE_KEYWORDS.some((kw) => q.includes(kw))) {

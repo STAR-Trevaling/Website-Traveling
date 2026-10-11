@@ -1,5 +1,6 @@
 import logging
 import uuid
+from typing import Any, cast
 
 from django.utils import timezone
 from rest_framework import permissions, status, viewsets
@@ -214,7 +215,7 @@ class AssistantConversationViewSet(viewsets.ModelViewSet):
                     payload=envelope,
                     state=IntegrationOutbox.State.PENDING,
                 )
-                dispatch_outbox_event.delay(str(outbox.id))
+                cast(Any, dispatch_outbox_event).delay(str(outbox.id))
             except Exception as exc:
                 logger.warning(f"Failed to enqueue ai.lead.created outbox event: {exc}")
 
@@ -285,7 +286,7 @@ class AssistantLeadCaptureViewSet(viewsets.ModelViewSet):
                 payload=envelope,
                 state=IntegrationOutbox.State.PENDING,
             )
-            dispatch_outbox_event.delay(str(outbox.id))
+            cast(Any, dispatch_outbox_event).delay(str(outbox.id))
         except Exception as exc:
             logger.warning(f"Failed to enqueue ai.lead.created outbox event: {exc}")
 

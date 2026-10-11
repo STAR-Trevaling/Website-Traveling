@@ -21,6 +21,7 @@ import {
   Utensils,
   Handshake,
   ChevronDown,
+  Info,
 } from "lucide-react";
 import type { CurrentUser } from "@/lib/types";
 import { useLanguage } from "@/lib/i18n/context";
@@ -70,6 +71,7 @@ export function MobileNav({ user, overlay = false }: MobileNavProps) {
           icon: Utensils,
         },
         { label: t.nav.stories, href: "/stories", icon: BookOpen },
+        { label: t.nav.guide, href: "/guide", icon: Info },
       ],
     },
     {
@@ -141,7 +143,7 @@ export function MobileNav({ user, overlay = false }: MobileNavProps) {
               <StarLogo variant="horizontal" size="sm" asLink={false} />
             </Link>
             <div className="flex items-center gap-2">
-              <LanguageSwitcher overlay={false} showIcon={false} />
+              <LanguageSwitcher overlay={false} showIcon={true} />
               <button
                 type="button"
                 onClick={() => setIsOpen(false)}

@@ -1,5 +1,6 @@
 import logging
 import uuid
+from typing import Any, cast
 
 from django.utils import timezone
 from rest_framework import permissions, viewsets
@@ -67,7 +68,7 @@ class PartnerApplicationViewSet(viewsets.ModelViewSet):
                 payload=envelope,
                 state=IntegrationOutbox.State.PENDING,
             )
-            dispatch_outbox_event.delay(str(outbox.id))
+            cast(Any, dispatch_outbox_event).delay(str(outbox.id))
         except Exception as e:
             logger.warning(f"Could not enqueue partner outbox event: {e}")
 

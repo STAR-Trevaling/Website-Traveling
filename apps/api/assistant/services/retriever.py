@@ -195,6 +195,154 @@ def search_knowledge(
         ]
     )
 
+    # 8. Visa & Entry inquiry detection
+    is_visa_inquiry = any(
+        kw in clean_query
+        for kw in [
+            "visa",
+            "e-visa",
+            "evisa",
+            "thị thực",
+            "nhập cảnh",
+            "hộ chiếu",
+            "passport",
+            "miễn thị thực",
+            "visa waiver",
+            "45 ngày",
+            "90 ngày",
+            "lệ phí visa",
+            "cổng xuất nhập cảnh",
+            "entry permit",
+        ]
+    )
+
+    # 9. Domestic Transport & Airport transfers detection
+    is_transport_inquiry = any(
+        kw in clean_query
+        for kw in [
+            "di chuyển",
+            "máy bay",
+            "sân bay",
+            "đón sân bay",
+            "tàu hỏa",
+            "đường sắt",
+            "limousine",
+            "xe khách",
+            "grab",
+            "xanh sm",
+            "taxi",
+            "nội bài",
+            "tân sơn nhất",
+            "cam ranh",
+            "liên khương",
+            "airport",
+            "transit",
+            "flight",
+            "train",
+            "transfer",
+        ]
+    )
+
+    # 10. Safety & Emergency hotlines detection
+    is_safety_inquiry = any(
+        kw in clean_query
+        for kw in [
+            "an toàn",
+            "khẩn cấp",
+            "công an",
+            "cứu hỏa",
+            "cấp cứu",
+            "113",
+            "114",
+            "115",
+            "112",
+            "bảo hiểm",
+            "dòng chảy xa bờ",
+            "rip current",
+            "đuối nước",
+            "leo núi an toàn",
+            "tai nạn",
+            "emergency",
+            "safety",
+            "ambulance",
+            "police",
+            "insurance",
+        ]
+    )
+
+    # 11. Culture, Dress code & Etiquette detection
+    is_culture_inquiry = any(
+        kw in clean_query
+        for kw in [
+            "văn hóa",
+            "trang phục",
+            "đền chùa",
+            "mặc gì",
+            "chùa chiền",
+            "mặc cả",
+            "trả giá",
+            "tiền tip",
+            "tiền boa",
+            "chào hỏi",
+            "cấm kỵ",
+            "cắm đũa",
+            "xưng hô",
+            "culture",
+            "etiquette",
+            "dress code",
+            "temple",
+            "tipping",
+            "bargaining",
+            "taboo",
+        ]
+    )
+
+    # 12. Currency, Money exchange & Daily costs detection
+    is_currency_inquiry = any(
+        kw in clean_query
+        for kw in [
+            "tiền tệ",
+            "đổi tiền",
+            "tiền mặt",
+            "ngân hàng",
+            "tiệm vàng",
+            "tỷ giá",
+            "chi phí",
+            "bao nhiêu tiền",
+            "500k",
+            "20k",
+            "polymer",
+            "vietqr",
+            "quẹt thẻ",
+            "credit card",
+            "currency",
+            "exchange rate",
+            "budget",
+            "cost per day",
+        ]
+    )
+
+    # 13. Festivals & Seasonal events detection
+    is_festival_inquiry = any(
+        kw in clean_query
+        for kw in [
+            "lễ hội",
+            "sự kiện",
+            "tết",
+            "pháo hoa",
+            "diff",
+            "chùa hương",
+            "trung thu",
+            "đền hùng",
+            "festival hoa",
+            "đua bò",
+            "lịch lễ hội",
+            "festival",
+            "event",
+            "celebration",
+        ]
+    )
+
     scored_chunks: list[tuple[int, AssistantKnowledgeChunk]] = []
     chunks = list(AssistantKnowledgeChunk.objects.all())
 
@@ -226,6 +374,24 @@ def search_knowledge(
         # Policy match
         if is_policy_inquiry and chunk.entity_type == AssistantKnowledgeChunk.EntityType.POLICY:
             score += 60
+
+        # Guide chunks specialized matching
+        if chunk.entity_type == AssistantKnowledgeChunk.EntityType.GUIDE:
+            guide_cat = meta.get("category", "")
+            if is_visa_inquiry and guide_cat in ["visa", "guide_visa"]:
+                score += 95
+            if is_season_inquiry and guide_cat in ["weather", "guide_weather"]:
+                score += 85
+            if is_transport_inquiry and guide_cat in ["transport", "guide_transport"]:
+                score += 90
+            if is_safety_inquiry and guide_cat in ["safety", "guide_safety"]:
+                score += 95
+            if is_culture_inquiry and guide_cat in ["culture", "guide_culture"]:
+                score += 90
+            if is_currency_inquiry and guide_cat in ["currency", "guide_currency"]:
+                score += 90
+            if is_festival_inquiry and guide_cat in ["festivals", "guide_festivals"]:
+                score += 90
 
         # History & Heritage match
         if is_history_inquiry and meta.get("category") == "heritage_history":

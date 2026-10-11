@@ -20,6 +20,7 @@ export * from "./stories";
 export * from "./history";
 export * from "./accommodations";
 export * from "./restaurants";
+export * from "./guide";
 
 import { ALL_VIETNAM_DESTINATIONS, VIETNAM_DESTINATIONS_PAGES, getDestinationBySlug } from "./destinations";
 import { VIETNAM_TOURS, getTourBySlug } from "./tours";
@@ -28,6 +29,29 @@ import { VIETNAM_STORIES, getStoryBySlug } from "./stories";
 import { VIETNAM_HERITAGE_HISTORY, getHeritageBySlug, getHeritageByDestination } from "./history";
 import { VIETNAM_ACCOMMODATIONS, getAccommodationBySlug } from "./accommodations";
 import { VIETNAM_RESTAURANTS, getRestaurantBySlug } from "./restaurants";
+import {
+  GUIDE_CATEGORIES,
+  REGIONS_WEATHER_OVERVIEW,
+  DESTINATIONS_WEATHER_DATA,
+  VISA_GUIDE_DATA,
+  TRANSPORT_MODES,
+  DESTINATIONS_TRANSPORT_DATA,
+  EMERGENCY_CONTACTS,
+  ACTIVITY_SAFETY_GUIDES,
+  INSURANCE_ADVISORY,
+  ETIQUETTE_CATEGORIES,
+  CULTURAL_TABOOS,
+  CURRENCY_DENOMINATIONS,
+  EXCHANGE_LOCATIONS,
+  DAILY_BUDGET_TIERS,
+  PAYMENT_METHODS,
+  FESTIVAL_CALENDAR,
+  getGuideCategoryBySlug,
+  getDestinationWeather,
+  getDestinationTransport,
+  getFestivalsByMonth,
+  getFestivalsByDestination,
+} from "./guide";
 
 /**
  * Đối tượng gom toàn bộ seed data về 1 điểm truy cập duy nhất
@@ -41,6 +65,24 @@ export const SEED_DATA = {
   heritageHistory: VIETNAM_HERITAGE_HISTORY,
   accommodations: VIETNAM_ACCOMMODATIONS,
   restaurants: VIETNAM_RESTAURANTS,
+  guide: {
+    categories: GUIDE_CATEGORIES,
+    regionsWeather: REGIONS_WEATHER_OVERVIEW,
+    destinationsWeather: DESTINATIONS_WEATHER_DATA,
+    visa: VISA_GUIDE_DATA,
+    transportModes: TRANSPORT_MODES,
+    destinationsTransport: DESTINATIONS_TRANSPORT_DATA,
+    emergencyContacts: EMERGENCY_CONTACTS,
+    activitySafety: ACTIVITY_SAFETY_GUIDES,
+    insurance: INSURANCE_ADVISORY,
+    etiquette: ETIQUETTE_CATEGORIES,
+    taboos: CULTURAL_TABOOS,
+    currencyDenominations: CURRENCY_DENOMINATIONS,
+    exchangeLocations: EXCHANGE_LOCATIONS,
+    dailyBudgets: DAILY_BUDGET_TIERS,
+    paymentMethods: PAYMENT_METHODS,
+    festivals: FESTIVAL_CALENDAR,
+  },
 } as const;
 
 /**
@@ -55,6 +97,11 @@ export const seedFinder = {
   heritageByDestination: getHeritageByDestination,
   accommodation: getAccommodationBySlug,
   restaurant: getRestaurantBySlug,
+  guideCategory: getGuideCategoryBySlug,
+  destinationWeather: getDestinationWeather,
+  destinationTransport: getDestinationTransport,
+  festivalsByMonth: getFestivalsByMonth,
+  festivalsByDestination: getFestivalsByDestination,
 };
 
 export default SEED_DATA;

@@ -4,7 +4,7 @@
 > **Dự án:** STAR Travels Vietnam — Nền tảng Du lịch & Trải nghiệm Bản địa  
 > **Ứng dụng:** `apps/public-site` (Next.js 15.5 App Router, React 19, Tailwind CSS v3, TypeScript 5.9)  
 > **Trạng thái:** Hoàn thiện 100% tính năng Public & Thanh toán (VNPay / VietQR), Trợ lý AI Concierge, Song ngữ Việt - Anh, Dữ liệu Seed 100% Việt Nam, Parity chuẩn Anima  
-> **Phạm vi hợp nhất:** Tổng quan kiến trúc + Danh mục thành phần UI Inventory (23 Routes) + Chuẩn Giao diện Cờ Đỏ Sao Vàng + Quy chuẩn Parity Checklist & Responsive  
+> **Phạm vi hợp nhất:** Tổng quan kiến trúc + Danh mục thành phần UI Inventory (31 Routes) + Chuẩn Giao diện Cờ Đỏ Sao Vàng + Quy chuẩn Parity Checklist & Responsive  
 
 ---
 
@@ -126,7 +126,7 @@ Toàn bộ dữ liệu mẫu được gom về một thư mục duy nhất `apps
 
 ---
 
-## 4. Danh Mục 23 Tuyến Đường & Khối Giao Diện (Route Inventory)
+## 4. Danh Mục 31 Tuyến Đường & Khối Giao Diện (Route Inventory)
 
 | Tuyến Đường (Route) | Tên Trang | Các Khối UI Chính Thể Hiện |
 |---|---|---|
@@ -141,6 +141,14 @@ Toàn bộ dữ liệu mẫu được gom về một thư mục duy nhất `apps
 | `/experiences/[slug]` | Chi Tiết Trải Nghiệm | Banner trải nghiệm, nút Yêu thích (`FavoriteButton`), thông số đoàn khách, thẻ đặt chỗ tương tác `ExperienceBookingCard`, biểu mẫu đánh giá `ReviewForm`. |
 | `/stories` | Cẩm Nang & Hành Trình | Bài viết tâm điểm (Featured Hero Story), danh sách cẩm nang du lịch, thời gian đọc ước tính, đăng ký nhận bài. |
 | `/stories/[slug]` | Chi Tiết Bài Viết | Dàn trang chuẩn tạp chí lữ hành, tác giả, ảnh minh họa chất lượng cao kèm chú thích, thẻ từ khóa phân loại. |
+| `/guide` | Trang Chủ Cẩm Nang Thông Tin | Hệ sinh thái tra cứu thực dụng: Thanh tìm kiếm & lọc chuyên đề (`GuideHubExplorer`), 7 thẻ cẩm nang lớn, hộp 4 mẹo thực tế trước khi hạ cánh (SIM 4G, Grab/Xanh SM, ổ cắm điện, hotline 113). |
+| `/guide/weather` | Thời Tiết & Mùa Du Lịch | Bảng tổng quan khí hậu 3 miền (Bắc 4 mùa, Nam 2 mùa, Trung mùa bão), chi tiết nhiệt độ theo mùa, tháng lý tưởng, tháng nên tránh và lưu ý bão lũ cho 12 điểm đến kèm link sang `/destinations/[slug]`. |
+| `/guide/visa` | Thị Thực & Nhập Cảnh | Bảng tra cứu miễn visa 45 ngày (25+ quốc gia), 30 ngày (ASEAN), 30 ngày (đặc khu Phú Quốc), quy trình 4 bước xin e-visa 90 ngày ($25-$50) tại cổng chính thức evisa.gov.vn, khuyến cáo pháp lý và FAQ Schema. |
+| `/guide/transport` | Di Chuyển Nội Địa | So sánh 4 phương tiện (Máy bay, Tàu SE, Limousine VIP, Xe khách giường nằm), hướng dẫn chi tiết từ sân bay/ga gần nhất vào trung tâm 12 điểm đến kèm chi phí ước tính, kết nối liên tỉnh và mẹo cài app Grab/Xanh SM. |
+| `/guide/safety` | An Toàn & Sức Khỏe | Khối thẻ hotline cứu hộ khẩn cấp quốc gia (113, 114, 115, 112) hỗ trợ 1-click quay số, quy tắc an toàn 3 hoạt động (biển đảo/dòng rip, trekking Fansipan/rừng, xe máy đèo dốc) và tư vấn bảo hiểm du lịch quốc tế. |
+| `/guide/culture` | Văn Hóa & Phép Tắc | Quy chuẩn trang phục đền chùa tôn giáo, văn hóa giao tiếp chào hỏi, nghệ thuật mặc cả văn minh ở chợ truyền thống, văn hóa tiền tip tại Việt Nam, danh mục các điều kiêng kỵ tuyệt đối nên tránh. |
+| `/guide/currency` | Tiền Tệ & Chi Phí | Giới thiệu tiền polymer VNĐ, cảnh báo chống nhầm lẫn tờ 20k và 500k, địa điểm đổi tiền uy tín (ngân hàng vs tiệm vàng vs sân bay), bảng ước tính ngân sách sinh hoạt 1 ngày theo 3 mức (tiết kiệm, tiêu chuẩn, cao cấp), lưu ý thanh toán thẻ và mã VietQR. |
+| `/guide/festivals` | Lễ Hội & Sự Kiện Theo Mùa | Lịch 12 tháng lễ hội truyền thống (Tết Nguyên Đán, Chùa Hương, Festival Huế, Pháo hoa DIFF Đà Nẵng, Trung Thu, Mùa vàng Sa Pa, Tam giác mạch Hà Giang, Festival hoa Đà Lạt), đánh giá mật độ đông đúc, mẹo thực tế và liên kết điểm đến. |
 | `/about` | Về Chúng Tôi | Câu chuyện thương hiệu STAR, 3 trụ cột triết lý dịch vụ, lưới 6 giải thưởng vinh danh di sản. |
 | `/contact` | Liên Hệ & Hỗ Trợ 24/7 | Hotline, email, giờ tư vấn, biểu mẫu `ContactForm` tích hợp checkbox đồng ý xử lý dữ liệu NĐ 13/2023, bản đồ trụ sở Hà Nội & TP.HCM, Accordion FAQ. |
 | `/partner` | Cổng Hợp Tác Đối Tác | 4 giá trị đồng hành, quy trình hợp tác 4 bước, biểu mẫu đăng ký đại lý/khách sạn trực tuyến `PartnerForm`. |

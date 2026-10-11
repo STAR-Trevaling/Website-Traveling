@@ -1,5 +1,6 @@
 import logging
 import uuid
+from typing import Any, cast
 
 from django.utils import timezone
 from rest_framework import permissions, status, viewsets
@@ -86,7 +87,7 @@ class BookingViewSet(viewsets.ModelViewSet):
                 payload=envelope,
                 state=IntegrationOutbox.State.PENDING,
             )
-            dispatch_outbox_event.delay(str(outbox.id))
+            cast(Any, dispatch_outbox_event).delay(str(outbox.id))
         except Exception as exc:
             logger.warning(f"Failed to create outbox event for booking {booking.id}: {exc}")
 
@@ -224,7 +225,7 @@ class ReferralTrackView(APIView):
                 payload=envelope,
                 state=IntegrationOutbox.State.PENDING,
             )
-            dispatch_outbox_event.delay(str(outbox.id))
+            cast(Any, dispatch_outbox_event).delay(str(outbox.id))
         except Exception as exc:
             logger.warning(f"Failed to emit referral.created outbox event: {exc}")
 

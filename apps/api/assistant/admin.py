@@ -45,6 +45,7 @@ class AssistantLeadCaptureAdmin(admin.ModelAdmin):
     @admin.action(description="🔄 Đẩy lại sự kiện đồng bộ sang Odoo CRM")
     def retry_odoo_sync_action(self, request, queryset):
         import uuid
+        from typing import Any, cast
 
         from django.contrib import messages
         from django.utils import timezone
@@ -81,7 +82,7 @@ class AssistantLeadCaptureAdmin(admin.ModelAdmin):
                 payload=envelope,
                 state=IntegrationOutbox.State.PENDING,
             )
-            dispatch_outbox_event.delay(str(outbox.id))
+            cast(Any, dispatch_outbox_event).delay(str(outbox.id))
             lead.sync_state = AssistantLeadCapture.SyncState.PENDING
             lead.save(update_fields=["sync_state"])
             count += 1

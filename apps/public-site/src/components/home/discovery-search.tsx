@@ -244,7 +244,7 @@ export function DiscoverySearch() {
   const { locale } = useLanguage();
   const isEn = locale === "en";
 
-  const [isSearchOpen, setIsSearchOpen] = useState(true);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<TabType>("flights");
   const [col1Index, setCol1Index] = useState(0); // Hanoi
   const [col2Index, setCol2Index] = useState(6); // Nha Trang
@@ -257,21 +257,8 @@ export function DiscoverySearch() {
   const [openTravellers, setOpenTravellers] = useState(false);
   const [openDate, setOpenDate] = useState<"start" | "end" | null>(null);
 
-  // Load saved preference from localStorage
-  useEffect(() => {
-    try {
-      const saved = localStorage.getItem("star_travels_search_open");
-      if (saved !== null) {
-        setIsSearchOpen(saved === "true");
-      }
-    } catch {}
-  }, []);
-
   const toggleSearch = (open: boolean) => {
     setIsSearchOpen(open);
-    try {
-      localStorage.setItem("star_travels_search_open", String(open));
-    } catch {}
   };
 
   // Click outside to close dropdowns

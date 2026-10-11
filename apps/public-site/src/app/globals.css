@@ -246,58 +246,56 @@
 
 .reveal-init {
   opacity: 0;
-  transform: translate3d(0, var(--reveal-distance, 32px), 0);
+  transform: translate3d(0, var(--reveal-distance, 24px), 0);
   transition-property: opacity, transform;
-  transition-duration: 1.15s;
+  transition-duration: 0.65s;
   transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity, transform;
   backface-visibility: hidden;
 }
 
 .reveal-init.reveal-down {
-  transform: translate3d(0, calc(-1 * var(--reveal-distance, 32px)), 0);
+  transform: translate3d(0, calc(-1 * var(--reveal-distance, 24px)), 0);
 }
 
 .reveal-init.reveal-scale {
-  transform: translate3d(0, 18px, 0) scale(0.95);
+  transform: translate3d(0, 14px, 0) scale(0.96);
 }
 
 .reveal-init.reveal-fade {
   transform: translate3d(0, 0, 0);
 }
 
-/* Active State (Triggered when element scrolls into view) */
-.reveal-init.reveal-active {
-  opacity: 1;
-  transform: translate3d(0, 0, 0) scale(1);
+/* Active State (Triggered when element scrolls into view or parent activates) */
+.reveal-init.reveal-active,
+.reveal-active,
+.reveal-active .reveal-child,
+.reveal-child.reveal-active {
+  opacity: 1 !important;
+  transform: translate3d(0, 0, 0) scale(1) !important;
 }
 
 /* Stagger Children */
 .reveal-child {
   opacity: 0;
-  transform: translate3d(0, var(--reveal-distance, 28px), 0);
+  transform: translate3d(0, var(--reveal-distance, 20px), 0);
   transition-property: opacity, transform;
-  transition-duration: 1.15s;
+  transition-duration: 0.65s;
   transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity, transform;
   backface-visibility: hidden;
 }
 
 .reveal-child.reveal-down {
-  transform: translate3d(0, calc(-1 * var(--reveal-distance, 28px)), 0);
+  transform: translate3d(0, calc(-1 * var(--reveal-distance, 20px)), 0);
 }
 
 .reveal-child.reveal-scale {
-  transform: translate3d(0, 16px, 0) scale(0.95);
+  transform: translate3d(0, 14px, 0) scale(0.96);
 }
 
 .reveal-child.reveal-fade {
   transform: translate3d(0, 0, 0);
-}
-
-.reveal-child.reveal-active {
-  opacity: 1;
-  transform: translate3d(0, 0, 0) scale(1);
 }
 
 /* Accessible reduced motion support */
@@ -308,7 +306,7 @@
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-  .reveal-init, .reveal-child {
+  .reveal-init, .reveal-child, .reveal-active {
     opacity: 1 !important;
     transform: none !important;
     transition: none !important;
