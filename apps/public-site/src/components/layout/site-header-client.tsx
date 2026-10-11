@@ -92,6 +92,7 @@ export function SiteHeaderClient({ user, overlay = false }: SiteHeaderClientProp
         "/stories",
         "/accommodations",
         "/restaurants",
+        "/guide",
       ],
       items: [
         { label: t.nav.destinations, href: "/destinations" },
@@ -106,6 +107,7 @@ export function SiteHeaderClient({ user, overlay = false }: SiteHeaderClientProp
           href: "/restaurants",
         },
         { label: t.nav.stories, href: "/stories" },
+        { label: t.nav.guide, href: "/guide" },
       ],
     },
     {

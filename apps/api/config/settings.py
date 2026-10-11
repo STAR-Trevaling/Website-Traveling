@@ -3,6 +3,7 @@ import os
 import sys
 from datetime import timedelta
 from pathlib import Path
+from typing import Any
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -70,6 +71,7 @@ INSTALLED_APPS = [
     "bookings",
     "payments",
     "assistant",
+    "guides",
 ]
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -307,7 +309,7 @@ SENTRY_TRACES_SAMPLE_RATE = float(os.getenv("SENTRY_TRACES_SAMPLE_RATE", "0.2"))
 ALERT_WEBHOOK_URL = os.getenv("ALERT_WEBHOOK_URL", "")
 
 
-def _sentry_before_send(event, hint):
+def _sentry_before_send(event: Any, hint: Any) -> Any:
     """
     Scrub passwords, tokens, secrets, financial hashes, and auth headers
     before sending events to Sentry (Decree 13/2023/ND-CP compliance).
@@ -327,9 +329,9 @@ def _sentry_before_send(event, hint):
         "api_key",
     }
 
-    def _scrub(val):
+    def _scrub(val: Any) -> Any:
         if isinstance(val, dict):
-            new_dict = {}
+            new_dict: dict[Any, Any] = {}
             for k, v in val.items():
                 if any(s in str(k).lower() for s in sensitive_keys):
                     new_dict[k] = "[REDACTED]"

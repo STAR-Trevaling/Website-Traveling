@@ -18,7 +18,7 @@ export function PopularDestinationsSection({ destinations }: PopularDestinations
   return (
     <section id="popular-destinations" className="relative w-full px-4 sm:px-6 md:px-12 lg:px-16 py-10 sm:py-14 md:py-20 scroll-mt-6">
       <div className="mx-auto max-w-7xl">
-        <ScrollReveal direction="up" distance={32} duration={1150} threshold={0.08}>
+        <ScrollReveal direction="up" distance={24} duration={650} threshold={0.01}>
           <div className="text-center mb-6 sm:mb-10 md:mb-12">
             <h2 className="script-title text-3xl sm:text-5xl md:text-6xl text-[#0f172a]">
               {t.destinations.heading}
@@ -29,7 +29,7 @@ export function PopularDestinationsSection({ destinations }: PopularDestinations
           </div>
         </ScrollReveal>
 
-        <ScrollReveal direction="up" distance={32} duration={1150} delay={180} threshold={0.06}>
+        <ScrollReveal direction="up" distance={24} duration={650} delay={120} threshold={0.01}>
           <DestinationsCarousel initialDestinations={destinations} />
         </ScrollReveal>
       </div>
@@ -47,7 +47,7 @@ export function WhyUsAndAdventuresSection() {
     <section className="w-full px-4 sm:px-6 md:px-12 lg:px-16 py-10 sm:py-14 md:py-20">
       <div className="mx-auto max-w-7xl">
         {/* Why Us? */}
-        <ScrollReveal direction="up" distance={32} duration={1150} threshold={0.08}>
+        <ScrollReveal direction="up" distance={24} duration={650} threshold={0.01}>
           <div className="text-center">
             <h2 className="script-title text-3xl sm:text-5xl md:text-6xl text-[#1e293b]">
               {t.whyUs.heading}
@@ -56,10 +56,11 @@ export function WhyUsAndAdventuresSection() {
         </ScrollReveal>
 
         <StaggerRevealGroup
-          staggerDelay={160}
-          distance={32}
-          duration={1150}
+          staggerDelay={120}
+          distance={24}
+          duration={650}
           direction="up"
+          threshold={0.01}
           className="mt-6 sm:mt-10 md:mt-12 grid gap-4 sm:gap-6 md:gap-8 grid-cols-1 md:grid-cols-3"
         >
           {t.whyUs.items.map((item, idx) => {
@@ -85,7 +86,7 @@ export function WhyUsAndAdventuresSection() {
         </StaggerRevealGroup>
 
         {/* Have an Adventure Today — Tuyển tập thám hiểm bản địa Việt Nam */}
-        <ScrollReveal direction="up" distance={32} duration={1150} threshold={0.08}>
+        <ScrollReveal direction="up" distance={24} duration={650} threshold={0.01}>
           <div className="mt-12 sm:mt-16 md:mt-24 text-center">
             <h2 className="script-title text-3xl sm:text-5xl md:text-6xl text-[#1e293b]">
               {t.adventures.heading}
@@ -94,10 +95,11 @@ export function WhyUsAndAdventuresSection() {
         </ScrollReveal>
 
         <StaggerRevealGroup
-          staggerDelay={160}
-          distance={32}
-          duration={1150}
+          staggerDelay={120}
+          distance={24}
+          duration={650}
           direction="up"
+          threshold={0.01}
           className="mt-8 sm:mt-12 grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6 md:gap-7"
         >
           {/* Column 1: Canal Cruise (Tall Card) */}

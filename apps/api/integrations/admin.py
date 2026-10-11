@@ -1,4 +1,5 @@
 import uuid
+from typing import Any, cast
 
 from django.contrib import admin, messages
 from django.utils import timezone
@@ -112,7 +113,7 @@ class InquiryAdmin(admin.ModelAdmin):
                 payload=envelope,
                 state=IntegrationOutbox.State.PENDING,
             )
-            dispatch_outbox_event.delay(str(outbox.id))
+            cast(Any, dispatch_outbox_event).delay(str(outbox.id))
             inquiry.status = Inquiry.Status.PENDING
             inquiry.save(update_fields=["status"])
             count += 1
@@ -170,7 +171,7 @@ class IntegrationOutboxAdmin(admin.ModelAdmin):
             outbox.retry_count = 0
             outbox.next_retry_at = timezone.now()
             outbox.save(update_fields=["state", "retry_count", "next_retry_at"])
-            dispatch_outbox_event.delay(str(outbox.id))
+            cast(Any, dispatch_outbox_event).delay(str(outbox.id))
             requeued += 1
 
         self.message_user(

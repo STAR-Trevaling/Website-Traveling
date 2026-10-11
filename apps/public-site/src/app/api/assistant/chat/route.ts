@@ -43,6 +43,7 @@ export async function POST(request: Request) {
           recommended_restaurants: data.recommended_restaurants || [],
           recommended_stories: contactRequired ? [] : localKnowledge.recommended_stories,
           recommended_destinations: contactRequired ? [] : localKnowledge.recommended_destinations,
+          recommended_guides: data.recommended_guides?.length ? data.recommended_guides : (localKnowledge.recommended_guides || []),
           contactRequired,
           lead_captured: data.lead_captured || false,
         });

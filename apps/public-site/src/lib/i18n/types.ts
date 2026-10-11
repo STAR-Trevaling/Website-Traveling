@@ -7,6 +7,7 @@ export interface NavTranslations {
   packages: string;
   tours: string;
   stories: string;
+  guide: string;
   aboutMenu: string;
   aboutUs: string;
   partner: string;

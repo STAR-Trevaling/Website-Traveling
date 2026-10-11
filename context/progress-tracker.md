@@ -1,6 +1,70 @@
 # Progress Tracker
 
 ## Completed in this artifact
+- Header & Banner Image Audit (Travel Destination Specificity):
+  - Strictly restricted landscape photo hero banners to pages containing actual travel destination/tour/experience data (`/`, `/destinations/[slug]`, `/tours/[slug]`, `/experiences/[slug]`).
+  - Completely removed misplaced travel landscape photo banners from editorial and practical directory pages:
+    - `/stories`: Removed Hoi An night market `PageHero`; replaced with clean `<SiteHeader overlay={false} />`, Breadcrumb navigation (`Trang Chủ > Góc Nhìn Du Lịch`), and clean card header.
+    - `/guide` and all 7 practical guide subpages (`/guide/weather`, `/guide/visa`, `/guide/transport`, `/guide/safety`, `/guide/festivals`, `/guide/currency`, `/guide/culture`): Removed `PageHero` with mismatched destination photos; replaced with `<SiteHeader overlay={false} />`.
+  - Verified 100% clean typecheck (`tsc --noEmit`) and visual rendering via browser inspection.
+- Production-Grade RAG AI Travel Assistant ("Trợ Lý Du Lịch STAR" - Production Ready):
+  - 7 Practical Travel Knowledge Domains Indexed in Django RAG Pipeline:
+    - Updated `AssistantKnowledgeChunk.EntityType` with `GUIDE = "guide", "Cẩm nang thông tin"`.
+    - Generated migration `apps/api/assistant/migrations/0002_alter_assistantknowledgechunk_entity_type.py`.
+    - Structured & indexed 7 comprehensive official guide chunks (`apps/api/assistant/data/vietnam_travel_guides.py`):
+      1. Visa & Entry Policy: 45-day unilateral exemption for 25 countries, 30-day ASEAN & Phu Quoc, 90-day universal e-visa on `https://evisa.gov.vn`.
+      2. Weather & Seasons: North 4 seasons, Central storm window, South dry/wet, golden months for 12 destinations.
+      3. Domestic Transport: Flight hubs, SE train Hai Van pass, Dcar limousines, sleeper buses, airport transfers for 12 destinations, Grab/Xanh SM apps.
+      4. Safety & Emergency Hotlines: 113 (Police), 114 (Fire/Rescue), 115 (Ambulance), 112 (Search & Rescue), ocean rip currents, mountain riding rules, travel insurance.
+      5. Culture & Etiquette: Sacred temple attire rules, two-hand greetings, market bargaining 70-80%, tipping norms, chopstick taboos.
+      6. Currency & Budget: VND polymer banknotes, 20k vs 500k color warning, money exchange channels, 3-tier daily spending budgets.
+      7. Festivals & Events: 12-month calendar (Tet, Huong Pagoda, Hung Kings, Da Nang DIFF, Mid-Autumn, Da Lat Flower Festival).
+    - Created management command `python manage.py index_guide_knowledge` for automated chunk ingestion with idempotency.
+  - Enhanced Retriever & Generator Services (`apps/api/assistant/services/`):
+    - `retriever.py`: Added intent detectors (`is_visa_inquiry`, `is_transport_inquiry`, `is_safety_inquiry`, `is_culture_inquiry`, `is_currency_inquiry`, `is_festival_inquiry`) with boost scoring for GUIDE entity chunks.
+    - `generator.py`: Enriched LLM system prompt with verified travel advisory guidelines and instruction to emit `[GUIDE_CARD: slug]`. Built deterministic fallback synthesizer for both vi and en guide queries.
+    - Verified guardrails & prompt injection defenses: 100% pass on 4/4 injection/jailbreak test scenarios (`verify_prompt_injection_spec.py`).
+    - Verified 7/7 guide query categories return relevant chunks & links (`verify_guide_rag_spec.py`).
+  - Next.js Concierge Engine & Interactive UI (`apps/public-site`):
+    - `assistant-engine.ts`: Removed erroneous out-of-scope triggers (`visa`, `passport`, `tau hoa`), and wired 8 dedicated intent handlers for travel guides with metadata and `GuideCardData`.
+    - `ai-trip-assistant.tsx`: Added interactive UI card rendering for `msg.guides` with red compass badge, title, summary, and direct link to `/guide/[slug]`.
+    - Sanitized `[GUIDE_CARD: slug]` markers in chat text bubble rendering to prevent markup leaks.
+    - Added quick prompt pills for practical travel inquiries (Visa 90 ngày, Thời tiết 12 điểm đến, Số khẩn cấp 113/115, Đổi tiền & Dự toán, Trang phục đền chùa, Đón sân bay).
+    - Created Living Star Creature Mascot ("Bé Sao STAR" / Starling Mascot) in `InteractiveMotionTrigger` (`interactive-motion-trigger.tsx`):
+      - Pure standalone living entity (100% free-floating, zero bounding box, zero background orb, zero pedestal frame).
+      - Chubby rounded 5-pointed star creature body with golden luster gradient, soft forehead 3D highlight, and synchronized dynamic ground shadow.
+      - Real-time Eye Tracking: Pupils dynamically look and follow the user's cursor pointer on the screen.
+      - Natural Blinking Cycle: Automatically blinks cute eyelids every 3.8s.
+      - Interactive Expressive Reactions: When hovered, eyes transform into joyful crescent arches `(^_^)`, mouth opens into a cheerful smile `(:D)` with cute pink tongue, cheeks blush brightly, and the creature hops with an excited jiggle (`creatureJiggle`).
+      - Celestial Orbit & Halo: Rotating orbital ring with sparkling satellite starlight and pulsing warm energy aura.
+      - Interactive Capability Showcase: Smooth rotating callout cards (7 core capabilities: 3D2N itinerary planning, 45-day visa & 90-day e-visa, 12-destination weather, safe VND exchange, airport transfers, 113/115 SOS numbers, Michelin restaurants) with manual `<` `>` carousel controls.
+      - 1-Click Interactive Prompt Dispatch: Clicking the primary capability button or quick prompt pills (`[Lịch trình 3N2Đ]`, `[E-visa 90 ngày]`, `[Đổi tiền VND]`) automatically opens the chat and dispatches the query directly to the RAG assistant engine.
+      - Fluid State Morphing: Smooth 180° twist with spring squash & stretch morphing into an illuminated Close (X) icon when opened.
+    - Verified 100% clean typecheck (`tsc --noEmit`), lint (`npm run lint`), and production Next.js build (67/67 routes compiled).
+- Travel Info Hub ("Cẩm Nang Thông Tin Du Lịch" - 8 Routes Completed & Verified):
+  - Created 8 new customer routes fulfilling Vietnam travel information discovery:
+    - `/guide`: Central landing hub with interactive search toolbar, category filter pills, 7 large cards, and pre-arrival essential checklist.
+    - `/guide/weather`: Climate overview across 3 regions (North 4 seasons, Central monsoon/typhoon risks, South dry/wet seasons) and 12 destination-specific cards with ideal months, avoid months, seasonal temperatures, and cross-links to `/destinations/[slug]`.
+    - `/guide/visa`: 2026-verified visa regulations (45-day exemption for 25+ nations, 30-day ASEAN, 30-day Phu Quoc zone), official 4-step 90-day e-visa protocol ($25-$50) on `evisa.gov.vn`, official legal disclaimer, and FAQ Schema.org.
+    - `/guide/transport`: 4 domestic transit modes comparison (Flights, SE Trains, VIP Limousines, Sleeper Buses), step-by-step transfer guide from nearest airport/station into all 12 destinations, intercity connections, and ride-hailing app advice (Grab, Xanh SM).
+    - `/guide/safety`: Prominent 1-click calling national SOS hotline cards (113, 114, 115, 112), activity safety rules (rip current sea survival, Fansipan/forest trekking gear, mountain pass motorbike laws with zero BAC), and comprehensive travel insurance advisory.
+    - `/guide/culture`: Sacred temple/pagoda dress code, social communication norms, respectful bargaining tips for traditional markets, tipping culture nuances, and local taboos.
+    - `/guide/currency`: Vietnamese Dong (VND) polymer notes breakdown, critical 20k vs 500k color confusion warning, money exchange comparison (banks vs licensed gold shops vs airport), 3-tier daily budgets, and card/VietQR payment guide.
+    - `/guide/festivals`: 12-month cultural calendar spanning Lunar and Solar events (Tet, Perfume Pagoda, Hue Festival, Da Nang DIFF Fireworks, Mid-Autumn Festival, Golden Terraces, Buckwheat bloom, Da Lat Flower Festival) with crowd ratings and booking advice.
+  - Navigation & i18n Integration:
+    - Distinctly named `/guide` as "Thông Tin Cần Biết" (vi) / "Travel Info Hub" (en) in navbar dropdown "Khám Phá" alongside existing "Cẩm Nang" (`/stories`).
+    - Added Info icon in mobile drawer navigation and updated footer navigation.
+  - Structured Seed Data for RAG indexing (`apps/public-site/src/data/seed/guide.ts`):
+    - Exported fully typed entities: `WEATHER_GUIDE_DATA`, `VISA_GUIDE_DATA`, `TRANSPORT_GUIDE_DATA`, `SAFETY_GUIDE_DATA`, `CULTURE_GUIDE_DATA`, `CURRENCY_GUIDE_DATA`, `FESTIVAL_CALENDAR`.
+    - Integrated with centralized `SEED_DATA` and `seedFinder`.
+  - Backend Foundation (`apps/api/guides`):
+    - Created Django models `GuideCategory` and `GuideArticle` with structured JSONField for RAG entities.
+    - Generated migration `guides/migrations/0001_initial.py` and registered in `settings.py`.
+    - Clean Django admin configuration and 100% clean `ruff` linter checks.
+  - SEO & Specification Alignment:
+    - Added dynamic OpenGraph metadata, descriptive title/description keywords, JSON-LD Schema.org (`FAQPage`, `Article`, `WebPage`).
+    - Updated `apps/public-site/src/app/sitemap.ts` with all 8 routes.
+    - Updated `docs/public-site-specification.md` to reflect 31 total routes in Route Inventory.
 - Public Site to ERP E2E Workflow & Production Data Transfer Audit (100% Passed):
   - Audited full data flows between Public Site (`apps/public-site`), Django Backend (`apps/api`), Outbox Dispatcher, and Odoo 18 ERP (`star_travels_payment_sync`, `travel_integration`, `travel_crm`, `travel_partner`).
   - Aligned transactional data contracts and Outbox event routing:
@@ -468,3 +532,27 @@
   - Bổ sung trường 'item_type' và 'partner_name' vào payload phản hồi của `ReferralTrackView` (`/api/v1/referrals/track/`), đảm bảo hợp đồng dữ liệu chuẩn với frontend và giúp 100% bộ kiểm thử `test_referrals.py` đạt GREEN.
   - Kiểm thử toàn diện các bước CI: `scripts/validate_context.py` (ok), `scripts/static_sanity.py` (169 files ok), Mypy (160 files ok), Ruff (160 files ok), Frontend Typecheck & Next.js production build (`npm run build` 59 static/dynamic routes ok).
 
+
+  - **Linh vật sống Bé Sao STAR & Interactive Motion Trigger (Items mascot & chat experience):**
+    - `apps/public-site/src/components/assistant/star-creature-mascot.tsx`: Xây dựng linh vật sinh thể sống Bé Sao STAR (chubby 5-pointed star) không nằm trong box, gradient vàng 3D, má hồng, mắt anime theo dõi con trỏ chuột, chu kỳ chớp mắt tự nhiên (~3.8s), nụ cười rạng rỡ (^_^) và (:D) khi hover hoặc AI đang trả lời.
+    - `apps/public-site/src/components/assistant/interactive-motion-trigger.tsx`: Thiết kế whisper pill siêu gọn nhẹ dạng viên thuốc viền vàng glassmorphic (cao ~30px, chỉ hiện badge + icon + mũi tên), tự động quay vòng 7 công dụng thực tế không chiếm diện tích website. Nhấn 1-click để hỏi Bé Sao ngay, có nút `×` để ẩn hoàn toàn. Tự động ẩn khi mở chat drawer.
+    - `apps/public-site/src/components/assistant/ai-trip-assistant.tsx`: Khi mở chat, Bé Sao di chuyển lên ngay đầu thanh tiêu đề ô chat (chat header) thay thế icon tĩnh trước đó, mắt tiếp tục theo dõi cử động chuột trong cửa sổ trò chuyện, biểu cảm vui vẻ khi AI sinh phản hồi.
+    - `apps/public-site/src/components/home/discovery-search.tsx`: Cấu hình thanh tìm kiếm mặc định ở chế độ OFF (thu gọn dạng capsule pill tối giản) ngay khi vào trang, triệt tiêu hoàn toàn hiện tượng nhấp nháy từ ON sang OFF (hydration flash). Khi người dùng nhấn vào thanh tìm kiếm thì mới mở rộng đầy đủ.
+    - **Bộ 3 Banner Biển & Đồng Bộ Ảnh Nền Toàn Website:**
+      - Tuyển chọn và tích hợp 3 ảnh banner danh thắng biển nổi tiếng chất lượng cao 16:9 (`nha-trang.jpg`, `vung-tau.jpg`, `phan-thiet.jpg`) thay thế cho các slide cũ.
+      - Cập nhật từ điển song ngữ (`assets.ts`, `dictionary.ts`) cho 3 điểm đến biển: Vịnh Biển Nha Trang, Biển Vũng Tàu, Biển Phan Thiết - Mũi Né.
+      - `apps/public-site/src/components/layout/global-site-background.tsx`: Tạo component ảnh nền toàn trang tự động bắt sự kiện `star_site_bg_change` từ `hero-slider.tsx`, thực hiện hiệu ứng cross-fade mượt mà theo đúng ảnh banner đang hiển thị.
+    - **Chuẩn hóa Định danh Linh vật & Thương hiệu STAR (Bé Sao STAR / Baby STAR):**
+      - Tên thương hiệu **STAR** được giữ cố định nguyên bản, tuyệt đối không việt hóa thành "Sao" đứng độc lập.
+      - Chuẩn hóa tên linh vật trên toàn bộ giao diện và engine AI:
+        - Tiếng Việt (`vi`): **Bé Sao STAR** (header, tiêu đề drawer, thông báo loading, lời chào mở đầu, tooltip và aria-label).
+        - Tiếng Anh (`en`): **Baby STAR** (header, drawer title badge, loading search status, welcome greeting intro, tooltip và aria-label).
+      - Đồng bộ hoàn toàn `ai-trip-assistant.tsx`, `interactive-motion-trigger.tsx` và `assistant-engine.ts`.
+    - **Sửa Lỗi Chuyển Mode Tiếng & Chuẩn Hóa Nút Ngôn Ngữ (Language Switcher Fix):**
+      - Khắc phục lỗi hiển thị nhãn nút bị ngược với nội dung trang: Trước đó khi ở Tiếng Việt thì nút hiện "EN", khi ở Tiếng Anh thì nút hiện "VI", gây hiểu lầm là web đang ở sai mode.
+      - Chuẩn hóa theo phản hồi người dùng: Nút luôn hiển thị **chính xác ngôn ngữ hiện tại** (`VI` khi đang xem Tiếng Việt, `EN` khi đang xem Tiếng Anh). Bấm vào chuyển đổi mượt mà sang ngôn ngữ còn lại.
+      - Sửa lỗi mặc định bị ép sang Tiếng Anh: Loại bỏ điều kiện tự động ép English theo `navigator.language` / `accept-language`; đặt mặc định chuẩn mực của nền tảng du lịch STAR Travels là **Tiếng Việt (`vi`)**, chỉ chuyển sang `en` khi người dùng chủ động chọn.
+    - **Tinh Gọn Whisper Pill Bé Sao STAR & Triệt Tiêu Khuất Chữ (Clean Whisper Pill):**
+      - Loại bỏ toàn bộ icon rườm rà không cần thiết trong bong bóng chat (icon danh mục tròn bên trái, icon mũi tên bên phải).
+      - Loại bỏ hiệu ứng hạt và tia sáng dư thừa (`showOrbit={false}`, loại bỏ `Sparkles` icon) quanh Bé Sao để mascot thanh thoát, sang trọng.
+      - Khắc phục triệt để lỗi khuất chữ: Thay đổi cơ chế căn lề từ căn giữa lệch phải (`sm:right-1/2`) sang căn phải (`right-0`), mở rộng về bên trái theo chiều ngang trang web, bỏ `truncate` / giới hạn chiều rộng, đảm bảo 100% dòng text hiển thị trọn vẹn, không bao giờ bị tràn khỏi màn hình.

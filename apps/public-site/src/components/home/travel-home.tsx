@@ -7,8 +7,6 @@ import {
   WhyUsAndAdventuresSection,
   LookingForSection,
 } from "./home-sections";
-import { ScrollReveal } from "@/components/shared/scroll-reveal";
-
 import type { Destination, TourItem } from "@/lib/types";
 
 interface TravelHomeProps {
@@ -35,9 +33,8 @@ export function TravelHome({ destinations, tours }: TravelHomeProps = {}) {
       <div className="section-divider opacity-75" />
 
       {/* 3. FEATURED TOURS */}
-      <ScrollReveal direction="up" distance={32} duration={1150} threshold={0.06}>
-        <FeaturedTours initialTours={tours} />
-      </ScrollReveal>
+      <FeaturedTours initialTours={tours} />
+
       {/* TRANSITION DIVIDER 3 */}
       <div className="section-divider opacity-75" />
 
@@ -48,14 +45,10 @@ export function TravelHome({ destinations, tours }: TravelHomeProps = {}) {
       <div className="section-divider opacity-75" />
 
       {/* 5. NEWSLETTER & AWARD WINNING */}
-      <ScrollReveal direction="up" distance={32} duration={1150} threshold={0.06}>
-        <NewsletterAwards />
-      </ScrollReveal>
+      <NewsletterAwards />
 
       {/* 6. LOOKING FOR AN EXPERIENCE? */}
-      <ScrollReveal direction="up" distance={32} duration={1150} threshold={0.06}>
-        <LookingForSection />
-      </ScrollReveal>
+      <LookingForSection />
     </main>
   );
 }

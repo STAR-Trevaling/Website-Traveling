@@ -22,11 +22,14 @@ import {
 } from "lucide-react";
 import { StarLogo } from "@/components/shared/star-logo";
 import { useLanguage } from "@/lib/i18n/context";
+import { InteractiveMotionTrigger } from "./interactive-motion-trigger";
+import { StarCreatureMascot } from "./star-creature-mascot";
 import {
   queryAssistantKnowledge,
   TourCardData,
   StoryCardData,
   DestinationCardData,
+  GuideCardData,
 } from "@/lib/assistant-engine";
 import { VIETNAM_ACCOMMODATIONS, getAccommodationBySlug } from "@/data/seed/accommodations";
 import { VIETNAM_RESTAURANTS, getRestaurantBySlug } from "@/data/seed/restaurants";
@@ -43,6 +46,7 @@ interface ChatMessage {
   destinations?: DestinationCardData[];
   accommodations?: Accommodation[];
   restaurants?: Restaurant[];
+  guides?: GuideCardData[];
   contactRequired?: boolean;
   leadCaptured?: boolean;
 }
@@ -151,6 +155,19 @@ export function AITripAssistant() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [sessionToken, setSessionToken] = useState<string>("");
   const [showTooltip, setShowTooltip] = useState(false);
+  const [headerEyeOffset, setHeaderEyeOffset] = useState({ x: 0, y: 0 });
+  const [isHeaderHovered, setIsHeaderHovered] = useState(false);
+
+  // Dynamic eye tracking for Bé Sao mascot sitting atop the chat drawer
+  const handleChatMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const xPct = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
+    const yPct = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
+    setHeaderEyeOffset({
+      x: Math.max(-2.5, Math.min(2.5, xPct * 2.5)),
+      y: Math.max(-2.5, Math.min(2.5, yPct * 2.5)),
+    });
+  };
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   // Periodic tooltip pill: visible for 5s every 20s to conserve screen space
@@ -197,11 +214,11 @@ export function AITripAssistant() {
     }
 
     const greetingVi =
-      "Dạ chào Quý khách! Em là **STAR Concierge** — Trợ lý tư vấn du lịch thông minh của STAR Travels Vietnam.\n\n" +
+      "Dạ chào Quý khách! Em là **Bé Sao STAR** — Trợ lý tư vấn du lịch thông minh của STAR Travels Vietnam.\n\n" +
       "Em có thể gợi ý các tour hot nhất, cẩm nang du lịch và điểm đến tuyệt đẹp kèm đường dẫn xem trực tiếp. Quý khách đang lên kế hoạch khám phá nơi nào ạ?";
 
     const greetingEn =
-      "Welcome to STAR Travels! I am **STAR Concierge**, your private AI travel advisor.\n\n" +
+      "Welcome to STAR Travels! I am **Baby STAR**, your private AI travel advisor.\n\n" +
       "I can recommend handcrafted itineraries, luxury packages matching your budget, and provide direct links to tours and articles. Where would you like to explore?";
 
     setMessages([
@@ -321,6 +338,7 @@ export function AITripAssistant() {
         destinations: data.recommended_destinations || [],
         accommodations: uniqueAccs,
         restaurants: uniqueRess,
+        guides: data.recommended_guides || [],
         leadCaptured: data.lead_captured || false,
         contactRequired: Boolean(data.contactRequired),
       };
@@ -352,6 +370,7 @@ export function AITripAssistant() {
           destinations: localData.recommended_destinations,
           accommodations: fallbackAccs,
           restaurants: fallbackRess,
+          guides: localData.recommended_guides || [],
           contactRequired: Boolean(localData.contactRequired),
         },
       ]);
@@ -382,74 +401,58 @@ export function AITripAssistant() {
 
   return (
     <>
-      {/* ─── FLOATING TRIGGER BUTTON ────────────────────────────────── */}
-      <div className="fixed bottom-6 right-6 z-50 flex items-center gap-3">
-        {/* Tooltip Pill - Only visible for 5s every 20s to preserve screen space */}
-        {!isOpen && (
-          <div
-            className={`transition-all duration-500 ease-in-out transform ${
-              showTooltip
-                ? "opacity-100 translate-x-0 scale-100 pointer-events-auto"
-                : "opacity-0 translate-x-3 scale-95 pointer-events-none"
-            }`}
-          >
-            <button
-              onClick={() => {
-                setShowTooltip(false);
-                setIsOpen(true);
-              }}
-              className="hidden md:flex items-center gap-2 rounded-full bg-white/95 px-4 py-2 text-xs font-semibold text-slate-800 shadow-[0_4px_20px_rgba(218,37,29,0.18)] border border-red-100 hover:border-red-200 hover:scale-105 transition-all duration-300"
-            >
-              <Sparkles
-                className="size-3.5 text-amber-500 animate-spin"
-                style={{ animationDuration: "3s" }}
-              />
-              <span>{isEnglish ? "Plan with STAR AI" : "Tư vấn lịch trình với STAR AI"}</span>
-            </button>
-          </div>
-        )}
-
-        {/* Bubble Trigger - Nền đỏ sao vàng Việt Nam */}
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          aria-label="Open AI Assistant"
-          className="relative flex size-14 items-center justify-center rounded-full bg-gradient-to-tr from-[#991b1b] via-[#da251d] to-[#dc2626] text-white shadow-[0_6px_28px_rgba(218,37,29,0.45)] transition-all duration-300 hover:scale-110 active:scale-95 focus:outline-none"
-        >
-          {isOpen ? (
-            <X className="size-6 text-white" />
-          ) : (
-            <>
-              {/* Pulsing ring đỏ tím */}
-              <span className="absolute -inset-1 rounded-full bg-[#7d1643]/35 animate-ping opacity-75" />
-              <StarLogo variant="icon-only" size="md" />
-            </>
-          )}
-        </button>
-      </div>
+      {/* ─── FLOATING LIVING MASCOT TRIGGER & CAPABILITIES ──────────── */}
+      <InteractiveMotionTrigger
+        isOpen={isOpen}
+        onToggle={() => setIsOpen(!isOpen)}
+        onSelectPrompt={(text: string) => {
+          setIsOpen(true);
+          handleSendMessage(text);
+        }}
+        isEn={isEnglish}
+      />
 
       {/* ─── CHAT DRAWER / POP-UP ──────────────────────────────────── */}
       {isOpen && (
-        <div className="fixed bottom-24 right-4 sm:right-6 z-50 w-[94vw] sm:w-[440px] h-[640px] max-h-[84vh] rounded-2xl bg-white/95 backdrop-blur-xl border border-slate-200/90 shadow-[0_16px_56px_rgba(0,0,0,0.22)] flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-6 duration-300">
-          {/* Header - Nền đỏ tím sang trọng (Red-Purple / Bordeaux-Wine) */}
-          <div className="bg-gradient-to-r from-[#591030] via-[#7d1643] to-[#4c0c28] p-4 text-white flex items-center justify-between border-b border-[#961c50]/50 shadow-sm">
+        <div
+          onMouseMove={handleChatMouseMove}
+          className="fixed bottom-4 sm:bottom-6 right-4 sm:right-6 z-50 w-[94vw] sm:w-[440px] h-[650px] max-h-[86vh] rounded-3xl bg-white/95 backdrop-blur-xl border border-slate-200/90 shadow-[0_20px_60px_rgba(0,0,0,0.25)] flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-6 duration-300"
+        >
+          {/* Header - Nền đỏ tím sang trọng với Bé Sao linh vật sống động ở đầu ô chat */}
+          <div className="bg-gradient-to-r from-[#591030] via-[#7d1643] to-[#4c0c28] px-4 py-3 sm:px-4 sm:py-3.5 text-white flex items-center justify-between border-b border-[#961c50]/50 shadow-sm relative overflow-visible">
             <div className="flex items-center gap-3">
-              <div className="flex size-10 items-center justify-center rounded-xl bg-[#8c1d48] backdrop-blur-md border border-amber-400/40 shadow-sm">
-                <StarLogo variant="icon-only" size="sm" />
+              {/* Bé Sao - Sinh vật linh vật thực thể sống động ở đầu ô chat, mắt dõi theo con trỏ chuột */}
+              <div
+                onMouseEnter={() => setIsHeaderHovered(true)}
+                onMouseLeave={() => setIsHeaderHovered(false)}
+                className="relative shrink-0 flex items-center justify-center cursor-pointer transition-transform hover:scale-105 select-none"
+                title={isEnglish ? "Baby STAR - Living AI Travel Companion" : "Bé Sao STAR - Linh vật trợ lý thông minh"}
+              >
+                <StarCreatureMascot
+                  size="sm"
+                  eyeOffset={headerEyeOffset}
+                  isHovered={isHeaderHovered}
+                  isHappy={isLoading || isHeaderHovered}
+                  showOrbit={false}
+                  showShadow={false}
+                />
               </div>
+
               <div>
                 <div className="flex items-center gap-2">
-                  <h3 className="text-sm font-bold tracking-tight text-white">
-                    STAR Concierge
+                  <h3 className="text-sm font-bold tracking-tight text-white flex items-center gap-1.5">
+                    <span>{isEnglish ? "Baby STAR" : "Bé Sao STAR"}</span>
+                    <span className="text-[11px] font-normal text-amber-300">★</span>
                   </h3>
                   <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/20 px-2 py-0.5 text-[10px] font-semibold text-emerald-300 border border-emerald-500/30">
                     <span className="size-1.5 rounded-full bg-emerald-400 animate-pulse" />
                     Online
                   </span>
                 </div>
-                <p className="text-[11px] text-white/80 font-light">
+                <p className="text-[11px] text-white/80 font-light line-clamp-1">
                   {isEnglish
-                    ? "AI Travel Concierge & Real-time Booking Guide"
-                    : "Trợ lý du lịch thông minh STAR Travels"}
+                    ? "Baby STAR • AI Travel Companion & Tour Concierge"
+                    : "Bé Sao STAR • Trợ lý du lịch thông minh STAR Travels"}
                 </p>
               </div>
             </div>
@@ -457,6 +460,7 @@ export function AITripAssistant() {
             <button
               onClick={() => setIsOpen(false)}
               className="rounded-lg p-1.5 text-white/70 hover:text-white hover:bg-white/10 transition cursor-pointer"
+              title={isEnglish ? "Close chat" : "Đóng chat"}
             >
               <X className="size-5" />
             </button>
@@ -562,6 +566,40 @@ export function AITripAssistant() {
                           </div>
                         </div>
                         <ChevronRight className="size-4 text-slate-400 group-hover:text-blue-600 transition shrink-0" />
+                      </Link>
+                    ))}
+                  </div>
+                )}
+
+                                {/* 🧭 Direct Travel Info Hub Guide Cards */}
+                {msg.guides && msg.guides.length > 0 && (
+                  <div className="mt-2.5 w-full space-y-2">
+                    <div className="flex items-center gap-1.5 text-[11px] font-bold text-slate-700 uppercase tracking-wider">
+                      <Compass className="size-3.5 text-[#da251d]" />
+                      <span>{isEnglish ? "Official Travel Hub Guides" : "Cẩm Nang Thông Tin Du Lịch"}</span>
+                    </div>
+                    {msg.guides.map((guide) => (
+                      <Link
+                        key={guide.slug}
+                        href={guide.href}
+                        onClick={() => setIsOpen(false)}
+                        className="group flex items-start gap-3 rounded-xl bg-white p-3 shadow-sm border border-slate-200/80 hover:border-[#da251d] hover:shadow-md transition-all"
+                      >
+                        <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-red-50 text-[#da251d] border border-red-100 group-hover:bg-[#da251d] group-hover:text-white transition-colors">
+                          <Compass className="size-5" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <span className="inline-block px-1.5 py-0.5 rounded text-[9px] font-bold bg-amber-50 text-amber-800 border border-amber-200 uppercase tracking-wider mb-1">
+                            {guide.badge}
+                          </span>
+                          <h4 className="text-xs font-bold text-slate-900 line-clamp-1 group-hover:text-[#da251d] transition">
+                            {guide.title}
+                          </h4>
+                          <p className="text-[11px] text-slate-500 line-clamp-1 mt-0.5">
+                            {guide.shortDesc}
+                          </p>
+                        </div>
+                        <ChevronRight className="size-4 text-slate-400 group-hover:text-[#da251d] transition shrink-0 mt-2" />
                       </Link>
                     ))}
                   </div>
@@ -823,8 +861,8 @@ export function AITripAssistant() {
                 </div>
                 <span>
                   {isEnglish
-                    ? "STAR Concierge is searching packages & guides..."
-                    : "STAR Concierge đang tra cứu tour & cẩm nang..."}
+                    ? "Baby STAR is searching packages & guides..."
+                    : "Bé Sao STAR đang tra cứu tour & cẩm nang..."}
                 </span>
               </div>
             )}

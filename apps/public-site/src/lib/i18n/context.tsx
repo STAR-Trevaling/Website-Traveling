@@ -52,16 +52,10 @@ export function LanguageProvider({
       if (saved && (saved === "vi" || saved === "en")) {
         setLocaleState(saved);
         document.documentElement.lang = saved;
-      } else if (typeof navigator !== "undefined" && navigator.language) {
-        // Automatically adapt to the user's browser language
-        const browserPrefersEn =
-          navigator.language.toLowerCase().startsWith("en") &&
-          !navigator.language.toLowerCase().startsWith("vi");
-        const detected: Locale = browserPrefersEn ? "en" : "vi";
-        setLocaleState(detected);
-        document.documentElement.lang = detected;
       } else {
-        document.documentElement.lang = initialLocale;
+        const fallback = initialLocale === "en" ? "en" : "vi";
+        setLocaleState(fallback);
+        document.documentElement.lang = fallback;
       }
     } catch {
       // Fallback in case of SSR or storage restriction

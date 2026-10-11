@@ -7,7 +7,7 @@ interface ScrollRevealProps {
   className?: string;
   direction?: "up" | "down" | "left" | "right" | "fade" | "scale";
   delay?: number; // Delay in milliseconds
-  duration?: number; // Duration in milliseconds (default: 1150ms for slow, graceful reveal)
+  duration?: number; // Duration in milliseconds (default: 650ms for smooth, responsive reveal)
   distance?: number; // Distance in pixels
   threshold?: number; // Intersection threshold
   as?: React.ElementType;
@@ -17,15 +17,16 @@ interface ScrollRevealProps {
  * Ultra-high-performance ScrollReveal component
  * Eliminates React re-render lag by toggling pure GPU CSS classes via IntersectionObserver directly on the DOM element.
  * Zero VDOM reconciliation during scroll, 100% 60fps/120fps hardware acceleration.
+ * Includes proactive 200px rootMargin, instant mount-check, and safety fallback to prevent content hiding.
  */
 export function ScrollReveal({
   children,
   className = "",
   direction = "up",
   delay = 0,
-  duration = 1150, // 1.15s slow, elegant reveal matching user preference
-  distance = 32,
-  threshold = 0.08,
+  duration = 650,
+  distance = 24,
+  threshold = 0.01,
   as: Component = "div",
 }: ScrollRevealProps) {
   const elementRef = useRef<HTMLElement>(null);
@@ -44,24 +45,36 @@ export function ScrollReveal({
       return;
     }
 
+    // Proactive check: if element is already within or near the viewport on mount, show immediately
+    const rect = element.getBoundingClientRect();
+    if (rect.top <= (window.innerHeight || 800) + 200 && rect.bottom >= -150) {
+      element.classList.add("reveal-active");
+      return;
+    }
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          // Add class directly to DOM without triggering React component re-renders
           entry.target.classList.add("reveal-active");
           observer.unobserve(entry.target);
         }
       },
       {
         threshold,
-        rootMargin: "0px 0px -40px 0px",
+        rootMargin: "0px 0px 200px 0px", // Proactive trigger 200px before reaching viewport
       }
     );
 
     observer.observe(element);
 
+    // Fail-safe safety timer: under no circumstances should content remain hidden
+    const timer = setTimeout(() => {
+      element.classList.add("reveal-active");
+    }, 700);
+
     return () => {
       observer.disconnect();
+      clearTimeout(timer);
     };
   }, [threshold]);
 
@@ -77,7 +90,7 @@ export function ScrollReveal({
   const customStyle: React.CSSProperties = {
     transitionDuration: `${duration}ms`,
     transitionDelay: delay > 0 ? `${delay}ms` : undefined,
-    ...(distance ? { "--reveal-distance": `${distance}px` } as React.CSSProperties : {}),
+    ...(distance ? ({ "--reveal-distance": `${distance}px` } as React.CSSProperties) : {}),
   };
 
   return (
@@ -92,7 +105,7 @@ export function ScrollReveal({
 }
 
 /**
- * StaggerRevealGroup: Renders a container whose children glide in one after another over 1.15s
+ * StaggerRevealGroup: Renders a container whose children glide in one after another smoothly
  */
 interface StaggerRevealGroupProps {
   children: React.ReactNode;
@@ -109,15 +122,23 @@ interface StaggerRevealGroupProps {
 export function StaggerRevealGroup({
   children,
   className = "",
-  staggerDelay = 140,
+  staggerDelay = 120,
   baseDelay = 0,
   direction = "up",
-  duration = 1150,
-  distance = 32,
-  threshold = 0.08,
+  duration = 650,
+  distance = 24,
+  threshold = 0.01,
   as: Component = "div",
 }: StaggerRevealGroupProps) {
   const containerRef = useRef<HTMLElement>(null);
+
+  const activateElements = () => {
+    const container = containerRef.current;
+    if (!container) return;
+    container.classList.add("reveal-active");
+    const childrenElements = container.querySelectorAll(".reveal-child");
+    childrenElements.forEach((el) => el.classList.add("reveal-active"));
+  };
 
   useEffect(() => {
     const container = containerRef.current;
@@ -128,33 +149,50 @@ export function StaggerRevealGroup({
       !("IntersectionObserver" in window) ||
       window.matchMedia("(prefers-reduced-motion: reduce)").matches
     ) {
-      container.classList.add("reveal-active");
-      const childrenElements = container.querySelectorAll(".reveal-child");
-      childrenElements.forEach((el) => el.classList.add("reveal-active"));
+      activateElements();
+      return;
+    }
+
+    // Proactive check: if already in or near viewport
+    const rect = container.getBoundingClientRect();
+    if (rect.top <= (window.innerHeight || 800) + 200 && rect.bottom >= -150) {
+      activateElements();
       return;
     }
 
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          entry.target.classList.add("reveal-active");
-          const childrenElements = entry.target.querySelectorAll(".reveal-child");
-          childrenElements.forEach((el) => el.classList.add("reveal-active"));
+          activateElements();
           observer.unobserve(entry.target);
         }
       },
       {
         threshold,
-        rootMargin: "0px 0px -40px 0px",
+        rootMargin: "0px 0px 200px 0px", // Proactive trigger
       }
     );
 
     observer.observe(container);
 
+    // Fail-safe safety timer: reveal within 700ms so content is NEVER stuck invisible
+    const timer = setTimeout(() => {
+      activateElements();
+    }, 700);
+
     return () => {
       observer.disconnect();
+      clearTimeout(timer);
     };
   }, [threshold]);
+
+  // When children update (e.g. language switch or re-render), ensure they are active if container is active
+  useEffect(() => {
+    if (containerRef.current?.classList.contains("reveal-active")) {
+      const childrenElements = containerRef.current.querySelectorAll(".reveal-child");
+      childrenElements.forEach((el) => el.classList.add("reveal-active"));
+    }
+  }, [children]);
 
   const directionClass =
     direction === "down"
@@ -175,7 +213,7 @@ export function StaggerRevealGroup({
         const childStyle: React.CSSProperties = {
           transitionDuration: `${duration}ms`,
           transitionDelay: `${childDelay}ms`,
-          ...(distance ? { "--reveal-distance": `${distance}px` } as React.CSSProperties : {}),
+          ...(distance ? ({ "--reveal-distance": `${distance}px` } as React.CSSProperties) : {}),
         };
 
         return (

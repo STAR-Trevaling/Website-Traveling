@@ -3,7 +3,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { cookies } from "next/headers";
 import { Clock, User, ChevronRight, ArrowUpRight } from "lucide-react";
-import { PageHero } from "@/components/layout/page-hero";
+import { SiteHeader } from "@/components/layout/site-header";
+import { Breadcrumb } from "@/components/shared/breadcrumb";
 import { publicApi, safe } from "@/lib/api";
 import { VIETNAM_IMAGES } from "@/lib/assets";
 import { VIETNAM_STORIES } from "@/data/seed";
@@ -39,16 +40,35 @@ export default async function StoriesPage() {
 
   return (
     <>
-      <PageHero
-        title="Góc Nhìn Du Lịch"
-        titleEn="Stories & Travel Insights"
-        subtitle="Những câu chuyện truyền cảm hứng, cẩm nang trải nghiệm và chiều sâu văn hóa bản địa."
-        subtitleEn="Inspiring narratives, insider guides, and authentic cultural journeys across Vietnam."
-        image={VIETNAM_IMAGES.hoiAn}
-      />
+      <SiteHeader overlay={false} />
 
-      <main className="template-page-bg min-h-screen px-4 sm:px-6 py-10 sm:py-16 md:px-12 lg:px-16">
+      <main className="template-page-bg min-h-screen px-4 sm:px-6 py-8 sm:py-12 md:px-12 lg:px-16 text-[#282828]">
         <div className="mx-auto max-w-7xl">
+          {/* Breadcrumb Navigation */}
+          <div className="mb-6 sm:mb-8">
+            <Breadcrumb
+              items={[
+                { label: isEn ? "Home" : "Trang Chủ", href: "/" },
+                { label: isEn ? "Stories & Travel Insights" : "Góc Nhìn Du Lịch" },
+              ]}
+            />
+          </div>
+
+          {/* Page Title Card without destination photo banner */}
+          <div className="rounded-[2px] bg-white/85 backdrop-blur-md p-6 sm:p-8 md:p-10 shadow-[0_4px_24px_rgba(0,152,162,0.06)] border border-white/90 mb-8 sm:mb-12">
+            <span className="inline-block px-3 py-1 rounded-[2px] bg-[#0098a2]/15 text-[#007a82] border border-[#0098a2]/25 text-[11px] font-bold uppercase tracking-[0.2em] mb-2">
+              {isEn ? "Travel Journal" : "Cảm Hứng & Trải Nghiệm"}
+            </span>
+            <h1 className="script-title mt-1 text-4xl sm:text-5xl md:text-6xl text-[#0f172a] leading-tight">
+              {isEn ? "Stories & Travel Insights" : "Góc Nhìn Du Lịch"}
+            </h1>
+            <p className="mt-2 text-sm sm:text-base md:text-[17px] text-slate-800 font-medium max-w-3xl leading-relaxed">
+              {isEn
+                ? "Inspiring narratives, insider guides, and authentic cultural journeys across Vietnam."
+                : "Những câu chuyện truyền cảm hứng, cẩm nang trải nghiệm và chiều sâu văn hóa bản địa."}
+            </p>
+          </div>
+
           {/* 1. FEATURED HERO STORY */}
           <section className="mb-10 sm:mb-16">
             <Link

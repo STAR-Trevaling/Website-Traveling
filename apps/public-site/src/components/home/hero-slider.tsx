@@ -23,6 +23,16 @@ export function HeroSlider() {
     return () => clearInterval(timer);
   }, [slides.length, isPaused]);
 
+  // Synchronize entire website background with the currently displayed banner slide
+  useEffect(() => {
+    const activeImage = slides[currentSlide]?.image;
+    if (activeImage && typeof window !== "undefined") {
+      window.dispatchEvent(
+        new CustomEvent("star_site_bg_change", { detail: { image: activeImage } })
+      );
+    }
+  }, [currentSlide, slides]);
+
   const prevSlide = () => {
     setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
   };

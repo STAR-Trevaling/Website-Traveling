@@ -5,41 +5,34 @@
 
 export const VIETNAM_IMAGES = {
   // Hero & Core Banners (Bright & Famous Vietnam Landmarks - 100% Verified Local Real Photos)
-  hero: "/images/hero/ha-long-bay.jpg", // Vịnh Hạ Long ngọc bích ngập tràn ánh nắng
-  goldenBridge: "/images/hero/golden-bridge.jpg", // Cầu Vàng Bà Nà Hills - Đà Nẵng rực rỡ nắng vàng
-  oceanBanner: "/images/hero/phu-quoc.jpg", // Biển nhiệt đới Bãi Sao Phú Quốc ngọc bích
-  ctaBanner: "/images/hero/hoi-an.jpg", // Phố cổ Hội An lung linh đèn lồng
-  pagePattern: "/images/hero/phu-quoc.jpg",
+  hero: "/images/hero/nha-trang.jpg", // Vịnh biển Nha Trang xanh ngọc bích
+  goldenBridge: "/images/hero/golden-bridge.jpg", // Cầu Vàng Bà Nà Hills
+  oceanBanner: "/images/hero/phan-thiet.jpg", // Biển Phan Thiết - Mũi Né đồi cát bay
+  ctaBanner: "/images/hero/vung-tau.jpg", // Bãi biển Vũng Tàu
+  pagePattern: "/images/hero/nha-trang.jpg",
 
-  // Top Hero Slide Banners (4 Danh thắng nổi tiếng & sáng rực rỡ bậc nhất Việt Nam)
+  // Top Hero Slide Banners (3 Danh thắng biển nổi tiếng: Nha Trang, Vũng Tàu, Phan Thiết)
   heroSlides: [
     {
-      id: "ha-long-bay",
-      title: "Kỳ Quan Vịnh Hạ Long",
-      subtitle: "Non nước ngọc bích và ngàn đảo đá kỳ vĩ",
-      image: "/images/hero/ha-long-bay.jpg",
-      tag: "Di sản thiên nhiên thế giới UNESCO",
+      id: "nha-trang",
+      title: "Vịnh Biển Nha Trang",
+      subtitle: "Biển xanh ngọc bích, bờ cát trắng mịn và thiên đường nghỉ dưỡng",
+      image: "/images/hero/nha-trang.jpg",
+      tag: "Vịnh biển đẹp bậc nhất thế giới",
     },
     {
-      id: "golden-bridge-da-nang",
-      title: "Tuyệt Tác Cầu Vàng",
-      subtitle: "Lối đi bộ vàng rực giữa mây trời Bà Nà Hills",
-      image: "/images/hero/golden-bridge.jpg",
-      tag: "Biểu tượng du lịch quốc tế Đà Nẵng",
+      id: "vung-tau",
+      title: "Biển Vũng Tàu",
+      subtitle: "Sóng vỗ Bãi Sau, cung đường ven biển lộng gió và ngọn Hải Đăng",
+      image: "/images/hero/vung-tau.jpg",
+      tag: "Thành phố biển sôi động phương Nam",
     },
     {
-      id: "sa-pa-rice-terraces",
-      title: "Mùa Vàng Sa Pa",
-      subtitle: "Kiệt tác ruộng bậc thang óng ả giữa mây ngàn",
-      image: "/images/hero/sapa-terraces.jpg",
-      tag: "Kỳ quan ruộng bậc thang Tây Bắc",
-    },
-    {
-      id: "trang-an-ninh-binh",
-      title: "Non Nước Tràng An",
-      subtitle: "Thuyền nan lướt nhẹ giữa non nước di sản kỳ vĩ",
-      image: "/images/hero/trang-an.jpg",
-      tag: "Di sản thế giới kép UNESCO Ninh Bình",
+      id: "phan-thiet",
+      title: "Biển Phan Thiết — Mũi Né",
+      subtitle: "Đồi cát vàng óng ả, làng chài thuyền thúng và biển biếc nắng ấm",
+      image: "/images/hero/phan-thiet.jpg",
+      tag: "Thủ phủ resort & đồi cát kỳ thú",
     },
   ],
 

@@ -104,6 +104,7 @@ class AssistantKnowledgeChunk(models.Model):
         PLACE = "place", "Danh thắng / Trải nghiệm"
         ARTICLE = "article", "Bài viết / Stories"
         POLICY = "policy", "Chính sách / Dịch vụ"
+        GUIDE = "guide", "Cẩm nang thông tin"
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     entity_type = models.CharField(
