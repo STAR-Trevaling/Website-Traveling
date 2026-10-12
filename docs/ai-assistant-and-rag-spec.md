@@ -471,7 +471,7 @@ Nhằm mở rộng năng lực hỗ trợ của AI Concierge sang các bài toá
    - Client Component `ai-trip-assistant.tsx` bắt marker `[GUIDE_CARD: ...]` và tự động render thẻ cẩm nang trực quan dẫn trực tiếp tới `/guide/[slug]`.
 
 4. **Kiểm Thử Hồi Quy Chuyên Biệt (Regression Verification):**
-   - Script kiểm thử tự động `apps/api/assistant/verify_guide_rag_spec.py` xác minh 100% tỷ lệ phản hồi chính xác trên 7/7 nhóm chủ đề và kiểm tra an toàn trước prompt injection.
+   - Script kiểm thử tự động `scripts/verify_guide_rag_spec.py` xác minh 100% tỷ lệ phản hồi chính xác trên 7/7 nhóm chủ đề và kiểm tra an toàn trước prompt injection.
 
 ---
 

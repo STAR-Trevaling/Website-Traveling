@@ -11,6 +11,7 @@ Verifies:
   5. Expiration auto-sweep logic.
 """
 # ruff: noqa: E402
+# pyrefly: ignore-errors[missing-import]
 
 import hashlib
 import hmac
@@ -22,10 +23,11 @@ from decimal import Decimal
 from pathlib import Path
 
 # Add apps/api directory to sys.path
-BASE_API = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_API = BASE_DIR / "apps" / "api"
 sys.path.insert(0, str(BASE_API))
 
-for _candidate in (BASE_API.parent.parent / ".env", BASE_API / ".env"):
+for _candidate in (BASE_DIR / ".env", BASE_API / ".env"):
     if _candidate.exists():
         with open(_candidate, encoding="utf-8") as _f:
             for _line in _f:
