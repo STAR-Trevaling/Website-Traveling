@@ -46,12 +46,14 @@ Built upon strict **Clean/Hexagonal Architecture** and pragmatic **DDD-lite** bo
 | 🏨 **Affiliate Referrals** | Non-blocking beacon tracking (`POST /api/v1/referrals/track/`) mapping bookings to partners. | Tracking referral conversions for Booking.com, Agoda, TableCheck with zero payment friction. |
 | 💳 **Tour Bookings & Pay** | Server-side price recalculation, VNPay Sandbox, and VietQR (NAPAS 247) integration. | Bulletproof checkout with zero client price tampering and automatic transaction ledger updates. |
 | 🤖 **AI Concierge & RAG** | Dual-tier RAG engine (Django pgvector semantic search + client-side deterministic fallback). | Prompt-injection-safe itinerary recommendations, regional discovery, and CRM lead capture. |
+| ⭐ **Living Star Mascot** | Floating 5-point star entity ("Bé Sao STAR") with real-time cursor eye tracking, natural blinking, emotional hover reactions, and 7-capability rotating carousel. | Delightful brand engagement driving 1-click prompt dispatch directly into the AI Concierge. |
+| 📚 **Travel Info Hub** | 8 authoritative routes (`/guide/*`) covering weather, 45-day visa & 90-day e-visa, transit, 113/114/115 SOS hotlines, 12-month festivals, currency, and etiquette. | Official practical travel handbook eliminating traveler ambiguity and ungrounded advice. |
 | ⚖️ **Legal Compliance** | Decrees 13/2023/NĐ-CP (PDPD) and 52/2013/NĐ-CP (E-Commerce) integration (`/privacy`, `/terms`). | Explicit consent checkboxes, privacy protection, and full MOIT corporate disclosures. |
 | 📍 **Geospatial Discovery** | PostGIS 3.5 spatial indexing with `ST_DWithin` radius queries (`?lat=&lng=&radius_km=`). | Real-time discovery of nearby attractions, heritage sites, and experiences. |
-| ⚡ **Next.js 15 & React 19** | App Router, Server-Side Rendering (SSR), React Server Components (RSC), and Edge middleware. | Sub-second page loads, optimal Core Web Vitals, and indexable SEO metadata. |
+| ⚡ **Next.js 15 & React 19** | App Router, Server-Side Rendering (SSR), React Server Components (RSC), and Edge middleware. | Sub-second page loads, optimal Core Web Vitals, and indexable SEO metadata across 33+ routes. |
 | 🛡️ **BFF Cookie Security** | Next.js Backend-for-Frontend routes (`/api/auth/*`) issuing secure `HttpOnly` session cookies. | Eliminates token storage in `localStorage` to defend against Cross-Site Scripting (XSS). |
 | 🌐 **100% Bilingual System** | Pure Vietnamese (`vi`) and English (`en`) dictionary toggle with zero mixed-language UI bleeding. | First-class UX for domestic travelers and international explorers alike. |
-| 🏛️ **Modular Monolith** | 13 decoupled bounded contexts in Django (`accounts`, `destinations`, `places`, `tours`, `experiences`, `bookings`, `payments`, `assistant`, `accommodations`, `restaurants`, `partners`, `content`, `reviews`). | Clean separation of concerns with atomic transactional boundaries. |
+| 🏛️ **Modular Monolith** | 14 decoupled bounded contexts in Django (`accounts`, `destinations`, `places`, `tours`, `experiences`, `bookings`, `payments`, `assistant`, `accommodations`, `restaurants`, `partners`, `content`, `reviews`, `guides`). | Clean separation of concerns with atomic transactional boundaries. |
 | 🤝 **Partner State Machine** | Strict state transitions (`submitted` → `under_review` → `approved`/`rejected`) with row-level locks. | Prevents concurrent approval races and maintains immutable audit logs. |
 | 📦 **Shared Data Contracts** | Standalone package `@travel/contracts` exporting TypeScript models and OpenAPI 3.1 schemas. | Guaranteed type safety across polyglot stacks without leaky internal abstractions. |
 | 🎨 **STAR Design System** | Reconstructed from the Anima STAR Travels reference using Tailwind CSS, Bento grids, and Radix UI. | Pixel-accurate visual hierarchy with responsive fluidity across mobile, tablet, and desktop. |
@@ -67,7 +69,7 @@ graph TD
     Client["🌐 Web Client (Desktop / Mobile)"]
 
     subgraph "Frontend Layer (apps/public-site)"
-        NextWeb["Next.js 15 App Router<br/>(25 Routes, SSR/RSC, Bilingual i18n, GPS Engine)"]
+        NextWeb["Next.js 15 App Router<br/>(33+ Routes, SSR/RSC, Bilingual i18n, GPS Engine, Travel Hub)"]
         BFF["BFF Auth Proxy (/api/auth/*)<br/>HttpOnly Cookie Session Storage"]
     end
 
@@ -83,6 +85,7 @@ graph TD
             HospitalityCtx["accommodations, restaurants (Referral Maps)"]
             TransactionCtx["bookings, payments (VNPay, VietQR)"]
             AICtx["assistant (RAG & pgvector)"]
+            GuideCtx["guides (Practical Travel Guides & RAG)"]
             PartnerCtx["partners (B2B State Machine & Locking)"]
             SocialCtx["content, reviews, audit"]
         end
@@ -100,8 +103,8 @@ graph TD
     NextWeb -.->|Static Type Contract| Contracts
     DRF -.->|OpenAPI Contract Sync| Contracts
     NextWeb -->|Direct Read Operations /api/v1/*| DRF
-    DRF --> AccountsCtx & CatalogCtx & HospitalityCtx & TransactionCtx & AICtx & PartnerCtx & SocialCtx
-    AccountsCtx & CatalogCtx & HospitalityCtx & TransactionCtx & AICtx & PartnerCtx & SocialCtx --> Postgres
+    DRF --> AccountsCtx & CatalogCtx & HospitalityCtx & TransactionCtx & AICtx & GuideCtx & PartnerCtx & SocialCtx
+    AccountsCtx & CatalogCtx & HospitalityCtx & TransactionCtx & AICtx & GuideCtx & PartnerCtx & SocialCtx --> Postgres
     DRF --> Redis
     Redis <--> CeleryWorker
 ```
@@ -124,6 +127,7 @@ travel-platform-mvp-complete/
 │   │   ├── core/                     # Shared pagination, exceptions, and seed commands
 │   │   ├── destinations/             # Destination models, regions, and search filters
 │   │   ├── experiences/              # Localized adventure activities and booking slots
+│   │   ├── guides/                   # Practical travel guide directory models & admin
 │   │   ├── partners/                 # B2B partner application state machine and review service
 │   │   ├── payments/                 # Transaction ledger, VNPay Sandbox, VietQR mock
 │   │   ├── places/                   # Locations, categories, and PostGIS geospatial search
@@ -138,7 +142,7 @@ travel-platform-mvp-complete/
 │   └── public-site/                  # Next.js 15.5 customer & partner web application
 │       ├── public/                   # Static media, SVG icons, and brand graphics
 │       ├── src/
-│       │   ├── app/                  # 25 App Router pages (SSR/RSC with full bilingual i18n)
+│       │   ├── app/                  # 33+ App Router pages (SSR/RSC with full bilingual i18n)
 │       │   ├── components/           # Reusable Radix UI primitives, cards, hero, and catalogs
 │       │   ├── data/seed/            # Centralized 100% Vietnam verified seed dataset
 │       │   └── lib/                  # BFF client, auth helpers, geo-utils, and dictionaries
@@ -284,6 +288,9 @@ All backend API endpoints are versioned under `/api/v1/`:
 | **Favorites** | `GET` | `/api/v1/favorites/` | List traveler's saved places and bookmarks | Bearer JWT |
 | **Favorites** | `POST` | `/api/v1/favorites/` | Save / bookmark a place | Bearer JWT |
 | **Favorites** | `DELETE` | `/api/v1/favorites/{place_id}/` | Remove a place from saved favorites | Bearer JWT |
+| **Bookings & Pay** | `POST` | `/api/v1/bookings/` | Create transactional tour booking with pricing check | Bearer JWT |
+| **Referrals** | `POST` | `/api/v1/referrals/track/` | Non-blocking affiliate referral tracking (Stays & Dining) | Public |
+| **AI Concierge** | `POST` | `/api/v1/assistant/chat/` | Dual-tier RAG Assistant chat query with intent extraction | Public |
 | **Partners** | `POST` | `/api/v1/partner-applications/` | Submit a B2B partner onboarding application | Bearer JWT |
 | **Partners** | `POST` | `/api/v1/partner-applications/{id}/approve/` | Admin: atomic approval & merchant provisioning | Staff / Admin |
 | **Partners** | `POST` | `/api/v1/partner-applications/{id}/reject/` | Admin: reject partner application with reason | Staff / Admin |

@@ -4,7 +4,7 @@
 > **Dự án:** STAR Travels Vietnam — Nền tảng Du lịch & Trải nghiệm Bản địa  
 > **Ứng dụng:** `apps/public-site` (Next.js 15.5 App Router, React 19, Tailwind CSS v3, TypeScript 5.9)  
 > **Trạng thái:** Hoàn thiện 100% tính năng Public & Thanh toán (VNPay / VietQR), Trợ lý AI Concierge, Song ngữ Việt - Anh, Dữ liệu Seed 100% Việt Nam, Parity chuẩn Anima  
-> **Phạm vi hợp nhất:** Tổng quan kiến trúc + Danh mục thành phần UI Inventory (31 Routes) + Chuẩn Giao diện Cờ Đỏ Sao Vàng + Quy chuẩn Parity Checklist & Responsive  
+> **Phạm vi hợp nhất:** Tổng quan kiến trúc + Danh mục thành phần UI Inventory (33+ Routes bao gồm Travel Info Hub) + Chuẩn Giao diện Cờ Đỏ Sao Vàng + Quy chuẩn Parity Checklist & Responsive  
 
 ---
 
@@ -386,4 +386,75 @@ Nhằm nâng cao trải nghiệm khách hàng tìm kiếm địa điểm lưu tr
    - Chân trang `SiteFooter` hiển thị đầy đủ thông tin pháp nhân: MST `0110896868`, Giấy phép Lữ hành Quốc tế số `01-2026/TCDL-GP LHQT`, trụ sở, hotline hỗ trợ 24/7.
    - Trang `/terms` quy định rõ quyền và nghĩa vụ khách hàng, quy chế thanh toán tour, và miễn trừ trách nhiệm pháp lý đối với các dịch vụ referral chuyển tiếp tới bên thứ ba.
    - Huy hiệu Đã Thông Báo Bộ Công Thương hiển thị trang trọng tại footer.
+
+---
+
+## 14. Hệ Thống Cẩm Nang Thông Tin Du Lịch Thực Dụng (Travel Info Hub — 8 Routes `/guide/*`)
+
+Nhằm giải quyết triệt để nhu cầu tra cứu thông tin thực tế của du khách quốc tế và nội địa trước và trong hành trình khám phá Việt Nam, phân hệ **Cẩm Nang Thông Tin Cần Biết** (`/guide`) được thiết lập với 8 tuyến đường chuyên biệt:
+
+### 14.1. Danh Mục Các Tuyến Đường Cẩm Nang (Route Matrix)
+
+| Tuyến Đường (Route) | Tên Chuyên Mục (Tiếng Việt / English) | Nội Dung Tri Thức Thực Dụng Cung Cấp |
+| :--- | :--- | :--- |
+| `/guide` | **Thông Tin Cần Biết**<br/>*Travel Info Hub* | Trung tâm điều hướng với thanh tìm kiếm thông minh, bộ lọc 7 danh mục, thẻ checklist chuẩn bị trước chuyến đi. |
+| `/guide/weather` | **Thời Tiết & Mùa Du Lịch**<br/>*Weather & Best Travel Seasons* | Tổng quan khí hậu 3 miền (Bắc 4 mùa, Trung mùa mưa bão, Nam mưa/khô), bảng 12 điểm đến với tháng vàng lý tưởng, tháng cần tránh và nhiệt độ trung bình. |
+| `/guide/visa` | **Thị Thực & Nhập Cảnh**<br/>*Visa & Entry Regulations* | Chính sách miễn visa 45 ngày cho 25 quốc gia, miễn visa 30 ngày ASEAN & Phú Quốc, quy trình 4 bước xin E-visa 90 ngày trên cổng chính thức `evisa.gov.vn`, cảnh báo pháp lý và Schema FAQ. |
+| `/guide/transport` | **Di Chuyển Nội Địa**<br/>*Domestic Transportation* | So sánh 4 phương tiện liên tỉnh (Máy bay, Tàu hỏa SE ngắm đèo Hải Vân, Limousine Dcar, Xe giường nằm), cẩm nang di chuyển từ sân bay/nhà ga vào 12 điểm đến, ứng dụng gọi xe (Grab, Xanh SM). |
+| `/guide/safety` | **An Toàn & Y Tế Khẩn Cấp**<br/>*Health, Safety & Emergency* | Hotline quốc gia 1-chạm (113 Công an, 114 Cứu hỏa, 115 Cấp cứu, 112 Cứu nạn), quy tắc an toàn dòng chảy xa bờ biển, leo núi Fansipan, lái xe máy đèo dốc và bảo hiểm y tế quốc tế. |
+| `/guide/culture` | **Văn Hóa & Phép Tắc Ứng Xử**<br/>*Culture & Social Etiquette* | Quy chuẩn trang phục đền chùa linh thiêng (kín vai/đầu gối), giao tiếp bằng hai tay, nghệ thuật mặc cả văn minh tại chợ truyền thống (70-80%), tiền tip và điều kiêng kỵ đôi đũa. |
+| `/guide/currency` | **Tiền Tệ & Chi Phí Du Lịch**<br/>*Currency, Money & Travel Costs* | Nhận diện tiền polymer VNĐ, cảnh báo chống nhầm lẫn màu sắc (20k vs 500k), địa điểm đổi tiền uy tín (ngân hàng vs tiệm vàng cấp phép), dự toán chi phí 3 bậc/ngày, thanh toán VietQR/thẻ. |
+| `/guide/festivals` | **Lễ Hội & Sự Kiện Theo Mùa**<br/>*Festivals & Seasonal Events* | Lịch 12 tháng lễ hội truyền thống & quốc tế (Tết Nguyên Đán, Chùa Hương, Giỗ Tổ Hùng Vương, Pháo hoa DIFF Đà Nẵng, Trung Thu, Mùa lúa chín Mù Cang Chải, Lễ hội Hoa Đà Lạt). |
+
+### 14.2. Kiến Trúc Dữ Liệu & RAG Integration
+- Toàn bộ nội dung cẩm nang được lưu trữ cấu trúc tại `@/data/seed/guide.ts`, đồng thời đồng bộ sang Django backend model `guides.GuideArticle` / `guides.GuideCategory`.
+- Hỗ trợ thẻ tri thức trực quan cho AI Concierge qua định dạng marker `[GUIDE_CARD: slug]`, tự động render card dẫn đường cho người dùng.
+
+---
+
+## 15. Linh Vật Tương Tác Sống Động "Bé Sao STAR" & Trình Diễn Năng Lực AI Concierge
+
+Trợ lý du lịch ảo STAR được trang bị linh vật thương hiệu độc quyền **"Bé Sao STAR"** (`StarCreatureMascot` kết hợp `InteractiveMotionTrigger`):
+
+### 15.1. Thiết Kế Linh Vật Sống Động (Living Entity Design)
+- **Tự Do Không Khung Viền (Zero Frame):** Linh vật bay lơ lửng tự do tại góc dưới màn hình (`fixed bottom-6 right-6 z-40`), loại bỏ hoàn toàn các khung viền chữ nhật, hình tròn đệm thô ráp hay đế bục tĩnh.
+- **Thân Hình Ngôi Sao 5 Cánh:** Tạo hình ngôi sao bầu bĩnh, gradient vàng kim ấm áp (`#FBBF24` đến `#F59E0B`), điểm sáng 3D mềm mại trên trán, bóng đổ tiếp đất đồng bộ thời gian thực.
+- **Mắt Dõi Theo Con Trỏ Chuột (Real-time Eye Tracking):** Đồng tử mắt tự động tính toán góc lượng giác (`Math.atan2`) để dõi theo từng cử động trỏ chuột của người dùng trên toàn màn hình.
+- **Chu Kỳ Chớp Mắt Tự Nhiên (Natural Blinking Cycle):** Tự động khép mí mắt nhịp nhàng sau mỗi 3.8 giây, tạo cảm giác một sinh thể AI có hồn và sống động.
+- **Phản Ứng Cảm Xúc Tương Tác (Expressive Hover Reactions):** Khi người dùng rê chuột vào, đôi mắt hóa thành trăng khuyết vui sướng `(^_^)`, miệng mở nụ cười rạng rỡ `(:D)` với chiếc lưỡi hồng chúm chím, đôi má ửng hồng rực sáng và thân mình nhún nhảy reo mừng (`creatureJiggle`).
+- **Quỹ Đạo Thiên Thể Ánh Sáng (Celestial Orbit & Energy Halo):** Vòng quỹ đạo ánh sáng xoay vòng quanh thân, phát ra những tia sáng tinh tú lấp lánh và hào quang ấm áp.
+
+### 15.2. Hộp Thoại Giới Thiệu Năng Lực & Kích Hoạt 1-Chạm (Capability Showcase Carousel)
+- Bật bảng giới thiệu nổi tinh tế bên cạnh linh vật, hiển thị xoay vòng 7 năng lực cốt lõi:
+  1. *Lên lịch trình 3N2Đ tùy biến*
+  2. *Quy định miễn visa 45 ngày & E-visa 90 ngày*
+  3. *Thời tiết & mùa đẹp nhất tại 12 điểm đến*
+  4. *Mẹo đổi tiền VNĐ an toàn & tránh nhầm lẫn*
+  5. *Hướng dẫn đón xe từ sân bay vào trung tâm*
+  6. *Số khẩn cấp cứu hộ 113, 114, 115*
+  7. *Gợi ý nhà hàng Michelin & món ngon địa phương*
+- **Kích Hoạt 1-Chạm:** Bấm vào nút năng lực hoặc các chip gợi ý nhanh (`[Lịch trình 3N2Đ]`, `[E-visa 90 ngày]`, `[Đổi tiền VND]`) sẽ tự động mở ngăn chat AI và gửi trực tiếp câu hỏi vào động cơ RAG.
+- **Chuyển Trạng Thái Mượt Mà:** Khi ngăn chat mở ra, linh vật biến hóa xoay 180° kèm hiệu ứng co giãn lò xo mượt mà thành nút Đóng (X).
+
+---
+
+## 16. Quy Chuẩn Hiển Thị Ảnh Banner & Đồng Bộ Nền Biển Toàn Trang (Banner Display & Dynamic Background Policy)
+
+Nhằm đảm bảo sự tôn nghiêm của cảnh quan di sản, tính mạch lạc của nội dung và tránh gây nhiễu thị giác cho người dùng:
+
+### 16.1. Hợp Đồng Hiển Thị Ảnh Banner Phong Cảnh (Hero Banner Display Contract)
+- **CHỈ hiển thị ảnh banner phong cảnh khổ lớn (Hero Image Banner)** đối với các trang chứa dữ liệu thực tế về **địa điểm / nơi du lịch** cụ thể:
+  - Trang chủ (`/`): Banner các bãi biển du lịch nổi tiếng Việt Nam (Nha Trang, Vũng Tàu, Phan Thiết).
+  - Chi tiết điểm đến (`/destinations/[slug]`): Ảnh banner danh thắng của chính điểm đến đó.
+  - Chi tiết tour du lịch (`/tours/[slug]`): Ảnh banner hành trình của tour đó.
+  - Chi tiết trải nghiệm bản địa (`/experiences/[slug]`): Ảnh banner của hoạt động/danh thắng đó.
+- **TUYỆT ĐỐI KHÔNG hiển thị ảnh banner phong cảnh** trên các trang biên tập, cẩm nang tra cứu thông tin hành chính, hoặc danh mục chung không đại diện cho một địa danh cụ thể:
+  - Trang Góc nhìn du lịch (`/stories`): Sử dụng `SiteHeader overlay={false}`, Breadcrumb và thẻ tiêu đề trắng tinh gọn trên nền kính mờ.
+  - Trang Cẩm nang du lịch (`/guide` và 7 trang hướng dẫn con): Sử dụng tiêu đề thẻ sạch, trực quan, không lồng ghép ảnh phong cảnh lạc đề (như thủ tục visa hay tiền tệ không bị chèn ảnh Hội An hay Sài Gòn gây hiểu lầm).
+  - Các trang chức năng (`/about`, `/contact`, `/partner`, `/terms`, `/privacy`, `/login`, `/register`, `/account`): Duy trì giao diện sạch với thẻ tiêu đề và breadcrumb sắc nét.
+
+### 16.2. Cơ Chế Đồng Bộ Nền Biển Toàn Trang (`GlobalSiteBackground`)
+- Component `GlobalSiteBackground` (`src/components/layout/global-site-background.tsx`) nằm cố định tại lớp nền đáy (`fixed inset-0 -z-50 pointer-events-none`).
+- Tự động bắt sự kiện `star_site_bg_change` phát ra từ banner slider trang chủ để chuyển đổi cross-fade mượt mà giữa các bãi biển biểu tượng (Nha Trang, Phan Thiết, Vũng Tàu).
+- Lớp phủ kính mờ `bg-[#edf7f6]/55 backdrop-blur-[1.5px]` đảm bảo toàn bộ thẻ bài viết, bảng biểu và văn bản trên trang luôn đạt độ tương phản WCAG 2.1 AA sắc nét và dễ đọc.
 

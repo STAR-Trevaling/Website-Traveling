@@ -441,3 +441,47 @@ Nhằm hỗ trợ tối đa cho 2 phân hệ Khách Sạn (`/accommodations`) v�
    - Hướng dẫn khách hàng sử dụng nút **"Tìm gần vị trí của tôi"** trên thanh công cụ để hệ thống tự động đo khoảng cách Haversine (`~850 m`, `~1.2 km`).
    - Khẳng định cam kết bảo mật theo Nghị định 13/2023/NĐ-CP (không thu thập tọa độ ngầm, chỉ tính toán khi khách chủ động bấm cho phép).
 
+---
+
+### 8.5. Hệ Thống Tri Thức Cẩm Nang Du Lịch Thực Dụng (Practical Travel Guide RAG Indexing — Entity `GUIDE`)
+
+Nhằm mở rộng năng lực hỗ trợ của AI Concierge sang các bài toán thực dụng trước và trong chuyến đi:
+
+1. **Phân Loại Entity Mới `GUIDE`:**
+   - Cập nhật model `AssistantKnowledgeChunk.EntityType`:
+     ```python
+     GUIDE = "guide", "Cẩm nang thông tin"
+     ```
+   - Migration: `apps/api/assistant/migrations/0002_alter_assistantknowledgechunk_entity_type.py`.
+   - Command nạp dữ liệu: `python manage.py index_guide_knowledge` lập chỉ mục tự động, đảm bảo tính idempotent.
+
+2. **7 Miền Tri Thức Cẩm Nang Chuẩn Quốc Gia:**
+   - **Visa & Thủ Tục Nhập Cảnh:** Miễn visa 45 ngày cho 25 quốc gia, miễn visa 30 ngày ASEAN & Phú Quốc, quy trình 4 bước xin E-visa 90 ngày trên cổng chính thức `https://evisa.gov.vn`.
+   - **Thời Tiết 3 Miền:** Khí hậu 4 mùa miền Bắc, mùa mưa bão miền Trung, 2 mùa mưa/khô miền Nam, tháng lý tưởng cho 12 danh thắng.
+   - **Giao Thông Nội Địa:** Tuyến bay kết nối, tàu hỏa SE ngắm vịnh Lăng Cô / đèo Hải Vân, limousine Dcar VIP, xe khách giường nằm, trung chuyển sân bay vào 12 điểm đến, xe công nghệ Grab / Xanh SM.
+   - **An Toàn & Cứu Hộ:** Tổng đài 113 (Công an), 114 (Cứu hỏa), 115 (Cấp cứu), 112 (Cứu nạn), phòng tránh dòng chảy xa bờ, leo núi Fansipan, luật lái xe máy không cồn, bảo hiểm du lịch.
+   - **Văn Hóa Ứng Xử:** Trang phục đền chùa kín đáo, cách chào bằng 2 tay, mặc cả văn minh 70-80% tại chợ truyền thống, tiền tip, kiêng kỵ cắm đũa thẳng vào bát cơm.
+   - **Tiền Tệ VNĐ & Chi Phí:** Nhận diện tiền polymer, cảnh báo chống nhầm lẫn 20k vs 500k, điểm đổi tiền hợp pháp (ngân hàng vs tiệm vàng cấp phép), dự toán chi phí 3 bậc/ngày, thanh toán mã QR / thẻ.
+   - **Lễ Hội 12 Tháng:** Lịch lễ hội truyền thống & quốc tế (Tết, Chùa Hương, Giỗ Tổ Hùng Vương, Pháo hoa DIFF Đà Nẵng, Trung Thu, Mùa vàng Mù Cang Chải, Lễ hội Hoa Đà Lạt).
+
+3. **Tăng Cường Bộ Truy Xuất (Retriever Boost Scoring):**
+   - Bộ nhận diện ý định (`retriever.py`): `is_visa_inquiry`, `is_transport_inquiry`, `is_safety_inquiry`, `is_culture_inquiry`, `is_currency_inquiry`, `is_festival_inquiry`.
+   - Khi phát hiện ý định, cộng thêm **+90 điểm ưu tiên** cho chunk thuộc entity `guide`.
+   - LLM System Prompt chỉ dẫn phát sinh thẻ dẫn đường dạng `[GUIDE_CARD: slug]` khi người dùng hỏi các chủ đề thực dụng.
+   - Client Component `ai-trip-assistant.tsx` bắt marker `[GUIDE_CARD: ...]` và tự động render thẻ cẩm nang trực quan dẫn trực tiếp tới `/guide/[slug]`.
+
+4. **Kiểm Thử Hồi Quy Chuyên Biệt (Regression Verification):**
+   - Script kiểm thử tự động `apps/api/assistant/verify_guide_rag_spec.py` xác minh 100% tỷ lệ phản hồi chính xác trên 7/7 nhóm chủ đề và kiểm tra an toàn trước prompt injection.
+
+---
+
+### 8.6. Linh Vật Tương Tác Sống Động "Bé Sao STAR" & Capability Carousel
+
+Trợ lý ảo được trang bị linh vật tương tác thế hệ mới:
+- **Linh Vật Ngôi Sao Độc Lập ("Bé Sao STAR"):** Không khung viền, tự do bay lơ lửng tại góc phải dưới (`InteractiveMotionTrigger`).
+- **Mắt Theo Dõi Con Trỏ Chuột Thời Gian Thực:** Tính toán lượng giác theo tọa độ chuột của người dùng.
+- **Biểu Cảm Phong Phú:** Chớp mắt tự nhiên 3.8s; khi hover mắt hóa trăng khuyết `(^_^)`, cười rạng rỡ `:D`, má hồng và nhún nhảy reo mừng (`creatureJiggle`).
+- **Vòng Hào Quang Thiên Thể:** Quỹ đạo xoay vòng quanh thân với tia sáng tinh tú lấp lánh.
+- **Carousel 7 Năng Lực Cốt Lõi:** Giới thiệu trực quan các khả năng tư vấn của STAR (Lịch trình 3N2Đ, E-visa 90 ngày, Thời tiết 12 điểm đến, Đổi tiền VNĐ an toàn, Đón xe sân bay, SOS 113/115, Nhà hàng Michelin) kèm nút kích hoạt 1-chạm gửi prompt trực tiếp vào hệ thống RAG.
+- **Chuyển Trạng Thái Morphing:** Xoay 180° kèm hiệu ứng co giãn lò xo mượt mà biến hóa thành nút Đóng (X) khi mở ngăn chat.
+

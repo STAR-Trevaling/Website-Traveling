@@ -284,7 +284,7 @@ erDiagram
 
     KNOWLEDGE_CHUNK {
         uuid id PK
-        string entity_type "tour|dest|place|policy"
+        string entity_type "tour|dest|place|policy|guide"
         uuid entity_id
         string entity_slug
         text chunk_content
@@ -965,6 +965,37 @@ CREATE TABLE integrations_outbox (
 CREATE INDEX idx_outbox_state_created ON integrations_outbox(state, created_at);
 ```
 
+### 3.8. Bounded Context 8: Practical Travel Guides & Directory (`apps/api/guides`)
+*Quản lý danh mục cẩm nang thông tin du lịch thực dụng (thời tiết, visa, vận tải, an toàn & SOS, văn hóa, tiền tệ, lễ hội) và xuất bản cấu trúc JSON phục vụ chỉ mục RAG AI Concierge.*
+
+#### Bảng `guides_guidecategory`
+| Cột | Kiểu dữ liệu | Ràng buộc | Mô tả |
+| :--- | :--- | :--- | :--- |
+| `id` | `UUID` | `PRIMARY KEY, DEFAULT gen_random_uuid()` | Khóa chính chuẩn UUIDv4 |
+| `slug` | `VARCHAR(100)` | `UNIQUE, NOT NULL, INDEX` | Định danh URL (e.g., `weather`, `visa`, `transport`) |
+| `name_vi` | `VARCHAR(255)` | `NOT NULL` | Tên chuyên mục tiếng Việt |
+| `name_en` | `VARCHAR(255)` | `NOT NULL` | Tên chuyên mục tiếng Anh |
+| `icon` | `VARCHAR(64)` | `NOT NULL, DEFAULT 'compass'` | Mã icon đại diện |
+| `sort_order` | `INTEGER` | `NOT NULL, DEFAULT 0` | Thứ tự hiển thị |
+
+#### Bảng `guides_guidearticle`
+| Cột | Kiểu dữ liệu | Ràng buộc | Mô tả |
+| :--- | :--- | :--- | :--- |
+| `id` | `UUID` | `PRIMARY KEY, DEFAULT gen_random_uuid()` | Khóa chính chuẩn UUIDv4 |
+| `category_id` | `UUID` | `NOT NULL, FK -> guides_guidecategory` | Khóa ngoại chuyên mục (`ON DELETE CASCADE`) |
+| `destination_id` | `UUID` | `NULLABLE, FK -> destinations_destination` | Khóa ngoại điểm đến liên kết (`ON DELETE SET NULL`) |
+| `slug` | `VARCHAR(150)` | `UNIQUE, NOT NULL, INDEX` | Đường dẫn bài viết / cẩm nang |
+| `title_vi` | `VARCHAR(255)` | `NOT NULL` | Tiêu đề hướng dẫn tiếng Việt |
+| `title_en` | `VARCHAR(255)` | `NOT NULL` | Tiêu đề hướng dẫn tiếng Anh |
+| `summary_vi` | `TEXT` | `NOT NULL` | Tóm tắt nhanh tiếng Việt |
+| `summary_en` | `TEXT` | `NOT NULL` | Tóm tắt nhanh tiếng Anh |
+| `content_vi` | `TEXT` | `NOT NULL` | Nội dung chi tiết tiếng Việt |
+| `content_en` | `TEXT` | `NOT NULL` | Nội dung chi tiết tiếng Anh |
+| `practical_data` | `JSONB` | `NOT NULL, DEFAULT '{}'` | Cấu trúc dữ liệu thực dụng (hotlines, phí visa, mùa đẹp, bảng giá vé) phục vụ RAG |
+| `is_published` | `BOOLEAN` | `NOT NULL, DEFAULT TRUE` | Trạng thái xuất bản |
+| `created_at` | `TIMESTAMPTZ` | `NOT NULL, DEFAULT NOW()` | Thời điểm tạo |
+| `updated_at` | `TIMESTAMPTZ` | `NOT NULL, DEFAULT NOW()` | Thời điểm cập nhật cuối |
+
 ---
 
 ## 4. Ma Trận Ánh Xạ Schema 3 Chiều: PostgreSQL ↔ Odoo 18 ↔ TypeScript Contract
@@ -979,6 +1010,7 @@ CREATE INDEX idx_outbox_state_created ON integrations_outbox(state, created_at);
 | **Giao dịch thanh toán** | `payments_payment_transaction`| `account.payment` | `PaymentTransactionResponse` |
 | **Lead tư vấn từ AI** | `assistant_lead_capture` | `crm.lead` (tag: `[AI_LEAD]`) | `AILeadCapturePayload` |
 | **Tri thức Vector AI** | `assistant_knowledge_chunk` | N/A (Internal RAG engine) | N/A |
+| **Cẩm nang du lịch thực dụng** | `guides_guidearticle` | N/A (Internal Content / RAG) | `GuideCardData`, `GuideCategory` |
 
 ---
 

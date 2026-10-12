@@ -44,6 +44,7 @@ PostgreSQL + PostGIS    Redis <-> Celery worker
 - `restaurants`: dining venues, Michelin Guide spotlights, culinary styles, and table reservation referral mapping.
 - `partners`: B2B partner application state machine (`submitted` -> `under_review` -> `approved`/`rejected`) with row-level locks.
 - `content`: editorial travel stories and cultural cẩm nang.
+- `guides`: practical travel directory models (`GuideCategory`, `GuideArticle`), verified handbook data, and structured JSON entities for RAG.
 - `reviews`: verified traveler ratings and saved favorites.
 - `audit`: immutable privileged operational logs.
 

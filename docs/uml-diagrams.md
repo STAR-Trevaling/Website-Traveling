@@ -38,6 +38,7 @@ flowchart LR
         UC7(["UC-7: Xét duyệt Đối tác Atomic"])
         UC8(["UC-8: Đăng nhập & Xác thực JWT BFF"])
         UC9(["UC-9: Quản trị & Giám sát DLQ"])
+        UC10(["UC-10: Tra cứu Cẩm nang Thực dụng (8 Routes)"])
     end
 
     subgraph ACTORS_RIGHT [Hệ Thống Ngoại Vi & Quản Trị]
@@ -56,6 +57,7 @@ flowchart LR
     UC4A --> OdooERP
     Traveler --> UC5
     Traveler --> UC8
+    Traveler --> UC10
     Partner --> UC6
     Partner --> UC8
     Admin --> UC7
@@ -66,7 +68,7 @@ flowchart LR
 
 ## 2. Biểu Đồ Lớp Miền Nghiệp Vụ (Domain Class Diagram)
 
-Cấu trúc 10 thực thể dữ liệu chính thuộc 13 Bounded Contexts trong kiến trúc Monolith mô-đun:
+Cấu trúc các thực thể dữ liệu chính thuộc 14 Bounded Contexts trong kiến trúc Monolith mô-đun:
 
 ![02. Domain Class Diagram](diagrams/02-domain-class-diagram.svg)
 
@@ -177,6 +179,18 @@ classDiagram
         +Text content
         +Vector1536 embedding
         +hybrid_search(vec, text) List
+    }
+
+    class GuideArticle {
+        +UUID id
+        +UUID category_id
+        +UUID destination_id
+        +String slug
+        +String title_vi
+        +String title_en
+        +JSONB practical_data
+        +Boolean is_published
+        +get_rag_entity_payload() dict
     }
 
     class AuditEvent {

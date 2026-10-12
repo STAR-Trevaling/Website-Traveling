@@ -166,6 +166,14 @@ Mọi Sub-Agent khi thực thi các hạng mục trong dự án BẮT BUỘC tu�
   - Thiết kế Error Boundary phong cách sang trọng Anima `apps/public-site/src/app/error.tsx`.
   - Đạt 100% PASS trên toàn bộ bộ kiểm thử tĩnh và kiểm thử tự động: `tsc --noEmit` (0 lỗi), `eslint` (0 lỗi), `mypy` (0 lỗi), `ruff` (0 lỗi).
 
+### Phân hệ 16 — Hệ Thống Cẩm Nang Du Lịch Thực Dụng & Linh Vật Sống Động "Bé Sao STAR" (Phase 16: Practical Travel Info Hub & Living Mascot AI Concierge)
+- **Nhiệm vụ:**
+  - **8 Tuyến đường Cẩm nang Thực dụng (`/guide/*`):** Xây dựng trọn vẹn 8 trang thông tin du lịch bản địa (`/guide`, `/guide/weather`, `/guide/visa`, `/guide/transport`, `/guide/safety`, `/guide/culture`, `/guide/currency`, `/guide/festivals`) với dữ liệu xác thực năm 2026, nút gọi SOS 1 chạm, và Schema.org FAQPage/Article.
+  - **Bounded Context `apps/api/guides` & RAG Indexing:** Mô hình hóa `GuideCategory`, `GuideArticle`, mở rộng `AssistantKnowledgeChunk.EntityType.GUIDE`, migration `0002`, và lệnh nạp `python manage.py index_guide_knowledge`.
+  - **Tối ưu Retriever & Generator AI:** Nhận diện 6 intent cẩm nang mới, boost điểm +90 trong `retriever.py`, trích xuất thẻ liên kết tương tác `[GUIDE_CARD: slug]`, phòng vệ tuyệt đối trước injection/jailbreak.
+  - **Linh vật Tương tác Sống động "Bé Sao STAR" (`InteractiveMotionTrigger`):** Thiết kế sinh vật ngôi sao 5 cánh độc lập (không viền khung/hộp nền), cơ chế xoay đồng tử mắt bám theo tọa độ chuột thực tế, chu kỳ chớp mắt tự nhiên 3.8s, hiệu ứng hân hoan (mắt cười, miệng mở, má ửng hồng, bật nảy jiggle), carousel trình diễn 7 năng lực cốt lõi và 1-click kích hoạt prompt vào khung chat.
+  - **Quy chuẩn Ảnh Banner Ngữ Cảnh & Nền Biển Động:** Giới hạn ảnh phong cảnh hero chỉ xuất hiện trên các trang catalog điểm đến (`/`, `/destinations/[slug]`, `/tours/[slug]`, `/experiences/[slug]`). Các trang cẩm nang và bài viết sử dụng header thẻ thanh lịch, kết hợp nền biển động chuyển cảnh mượt mà (`GlobalSiteBackground`).
+
 ---
 
 ## 3. Báo Cáo Kiểm Định Môi Trường & Kết Quả Thẩm Định (Validation Report)
@@ -173,10 +181,12 @@ Mọi Sub-Agent khi thực thi các hạng mục trong dự án BẮT BUỘC tu�
 ### 3.1. Các Hạng Mục Đã Kiểm Định Thành Công Trong Toàn Bộ Dự Án (Executed Successfully)
 - **Kiểm định Đặc tả Thanh toán VNPay:** `python apps/api/payments/verify_vnpay_spec.py` — **100% PASSED** (Xác minh chuẩn URL, sắp xếp tham số, HMAC-SHA512, và 5 mã phản hồi IPN 97, 01, 04, 02, 00).
 - **Kiểm định Đặc tả Thanh toán VietQR:** `python apps/api/payments/verify_vietqr_spec.py` — **100% PASSED** (Xác minh EMVCo CRC16, QuickLink URL, HMAC-SHA256, Idempotency và Quét quá hạn).
+- **Kiểm định RAG Cẩm Nang Du Lịch Thực Dụng:** `python apps/api/assistant/verify_guide_rag_spec.py` — **100% PASSED** (Xác minh 7 chuyên mục cẩm nang trả về đúng chunks tri thức và link thẻ).
+- **Kiểm định Phòng Vệ Prompt Injection:** `python apps/api/assistant/verify_prompt_injection_spec.py` — **100% PASSED** (4/4 kịch bản injection & jailbreak bị chặn an toàn).
 - **Bộ Kiểm Thử Tự Động Backend Pytest:** `docker compose exec backend pytest` — **10 passed in 7.31s (100% green)**.
 - **Phân Tích Cú Pháp Tĩnh & Kiểu Dữ Liệu TypeScript:** `npx tsc --noEmit` trên `apps/public-site` và `packages/contracts` — **0 errors (Exit code 0)**.
 - **Rà Soát An Ninh & Lỗ Hổng CodeQL:** Đã xử lý triệt để các cảnh báo DOM XSS trên giao diện AI Chat, xác thực an toàn toàn bộ dữ liệu đầu vào và các liên kết sinh ra.
-- **Toàn Vẹn Dữ Liệu & Danh Mục 100% Việt Nam:** Cơ sở dữ liệu PostgreSQL lưu trữ sạch sẽ 12 Điểm đến, 10 Trải nghiệm, 8 Tours trọn gói, 4 Bài viết cẩm nang, 58 Chunks tri thức di sản vector, 0 dữ liệu rác, 100% ảnh Unsplash CDN hoạt động ổn định.
+- **Toàn Vẹn Dữ Liệu & Danh Mục 100% Việt Nam:** Cơ sở dữ liệu PostgreSQL lưu trữ sạch sẽ 12 Điểm đến, 10 Trải nghiệm, 8 Tours trọn gói, 5 Bài viết cẩm nang, 7 Bộ tri thức cẩm nang thực dụng, 58 Chunks tri thức di sản vector, 0 dữ liệu rác, 100% ảnh Unsplash CDN hoạt động ổn định.
 - **Xác Thực Canonical Context & Cú Pháp Python:** `python scripts/validate_context.py` và `python scripts/static_sanity.py` vượt qua 100% các tiêu chí.
 
 ### 3.2. Chứng Nhận Độ Chuẩn Xác Giao Diện (UI Parity Note)
