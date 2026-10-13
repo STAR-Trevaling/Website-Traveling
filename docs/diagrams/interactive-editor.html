@@ -787,7 +787,7 @@
         const iframe = document.getElementById('drawio-iframe');
         const loading = document.getElementById('loading-overlay');
         const xmlTextarea = document.getElementById('raw-xml-data');
-        const xmlContent = xmlTextarea.value.replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+        const xmlContent = xmlTextarea.value;
 
         window.addEventListener('message', function(evt) {
             if (!evt.data || typeof evt.data !== 'string') return;
