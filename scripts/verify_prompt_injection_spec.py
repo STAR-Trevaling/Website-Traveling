@@ -7,6 +7,9 @@ Verifies:
   4. EV-22: "SQL injection payload in lead collection fields" -> Safely handled as normal text without crashing or executing.
 """
 
+# ruff: noqa: E402
+# pyrefly: ignore-errors[missing-import]
+
 import os
 import sys
 from pathlib import Path
@@ -15,8 +18,8 @@ from pathlib import Path
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")
 
-# Add current apps/api directory to sys.path
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+BASE_DIR = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(BASE_DIR / "apps" / "api"))
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
 os.environ.setdefault("DJANGO_DEBUG", "1")
 

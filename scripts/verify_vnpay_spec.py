@@ -9,18 +9,21 @@ Verifies:
   6. Expiration logic.
 """
 # ruff: noqa: E402
+# pyrefly: ignore-errors[missing-import]
 
 import os
 import sys
+import urllib.parse
 from datetime import datetime
 from decimal import Decimal
 from pathlib import Path
 
-# Add current apps/api directory to sys.path
-BASE_API = Path(__file__).resolve().parent.parent
+# Add apps/api directory to sys.path
+BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_API = BASE_DIR / "apps" / "api"
 sys.path.insert(0, str(BASE_API))
 
-for _candidate in (BASE_API.parent.parent / ".env", BASE_API / ".env"):
+for _candidate in (BASE_DIR / ".env", BASE_API / ".env"):
     if _candidate.exists():
         with open(_candidate, encoding="utf-8") as _f:
             for _line in _f:
@@ -182,8 +185,6 @@ def run_tests():
     sorted_items = sorted(
         [(k, v) for k, v in valid_data_unknown_ref.items() if k != "vnp_SecureHash"]
     )
-    import urllib.parse
-
     qs = urllib.parse.urlencode(sorted_items, quote_via=urllib.parse.quote_plus)
     valid_data_unknown_ref["vnp_SecureHash"] = adapter._hmac_sha512(adapter.hash_secret, qs)
 

@@ -119,7 +119,7 @@
 2. **Hiện trạng các bộ test hiện có:**
    - Repository hiện tại chỉ có:
      - 8 file integration test backend trong [`apps/api/tests/`](file:///c:/Users/msi/Downloads/travel-platform-mvp-complete/travel-platform-mvp-complete/apps/api/tests) (kiểm tra tầng DRF/Django models).
-     - 2 script kiểm thử độc lập cho cổng thanh toán ([`verify_vnpay_spec.py`](file:///c:/Users/msi/Downloads/travel-platform-mvp-complete/travel-platform-mvp-complete/apps/api/payments/verify_vnpay_spec.py) và [`verify_vietqr_spec.py`](file:///c:/Users/msi/Downloads/travel-platform-mvp-complete/travel-platform-mvp-complete/apps/api/payments/verify_vietqr_spec.py)).
+     - 2 script kiểm thử độc lập cho cổng thanh toán ([`verify_vnpay_spec.py`](file:///c:/Users/msi/Downloads/travel-platform-mvp-complete/travel-platform-mvp-complete/scripts/verify_vnpay_spec.py) và [`verify_vietqr_spec.py`](file:///c:/Users/msi/Downloads/travel-platform-mvp-complete/travel-platform-mvp-complete/scripts/verify_vietqr_spec.py)).
      - Bộ 20 test case auth `test_auth_standards.js` (kiểm thử logic cookie HttpOnly và edge middleware, không phải kiểm thử E2E browser giao diện).
 3. **Mức độ bao phủ đối với 4 luồng người dùng cốt lõi:**
    - *Luồng Đặt tour trọn vẹn (`/tours/[slug]` $\rightarrow$ thanh toán $\rightarrow$ `/booking/[id]/success`):* **Chưa có test E2E**.
@@ -152,9 +152,9 @@
        - `test_ev21_unauthorized_admin_data_poisoning_defense()`
        - `test_ev22_lead_extraction_sql_injection_defense()`
 3. **Bộ kiểm thử đặc tả độc lập (Standalone Verification Suite):**
-   - Đã tạo tệp [`apps/api/assistant/verify_prompt_injection_spec.py`](file:///c:/Users/msi/Downloads/travel-platform-mvp-complete/travel-platform-mvp-complete/apps/api/assistant/verify_prompt_injection_spec.py) tương tự như `verify_vnpay_spec.py` để có thể chạy kiểm thử tức thì mà không phụ thuộc vào hạ tầng database ngoài:
+   - Đã tạo tệp [`scripts/verify_prompt_injection_spec.py`](file:///c:/Users/msi/Downloads/travel-platform-mvp-complete/travel-platform-mvp-complete/scripts/verify_prompt_injection_spec.py) tương tự như `verify_vnpay_spec.py` để có thể chạy kiểm thử tức thì mà không phụ thuộc vào hạ tầng database ngoài:
      ```bash
-     $env:DJANGO_DEBUG="1"; python assistant/verify_prompt_injection_spec.py
+     $env:DJANGO_DEBUG="1"; python scripts/verify_prompt_injection_spec.py
      ```
    - **Kết quả chạy thực tế (Console Output):**
      ```text

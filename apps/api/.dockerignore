@@ -7,3 +7,12 @@ __pycache__
 venv/
 *.sqlite3
 .git
+tests/
+*.md
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+*.log
+*.tmp

@@ -3,6 +3,9 @@ Standalone Verification Script for Travel Info Hub (Cẩm Nang Thông Tin) RAG C
 Tests in-memory search_knowledge and generate_response across all 7 guide categories.
 """
 
+# ruff: noqa: E402
+# pyrefly: ignore-errors[missing-import]
+
 import os
 import sys
 from pathlib import Path
@@ -11,17 +14,18 @@ from pathlib import Path
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")
 
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+BASE_DIR = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(BASE_DIR / "apps" / "api"))
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
 os.environ.setdefault("DJANGO_DEBUG", "1")
 
-import django  # noqa: E402
+import django
 
 django.setup()
 
-from assistant.data.vietnam_travel_guides import VIETNAM_TRAVEL_GUIDES  # noqa: E402
-from assistant.models import AssistantKnowledgeChunk  # noqa: E402
-from assistant.services.generator import generate_response  # noqa: E402
+from assistant.data.vietnam_travel_guides import VIETNAM_TRAVEL_GUIDES
+from assistant.models import AssistantKnowledgeChunk
+from assistant.services.generator import generate_response
 
 
 def run_tests():
@@ -32,6 +36,8 @@ def run_tests():
     # Create in-memory chunks from VIETNAM_TRAVEL_GUIDES
     mock_chunks = []
     for item in VIETNAM_TRAVEL_GUIDES:
+        meta_val = item.get("metadata")
+        meta_dict = meta_val if isinstance(meta_val, dict) else {}
         chunk = AssistantKnowledgeChunk(
             entity_type=AssistantKnowledgeChunk.EntityType.GUIDE,
             entity_slug=item["slug"],
@@ -40,7 +46,7 @@ def run_tests():
             content_en=item.get("content_en", ""),
             metadata={
                 "category": item["category"],
-                **item.get("metadata", {}),
+                **meta_dict,
             },
         )
         mock_chunks.append(chunk)

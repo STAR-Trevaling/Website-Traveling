@@ -337,7 +337,7 @@
     - Client-side polling every 3 seconds (up to 21 seconds) if transaction is still `pending` waiting for IPN webhook arrival.
     - Rich Anima-style UI: breadcrumbs, status badge, transaction ID, paid amount, response code, and direct booking actions.
   - Developed test suites:
-    - `apps/api/payments/verify_vnpay_spec.py`: Pure Python standalone test suite verifying parameter sorting, signature computation, tampering rejection, and IPN business logic invariants (97, 01, 04, 02, 00, failure preservation).
+    - `scripts/verify_vnpay_spec.py`: Pure Python standalone test suite verifying parameter sorting, signature computation, tampering rejection, and IPN business logic invariants (97, 01, 04, 02, 00, failure preservation).
     - `apps/api/tests/test_vnpay_integration.py`: Django test suite covering VNPay integration.
 
 - VietQR Bank Transfer Integration (Section A & B - `apps/api/payments/` & `apps/public-site/`):
@@ -360,7 +360,7 @@
     - `/booking/[id]/success`: celebratory confirmation screen with booking reference and links.
     - `/account/bookings`: booking history dashboard with distinctive amber `pending_payment` badge (VietQR awaiting) and direct payment links.
   - Verification & Testing:
-    - `apps/api/payments/verify_vietqr_spec.py`: 100% green test suite verifying EMVCo CRC16, QuickLink URL, HMAC-SHA256 security, idempotency, and expiration sweep.
+    - `scripts/verify_vietqr_spec.py`: 100% green test suite verifying EMVCo CRC16, QuickLink URL, HMAC-SHA256 security, idempotency, and expiration sweep.
     - `apps/api/tests/test_vietqr_integration.py`: Django integration test suite.
     - TypeScript compilation (`tsc --noEmit`): 0 errors.
     - Ruff check & MyPy check: 0 errors.
@@ -503,7 +503,7 @@
   - **Bảo mật AI & Ngăn chặn Prompt Injection (Tiêu chí EV-19 đến EV-22):**
     - Cập nhật `apps/api/assistant/services/generator.py` với các lớp phòng thủ chống jailbreak, rò rỉ system prompt, lệnh giả mạo admin/giảm giá.
     - Bổ sung 4 bài test chuyên biệt trong `apps/api/tests/test_assistant_rag.py`.
-    - Kịch bản kiểm thử độc lập `apps/api/assistant/verify_prompt_injection_spec.py` đạt **100% (4/4 test passed)**.
+    - Kịch bản kiểm thử độc lập `scripts/verify_prompt_injection_spec.py` đạt **100% (4/4 test passed)**.
   - **Google Analytics 4 & Quyền riêng tư (Item 43):**
     - `apps/public-site/src/components/shared/google-analytics.tsx`: Tích hợp GA4 script qua `next/script` với `strategy="afterInteractive"`.
     - Tôn trọng Do Not Track (`navigator.doNotTrack === "1"`) và cơ chế opt-out qua `localStorage.getItem('star_analytics_optout')`.
@@ -526,7 +526,7 @@
 - CI Pipeline & PR Build Stabilization:
   - Khắc phục lỗi Mypy typecheck trong `apps/api/core/alerts.py` (`set_level` Literal type casting và `payload` dictionary type annotation).
   - Chuẩn hóa format toàn bộ mã nguồn backend bằng Ruff (`ruff format .`), đảm bảo kiểm tra `ruff format --check .` và `ruff check .` đạt 100% GREEN không có vi phạm.
-  - Triệt tiêu 4 cảnh báo bảo mật CodeQL (Clear-text logging of sensitive information) trong `apps/api/assistant/verify_prompt_injection_spec.py` bằng cách loại bỏ việc in dữ liệu nhạy cảm và thông tin PII khách hàng ra stdout.
+  - Triệt tiêu 4 cảnh báo bảo mật CodeQL (Clear-text logging of sensitive information) trong `scripts/verify_prompt_injection_spec.py` bằng cách loại bỏ việc in dữ liệu nhạy cảm và thông tin PII khách hàng ra stdout.
   - Khởi tạo migration ban đầu `0001_initial.py` cho hai app `accommodations` và `restaurants`, giải quyết triệt để lỗi dependency graph `NodeNotFoundError: ('accommodations', '__first__')` trong bước `python manage.py migrate` của CI.
   - Bổ sung giá trị môi trường dự phòng an toàn cho `ODOO_WEBHOOK_SECRET`, `ODOO_INBOUND_API_KEY`, `VNPAY_TMN_CODE`, `VNPAY_HASH_SECRET` khi chạy test và khai báo tường minh trong `ci.yml`, đảm bảo các bài test xác thực chữ ký số HMAC và IPN thanh toán hoạt động chính xác 100%.
   - Bổ sung trường 'item_type' và 'partner_name' vào payload phản hồi của `ReferralTrackView` (`/api/v1/referrals/track/`), đảm bảo hợp đồng dữ liệu chuẩn với frontend và giúp 100% bộ kiểm thử `test_referrals.py` đạt GREEN.

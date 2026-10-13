@@ -782,14 +782,14 @@ Hệ thống cung cấp 3 endpoint chuẩn hóa phục vụ đa cổng thanh to�
 
 Nhằm đảm bảo 100% tuân thủ các chuẩn giao thức quốc tế và quốc gia (VNPay 2.1.0 & NAPAS 247 EMVCo), hệ thống cung cấp 2 bộ kiểm thử độc lập không phụ thuộc database:
 
-1. **Kiểm thử đặc tả VNPay (`python apps/api/payments/verify_vnpay_spec.py`):**
+1. **Kiểm thử đặc tả VNPay (`python scripts/verify_vnpay_spec.py`):**
    - Sắp xếp thứ tự alphabetic chuẩn xác các tham số URL.
    - Định dạng chuẩn thời gian UTC+7 (`vnp_CreateDate`, `vnp_ExpireDate` = +15m).
    - Mã hóa chuẩn `quote_plus` và tạo chữ ký HMAC-SHA512.
    - Xác minh toàn bộ mã phản hồi IPN: `97` (Invalid Checksum), `01` (Order Not Found), `04` (Invalid Amount), `02` (Order Already Confirmed), `00` (Payment Success & Outbox dispatch).
    - Bảo toàn trạng thái `pending_payment` cho booking khi giao dịch thanh toán thất bại để khách có thể thử lại.
 
-2. **Kiểm thử đặc tả VietQR & EMVCo (`python apps/api/payments/verify_vietqr_spec.py`):**
+2. **Kiểm thử đặc tả VietQR & EMVCo (`python scripts/verify_vietqr_spec.py`):**
    - Thuật toán CRC16-CCITT (đa thức 0x1021, giá trị khởi tạo 0xFFFF, chuẩn EMVCo).
    - Định dạng chuỗi payload NAPAS 247 (Tag 00, 01, 38, 53, 54, 58, 62, 63).
    - Sinh URL ảnh QuickLink (`img.vietqr.io`).

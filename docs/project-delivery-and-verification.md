@@ -114,7 +114,7 @@ Mọi Sub-Agent khi thực thi các hạng mục trong dự án BẮT BUỘC tu�
     - Bộ sinh URL ảnh QuickLink (`img.vietqr.io`).
     - Webhook nội bộ nhận xác nhận từ Odoo ERP (`POST /api/v1/payments/<id>/vietqr-confirm/`) bảo vệ bởi chữ ký HMAC-SHA256 (`X-Signature-SHA256`).
   - Tác vụ nền Celery `payments.tasks.sweep_expired_payments` chạy định kỳ mỗi 5 phút quét dọn giao dịch quá hạn.
-  - Bộ kiểm thử đặc tả độc lập: `apps/api/payments/verify_vnpay_spec.py` và `apps/api/payments/verify_vietqr_spec.py` (100% green).
+  - Bộ kiểm thử đặc tả độc lập: `scripts/verify_vnpay_spec.py` và `scripts/verify_vietqr_spec.py` (100% green).
   - Frontend Next.js: Trang thanh toán tương tác `/booking/[id]/payment` (bộ chọn cổng, countdown timer, auto-polling mỗi 5s), màn hình chúc mừng `/booking/[id]/success`, trang callback `/payment/return` (polling backend mỗi 3s), và trang theo dõi lịch sử `/account/bookings`.
 
 ### Phân hệ 11 — Tri Thức Di Sản Lịch Sử RAG & AI Concierge (Phase 11: Authentic Vietnam Heritage & RAG Grounding)
@@ -179,10 +179,10 @@ Mọi Sub-Agent khi thực thi các hạng mục trong dự án BẮT BUỘC tu�
 ## 3. Báo Cáo Kiểm Định Môi Trường & Kết Quả Thẩm Định (Validation Report)
 
 ### 3.1. Các Hạng Mục Đã Kiểm Định Thành Công Trong Toàn Bộ Dự Án (Executed Successfully)
-- **Kiểm định Đặc tả Thanh toán VNPay:** `python apps/api/payments/verify_vnpay_spec.py` — **100% PASSED** (Xác minh chuẩn URL, sắp xếp tham số, HMAC-SHA512, và 5 mã phản hồi IPN 97, 01, 04, 02, 00).
-- **Kiểm định Đặc tả Thanh toán VietQR:** `python apps/api/payments/verify_vietqr_spec.py` — **100% PASSED** (Xác minh EMVCo CRC16, QuickLink URL, HMAC-SHA256, Idempotency và Quét quá hạn).
-- **Kiểm định RAG Cẩm Nang Du Lịch Thực Dụng:** `python apps/api/assistant/verify_guide_rag_spec.py` — **100% PASSED** (Xác minh 7 chuyên mục cẩm nang trả về đúng chunks tri thức và link thẻ).
-- **Kiểm định Phòng Vệ Prompt Injection:** `python apps/api/assistant/verify_prompt_injection_spec.py` — **100% PASSED** (4/4 kịch bản injection & jailbreak bị chặn an toàn).
+- **Kiểm định Đặc tả Thanh toán VNPay:** `python scripts/verify_vnpay_spec.py` — **100% PASSED** (Xác minh chuẩn URL, sắp xếp tham số, HMAC-SHA512, và 5 mã phản hồi IPN 97, 01, 04, 02, 00).
+- **Kiểm định Đặc tả Thanh toán VietQR:** `python scripts/verify_vietqr_spec.py` — **100% PASSED** (Xác minh EMVCo CRC16, QuickLink URL, HMAC-SHA256, Idempotency và Quét quá hạn).
+- **Kiểm định RAG Cẩm Nang Du Lịch Thực Dụng:** `python scripts/verify_guide_rag_spec.py` — **100% PASSED** (Xác minh 7 chuyên mục cẩm nang trả về đúng chunks tri thức và link thẻ).
+- **Kiểm định Phòng Vệ Prompt Injection:** `python scripts/verify_prompt_injection_spec.py` — **100% PASSED** (4/4 kịch bản injection & jailbreak bị chặn an toàn).
 - **Bộ Kiểm Thử Tự Động Backend Pytest:** `docker compose exec backend pytest` — **10 passed in 7.31s (100% green)**.
 - **Phân Tích Cú Pháp Tĩnh & Kiểu Dữ Liệu TypeScript:** `npx tsc --noEmit` trên `apps/public-site` và `packages/contracts` — **0 errors (Exit code 0)**.
 - **Rà Soát An Ninh & Lỗ Hổng CodeQL:** Đã xử lý triệt để các cảnh báo DOM XSS trên giao diện AI Chat, xác thực an toàn toàn bộ dữ liệu đầu vào và các liên kết sinh ra.
@@ -221,10 +221,10 @@ docker compose exec backend python manage.py seed_demo
 docker compose exec backend pytest
 
 # Chạy kiểm thử đặc tả thanh toán VNPay độc lập
-python apps/api/payments/verify_vnpay_spec.py
+python scripts/verify_vnpay_spec.py
 
 # Chạy kiểm thử đặc tả thanh toán VietQR độc lập
-python apps/api/payments/verify_vietqr_spec.py
+python scripts/verify_vietqr_spec.py
 
 # Kiểm tra kiểu dữ liệu TypeScript frontend
 cd apps/public-site && npm run typecheck
