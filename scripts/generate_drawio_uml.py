@@ -9,6 +9,7 @@ Generates:
 5. .vscode settings to bind .drawio to graphical Draw.io extension
 """
 
+import html
 import xml.etree.ElementTree as ET
 from xml.dom import minidom
 from pathlib import Path
@@ -570,7 +571,7 @@ PAGE_BUILDERS = [
 
 
 def generate_interactive_html(xml_content: str) -> str:
-    escaped_xml = xml_content.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+    escaped_xml = html.escape(xml_content, quote=False)
     return f"""<!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -693,7 +694,7 @@ def generate_interactive_html(xml_content: str) -> str:
         const iframe = document.getElementById('drawio-iframe');
         const loading = document.getElementById('loading-overlay');
         const xmlTextarea = document.getElementById('raw-xml-data');
-        const xmlContent = xmlTextarea.value.replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+        const xmlContent = xmlTextarea.value;
 
         window.addEventListener('message', function(evt) {{
             if (!evt.data || typeof evt.data !== 'string') return;
