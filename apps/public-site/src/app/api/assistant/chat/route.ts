@@ -8,6 +8,7 @@ export async function POST(request: Request) {
     const payload = await request.json();
     const userMessage = payload?.message || "";
     const locale = payload?.locale === "en" ? "en" : "vi";
+    const history = Array.isArray(payload?.history) ? payload.history : [];
 
     // Attempt backend fetch with 2s timeout
     try {
@@ -27,7 +28,7 @@ export async function POST(request: Request) {
       if (backendRes.ok) {
         const data = await backendRes.json();
         // Enrich backend response if stories/destinations are not yet included
-        const localKnowledge = queryAssistantKnowledge(userMessage, locale);
+        const localKnowledge = queryAssistantKnowledge(userMessage, locale, history);
         const contactRequired =
           Boolean(data.contact_required) ||
           Boolean(localKnowledge.contactRequired) ||
@@ -39,8 +40,8 @@ export async function POST(request: Request) {
           recommended_tours: contactRequired
             ? []
             : (data.recommended_tours?.length ? data.recommended_tours : localKnowledge.recommended_tours),
-          recommended_accommodations: data.recommended_accommodations || [],
-          recommended_restaurants: data.recommended_restaurants || [],
+          recommended_accommodations: data.recommended_accommodations || localKnowledge.recommended_accommodations || [],
+          recommended_restaurants: data.recommended_restaurants || localKnowledge.recommended_restaurants || [],
           recommended_stories: contactRequired ? [] : localKnowledge.recommended_stories,
           recommended_destinations: contactRequired ? [] : localKnowledge.recommended_destinations,
           recommended_guides: data.recommended_guides?.length ? data.recommended_guides : (localKnowledge.recommended_guides || []),
@@ -53,7 +54,7 @@ export async function POST(request: Request) {
     }
 
     // High-performance intelligent concierge response from centralized seed repository
-    const localData = queryAssistantKnowledge(userMessage, locale);
+    const localData = queryAssistantKnowledge(userMessage, locale, history);
     return NextResponse.json(localData);
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : "Assistant error";

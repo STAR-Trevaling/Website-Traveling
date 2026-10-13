@@ -38,6 +38,23 @@ DESTINATION_KEYWORDS = {
     "phu-yen": ["phú yên", "gành đá đĩa", "mũi điện", "đại lãnh", "vũng rô", "đầm ô loan"],
     "pu-luong": ["pù luông", "mai châu", "bản đôn", "bản lác", "cọn nước"],
     "yen-tu": ["yên tử", "trúc lâm", "chùa đồng", "trần nhân tông"],
+    "ha-noi": [
+        "hà nội",
+        "ha noi",
+        "hanoi",
+        "hn",
+        "thủ đô",
+        "thăng long",
+        "hồ gươm",
+        "ho guom",
+        "phố cổ",
+        "pho co",
+        "hồ tây",
+        "ho tay",
+        "tràng tiền",
+        "metropole",
+        "capella",
+    ],
 }
 
 REGION_KEYWORDS = {
