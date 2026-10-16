@@ -597,7 +597,7 @@ def generate_response(
                 "[ACCOMMODATION_CARD: topas-ecolodge-sapa]"
             )
             return reply, []
-        if "hà nội" in q_norm or "ha noi" in q_norm:
+        if any(k in q_norm for k in ["hà nội", "ha noi", "hanoi", "hn", "thủ đô", "thang long", "ho guom"]):
             reply = (
                 "Dạ tại **Hà Nội**, hai kiệt tác lưu trú sang trọng bậc nhất là khách sạn di sản **Sofitel Legend Metropole Hanoi** (thành lập từ năm 1901) "
                 "và khách sạn boutique nghệ thuật Opera **Capella Hanoi**.\n\n"
@@ -715,6 +715,18 @@ def generate_response(
             "• **Hạ Long:** Hải sản tươi sống Cua Vàng Bãi Cháy\n"
             "• **Huế:** Yến tiệc Hoàng gia Cung đình Ngự Uyển\n\n"
             "Quý khách chỉ cần nhắn tên khu vực hoặc gu thưởng thức (Michelin, hải sản tươi sống, cơm truyền thống, ven sông...), em sẽ gợi ý chính xác ngay ạ!"
+        )
+        return reply, []
+
+    # Standalone cross-entity fallback for destinations without isolated tour packages (e.g. Hanoi)
+    if any(k in q_norm for k in ["hà nội", "ha noi", "hanoi", "hn", "thủ đô", "thang long"]):
+        reply = (
+            "Dạ tại **Thủ Đô Hà Nội**, STAR Travels tự hào mang đến bộ sưu tập nghỉ dưỡng di sản 5 sao và tinh hoa ẩm thực Michelin trứ danh:\n\n"
+            "• **Khách Sạn & Resort Di Sản 5 Sao:**\n"
+            "[ACCOMMODATION_CARD: sofitel-legend-metropole-hanoi] [ACCOMMODATION_CARD: capella-hanoi]\n\n"
+            "• **Nhà Hàng & Ẩm Thực Tinh Tuyển Michelin:**\n"
+            "[RESTAURANT_CARD: gia-restaurant-hanoi] [RESTAURANT_CARD: tam-vi-restaurant-hanoi]\n\n"
+            "Mời Quý khách xem trực tiếp thông tin thẻ đối tác bên dưới và khám phá các liên kết hữu ích nhé ạ!"
         )
         return reply, []
 

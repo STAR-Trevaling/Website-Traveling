@@ -1,8 +1,10 @@
 import { VIETNAM_TOURS, TourItem } from "@/data/seed/tours";
 import { VIETNAM_STORIES, StoryItem } from "@/data/seed/stories";
 import { ALL_VIETNAM_DESTINATIONS } from "@/data/seed/destinations";
+import { VIETNAM_ACCOMMODATIONS } from "@/data/seed/accommodations";
+import { VIETNAM_RESTAURANTS } from "@/data/seed/restaurants";
 import { GUIDE_CATEGORIES } from "@/data/seed/guide";
-import type { Destination } from "@/lib/types";
+import type { Destination, Accommodation, Restaurant } from "@/lib/types";
 
 export interface TourCardData {
   slug: string;
@@ -40,11 +42,21 @@ export interface GuideCardData {
   iconName?: string;
 }
 
+export interface HistoryMessage {
+  role: "user" | "assistant" | string;
+  content?: string;
+  text?: string;
+  assistantContent?: string;
+  userText?: string;
+}
+
 export interface AssistantResponse {
   message: string;
   recommended_tours: TourCardData[];
   recommended_stories: StoryCardData[];
   recommended_destinations: DestinationCardData[];
+  recommended_accommodations?: Accommodation[];
+  recommended_restaurants?: Restaurant[];
   recommended_guides?: GuideCardData[];
   contactRequired?: boolean;
   lead_captured?: boolean;
@@ -106,9 +118,205 @@ export function normalizeText(str: string): string {
     .trim();
 }
 
-export function queryAssistantKnowledge(message: string, locale: "vi" | "en" = "vi"): AssistantResponse {
+// ─── 1. Fuzzy Matching & Abbreviation Resolution ──────────────────────
+export const LOCATION_ABBREVIATIONS: Record<string, string> = {
+  hn: "ha noi",
+  hnoi: "ha noi",
+  hanoi: "ha noi",
+  thudo: "ha noi",
+  "thu do": "ha noi",
+  thanglong: "ha noi",
+  "thang long": "ha noi",
+  "ho guom": "ha noi",
+  hoguom: "ha noi",
+  "pho co": "ha noi",
+  "ho tay": "ha noi",
+  hotay: "ha noi",
+
+  dn: "da nang",
+  danang: "da nang",
+  "ba na": "da nang",
+  bana: "da nang",
+  "cau vang": "da nang",
+  "son tra": "da nang",
+  sontra: "da nang",
+
+  sg: "ho chi minh",
+  saigon: "ho chi minh",
+  "sai gon": "ho chi minh",
+  hcm: "ho chi minh",
+  tphcm: "ho chi minh",
+  "tp hcm": "ho chi minh",
+
+  hl: "ha long",
+  halong: "ha long",
+  "vinh ha long": "ha long",
+  "lan ha": "ha long",
+  lanha: "ha long",
+
+  sp: "sa pa",
+  sapa: "sa pa",
+  safpa: "sa pa",
+  fansipan: "sa pa",
+  fansipang: "sa pa",
+
+  ha: "hoi an",
+  hoian: "hoi an",
+  "chua cau": "hoi an",
+
+  pq: "phu quoc",
+  phuquoc: "phu quoc",
+  "dao ngoc": "phu quoc",
+  "bai khem": "phu quoc",
+
+  dl: "da lat",
+  dalat: "da lat",
+  "ngan hoa": "da lat",
+  "tuyen lam": "da lat",
+
+  nb: "ninh binh",
+  ninhbinh: "ninh binh",
+  "trang an": "ninh binh",
+  "tam coc": "ninh binh",
+
+  hg: "ha giang",
+  hagiang: "ha giang",
+  "ma pi leng": "ha giang",
+  mapileng: "ha giang",
+  "nho que": "ha giang",
+
+  nt: "nha trang",
+  nhatrang: "nha trang",
+  "ninh van": "nha trang",
+  ninhvan: "nha trang",
+
+  pn: "phong nha",
+  phongnha: "phong nha",
+  qb: "phong nha",
+  "quang binh": "phong nha",
+  quangbinh: "phong nha",
+  "son doong": "phong nha",
+
+  cd: "con dao",
+  condao: "con dao",
+  "hang duong": "con dao",
+
+  ct: "can tho",
+  cantho: "can tho",
+  "cai rang": "can tho",
+  cairang: "can tho",
+
+  mn: "mui ne",
+  muine: "mui ne",
+  "phan thiet": "mui ne",
+  phanthiet: "mui ne",
+
+  hue: "hue",
+  "co do": "hue",
+  "song huong": "hue",
+  songhuong: "hue",
+
+  cb: "cao bang",
+  caobang: "cao bang",
+  "ban gioc": "cao bang",
+  bangioc: "cao bang",
+};
+
+export function levenshteinDistance(s1: string, s2: string): number {
+  if (s1 === s2) return 0;
+  if (s1.length === 0) return s2.length;
+  if (s2.length === 0) return s1.length;
+  const v0 = new Int32Array(s2.length + 1);
+  const v1 = new Int32Array(s2.length + 1);
+  for (let i = 0; i <= s2.length; i++) v0[i] = i;
+  for (let i = 0; i < s1.length; i++) {
+    v1[0] = i + 1;
+    for (let j = 0; j < s2.length; j++) {
+      const cost = s1[i] === s2[j] ? 0 : 1;
+      v1[j + 1] = Math.min(v1[j] + 1, v0[j + 1] + 1, v0[j] + cost);
+    }
+    for (let j = 0; j <= s2.length; j++) v0[j] = v1[j];
+  }
+  return v1[s2.length];
+}
+
+export function expandQueryWithFuzzyAndAbbreviations(rawQuery: string): string {
+  const norm = normalizeText(rawQuery);
+  if (!norm) return "";
+
+  // 1. Direct match on abbreviation/alias dictionary
+  if (LOCATION_ABBREVIATIONS[norm]) {
+    return LOCATION_ABBREVIATIONS[norm];
+  }
+
+  // 2. Token-level abbreviation and typo resolution
+  const words = norm.split(/\s+/).filter(Boolean);
+  const expandedWords = words.map((w) => {
+    if (LOCATION_ABBREVIATIONS[w]) {
+      return LOCATION_ABBREVIATIONS[w];
+    }
+    // Check fuzzy match for typos (e.g. "safpa" -> "sa pa", "hnoi" -> "ha noi")
+    if (w.length >= 4) {
+      for (const [abbrKey, target] of Object.entries(LOCATION_ABBREVIATIONS)) {
+        if (abbrKey.length >= 4 && levenshteinDistance(w, abbrKey) <= 1) {
+          return target;
+        }
+      }
+    }
+    return w;
+  });
+
+  return expandedWords.join(" ");
+}
+
+// ─── 2. Context & Conversation Memory ─────────────────────────────────
+export function detectPreviousIntent(history?: HistoryMessage[]): "accommodation" | "restaurant" | "tour" | null {
+  if (!history || history.length === 0) return null;
+  for (let i = history.length - 1; i >= 0; i--) {
+    const msg = history[i];
+    if (msg.role === "assistant") {
+      const raw = msg.assistantContent || msg.content || msg.text || "";
+      const text = normalizeText(raw);
+      if (
+        text.includes("khach san & resort tai khu vuc nao") ||
+        text.includes("khach san & resort") ||
+        text.includes("hotels & resorts") ||
+        text.includes("di san dang cap tai") ||
+        text.includes("nhan ten khu vuc") ||
+        raw.includes("[ACCOMMODATION_CARD:")
+      ) {
+        return "accommodation";
+      }
+      if (
+        text.includes("am thuc tai khu vuc nao") ||
+        text.includes("diem hen am thuc") ||
+        text.includes("michelin") ||
+        raw.includes("[RESTAURANT_CARD:")
+      ) {
+        return "restaurant";
+      }
+      if (
+        text.includes("danh muc tour") ||
+        text.includes("tour du lich") ||
+        text.includes("hanh trinh phu hop")
+      ) {
+        return "tour";
+      }
+      break;
+    }
+  }
+  return null;
+}
+
+export function queryAssistantKnowledge(
+  message: string,
+  locale: "vi" | "en" = "vi",
+  history?: HistoryMessage[]
+): AssistantResponse {
   const isEn = locale === "en";
-  const q = normalizeText(message);
+  const qRaw = normalizeText(message);
+  const q = expandQueryWithFuzzyAndAbbreviations(message);
+  const previousIntent = detectPreviousIntent(history);
 
   // Helper finders
   const findTour = (slug: string) => VIETNAM_TOURS.find((t) => t.slug === slug || t.aliases?.includes(slug));
@@ -691,7 +899,8 @@ export function queryAssistantKnowledge(message: string, locale: "vi" | "en" = "
     q.includes("ecolodge") ||
     q.includes("homestay") ||
     q.includes("dat phong") ||
-    q.includes("cho o");
+    q.includes("cho o") ||
+    (previousIntent === "accommodation" && Boolean(q));
 
   if (isAccQuery) {
     // Check specific region
@@ -797,7 +1006,8 @@ export function queryAssistantKnowledge(message: string, locale: "vi" | "en" = "
     q.includes("restaurant") ||
     q.includes("michelin") ||
     q.includes("dat ban") ||
-    q.includes("mon ngon");
+    q.includes("mon ngon") ||
+    (previousIntent === "restaurant" && Boolean(q));
 
   if (isResQuery) {
     if (q.includes("ha noi") || q.includes("hanoi")) {
@@ -1289,11 +1499,53 @@ export function queryAssistantKnowledge(message: string, locale: "vi" | "en" = "
       slug: "mui-ne",
       keywords: ["mui ne", "muine", "phan thiet", "phanthiet", "doi cat bay", "bau trang"],
     },
+    {
+      slug: "ha-noi",
+      keywords: [
+        "ha noi",
+        "hanoi",
+        "hn",
+        "thu do",
+        "thang long",
+        "ho guom",
+        "pho co",
+        "ho tay",
+        "trang tien",
+        "dong da",
+        "ba dinh",
+        "metropole",
+        "capella",
+      ],
+      tourSlug: "tour-ha-long-cruise-2n1d",
+      storySlug: "cam-nang-chinh-phuc-ma-pi-leng",
+    },
+    {
+      slug: "nha-trang",
+      keywords: ["nha trang", "nhatrang", "nt", "ninh van", "hon mun", "ponagar", "vinpearl", "bai dai"],
+    },
+    {
+      slug: "ho-chi-minh",
+      keywords: ["ho chi minh", "tp hcm", "tphcm", "sai gon", "saigon", "sg", "dinh doc lap", "ben thanh"],
+      tourSlug: "tour-mekong-delta-floating-market",
+    },
+    {
+      slug: "cao-bang",
+      keywords: ["cao bang", "caobang", "cb", "ban gioc", "bangioc", "nguom ngao", "pac bo", "suoi le nin"],
+    },
   ];
 
-  // Match against canonical entities
+  // Match against canonical entities with direct, token and fuzzy criteria
   const matchedEntities = DESTINATION_ENTITIES.filter((entity) =>
-    entity.keywords.some((kw) => q.includes(kw))
+    entity.keywords.some((kw) => {
+      if (q.includes(kw) || kw.includes(q)) return true;
+      const kwTokens = kw.split(/\s+/);
+      const qTokens = q.split(/\s+/);
+      if (qTokens.some((tok) => tok === kw || LOCATION_ABBREVIATIONS[tok] === kw)) return true;
+      return qTokens.some((tok) => {
+        if (tok.length < 4) return false;
+        return levenshteinDistance(tok, kw) <= (kw.length >= 6 ? 2 : 1);
+      });
+    })
   );
 
   const matchedDests = matchedEntities
@@ -1328,25 +1580,72 @@ export function queryAssistantKnowledge(message: string, locale: "vi" | "en" = "
     }
   }
 
-  const hasRelevantMatch = matchedTours.length > 0 || matchedStories.length > 0 || matchedDests.length > 0;
+  // Cross-entity matching: find accommodations & restaurants matching destination slug or keywords
+  const matchedSlugs = new Set(matchedEntities.map((e) => e.slug));
+  const matchedAccs = VIETNAM_ACCOMMODATIONS.filter((acc) =>
+    matchedSlugs.has(acc.destination_slug || "") ||
+    matchedEntities.some((e) => e.keywords.some((kw) => normalizeText(acc.name).includes(kw) || normalizeText(acc.address).includes(kw)))
+  );
+  const matchedRess = VIETNAM_RESTAURANTS.filter((res) =>
+    matchedSlugs.has(res.destination_slug || "") ||
+    matchedEntities.some((e) => e.keywords.some((kw) => normalizeText(res.name).includes(kw) || normalizeText(res.address).includes(kw)))
+  );
 
-  // Case A: Tìm thấy dữ liệu liên quan trong kho kiến thức -> Trả về link, tour, story cụ thể
+  const hasRelevantMatch =
+    matchedTours.length > 0 ||
+    matchedStories.length > 0 ||
+    matchedDests.length > 0 ||
+    matchedAccs.length > 0 ||
+    matchedRess.length > 0;
+
+  // Case A: Tìm thấy dữ liệu liên quan trong kho kiến thức -> Trả về link, tour, story, khách sạn, nhà hàng cụ thể
   if (hasRelevantMatch) {
     const finalTours = matchedTours.slice(0, 3).map((t) => mapTourToCard(t, isEn));
     const finalStories = matchedStories.slice(0, 2).map(mapStoryToCard);
     const finalDests = matchedDests.slice(0, 2).map((d) => mapDestinationToCard(d, isEn));
 
-    const textVi =
-      "Dạ STAR Travels đã tra cứu trong kho kiến thức và tìm thấy các thông tin, hành trình phù hợp nhất với yêu cầu của Quý khách. Mời Quý khách xem trực tiếp qua các liên kết bên dưới:";
+    const accCardsText = matchedAccs.slice(0, 2).map((a) => `[ACCOMMODATION_CARD: ${a.slug}]`).join(" ");
+    const resCardsText = matchedRess.slice(0, 2).map((r) => `[RESTAURANT_CARD: ${r.slug}]`).join(" ");
 
-    const textEn =
-      "STAR Travels searched our knowledge base and found relevant itineraries and travel guides matching your inquiry. Feel free to explore the direct links below:";
+    let textVi = "";
+    let textEn = "";
+
+    if (finalTours.length > 0) {
+      textVi =
+        "Dạ STAR Travels đã tra cứu trong kho kiến thức và tìm thấy các thông tin, hành trình phù hợp nhất với yêu cầu của Quý khách. Mời Quý khách xem trực tiếp qua các liên kết bên dưới:";
+      textEn =
+        "STAR Travels searched our knowledge base and found relevant itineraries and travel guides matching your inquiry. Feel free to explore the direct links below:";
+      if (accCardsText) {
+        textVi += `\n\n• **Gợi ý lưu trú 5 sao:**\n${accCardsText}`;
+        textEn += `\n\n• **Featured 5-star Stays:**\n${accCardsText}`;
+      }
+      if (resCardsText) {
+        textVi += `\n\n• **Gợi ý ẩm thực tinh tuyển:**\n${resCardsText}`;
+        textEn += `\n\n• **Curated Gastronomy:**\n${resCardsText}`;
+      }
+    } else {
+      // Cross-entity case: No packaged tours, but destination + hotels + restaurants exist (e.g. Hanoi)
+      const destName = finalDests[0]?.name || "khu vực này";
+      const destNameEn = finalDests[0]?.name || "this destination";
+      textVi =
+        `Dạ tại **${destName}**, STAR Travels tuyển chọn sẵn các tuyệt tác khách sạn di sản 5 sao, nhà hàng ẩm thực Michelin đỉnh cao và cẩm nang khám phá dành riêng cho Quý khách:\n\n` +
+        (accCardsText ? `• **Khách Sạn & Resort Di Sản 5 Sao:**\n${accCardsText}\n\n` : "") +
+        (resCardsText ? `• **Nhà Hàng & Ẩm Thực Tinh Hoa Michelin:**\n${resCardsText}\n\n` : "") +
+        `Mời Quý khách xem trực tiếp thông tin thẻ đối tác bên dưới và khám phá các liên kết hữu ích nhé ạ!`;
+      textEn =
+        `In **${destNameEn}**, STAR Travels features curated 5-star heritage retreats, Michelin gastronomy, and bespoke concierge guides:\n\n` +
+        (accCardsText ? `• **5-Star Heritage Stays:**\n${accCardsText}\n\n` : "") +
+        (resCardsText ? `• **Michelin Gastronomy:**\n${resCardsText}\n\n` : "") +
+        `Feel free to explore our curated partner cards and links below!`;
+    }
 
     return {
       message: isEn ? textEn : textVi,
       recommended_tours: finalTours,
       recommended_stories: finalStories,
       recommended_destinations: finalDests,
+      recommended_accommodations: matchedAccs.slice(0, 2),
+      recommended_restaurants: matchedRess.slice(0, 2),
       contactRequired: false,
     };
   }

@@ -292,6 +292,11 @@ export function AITripAssistant() {
     setInputMessage("");
     setIsLoading(true);
 
+    const historyPayload = messages.slice(-6).map((m) => ({
+      role: m.role,
+      content: m.role === "assistant" ? m.assistantContent : m.userText,
+    }));
+
     try {
       const response = await fetch("/api/assistant/chat", {
         method: "POST",
@@ -300,6 +305,7 @@ export function AITripAssistant() {
           session_token: sessionToken,
           message: text,
           locale: isEnglish ? "en" : "vi",
+          history: historyPayload,
         }),
       });
 
@@ -346,7 +352,7 @@ export function AITripAssistant() {
       setMessages((prev) => [...prev, assistantMsg]);
     } catch {
       // Offline fallback: intelligent local concierge engine guarantees tour & article links
-      const localData = queryAssistantKnowledge(text, isEnglish ? "en" : "vi");
+      const localData = queryAssistantKnowledge(text, isEnglish ? "en" : "vi", historyPayload);
 
       const localRaw = localData.message || "";
       const localAccMatches = Array.from(localRaw.matchAll(/\[ACCOMMODATION_CARD:\s*([\w-]+)\]/g)) as RegExpMatchArray[];
