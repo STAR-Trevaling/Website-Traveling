@@ -1,6 +1,4 @@
 import pytest
-from rest_framework.test import APIClient
-
 from assistant.models import (
     AssistantConversation,
     AssistantKnowledgeChunk,
@@ -9,6 +7,7 @@ from assistant.models import (
 from assistant.services.generator import extract_lead_info, generate_response
 from assistant.services.retriever import search_knowledge
 from integrations.models import IntegrationOutbox
+from rest_framework.test import APIClient
 
 
 @pytest.mark.django_db

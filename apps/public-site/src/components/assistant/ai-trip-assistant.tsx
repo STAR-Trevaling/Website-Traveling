@@ -19,6 +19,7 @@ import {
   Utensils,
   Phone,
   Star,
+  Calendar,
 } from "lucide-react";
 import { StarLogo } from "@/components/shared/star-logo";
 import { useLanguage } from "@/lib/i18n/context";
@@ -36,6 +37,32 @@ import { VIETNAM_RESTAURANTS, getRestaurantBySlug } from "@/data/seed/restaurant
 import { publicApi } from "@/lib/api";
 import type { Accommodation, Restaurant } from "@/lib/types";
 
+export interface ProvenanceSource {
+  entity_type: string;
+  entity_id?: string | null;
+  slug: string;
+  title: string;
+  url: string;
+}
+
+export interface ItineraryDayPlan {
+  day: number;
+  title: string;
+  morning: string;
+  afternoon: string;
+  evening: string;
+}
+
+export interface ItineraryPlanData {
+  destination: string;
+  destination_slug?: string;
+  days: number;
+  pace: string;
+  estimated_budget: number;
+  days_plan: ItineraryDayPlan[];
+  disclaimer?: string;
+}
+
 interface ChatMessage {
   id: string;
   role: "user" | "assistant";
@@ -47,6 +74,8 @@ interface ChatMessage {
   accommodations?: Accommodation[];
   restaurants?: Restaurant[];
   guides?: GuideCardData[];
+  sources?: ProvenanceSource[];
+  itineraryPlan?: ItineraryPlanData | null;
   contactRequired?: boolean;
   leadCaptured?: boolean;
 }
@@ -157,6 +186,9 @@ export function AITripAssistant() {
   const [showTooltip, setShowTooltip] = useState(false);
   const [headerEyeOffset, setHeaderEyeOffset] = useState({ x: 0, y: 0 });
   const [isHeaderHovered, setIsHeaderHovered] = useState(false);
+  const [consultationPhone, setConsultationPhone] = useState("");
+  const [consentChecked, setConsentChecked] = useState(false);
+  const [consultationMsgId, setConsultationMsgId] = useState<string | null>(null);
 
   // Dynamic eye tracking for Bé Sao mascot sitting atop the chat drawer
   const handleChatMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -278,7 +310,7 @@ export function AITripAssistant() {
     }
   };
 
-  const handleSendMessage = async (textToSend?: string) => {
+  const handleSendMessage = async (textToSend?: string, confirmedConsent = false) => {
     const text = (textToSend || inputMessage).trim();
     if (!text || isLoading) return;
 
@@ -306,6 +338,7 @@ export function AITripAssistant() {
           message: text,
           locale: isEnglish ? "en" : "vi",
           history: historyPayload,
+          confirmed_consent: confirmedConsent,
         }),
       });
 
@@ -345,6 +378,8 @@ export function AITripAssistant() {
         accommodations: uniqueAccs,
         restaurants: uniqueRess,
         guides: data.recommended_guides || [],
+        itineraryPlan: data.itinerary_plan || null,
+        sources: data.sources || [],
         leadCaptured: data.lead_captured || false,
         contactRequired: Boolean(data.contactRequired),
       };
@@ -385,6 +420,18 @@ export function AITripAssistant() {
     }
   };
 
+  const handleConsultationSubmit = (msgId: string) => {
+    if (!consultationPhone.trim() || !consentChecked) return;
+    const text = isEnglish
+      ? `I would like a private consultation for this itinerary. My phone number is: ${consultationPhone.trim()}`
+      : `Tôi muốn chuyên viên tư vấn chi tiết về lịch trình này. Số điện thoại của tôi là: ${consultationPhone.trim()}`;
+    handleSendMessage(text, true);
+    setConsultationPhone("");
+    setConsentChecked(false);
+    setConsultationMsgId(null);
+  };
+
+
   const quickPrompts = isEnglish
     ? [
         "Hotels & Resorts by Region",
@@ -421,6 +468,7 @@ export function AITripAssistant() {
       {/* ─── CHAT DRAWER / POP-UP ──────────────────────────────────── */}
       {isOpen && (
         <div
+          data-testid="assistant-chat-drawer"
           onMouseMove={handleChatMouseMove}
           className="fixed bottom-4 sm:bottom-6 right-4 sm:right-6 z-50 w-[94vw] sm:w-[440px] h-[650px] max-h-[86vh] rounded-3xl bg-white/95 backdrop-blur-xl border border-slate-200/90 shadow-[0_20px_60px_rgba(0,0,0,0.25)] flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-6 duration-300"
         >
@@ -495,6 +543,114 @@ export function AITripAssistant() {
                     )}
                   </div>
                 </div>
+
+                {/* 🗺️ Interactive Grounded Itinerary Plan Card */}
+                {msg.itineraryPlan && (
+                  <div data-testid="assistant-itinerary-card" className="mt-2.5 w-full rounded-2xl bg-gradient-to-br from-amber-50/70 via-white to-red-50/40 p-3.5 border border-amber-200/90 shadow-sm space-y-3">
+                    <div className="flex items-center justify-between border-b border-amber-100 pb-2.5">
+                      <div className="flex items-center gap-2">
+                        <div className="flex size-7 items-center justify-center rounded-lg bg-amber-500 text-white shadow-2xs">
+                          <Calendar className="size-4" />
+                        </div>
+                        <div>
+                          <h4 className="text-xs font-bold text-slate-900">
+                            {msg.itineraryPlan.destination} • {msg.itineraryPlan.days} {isEnglish ? "Days" : "Ngày"}
+                          </h4>
+                          <span className="text-[10px] text-slate-500">
+                            {isEnglish ? "Pace:" : "Nhịp độ:"} <strong className="text-slate-700 capitalize">{msg.itineraryPlan.pace}</strong>
+                          </span>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <span className="text-[9px] uppercase tracking-wider text-slate-400 block font-semibold">
+                          {isEnglish ? "Ref Budget" : "Dự toán tham khảo"}
+                        </span>
+                        <span className="text-xs font-black text-[#da251d]">
+                          ~{Number(msg.itineraryPlan.estimated_budget).toLocaleString("vi-VN")} đ
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Day timeline */}
+                    <div className="space-y-2">
+                      {msg.itineraryPlan.days_plan.map((dp) => (
+                        <div key={dp.day} className="rounded-xl bg-white p-2.5 border border-slate-200/80 shadow-2xs">
+                          <div className="flex items-center justify-between text-xs font-bold text-slate-800">
+                            <span className="text-[#da251d]">Ngày {dp.day}</span>
+                            <span className="text-slate-700 line-clamp-1 text-[11px] font-semibold">{dp.title}</span>
+                          </div>
+                          <div className="mt-1.5 space-y-1 text-[11px] text-slate-600 border-t border-slate-100 pt-1.5">
+                            <p><span className="font-semibold text-amber-700">Sáng:</span> {dp.morning}</p>
+                            <p><span className="font-semibold text-blue-700">Chiều:</span> {dp.afternoon}</p>
+                            <p><span className="font-semibold text-purple-700">Tối:</span> {dp.evening}</p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Inline Lead Consultation CTA with Consent Checkbox */}
+                    {consultationMsgId === msg.id ? (
+                      <div data-testid="assistant-consultation-form" className="rounded-xl bg-white p-3 border border-red-200 shadow-sm space-y-2">
+                        <h5 className="text-[11px] font-bold text-slate-900">
+                          {isEnglish ? "Request Expert Consultation" : "Gửi Yêu Cầu Tư Vấn Lịch Trình Này"}
+                        </h5>
+                        <input
+                          type="tel"
+                          data-testid="assistant-phone-input"
+                          placeholder={isEnglish ? "Your Phone / WhatsApp" : "Số điện thoại / Zalo của Quý khách"}
+                          value={consultationPhone}
+                          onChange={(e) => setConsultationPhone(e.target.value)}
+                          className="w-full rounded-lg border border-slate-200 px-2.5 py-1.5 text-xs text-slate-800 focus:border-[#da251d] focus:outline-hidden"
+                        />
+                        <label className="flex items-start gap-1.5 cursor-pointer text-[10px] text-slate-600 leading-tight">
+                          <input
+                            type="checkbox"
+                            data-testid="assistant-consent-checkbox"
+                            checked={consentChecked}
+                            onChange={(e) => setConsentChecked(e.target.checked)}
+                            className="mt-0.5 rounded border-slate-300 text-[#da251d] focus:ring-[#da251d]"
+                          />
+                          <span>
+                            {isEnglish
+                              ? "I agree to let STAR Travels contact me for private trip consultation."
+                              : "Tôi đồng ý để chuyên viên STAR Travels liên hệ qua SĐT/Zalo để tư vấn lịch trình này."}
+                          </span>
+                        </label>
+                        <div className="flex items-center justify-end gap-2 pt-1">
+                          <button
+                            type="button"
+                            onClick={() => setConsultationMsgId(null)}
+                            className="px-2 py-1 text-[10px] text-slate-500 hover:text-slate-700 cursor-pointer"
+                          >
+                            {isEnglish ? "Cancel" : "Hủy"}
+                          </button>
+                          <button
+                            type="button"
+                            data-testid="assistant-submit-consultation"
+                            disabled={!consultationPhone.trim() || !consentChecked}
+                            onClick={() => handleConsultationSubmit(msg.id)}
+                            className="rounded-md bg-[#da251d] px-3 py-1 text-[10px] font-bold text-white hover:bg-[#b01b14] disabled:opacity-50 transition shadow-2xs cursor-pointer"
+                          >
+                            {isEnglish ? "Submit Request" : "Xác Nhận Gửi"}
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      <button
+                        type="button"
+                        data-testid="assistant-consultation-btn"
+                        onClick={() => {
+                          setConsultationMsgId(msg.id);
+                          setConsentChecked(false);
+                        }}
+                        className="w-full flex items-center justify-center gap-1.5 rounded-xl bg-gradient-to-r from-[#da251d] to-[#ff4d4f] px-3 py-2 text-xs font-bold text-white hover:opacity-95 transition shadow-sm cursor-pointer"
+                      >
+                        <Sparkles className="size-3.5" />
+                        <span>{isEnglish ? "Request Custom Quote & Booking" : "Nhận Báo Giá & Tinh Chỉnh Riêng"}</span>
+                      </button>
+                    )}
+                  </div>
+                )}
 
                 {/* 🎯 Direct Tour Recommendation Cards */}
                 {msg.tours && msg.tours.length > 0 && (
@@ -798,6 +954,30 @@ export function AITripAssistant() {
                   </div>
                 )}
 
+                {/* 🛡️ Provenance Sources Citations Bar */}
+                {msg.sources && msg.sources.length > 0 && (
+                  <div className="mt-2 w-full rounded-xl bg-slate-50 border border-slate-200/80 p-2.5">
+                    <div className="flex items-center gap-1.5 text-[10px] font-bold text-slate-600 uppercase tracking-wider mb-1.5">
+                      <CheckCircle2 className="size-3 text-emerald-600" />
+                      <span>{isEnglish ? "Verified Sources" : "Nguồn Dữ Liệu Đối Chiếu"}</span>
+                    </div>
+                    <div className="flex flex-wrap gap-1.5">
+                      {msg.sources.map((src, sIdx) => (
+                        <Link
+                          key={`${src.slug}-${sIdx}`}
+                          href={getSafeHref(src.url)}
+                          onClick={() => setIsOpen(false)}
+                          className="inline-flex items-center gap-1 rounded-md bg-white px-2 py-1 text-[10px] font-medium text-slate-700 border border-slate-200 hover:border-[#da251d] hover:text-[#da251d] transition shadow-2xs"
+                        >
+                          <span className="capitalize text-[9px] text-slate-400">[{src.entity_type}]</span>
+                          <span className="truncate max-w-[140px]">{src.title}</span>
+                          <ExternalLink className="size-2.5 opacity-60 shrink-0" />
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
                 {/* Lead Captured Success Banner */}
                 {msg.leadCaptured && (
                   <div className="mt-2.5 flex items-center gap-2 rounded-xl bg-emerald-50 px-3 py-2 text-xs text-emerald-800 border border-emerald-200">
@@ -882,8 +1062,9 @@ export function AITripAssistant() {
               {quickPrompts.map((p, idx) => (
                 <button
                   key={idx}
+                  data-testid="assistant-quick-prompt"
                   onClick={() => handleSendMessage(p)}
-                  className="rounded-full bg-white px-2.5 py-1 text-[11px] font-medium text-slate-700 border border-slate-200/80 hover:border-[#da251d] hover:text-[#da251d] transition"
+                  className="rounded-full bg-white px-2.5 py-1 text-[11px] font-medium text-slate-700 border border-slate-200/80 hover:border-[#da251d] hover:text-[#da251d] transition cursor-pointer"
                 >
                   {p}
                 </button>
@@ -902,6 +1083,7 @@ export function AITripAssistant() {
             >
               <input
                 type="text"
+                data-testid="assistant-chat-input"
                 value={inputMessage}
                 onChange={(e) => setInputMessage(e.target.value)}
                 placeholder={
@@ -913,8 +1095,9 @@ export function AITripAssistant() {
               />
               <button
                 type="submit"
+                data-testid="assistant-chat-send"
                 disabled={isLoading || !inputMessage.trim()}
-                className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-slate-900 text-white hover:bg-[#da251d] disabled:opacity-40 disabled:hover:bg-slate-900 transition"
+                className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-slate-900 text-white hover:bg-[#da251d] disabled:opacity-40 disabled:hover:bg-slate-900 transition cursor-pointer"
               >
                 <Send className="size-4" />
               </button>

@@ -10,10 +10,10 @@ export async function POST(request: Request) {
     const locale = payload?.locale === "en" ? "en" : "vi";
     const history = Array.isArray(payload?.history) ? payload.history : [];
 
-    // Attempt backend fetch with 2s timeout
+    // Attempt backend fetch with 8s timeout to support RAG, planning & synthesis
     try {
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 2000);
+      const timeoutId = setTimeout(() => controller.abort(), 8000);
 
       const backendRes = await fetch(`${BASE_URL}/assistant/conversations/chat/`, {
         method: "POST",
@@ -37,29 +37,44 @@ export async function POST(request: Request) {
 
         return NextResponse.json({
           message: data.message || localKnowledge.message,
-          recommended_tours: contactRequired
-            ? []
-            : (data.recommended_tours?.length ? data.recommended_tours : localKnowledge.recommended_tours),
+          recommended_tours: data.recommended_tours?.length ? data.recommended_tours : (localKnowledge.recommended_tours || []),
           recommended_accommodations: data.recommended_accommodations || localKnowledge.recommended_accommodations || [],
           recommended_restaurants: data.recommended_restaurants || localKnowledge.recommended_restaurants || [],
-          recommended_stories: contactRequired ? [] : localKnowledge.recommended_stories,
-          recommended_destinations: contactRequired ? [] : localKnowledge.recommended_destinations,
+          recommended_stories: localKnowledge.recommended_stories || [],
+          recommended_destinations: localKnowledge.recommended_destinations || [],
           recommended_guides: data.recommended_guides?.length ? data.recommended_guides : (localKnowledge.recommended_guides || []),
-          contactRequired,
+          itinerary_plan: data.itinerary_plan || null,
+          sources: data.sources || [],
+          route: data.route || "knowledge",
+          contactRequired: Boolean(data.contact_required),
           lead_captured: data.lead_captured || false,
+          is_offline_fallback: false,
         });
       }
     } catch {
-      // Backend is offline or timed out; seamlessly fallback to local engine
+      // Backend is offline or timed out; seamlessly fallback to local verified knowledge
     }
 
-    // High-performance intelligent concierge response from centralized seed repository
+    // High-performance intelligent concierge response from centralized verified seed repository
     const localData = queryAssistantKnowledge(userMessage, locale, history);
-    return NextResponse.json(localData);
+    const offlineNotice = locale === "en"
+      ? "\n\n*Notice: Concierge is operating in verified offline reference mode. Real-time availability and exact seasonal rates require direct verification with our advisors.*"
+      : "\n\n*Lưu ý: Hệ thống đang phản hồi từ cẩm nang tham khảo ngoại tuyến. Tình trạng chỗ trống và giá thực tế có thể thay đổi theo thời điểm khởi hành; Quý khách vui lòng kết nối tư vấn viên để có thông tin chính xác nhất.*";
+
+    return NextResponse.json({
+      ...localData,
+      message: (localData.message || "") + offlineNotice,
+      is_offline_fallback: true,
+      contactRequired: true,
+    });
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : "Assistant error";
     return NextResponse.json(
-      queryAssistantKnowledge("", "vi"),
+      {
+        ...queryAssistantKnowledge("", "vi"),
+        is_offline_fallback: true,
+        contactRequired: true,
+      },
       { status: 200 }
     );
   }

@@ -266,6 +266,7 @@ export function InteractiveMotionTrigger({
       {/* ─── 2. THE LIVING STAR CREATURE ENTITY (NO BOX, FREE FLOATING) ─── */}
       <button
         type="button"
+        data-testid="assistant-mascot-trigger"
         onClick={onToggle}
         onMouseDown={() => setIsPressed(true)}
         onMouseUp={() => setIsPressed(false)}

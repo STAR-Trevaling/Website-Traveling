@@ -23,7 +23,7 @@ def extract_lead_info(message: str) -> dict:
 
     # Guess contact name if introduced
     name_match = re.search(
-        r"(mình là|tôi tên|tên tôi là|tôi là|anh|chị)\s+([A-ZĐÀÁẢÃẠ][a-zđàáảãạ]+(?:\s+[A-ZĐÀÁẢÃẠ][a-zđàáảãạ]+)?)",
+        r"(mình là|tôi tên|tên tôi là|tôi là|anh|chị)\s+([A-ZÀ-Ỹ][a-zà-ỹ]+(?:\s+[A-ZÀ-Ỹ][a-zà-ỹ]+)*)",
         message,
     )
     contact_name = name_match.group(2) if name_match else "Khách hàng STAR"
@@ -160,6 +160,7 @@ def generate_response(
     query: str,
     chunks: list[AssistantKnowledgeChunk],
     locale: str = "vi",
+    lead_consent: bool = False,
 ) -> tuple[str, list[str]]:
     """
     Generate an intelligent, grounded response and list of recommended tour slugs.
@@ -254,7 +255,7 @@ def generate_response(
 
     # Grounded synthesis fallback (Runs without external API key)
     if is_en:
-        if lead_info["has_contact"]:
+        if lead_info["has_contact"] and lead_consent:
             reply = (
                 f"Thank you, {lead_info['contact_name']}! We have received your contact number "
                 f"({lead_info['phone_number'] or lead_info['email']}). "
@@ -262,9 +263,16 @@ def generate_response(
             )
             return reply, recommended_tour_slugs[:2]
 
+        if lead_info["has_contact"] and not lead_consent and not chunks:
+            reply = (
+                f"We have noted your contact details ({lead_info['phone_number'] or lead_info['email']}). "
+                f"To connect you with a dedicated travel specialist, please confirm your request for a callback."
+            )
+            return reply, []
+
         if not chunks:
             return (
-                "Currently, our knowledge base and curated catalog do not have pre-packaged itineraries matching your request. "
+                "Currently, our verified STAR Travels knowledge base does not have confirmed records matching your request. "
                 "For customized private itineraries or direct concierge consultation, please reach out via our [Contact Page](/contact) "
                 "or call our 24/7 hotline at +84 (0) 24 3999 8888.",
                 [],
@@ -313,7 +321,7 @@ def generate_response(
         )
 
     # Vietnamese response
-    if lead_info["has_contact"]:
+    if lead_info["has_contact"] and lead_consent:
         reply = (
             f"Dạ cảm ơn Quý khách {lead_info['contact_name']}! STAR Travels đã ghi nhận thông tin liên hệ "
             f"**{lead_info['phone_number'] or lead_info['email']}** (Dự kiến {lead_info['estimated_pax']} khách). "
@@ -321,6 +329,13 @@ def generate_response(
             f"để hoàn thiện lịch trình chi tiết và gửi báo giá ưu đãi nhất cho gia đình mình ạ!"
         )
         return reply, recommended_tour_slugs[:2]
+
+    if lead_info["has_contact"] and not lead_consent and not chunks:
+        reply = (
+            f"Dạ STAR Travels đã nhận được thông tin liên hệ **{lead_info['phone_number'] or lead_info['email']}** của Quý khách. "
+            f"Để chuyên viên tư vấn hỗ trợ chi tiết và bảo mật thông tin cá nhân, Quý khách vui lòng xác nhận đồng ý (ví dụ: 'tư vấn cho tôi' hoặc gửi yêu cầu tư vấn) nhé ạ!"
+        )
+        return reply, []
 
     # Checking practical travel guide inquiry
     guide_chunk = next(

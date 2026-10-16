@@ -1,5 +1,7 @@
 import re
 
+from django.db.models import Q
+
 from assistant.models import AssistantKnowledgeChunk
 
 DESTINATION_KEYWORDS = {
@@ -61,6 +63,84 @@ REGION_KEYWORDS = {
     "north": ["miền bắc", "phía bắc", "bắc bộ", "hà nội", "tây bắc", "đông bắc", "north"],
     "central": ["miền trung", "trung bộ", "duyên hải", "central"],
     "south": ["miền nam", "nam bộ", "sài gòn", "tây nam bộ", "đồng bằng sông cửu long", "south"],
+}
+
+STOP_WORDS = {
+    "tour",
+    "tours",
+    "du",
+    "lịch",
+    "muốn",
+    "đặt",
+    "hỏi",
+    "cho",
+    "của",
+    "với",
+    "các",
+    "những",
+    "được",
+    "không",
+    "mình",
+    "tôi",
+    "bạn",
+    "ngày",
+    "đêm",
+    "người",
+    "khách",
+    "nào",
+    "gì",
+    "sao",
+    "đi",
+    "đến",
+    "tại",
+    "nơi",
+    "ở",
+    "có",
+    "và",
+    "hoặc",
+    "là",
+    "thì",
+    "mà",
+    "hay",
+    "hãy",
+    "em",
+    "anh",
+    "chị",
+    "ơi",
+    "nhé",
+    "ạ",
+    "nam",
+    "bắc",
+    "trung",
+    "đông",
+    "tây",
+    "việt",
+    "đảo",
+    "núi",
+    "sông",
+    "biển",
+    "vịnh",
+    "thành",
+    "phố",
+    "the",
+    "and",
+    "for",
+    "with",
+    "trip",
+    "travel",
+    "about",
+    "what",
+    "where",
+    "when",
+    "how",
+    "can",
+    "you",
+    "are",
+    "have",
+    "from",
+    "please",
+    "want",
+    "like",
 }
 
 
@@ -360,8 +440,58 @@ def search_knowledge(
         ]
     )
 
+    # Build candidate Q filter for DB-level filtering instead of loading all chunks
+    candidates_q = Q()
+    if matched_dest_slugs:
+        dest_filter = (
+            Q(entity_slug__in=matched_dest_slugs)
+            | Q(metadata__destination_slug__in=matched_dest_slugs)
+            | Q(metadata__slug__in=matched_dest_slugs)
+        )
+        for d_slug in matched_dest_slugs:
+            dest_filter |= Q(title__icontains=d_slug.replace("-", " "))
+        candidates_q |= dest_filter
+
+    if matched_regions:
+        candidates_q |= Q(metadata__region__in=matched_regions)
+
+    if is_policy_inquiry:
+        candidates_q |= Q(entity_type=AssistantKnowledgeChunk.EntityType.POLICY) | Q(
+            metadata__category="policy"
+        )
+
+    if is_history_inquiry:
+        candidates_q |= Q(metadata__category="heritage_history")
+
+    if (
+        is_visa_inquiry
+        or is_transport_inquiry
+        or is_safety_inquiry
+        or is_culture_inquiry
+        or is_currency_inquiry
+        or is_festival_inquiry
+        or is_season_inquiry
+    ):
+        candidates_q |= Q(entity_type=AssistantKnowledgeChunk.EntityType.GUIDE)
+
+    # Keyword tokens (words >= 3 chars excluding stopwords, limit to top 8 tokens for DB candidate query)
+    keyword_words = [w for w in words if len(w) >= 3 and w not in STOP_WORDS][:8]
+    if keyword_words:
+        kw_q = Q()
+        for w in keyword_words:
+            kw_q |= Q(title__icontains=w) | Q(entity_slug__icontains=w)
+        candidates_q |= kw_q
+
+    # If no candidate signals matched at all (e.g. empty or non-matching query)
+    if not candidates_q:
+        return []
+
+    # Retrieve candidate chunks from database with an upper bound limit
+    chunks = list(AssistantKnowledgeChunk.objects.filter(candidates_q).distinct()[:100])
+    if not chunks:
+        return []
+
     scored_chunks: list[tuple[int, AssistantKnowledgeChunk]] = []
-    chunks = list(AssistantKnowledgeChunk.objects.all())
 
     for chunk in chunks:
         score = 0
@@ -426,9 +556,9 @@ def search_knowledge(
         if is_tips_inquiry and (meta.get("insider_tips") or meta.get("ideal_duration")):
             score += 60
 
-        # Keyword matching
+        # Keyword matching (excluding generic stopwords)
         for w in words:
-            if len(w) >= 3:
+            if len(w) >= 3 and w not in STOP_WORDS:
                 if w in title:
                     score += 15
                 if w in slug:
@@ -436,7 +566,7 @@ def search_knowledge(
                 if w in content:
                     score += 2
 
-        if score > 0:
+        if score >= 20:
             scored_chunks.append((score, chunk))
 
     # Sort descending by score
@@ -444,12 +574,6 @@ def search_knowledge(
 
     results = [item[1] for item in scored_chunks[:limit]]
 
-    # Fallback to featured tours if no specific matches found
-    if not results:
-        results = list(
-            AssistantKnowledgeChunk.objects.filter(
-                entity_type=AssistantKnowledgeChunk.EntityType.TOUR
-            )[:limit]
-        )
-
+    # NO fallback to random tours when score is 0 or no results match!
+    # Returning empty list allows honest no-evidence detection.
     return results
