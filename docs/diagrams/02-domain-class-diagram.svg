@@ -1,0 +1,219 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1650 1100" width="100%" height="100%" style="background:#FFFFFF; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+  <defs>
+    <!-- Drop Shadow Filter -->
+    <filter id="card-shadow" x="-5%" y="-5%" width="110%" height="115%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#0F172A" flood-opacity="0.08"/>
+    </filter>
+    
+    <!-- UML Markers -->
+    <marker id="arrow-sync" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#0F172A" />
+    </marker>
+    <marker id="arrow-open" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9" fill="none" stroke="#64748B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+    </marker>
+    <marker id="arrow-comp" viewBox="0 0 16 10" refX="1" refY="5" markerWidth="14" markerHeight="9" orient="auto-start-reverse">
+      <polygon points="1,5 8,1 15,5 8,9" fill="#0F172A" stroke="#0F172A" stroke-width="1.5" />
+    </marker>
+    <marker id="arrow-inherit" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="10" markerHeight="10" orient="auto-start-reverse">
+      <polygon points="1,1 11,6 1,11" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.8" />
+    </marker>
+    <marker id="arrow-include" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9" fill="none" stroke="#DA251D" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+    </marker>
+  </defs>
+
+  <!-- Background Grid -->
+  <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+    <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#F1F5F9" stroke-width="1"/>
+  </pattern>
+  <rect width="1650" height="1100" fill="url(#grid)" />
+
+  
+    
+    <g filter="url(#card-shadow)">
+      <rect x="40" y="30" width="600" height="80" rx="8" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.2"/>
+      <text x="56" y="56" font-size="14" font-weight="700" fill="#0F172A">STAR Travels — Sơ Đồ Lớp Miền Nghiệp Vụ (Domain Class Diagram)</text>
+      <text x="56" y="76" font-size="11" fill="#475569">Chuẩn: OMG UML 2.5.1 | Bounded Contexts: 13 Mô-đun Clean Architecture</text>
+      <text x="56" y="94" font-size="11" fill="#64748B" font-style="italic">Phạm vi: 10 Thực thể chính, Multiplicities chuẩn, Ký hiệu Composition/Association/Aggregation</text>
+    </g>
+    
+    
+    <g filter="url(#card-shadow)">
+      <rect x="1350" y="30" width="270" height="95" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+      <text x="1366" y="48" font-size="11" font-weight="700" fill="#0F172A">CHÚ GIẢI (LEGEND)</text>
+      
+        <circle cx="1368" cy="62" r="5" fill="#DA251D"/>
+        <text x="1380" y="66" font-size="11" fill="#334155">Core Domain (Tour, Booking)</text>
+        
+
+        <circle cx="1368" cy="80" r="5" fill="#0F766E"/>
+        <text x="1380" y="84" font-size="11" fill="#334155">Spatial & Catalog (Destinations)</text>
+        
+
+        <circle cx="1368" cy="98" r="5" fill="#1D4ED8"/>
+        <text x="1380" y="102" font-size="11" fill="#334155">Hospitality Referral (Hotel, Dining)</text>
+        
+
+        <circle cx="1368" cy="116" r="5" fill="#C2410C"/>
+        <text x="1380" y="120" font-size="11" fill="#334155">Financial Transactions (VNPay, VietQR)</text>
+        
+    </g>
+    
+
+    <!-- 1. User -->
+    
+        <g filter="url(#card-shadow)">
+          <rect x="60" y="150" width="240" height="210" rx="6" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.5"/>
+          <path d="M 60 156 Q 60 150 66 150 L 294 150 Q 300 150 300 156 L 300 182 L 60 182 Z" fill="#1E293B"/>
+          <text x="180.0" y="168" text-anchor="middle" font-size="12" font-weight="700" fill="#FFFFFF">User</text>
+          <text x="180.0" y="179" text-anchor="middle" font-size="9.5" font-style="italic" fill="#E2E8F0">«accounts_user»</text>
+          <text x="70" y="198" font-size="10.5" fill="#0F172A">- id: UUID</text><text x="70" y="214" font-size="10.5" fill="#0F172A">- email: String (Unique)</text><text x="70" y="230" font-size="10.5" fill="#0F172A">- phone: String (Indexed)</text><text x="70" y="246" font-size="10.5" fill="#0F172A">- role: RoleEnum</text><text x="70" y="262" font-size="10.5" fill="#0F172A">- is_active: Boolean</text><text x="70" y="278" font-size="10.5" fill="#0F172A">- date_joined: DateTime</text>
+          <line x1="60" y1="300" x2="300" y2="300" stroke="#CBD5E1" stroke-width="1"/>
+          <text x="70" y="316" font-size="10.5" fill="#0F172A">+ check_password(raw): bool</text><text x="70" y="332" font-size="10.5" fill="#0F172A">+ is_partner_owner(): bool</text>
+        </g>
+        
+
+    <!-- 2. Destination -->
+    
+        <g filter="url(#card-shadow)">
+          <rect x="380" y="150" width="250" height="210" rx="6" fill="#FFFFFF" stroke="#115E59" stroke-width="1.5"/>
+          <path d="M 380 156 Q 380 150 386 150 L 624 150 Q 630 150 630 156 L 630 182 L 380 182 Z" fill="#0F766E"/>
+          <text x="505.0" y="168" text-anchor="middle" font-size="12" font-weight="700" fill="#FFFFFF">Destination</text>
+          <text x="505.0" y="179" text-anchor="middle" font-size="9.5" font-style="italic" fill="#E2E8F0">«destinations_destination»</text>
+          <text x="390" y="198" font-size="10.5" fill="#0F172A">- id: UUID</text><text x="390" y="214" font-size="10.5" fill="#0F172A">- slug: String (Unique)</text><text x="390" y="230" font-size="10.5" fill="#0F172A">- name: String / name_en: String</text><text x="390" y="246" font-size="10.5" fill="#0F172A">- region: RegionEnum</text><text x="390" y="262" font-size="10.5" fill="#0F172A">- location: PointField (4326)</text><text x="390" y="278" font-size="10.5" fill="#0F172A">- is_published: Boolean</text>
+          <line x1="380" y1="300" x2="630" y2="300" stroke="#CBD5E1" stroke-width="1"/>
+          <text x="390" y="316" font-size="10.5" fill="#0F172A">+ get_published_tours(): QuerySet</text><text x="390" y="332" font-size="10.5" fill="#0F172A">+ calculate_nearby_places(rad): List</text>
+        </g>
+        
+
+    <!-- 3. Tour -->
+    
+        <g filter="url(#card-shadow)">
+          <rect x="710" y="150" width="270" height="230" rx="6" fill="#FFFFFF" stroke="#B91C1C" stroke-width="1.5"/>
+          <path d="M 710 156 Q 710 150 716 150 L 974 150 Q 980 150 980 156 L 980 182 L 710 182 Z" fill="#DA251D"/>
+          <text x="845.0" y="168" text-anchor="middle" font-size="12" font-weight="700" fill="#FFFFFF">Tour</text>
+          <text x="845.0" y="179" text-anchor="middle" font-size="9.5" font-style="italic" fill="#E2E8F0">«tours_tour»</text>
+          <text x="720" y="198" font-size="10.5" fill="#0F172A">- id: UUID</text><text x="720" y="214" font-size="10.5" fill="#0F172A">- destination_id: UUID (FK)</text><text x="720" y="230" font-size="10.5" fill="#0F172A">- slug: String (Unique)</text><text x="720" y="246" font-size="10.5" fill="#0F172A">- title: String / title_en: String</text><text x="720" y="262" font-size="10.5" fill="#0F172A">- price: Decimal (Authority)</text><text x="720" y="278" font-size="10.5" fill="#0F172A">- duration_days: Integer</text><text x="720" y="294" font-size="10.5" fill="#0F172A">- itinerary: JSONB</text>
+          <line x1="710" y1="316" x2="980" y2="316" stroke="#CBD5E1" stroke-width="1"/>
+          <text x="720" y="332" font-size="10.5" fill="#0F172A">+ calculate_total(pax): Decimal</text><text x="720" y="348" font-size="10.5" fill="#0F172A">+ verify_slot_availability(date): bool</text>
+        </g>
+        
+
+    <!-- 4. Booking -->
+    
+        <g filter="url(#card-shadow)">
+          <rect x="1070" y="150" width="280" height="240" rx="6" fill="#FFFFFF" stroke="#991B1B" stroke-width="1.5"/>
+          <path d="M 1070 156 Q 1070 150 1076 150 L 1344 150 Q 1350 150 1350 156 L 1350 182 L 1070 182 Z" fill="#B91C1C"/>
+          <text x="1210.0" y="168" text-anchor="middle" font-size="12" font-weight="700" fill="#FFFFFF">Booking</text>
+          <text x="1210.0" y="179" text-anchor="middle" font-size="9.5" font-style="italic" fill="#E2E8F0">«bookings_booking»</text>
+          <text x="1080" y="198" font-size="10.5" fill="#0F172A">- id: UUID</text><text x="1080" y="214" font-size="10.5" fill="#0F172A">- code: String (STAR-YYYYMM)</text><text x="1080" y="230" font-size="10.5" fill="#0F172A">- user_id: UUID (FK Nullable)</text><text x="1080" y="246" font-size="10.5" fill="#0F172A">- item_type: BookingItemTypeEnum</text><text x="1080" y="262" font-size="10.5" fill="#0F172A">- item_id: UUID</text><text x="1080" y="278" font-size="10.5" fill="#0F172A">- status: BookingStatusEnum</text><text x="1080" y="294" font-size="10.5" fill="#0F172A">- total_price: Decimal (Server-calc)</text>
+          <line x1="1070" y1="316" x2="1350" y2="316" stroke="#CBD5E1" stroke-width="1"/>
+          <text x="1080" y="332" font-size="10.5" fill="#0F172A">+ transition_to(status): void</text><text x="1080" y="348" font-size="10.5" fill="#0F172A">+ mark_paid_and_emit_outbox(): void</text>
+        </g>
+        
+
+    <!-- 5. PaymentTransaction -->
+    
+        <g filter="url(#card-shadow)">
+          <rect x="1410" y="150" width="240" height="230" rx="6" fill="#FFFFFF" stroke="#9A3412" stroke-width="1.5"/>
+          <path d="M 1410 156 Q 1410 150 1416 150 L 1644 150 Q 1650 150 1650 156 L 1650 182 L 1410 182 Z" fill="#C2410C"/>
+          <text x="1530.0" y="168" text-anchor="middle" font-size="12" font-weight="700" fill="#FFFFFF">PaymentTransaction</text>
+          <text x="1530.0" y="179" text-anchor="middle" font-size="9.5" font-style="italic" fill="#E2E8F0">«payments_transaction»</text>
+          <text x="1420" y="198" font-size="10.5" fill="#0F172A">- id: UUID</text><text x="1420" y="214" font-size="10.5" fill="#0F172A">- booking_id: UUID (FK)</text><text x="1420" y="230" font-size="10.5" fill="#0F172A">- gateway: GatewayEnum</text><text x="1420" y="246" font-size="10.5" fill="#0F172A">- amount: Decimal</text><text x="1420" y="262" font-size="10.5" fill="#0F172A">- transaction_code: String</text><text x="1420" y="278" font-size="10.5" fill="#0F172A">- status: TxStatusEnum</text><text x="1420" y="294" font-size="10.5" fill="#0F172A">- raw_ipn_payload: JSONB</text>
+          <line x1="1410" y1="316" x2="1650" y2="316" stroke="#CBD5E1" stroke-width="1"/>
+          <text x="1420" y="332" font-size="10.5" fill="#0F172A">+ verify_signature(secret): bool</text><text x="1420" y="348" font-size="10.5" fill="#0F172A">+ reconcile_with_booking(): void</text>
+        </g>
+        
+
+    <!-- 6. Accommodation -->
+    
+        <g filter="url(#card-shadow)">
+          <rect x="60" y="520" width="240" height="210" rx="6" fill="#FFFFFF" stroke="#1E40AF" stroke-width="1.5"/>
+          <path d="M 60 526 Q 60 520 66 520 L 294 520 Q 300 520 300 526 L 300 552 L 60 552 Z" fill="#1D4ED8"/>
+          <text x="180.0" y="538" text-anchor="middle" font-size="12" font-weight="700" fill="#FFFFFF">Accommodation</text>
+          <text x="180.0" y="549" text-anchor="middle" font-size="9.5" font-style="italic" fill="#E2E8F0">«Hospitality Referral»</text>
+          <text x="70" y="568" font-size="10.5" fill="#0F172A">- id: UUID</text><text x="70" y="584" font-size="10.5" fill="#0F172A">- slug: String (Unique)</text><text x="70" y="600" font-size="10.5" fill="#0F172A">- destination_id: UUID (FK)</text><text x="70" y="616" font-size="10.5" fill="#0F172A">- name: String</text><text x="70" y="632" font-size="10.5" fill="#0F172A">- category: String</text><text x="70" y="648" font-size="10.5" fill="#0F172A">- location: {lat, lng}</text><text x="70" y="664" font-size="10.5" fill="#0F172A">- referral_url: URLString</text>
+          <line x1="60" y1="686" x2="300" y2="686" stroke="#CBD5E1" stroke-width="1"/>
+          <text x="70" y="702" font-size="10.5" fill="#0F172A">+ distance_to(coords): Float</text><text x="70" y="718" font-size="10.5" fill="#0F172A">+ generate_referral_payload(): dict</text>
+        </g>
+        
+
+    <!-- 7. Restaurant -->
+    
+        <g filter="url(#card-shadow)">
+          <rect x="380" y="520" width="250" height="210" rx="6" fill="#FFFFFF" stroke="#3730A3" stroke-width="1.5"/>
+          <path d="M 380 526 Q 380 520 386 520 L 624 520 Q 630 520 630 526 L 630 552 L 380 552 Z" fill="#4338CA"/>
+          <text x="505.0" y="538" text-anchor="middle" font-size="12" font-weight="700" fill="#FFFFFF">Restaurant</text>
+          <text x="505.0" y="549" text-anchor="middle" font-size="9.5" font-style="italic" fill="#E2E8F0">«Dining Referral»</text>
+          <text x="390" y="568" font-size="10.5" fill="#0F172A">- id: UUID</text><text x="390" y="584" font-size="10.5" fill="#0F172A">- slug: String (Unique)</text><text x="390" y="600" font-size="10.5" fill="#0F172A">- destination_id: UUID (FK)</text><text x="390" y="616" font-size="10.5" fill="#0F172A">- name: String</text><text x="390" y="632" font-size="10.5" fill="#0F172A">- cuisine_type: String</text><text x="390" y="648" font-size="10.5" fill="#0F172A">- location: {lat, lng}</text><text x="390" y="664" font-size="10.5" fill="#0F172A">- booking_url: URLString</text>
+          <line x1="380" y1="686" x2="630" y2="686" stroke="#CBD5E1" stroke-width="1"/>
+          <text x="390" y="702" font-size="10.5" fill="#0F172A">+ distance_to(coords): Float</text><text x="390" y="718" font-size="10.5" fill="#0F172A">+ generate_referral_payload(): dict</text>
+        </g>
+        
+
+    <!-- 8. PartnerApplication -->
+    
+        <g filter="url(#card-shadow)">
+          <rect x="710" y="520" width="270" height="210" rx="6" fill="#FFFFFF" stroke="#334155" stroke-width="1.5"/>
+          <path d="M 710 526 Q 710 520 716 520 L 974 520 Q 980 520 980 526 L 980 552 L 710 552 Z" fill="#475569"/>
+          <text x="845.0" y="538" text-anchor="middle" font-size="12" font-weight="700" fill="#FFFFFF">PartnerApplication</text>
+          <text x="845.0" y="549" text-anchor="middle" font-size="9.5" font-style="italic" fill="#E2E8F0">«partners_partnerapplication»</text>
+          <text x="720" y="568" font-size="10.5" fill="#0F172A">- id: UUID</text><text x="720" y="584" font-size="10.5" fill="#0F172A">- user_id: UUID (FK)</text><text x="720" y="600" font-size="10.5" fill="#0F172A">- business_name: String</text><text x="720" y="616" font-size="10.5" fill="#0F172A">- tax_id: String (MST)</text><text x="720" y="632" font-size="10.5" fill="#0F172A">- license_number: String</text><text x="720" y="648" font-size="10.5" fill="#0F172A">- status: PartnerStatusEnum</text>
+          <line x1="710" y1="670" x2="980" y2="670" stroke="#CBD5E1" stroke-width="1"/>
+          <text x="720" y="686" font-size="10.5" fill="#0F172A">+ approve_and_create_org(adm): Org</text><text x="720" y="702" font-size="10.5" fill="#0F172A">+ reject(reason): void</text>
+        </g>
+        
+
+    <!-- 9. KnowledgeChunk -->
+    
+        <g filter="url(#card-shadow)">
+          <rect x="1070" y="520" width="280" height="210" rx="6" fill="#FFFFFF" stroke="#713F12" stroke-width="1.5"/>
+          <path d="M 1070 526 Q 1070 520 1076 520 L 1344 520 Q 1350 520 1350 526 L 1350 552 L 1070 552 Z" fill="#854D0E"/>
+          <text x="1210.0" y="538" text-anchor="middle" font-size="12" font-weight="700" fill="#FFFFFF">KnowledgeChunk</text>
+          <text x="1210.0" y="549" text-anchor="middle" font-size="9.5" font-style="italic" fill="#E2E8F0">«assistant_knowledge_chunk»</text>
+          <text x="1080" y="568" font-size="10.5" fill="#0F172A">- id: UUID</text><text x="1080" y="584" font-size="10.5" fill="#0F172A">- title: String</text><text x="1080" y="600" font-size="10.5" fill="#0F172A">- category: String</text><text x="1080" y="616" font-size="10.5" fill="#0F172A">- content: Text</text><text x="1080" y="632" font-size="10.5" fill="#0F172A">- embedding: Vector(1536)</text><text x="1080" y="648" font-size="10.5" fill="#0F172A">- metadata: JSONB</text>
+          <line x1="1070" y1="670" x2="1350" y2="670" stroke="#CBD5E1" stroke-width="1"/>
+          <text x="1080" y="686" font-size="10.5" fill="#0F172A">+ hybrid_search(vec, text): List</text><text x="1080" y="702" font-size="10.5" fill="#0F172A">+ extract_citations(): List</text>
+        </g>
+        
+
+    <!-- 10. AuditEvent -->
+    
+        <g filter="url(#card-shadow)">
+          <rect x="1410" y="520" width="240" height="200" rx="6" fill="#FFFFFF" stroke="#1F2937" stroke-width="1.5"/>
+          <path d="M 1410 526 Q 1410 520 1416 520 L 1644 520 Q 1650 520 1650 526 L 1650 552 L 1410 552 Z" fill="#374151"/>
+          <text x="1530.0" y="538" text-anchor="middle" font-size="12" font-weight="700" fill="#FFFFFF">AuditEvent</text>
+          <text x="1530.0" y="549" text-anchor="middle" font-size="9.5" font-style="italic" fill="#E2E8F0">«audit_auditevent»</text>
+          <text x="1420" y="568" font-size="10.5" fill="#0F172A">- id: UUID</text><text x="1420" y="584" font-size="10.5" fill="#0F172A">- actor_id: UUID</text><text x="1420" y="600" font-size="10.5" fill="#0F172A">- action: String</text><text x="1420" y="616" font-size="10.5" fill="#0F172A">- entity_type: String</text><text x="1420" y="632" font-size="10.5" fill="#0F172A">- entity_id: UUID</text><text x="1420" y="648" font-size="10.5" fill="#0F172A">- change_diff: JSONB</text><text x="1420" y="664" font-size="10.5" fill="#0F172A">- timestamp: DateTime</text>
+          <line x1="1410" y1="686" x2="1650" y2="686" stroke="#CBD5E1" stroke-width="1"/>
+          <text x="1420" y="702" font-size="10.5" fill="#0F172A">+ log_privileged_transition(): void</text>
+        </g>
+        
+
+    <!-- Relationships -->
+    <path d="M 630 250 L 710 250" stroke="#0F172A" stroke-width="1.5" marker-start="url(#arrow-comp)" fill="none"/>
+    <text x="670" y="242" font-size="10" font-weight="700" fill="#0F172A">1..*</text>
+
+    <path d="M 980 250 L 1070 250" stroke="#475569" stroke-width="1.5" fill="none"/>
+    <text x="1000" y="242" font-size="10" font-weight="700" fill="#475569">1</text>
+    <text x="1045" y="242" font-size="10" font-weight="700" fill="#475569">0..*</text>
+
+    <path d="M 1350 250 L 1410 250" stroke="#0F172A" stroke-width="1.5" marker-start="url(#arrow-comp)" fill="none"/>
+    <text x="1380" y="242" font-size="10" font-weight="700" fill="#0F172A">1</text>
+
+    <path d="M 180 360 L 180 430 L 1180 430 L 1180 390" stroke="#475569" stroke-width="1.5" fill="none"/>
+    <text x="190" y="380" font-size="10" font-weight="700" fill="#475569">1</text>
+    <text x="1190" y="415" font-size="10" font-weight="700" fill="#475569">0..*</text>
+
+    <path d="M 505 360 L 505 470 L 180 470 L 180 520" stroke="#0F172A" stroke-width="1.5" marker-start="url(#arrow-comp)" fill="none"/>
+    <text x="190" y="505" font-size="10" font-weight="700" fill="#0F172A">1..*</text>
+
+    <path d="M 505 360 L 505 520" stroke="#0F172A" stroke-width="1.5" marker-start="url(#arrow-comp)" fill="none"/>
+    <text x="515" y="505" font-size="10" font-weight="700" fill="#0F172A">1..*</text>
+
+    <path d="M 300 300 L 340 300 L 340 600 L 710 600" stroke="#475569" stroke-width="1.5" fill="none"/>
+    <text x="310" y="292" font-size="10" font-weight="700" fill="#475569">1</text>
+    <text x="680" y="592" font-size="10" font-weight="700" fill="#475569">0..1</text>
+    
+</svg>

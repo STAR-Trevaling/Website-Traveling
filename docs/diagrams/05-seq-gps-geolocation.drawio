@@ -1,0 +1,71 @@
+<?xml version="1.0" ?>
+<mxfile host="app.diagrams.net" modified="2026-10-09T00:00:00.000Z" agent="STAR-Travels-Drawio-Master-Suite" version="24.0.0" type="device">
+  <diagram name="5. Seq - GPS Geolocation" id="page-5-seq-gps">
+    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1650" pageHeight="1000" background="#FFFFFF">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="p5-title-block" value="&amp;lt;b style=&amp;quot;font-size:14px; color:#0F172A;&amp;quot;&amp;gt;STAR Travels — Sơ Đồ Tuần Tự: Định Vị Vị Trí &amp; Gợi Ý Gần Nhất (GPS Haversine)&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;font color=&amp;quot;#475569&amp;quot; style=&amp;quot;font-size:11px;&amp;quot;&amp;gt;Chuẩn: OMG UML 2.5.1 Sequence Diagram | Pháp lý: Nghị định 13/2023/NĐ-CP (PDPD)&amp;lt;br&amp;gt;&amp;lt;i&amp;gt;Phạm vi:&amp;lt;/i&amp;gt; Yêu cầu quyền tường minh (Explicit Consent), tính toán khoảng cách Client-side, không lưu vết ngầm&amp;lt;/font&amp;gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=#94A3B8;strokeWidth=1.2;align=left;spacingLeft=14;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="30" width="620" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="p5-legend-block" value="&amp;lt;b style=&amp;quot;font-size:11px; color:#0F172A;&amp;quot;&amp;gt;CHÚ GIẢI (LEGEND)&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;■ &amp;lt;font color=&amp;quot;#0F172A&amp;quot;&amp;gt;●&amp;lt;/font&amp;gt; Tương tác người dùng &amp; Xử lý Web&amp;lt;br&amp;gt;■ &amp;lt;font color=&amp;quot;#0284C7&amp;quot;&amp;gt;●&amp;lt;/font&amp;gt; Trình duyệt kiểm tra quyền riêng tư&amp;lt;br&amp;gt;■ &amp;lt;font color=&amp;quot;#DA251D&amp;quot;&amp;gt;●&amp;lt;/font&amp;gt; Huy hiệu Gợi ý STAR Hàng đầu&amp;lt;br&amp;gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CBD5E1;strokeWidth=1;align=left;spacingLeft=10;fontSize=10;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="1320" y="30" width="290" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="g-user" value="Traveler&#10;(Người dùng)" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;size=42;fillColor=#1E293B;strokeColor=#0F172A;fontColor=#FFFFFF;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="100" y="130" width="140" height="830" as="geometry"/>
+        </mxCell>
+        <mxCell id="g-ui" value="Catalog Wizard UI&#10;(accommodations-catalog)" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;size=42;fillColor=#1E293B;strokeColor=#0F172A;fontColor=#FFFFFF;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="370" y="130" width="180" height="830" as="geometry"/>
+        </mxCell>
+        <mxCell id="g-browser" value="Browser Geolocation&#10;(navigator.geolocation)" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;size=42;fillColor=#1E293B;strokeColor=#0F172A;fontColor=#FFFFFF;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="660" y="130" width="170" height="830" as="geometry"/>
+        </mxCell>
+        <mxCell id="g-geo" value="Geo Utilities&#10;(@/lib/geo-utils.ts)" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;size=42;fillColor=#1E293B;strokeColor=#0F172A;fontColor=#FFFFFF;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="940" y="130" width="160" height="830" as="geometry"/>
+        </mxCell>
+        <mxCell id="g-cards" value="Catalog Cards&#10;(AccommodationCard)" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;size=42;fillColor=#1E293B;strokeColor=#0F172A;fontColor=#FFFFFF;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1210" y="130" width="170" height="830" as="geometry"/>
+        </mxCell>
+        <mxCell id="g-act1" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#CBD5E1;strokeColor=#475569;" vertex="1" parent="1">
+          <mxGeometry x="455" y="200" width="12" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="g-act2" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#CBD5E1;strokeColor=#475569;" vertex="1" parent="1">
+          <mxGeometry x="740" y="260" width="12" height="130" as="geometry"/>
+        </mxCell>
+        <mxCell id="g-act3" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#CBD5E1;strokeColor=#475569;" vertex="1" parent="1">
+          <mxGeometry x="1015" y="450" width="12" height="110" as="geometry"/>
+        </mxCell>
+        <mxCell id="g-act4" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#CBD5E1;strokeColor=#475569;" vertex="1" parent="1">
+          <mxGeometry x="1290" y="600" width="12" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="gm1" value="1. Bấm nút 'Tìm gần vị trí của tôi'" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=10;jumpStyle=arc;jumpSize=6;strokeColor=#0F172A;strokeWidth=1.5;labelBackgroundColor=#FFFFFF;fontSize=11;" edge="1" parent="1" source="g-user" target="g-ui">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="gm2" value="2. Gọi getCurrentPosition() (Tuân thủ NĐ 13/2023)" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=10;jumpStyle=arc;jumpSize=6;strokeColor=#0F172A;strokeWidth=1.5;labelBackgroundColor=#FFFFFF;fontSize=11;" edge="1" parent="1" source="g-ui" target="g-browser">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="gm3" value="3. Trình duyệt hỏi popup cho phép quyền vị trí" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=10;jumpStyle=arc;jumpSize=6;strokeColor=#0F172A;strokeWidth=1.5;labelBackgroundColor=#FFFFFF;fontSize=11;" edge="1" parent="1" source="g-browser" target="g-user">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="gm4" value="4. Người dùng bấm Cho phép (Allow)" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=10;jumpStyle=arc;jumpSize=6;strokeColor=#0F172A;strokeWidth=1.5;labelBackgroundColor=#FFFFFF;fontSize=11;" edge="1" parent="1" source="g-user" target="g-browser">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="gm5" value="5. Trả về tọa độ {latitude, longitude}" style="html=1;verticalAlign=bottom;endArrow=open;endFill=0;dashed=1;endSize=8;edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=10;jumpStyle=arc;jumpSize=6;strokeColor=#64748B;strokeWidth=1.2;labelBackgroundColor=#FFFFFF;fontSize=11;" edge="1" parent="1" source="g-browser" target="g-geo">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="gm6" value="6. findNearestDestination() nhận diện thành phố gần nhất" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=10;jumpStyle=arc;jumpSize=6;strokeColor=#0F172A;strokeWidth=1.5;labelBackgroundColor=#FFFFFF;fontSize=11;" edge="1" parent="1" source="g-geo" target="g-geo">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="gm7" value="7. calculateDistanceKm() tính công thức Haversine từng item" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=10;jumpStyle=arc;jumpSize=6;strokeColor=#0F172A;strokeWidth=1.5;labelBackgroundColor=#FFFFFF;fontSize=11;" edge="1" parent="1" source="g-geo" target="g-ui">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="gm8" value="8. formatDistance() định dạng mét/km &amp; Sắp xếp gần nhất" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=10;jumpStyle=arc;jumpSize=6;strokeColor=#0F172A;strokeWidth=1.5;labelBackgroundColor=#FFFFFF;fontSize=11;" edge="1" parent="1" source="g-ui" target="g-cards">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="gm9" value="9. Gắn huy hiệu '✦ GỢI Ý STAR HÀNG ĐẦU (~850 m)' lên card đầu tiên" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=10;jumpStyle=arc;jumpSize=6;strokeColor=#0F172A;strokeWidth=1.5;labelBackgroundColor=#FFFFFF;fontSize=11;" edge="1" parent="1" source="g-cards" target="g-user">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

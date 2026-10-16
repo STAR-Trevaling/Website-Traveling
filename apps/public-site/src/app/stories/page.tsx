@@ -1,0 +1,221 @@
+import type { Metadata } from "next";
+import Image from "next/image";
+import Link from "next/link";
+import { cookies } from "next/headers";
+import { Clock, User, ChevronRight, ArrowUpRight } from "lucide-react";
+import { SiteHeader } from "@/components/layout/site-header";
+import { Breadcrumb } from "@/components/shared/breadcrumb";
+import { publicApi, safe } from "@/lib/api";
+import { VIETNAM_IMAGES } from "@/lib/assets";
+import { VIETNAM_STORIES } from "@/data/seed";
+import { DICTIONARY } from "@/lib/i18n/dictionary";
+
+export const metadata: Metadata = {
+  title: "Góc Nhìn Du Lịch & Cẩm Nang Khám Phá | Star Travels Vietnam",
+  description: "Cảm hứng và cẩm nang khám phá các miền di sản, văn hóa và ẩm thực Việt Nam.",
+};
+
+export default async function StoriesPage() {
+  const cookieStore = await cookies();
+  const isEn = cookieStore.get("star_travels_locale")?.value === "en";
+  const dict = DICTIONARY[isEn ? "en" : "vi"];
+  const t = dict.storiesPage;
+  const nl = dict.newsletter;
+
+  const backendArticles = await safe(publicApi.articles(), []);
+  const rawStories = backendArticles.length > 0 ? backendArticles : VIETNAM_STORIES;
+  const allStories = rawStories.map((s: any) => ({
+    ...s,
+    category: s.category || (isEn ? "Travel Perspective" : "Góc Nhìn Du Lịch"),
+    authorName: s.authorName || s.author_name || (isEn ? "Star Travels Editorial" : "Ban Biên Tập Star Travels"),
+    authorRole: s.authorRole || s.author_role || (isEn ? "Destination Expert" : "Chuyên gia du lịch bản địa"),
+    readTime: s.readTime || s.read_time || (isEn ? "5 min read" : "5 phút đọc"),
+    destinationName: typeof s.destination === "object" ? s.destination?.name : (s.destination_slug || "Việt Nam"),
+  }));
+  const featuredStory = allStories[0] || VIETNAM_STORIES[0];
+  const remainingStories = allStories.slice(1);
+
+  const formatReadTime = (rt: string) =>
+    isEn ? rt.replace(/phút đọc/gi, "min read") : rt;
+
+  return (
+    <>
+      <SiteHeader overlay={false} />
+
+      <main className="template-page-bg min-h-screen px-4 sm:px-6 py-8 sm:py-12 md:px-12 lg:px-16 text-[#282828]">
+        <div className="mx-auto max-w-7xl">
+          {/* Breadcrumb Navigation */}
+          <div className="mb-6 sm:mb-8">
+            <Breadcrumb
+              items={[
+                { label: isEn ? "Home" : "Trang Chủ", href: "/" },
+                { label: isEn ? "Stories & Travel Insights" : "Góc Nhìn Du Lịch" },
+              ]}
+            />
+          </div>
+
+          {/* Page Title Card without destination photo banner */}
+          <div className="rounded-[2px] bg-white/85 backdrop-blur-md p-6 sm:p-8 md:p-10 shadow-[0_4px_24px_rgba(0,152,162,0.06)] border border-white/90 mb-8 sm:mb-12">
+            <span className="inline-block px-3 py-1 rounded-[2px] bg-[#0098a2]/15 text-[#007a82] border border-[#0098a2]/25 text-[11px] font-bold uppercase tracking-[0.2em] mb-2">
+              {isEn ? "Travel Journal" : "Cảm Hứng & Trải Nghiệm"}
+            </span>
+            <h1 className="script-title mt-1 text-4xl sm:text-5xl md:text-6xl text-[#0f172a] leading-tight">
+              {isEn ? "Stories & Travel Insights" : "Góc Nhìn Du Lịch"}
+            </h1>
+            <p className="mt-2 text-sm sm:text-base md:text-[17px] text-slate-800 font-medium max-w-3xl leading-relaxed">
+              {isEn
+                ? "Inspiring narratives, insider guides, and authentic cultural journeys across Vietnam."
+                : "Những câu chuyện truyền cảm hứng, cẩm nang trải nghiệm và chiều sâu văn hóa bản địa."}
+            </p>
+          </div>
+
+          {/* 1. FEATURED HERO STORY */}
+          <section className="mb-10 sm:mb-16">
+            <Link
+              href={`/stories/${featuredStory.slug}`}
+              className="group grid overflow-hidden rounded-[2px] bg-white shadow-md transition-all duration-300 hover:shadow-xl lg:grid-cols-[1.1fr_0.9fr]"
+            >
+              <div className="relative aspect-[16/10] lg:aspect-auto min-h-[220px] sm:min-h-[320px] w-full overflow-hidden bg-slate-100">
+                <Image
+                  src={featuredStory.cover_image || VIETNAM_IMAGES.hero}
+                  alt={featuredStory.title}
+                  fill
+                  priority
+                  unoptimized
+                  className="object-cover transition duration-500 group-hover:scale-105"
+                />
+                <div className="absolute top-3 left-3 sm:top-4 sm:left-4 rounded-[2px] bg-[#da251d] px-2.5 sm:px-3 py-1 text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-white shadow-sm">
+                  {featuredStory.category}
+                </div>
+              </div>
+
+              <div className="flex flex-col justify-between p-5 sm:p-8 lg:p-12">
+                <div>
+                  <div className="flex items-center gap-2.5 sm:gap-3 text-xs text-slate-400 font-light">
+                    <span className="flex items-center gap-1">
+                      <User className="size-3 text-slate-500" />
+                      {featuredStory.authorName}
+                    </span>
+                    <span>•</span>
+                    <span className="flex items-center gap-1">
+                      <Clock className="size-3 text-slate-500" />
+                      {formatReadTime(featuredStory.readTime)}
+                    </span>
+                  </div>
+
+                  <h2 className="display-title mt-3 sm:mt-4 text-xl sm:text-3xl lg:text-4xl font-bold leading-tight text-[#1e293b] group-hover:text-amber-700 transition-colors">
+                    {featuredStory.title}
+                  </h2>
+
+                  <p className="mt-2.5 sm:mt-4 text-xs sm:text-sm md:text-base font-light leading-relaxed text-[#64748b] line-clamp-3">
+                    {featuredStory.excerpt}
+                  </p>
+                </div>
+
+                <div className="mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-slate-100 flex items-center justify-between">
+                  <span className="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-slate-900 flex items-center gap-1 sm:gap-1.5 group-hover:translate-x-1 transition">
+                    {isEn ? "READ FULL STORY" : "ĐỌC TIẾP CÂU CHUYỆN"} <ArrowUpRight className="size-3.5 sm:size-4" />
+                  </span>
+                  <span className="text-[11px] sm:text-xs text-slate-400 font-light">
+                    {featuredStory.destinationName || (featuredStory as any).destination?.name}
+                  </span>
+                </div>
+              </div>
+            </Link>
+          </section>
+
+          {/* 2. STORIES MAGAZINE GRID */}
+          <div className="mb-6 sm:mb-10 text-center">
+            <h2 className="script-title text-3xl sm:text-4xl md:text-5xl text-[#0f172a] drop-shadow-[0_1px_1px_rgba(255,255,255,0.8)]">
+              {isEn ? "Latest Articles" : "Bài Viết Mới Nhất"}
+            </h2>
+            <p className="mt-2 text-sm sm:text-base text-slate-800 font-medium max-w-2xl mx-auto leading-relaxed">
+              {isEn
+                ? "A curated collection of insightful articles on travel experiences, cuisine, and local culture."
+                : "Tuyển tập những bài viết chất lượng cao về trải nghiệm, ẩm thực và văn hóa"}
+            </p>
+          </div>
+
+          <div className="grid gap-6 sm:gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            {remainingStories.map((story) => (
+              <Link
+                key={story.id}
+                href={`/stories/${story.slug}`}
+                className="group flex flex-col justify-between overflow-hidden rounded-[2px] bg-white shadow-sm border border-slate-100 transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
+              >
+                <div>
+                  <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-100">
+                    <Image
+                      src={story.cover_image || VIETNAM_IMAGES.hero}
+                      alt={story.title}
+                      fill
+                      unoptimized
+                      className="object-cover transition duration-500 group-hover:scale-105"
+                    />
+                    <div className="absolute top-2.5 left-2.5 sm:top-3 sm:left-3 rounded-[2px] bg-black/60 backdrop-blur-md px-2 sm:px-2.5 py-0.5 text-[10px] sm:text-[11px] font-medium text-white">
+                      {story.category}
+                    </div>
+                  </div>
+
+                  <div className="p-4 sm:p-6">
+                    <div className="flex items-center gap-2 text-[10px] sm:text-[11px] text-slate-400 font-light">
+                      <span>{story.authorName}</span>
+                      <span>•</span>
+                      <span>{formatReadTime(story.readTime)}</span>
+                    </div>
+
+                    <h3 className="display-title mt-2 text-lg sm:text-xl font-bold leading-snug text-[#1e293b] group-hover:text-amber-700 transition-colors line-clamp-2">
+                      {story.title}
+                    </h3>
+
+                    <p className="mt-2 sm:mt-2.5 text-xs sm:text-sm font-light leading-relaxed text-[#64748b] line-clamp-3">
+                      {story.excerpt}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="p-4 sm:p-6 pt-0 border-t border-slate-50 flex items-center justify-between text-xs">
+                  <span className="font-semibold text-slate-900 flex items-center gap-1 group-hover:translate-x-1 transition text-[11px] sm:text-xs">
+                    {isEn ? "Discover" : "Khám phá"} <ChevronRight className="size-3 sm:size-3.5" />
+                  </span>
+                  <span className="text-[10px] sm:text-[11px] text-slate-400 font-light">
+                    {story.destinationName || (story as any).destination?.name}
+                  </span>
+                </div>
+              </Link>
+            ))}
+          </div>
+
+          {/* 3. NEWSLETTER BANNER MATCHING TEMPLATE */}
+          <div className="mt-14 sm:mt-20 rounded-[2px] bg-white/90 backdrop-blur-md p-6 sm:p-10 md:p-14 text-center shadow-[0_4px_24px_rgba(0,152,162,0.06)] border border-white/90 relative overflow-hidden">
+            <div className="relative z-10 max-w-2xl mx-auto">
+              <span className="text-[10px] sm:text-xs font-bold uppercase tracking-[0.25em] text-amber-700">
+                {isEn ? "HERITAGE NEWSLETTER" : "ĐĂNG KÝ BẢN TIN DI SẢN"}
+              </span>
+              <h3 className="script-title text-3xl sm:text-4xl md:text-5xl mt-2.5 sm:mt-3 text-[#1e293b]">
+                {nl.heading}
+              </h3>
+              <p className="mt-3 sm:mt-4 text-xs md:text-sm text-[#4b5563] font-light leading-relaxed">
+                {nl.subheading}
+              </p>
+
+              <form className="mt-6 sm:mt-8 flex flex-col sm:flex-row gap-2.5 sm:gap-3 max-w-md mx-auto">
+                <input
+                  type="email"
+                  placeholder={nl.emailPlaceholder}
+                  className="flex-1 rounded-[2px] bg-white border border-slate-300 px-3.5 sm:px-4 py-2.5 sm:py-3 text-xs md:text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-[#da251d] focus:ring-1 focus:ring-[#da251d] shadow-sm"
+                />
+                <button
+                  type="button"
+                  className="rounded-[2px] bg-[#da251d] text-white px-5 sm:px-6 py-2.5 sm:py-3 text-xs md:text-sm font-bold uppercase tracking-wider shadow-sm transition-all duration-200 hover:bg-[#c92018] hover:shadow-[0px_8px_25px_rgba(218,37,29,0.35)] hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
+                >
+                  {nl.submitBtn}
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </main>
+    </>
+  );
+}

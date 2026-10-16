@@ -1,0 +1,11 @@
+{
+  "venvPath": "apps/api",
+  "venv": ".venv",
+  "extraPaths": [
+    "apps/api",
+    "scripts"
+  ],
+  "typeCheckingMode": "basic",
+  "reportMissingImports": "warning",
+  "reportGeneralTypeIssues": "warning"
+}

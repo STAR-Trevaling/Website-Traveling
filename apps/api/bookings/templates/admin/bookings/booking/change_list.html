@@ -1,0 +1,11 @@
+{% extends "admin/change_list.html" %}
+{% load i18n %}
+
+{% block object-tools-items %}
+  <li>
+    <a href="{% url 'admin:booking_referral_stats' %}" class="historylink" style="background: #da251d; color: white; font-weight: bold;">
+      📊 Thống Kê Referral Đối Tác
+    </a>
+  </li>
+  {{ block.super }}
+{% endblock %}

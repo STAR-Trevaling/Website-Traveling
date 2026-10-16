@@ -1,0 +1,89 @@
+<?xml version="1.0" ?>
+<mxfile host="app.diagrams.net" modified="2026-10-09T00:00:00.000Z" agent="STAR-Travels-Drawio-Master-Suite" version="24.0.0" type="device">
+  <diagram name="3. Seq - Tour Booking" id="page-3-seq-booking">
+    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1650" pageHeight="1050" background="#FFFFFF">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="p3-title-block" value="&amp;lt;b style=&amp;quot;font-size:14px; color:#0F172A;&amp;quot;&amp;gt;STAR Travels — Sơ Đồ Tuần Tự: Đặt Tour &amp; Thanh Toán Trực Tuyến&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;font color=&amp;quot;#475569&amp;quot; style=&amp;quot;font-size:11px;&amp;quot;&amp;gt;Chuẩn: OMG UML 2.5.1 Sequence Diagram | Cơ chế: Server-side Price recalculation&amp;lt;br&amp;gt;&amp;lt;i&amp;gt;Phạm vi:&amp;lt;/i&amp;gt; Luồng gọi đồng bộ, thanh kích hoạt (Activation), xác thực chữ ký HMAC SHA512&amp;lt;/font&amp;gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=#94A3B8;strokeWidth=1.2;align=left;spacingLeft=14;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="30" width="580" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="p3-legend-block" value="&amp;lt;b style=&amp;quot;font-size:11px; color:#0F172A;&amp;quot;&amp;gt;CHÚ GIẢI (LEGEND)&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;■ &amp;lt;font color=&amp;quot;#0F172A&amp;quot;&amp;gt;●&amp;lt;/font&amp;gt; Cuộc gọi đồng bộ (Sync Call - Solid Arrow)&amp;lt;br&amp;gt;■ &amp;lt;font color=&amp;quot;#64748B&amp;quot;&amp;gt;●&amp;lt;/font&amp;gt; Kết quả trả về (Return - Dashed Arrow)&amp;lt;br&amp;gt;■ &amp;lt;font color=&amp;quot;#CBD5E1&amp;quot;&amp;gt;●&amp;lt;/font&amp;gt; Thanh kích hoạt thực thi (Activation Bar)&amp;lt;br&amp;gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CBD5E1;strokeWidth=1;align=left;spacingLeft=10;fontSize=10;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="1320" y="30" width="290" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="ll-trav" value="Traveler&#10;(Trình duyệt)" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;size=42;fillColor=#1E293B;strokeColor=#0F172A;fontColor=#FFFFFF;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="70" y="130" width="140" height="880" as="geometry"/>
+        </mxCell>
+        <mxCell id="ll-web" value="Next.js Web&#10;(TourBookingCard)" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;size=42;fillColor=#1E293B;strokeColor=#0F172A;fontColor=#FFFFFF;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="290" y="130" width="150" height="880" as="geometry"/>
+        </mxCell>
+        <mxCell id="ll-bff" value="BFF Auth Proxy&#10;(/api/auth/*)" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;size=42;fillColor=#1E293B;strokeColor=#0F172A;fontColor=#FFFFFF;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="520" y="130" width="140" height="880" as="geometry"/>
+        </mxCell>
+        <mxCell id="ll-api" value="Django Bookings&#10;(/api/v1/bookings/)" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;size=42;fillColor=#1E293B;strokeColor=#0F172A;fontColor=#FFFFFF;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="750" y="130" width="150" height="880" as="geometry"/>
+        </mxCell>
+        <mxCell id="ll-db" value="PostgreSQL 17&#10;(Tour &amp; Ledger)" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;size=42;fillColor=#1E293B;strokeColor=#0F172A;fontColor=#FFFFFF;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="990" y="130" width="140" height="880" as="geometry"/>
+        </mxCell>
+        <mxCell id="ll-gw" value="Payment Gateway&#10;(VNPay / VietQR)" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;size=42;fillColor=#1E293B;strokeColor=#0F172A;fontColor=#FFFFFF;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1220" y="130" width="150" height="880" as="geometry"/>
+        </mxCell>
+        <mxCell id="act-w1" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#CBD5E1;strokeColor=#475569;" vertex="1" parent="1">
+          <mxGeometry x="360" y="200" width="12" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="act-a1" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#CBD5E1;strokeColor=#475569;" vertex="1" parent="1">
+          <mxGeometry x="820" y="240" width="12" height="160" as="geometry"/>
+        </mxCell>
+        <mxCell id="act-d1" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#CBD5E1;strokeColor=#475569;" vertex="1" parent="1">
+          <mxGeometry x="1055" y="270" width="12" height="110" as="geometry"/>
+        </mxCell>
+        <mxCell id="act-gw" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#CBD5E1;strokeColor=#475569;" vertex="1" parent="1">
+          <mxGeometry x="1290" y="520" width="12" height="180" as="geometry"/>
+        </mxCell>
+        <mxCell id="act-a2" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#CBD5E1;strokeColor=#475569;" vertex="1" parent="1">
+          <mxGeometry x="820" y="640" width="12" height="140" as="geometry"/>
+        </mxCell>
+        <mxCell id="m1" value="1. Chọn ngày, số lượng khách -&gt; Bấm 'Đặt ngay'" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=10;jumpStyle=arc;jumpSize=6;strokeColor=#0F172A;strokeWidth=1.5;labelBackgroundColor=#FFFFFF;fontSize=11;" edge="1" parent="1" source="ll-trav" target="ll-web">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="m2" value="2. Gửi request kèm Cookie HttpOnly" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=10;jumpStyle=arc;jumpSize=6;strokeColor=#0F172A;strokeWidth=1.5;labelBackgroundColor=#FFFFFF;fontSize=11;" edge="1" parent="1" source="ll-web" target="ll-bff">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="m3" value="3. Forward request + Bearer JWT Header" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=10;jumpStyle=arc;jumpSize=6;strokeColor=#0F172A;strokeWidth=1.5;labelBackgroundColor=#FFFFFF;fontSize=11;" edge="1" parent="1" source="ll-bff" target="ll-api">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="m4" value="4. Query Tour.price thật từ DB (Bỏ qua giá client)" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=10;jumpStyle=arc;jumpSize=6;strokeColor=#0F172A;strokeWidth=1.5;labelBackgroundColor=#FFFFFF;fontSize=11;" edge="1" parent="1" source="ll-api" target="ll-db">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="m5" value="5. Trả về Tour record chính xác" style="html=1;verticalAlign=bottom;endArrow=open;endFill=0;dashed=1;endSize=8;edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=10;jumpStyle=arc;jumpSize=6;strokeColor=#64748B;strokeWidth=1.2;labelBackgroundColor=#FFFFFF;fontSize=11;" edge="1" parent="1" source="ll-db" target="ll-api">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="m6" value="6. Calculate total = price * pax &amp; Tạo Booking pending" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=10;jumpStyle=arc;jumpSize=6;strokeColor=#0F172A;strokeWidth=1.5;labelBackgroundColor=#FFFFFF;fontSize=11;" edge="1" parent="1" source="ll-api" target="ll-db">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="m7" value="7. Return Booking ID + Total Price chính xác" style="html=1;verticalAlign=bottom;endArrow=open;endFill=0;dashed=1;endSize=8;edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=10;jumpStyle=arc;jumpSize=6;strokeColor=#64748B;strokeWidth=1.2;labelBackgroundColor=#FFFFFF;fontSize=11;" edge="1" parent="1" source="ll-api" target="ll-web">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="m8" value="8. Điều hướng sang trang thanh toán /booking/[id]/payment" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=10;jumpStyle=arc;jumpSize=6;strokeColor=#0F172A;strokeWidth=1.5;labelBackgroundColor=#FFFFFF;fontSize=11;" edge="1" parent="1" source="ll-web" target="ll-trav">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="m9" value="9. Chọn VNPay / VietQR -&gt; Tạo payment URL / EMVCo QR" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=10;jumpStyle=arc;jumpSize=6;strokeColor=#0F172A;strokeWidth=1.5;labelBackgroundColor=#FFFFFF;fontSize=11;" edge="1" parent="1" source="ll-trav" target="ll-gw">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="m10" value="10. Du khách quét QR hoặc nhập thẻ thanh toán" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=10;jumpStyle=arc;jumpSize=6;strokeColor=#0F172A;strokeWidth=1.5;labelBackgroundColor=#FFFFFF;fontSize=11;" edge="1" parent="1" source="ll-trav" target="ll-gw">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="m11" value="11. Webhook Server-to-Server IPN (Xác thực chữ ký HMAC)" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=10;jumpStyle=arc;jumpSize=6;strokeColor=#0F172A;strokeWidth=1.5;labelBackgroundColor=#FFFFFF;fontSize=11;" edge="1" parent="1" source="ll-gw" target="ll-api">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="m12" value="12. Cập nhật Booking -&gt; 'confirmed' &amp; Tạo Transaction" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=10;jumpStyle=arc;jumpSize=6;strokeColor=#0F172A;strokeWidth=1.5;labelBackgroundColor=#FFFFFF;fontSize=11;" edge="1" parent="1" source="ll-api" target="ll-db">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="m13" value="13. Polling / Webhook nhận kết quả thành công -&gt; /booking/[id]/success" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=10;jumpStyle=arc;jumpSize=6;strokeColor=#0F172A;strokeWidth=1.5;labelBackgroundColor=#FFFFFF;fontSize=11;" edge="1" parent="1" source="ll-api" target="ll-web">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

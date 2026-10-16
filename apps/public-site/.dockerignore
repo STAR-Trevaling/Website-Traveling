@@ -1,0 +1,12 @@
+node_modules
+.next
+.git
+.turbo
+*.log
+.DS_Store
+.env.local
+.env.*.local
+e2e/
+playwright.config.ts
+*.tsbuildinfo
+*.md

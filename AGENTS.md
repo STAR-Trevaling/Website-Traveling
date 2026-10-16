@@ -63,6 +63,9 @@ Then choose the **minimum useful skill set**. Never invoke all skills as a ritua
 | Deploy to Vercel | Next.js deployment workflow | backend/database deployment |
 | Remotion | React-based video/motion assets are explicitly in scope | ordinary UI animation |
 | Professional README Crafting | GitHub README, project showcase, developer documentation | code implementation |
+| Brand Identity & Logo | brand name standardization (STAR), logo design, star emblem, visual lockups | permission to override core product architecture |
+| Draw.io Diagramming | interactive drag-and-drop UML diagrams, system architecture .drawio XML | replacing code-level implementation |
+
 
 ### Recommended sequences
 - Backend feature: `Jev -> Caveman -> Brainstorming (only if ambiguous) -> TDD -> Superpowers`.
