@@ -104,9 +104,23 @@ class ItineraryPlanner:
 
         # 4. Pace Extraction
         pace = "moderate"
-        if any(w in msg_lower for w in ["thong thả", "thong tha", "nhẹ nhàng", "nhe nhang", "nghỉ dưỡng", "relaxed"]):
+        if any(
+            w in msg_lower
+            for w in ["thong thả", "thong tha", "nhẹ nhàng", "nhe nhang", "nghỉ dưỡng", "relaxed"]
+        ):
             pace = "relaxed"
-        elif any(w in msg_lower for w in ["dày đặc", "day dac", "năng động", "nang dong", "khám phá nhiều", "fast", "packed"]):
+        elif any(
+            w in msg_lower
+            for w in [
+                "dày đặc",
+                "day dac",
+                "năng động",
+                "nang dong",
+                "khám phá nhiều",
+                "fast",
+                "packed",
+            ]
+        ):
             pace = "fast"
 
         # 5. Interests Extraction
@@ -180,7 +194,9 @@ class ItineraryPlanner:
 
         if not dest and dest_raw:
             dest = Destination.objects.filter(
-                Q(name__icontains=dest_raw) | Q(name_en__icontains=dest_raw) | Q(slug__icontains=dest_raw),
+                Q(name__icontains=dest_raw)
+                | Q(name_en__icontains=dest_raw)
+                | Q(slug__icontains=dest_raw),
                 is_published=True,
             ).first()
 
@@ -206,7 +222,9 @@ class ItineraryPlanner:
         # 3. Query Published Tours for this Destination
         published_tours = list(
             Tour.objects.filter(
-                Q(destination=dest) | Q(destination_name__icontains=dest.name) | Q(slug__icontains=dest.slug),
+                Q(destination=dest)
+                | Q(destination_name__icontains=dest.name)
+                | Q(slug__icontains=dest.slug),
                 is_published=True,
             ).order_by("-is_featured", "-rating")[:3]
         )
@@ -249,7 +267,9 @@ class ItineraryPlanner:
                 afternoon = f"[Nghỉ ngơi] {afternoon}. Dành thời gian nghỉ ngơi thư thái."
             elif pace == "fast":
                 morning = f"[Khởi hành sớm] {morning}. Tiếp tục check-in các điểm lân cận."
-                afternoon = f"[Tăng tốc trải nghiệm] {afternoon} kết hợp trải nghiệm hoạt động vận động."
+                afternoon = (
+                    f"[Tăng tốc trải nghiệm] {afternoon} kết hợp trải nghiệm hoạt động vận động."
+                )
 
             days_plan.append(
                 {
@@ -265,10 +285,9 @@ class ItineraryPlanner:
         base_tour_price = float(base_tour.price) if base_tour else 0.0
         has_tour_package = base_tour is not None
 
-        tour_inclusions = base_tour.included if (base_tour and isinstance(base_tour.included, list)) else []
-        incl_text = " ".join(tour_inclusions).lower()
-        has_room_incl = any(k in incl_text for k in ["khách sạn", "resort", "phòng", "homestay", "lưu trú"])
-        has_meal_incl = any(k in incl_text for k in ["ăn", "bữa", "buffet", "ẩm thực"])
+        tour_inclusions = (
+            base_tour.included if (base_tour and isinstance(base_tour.included, list)) else []
+        )
 
         if has_tour_package:
             # Package already covers hotel room, tour transport, and scheduled meals
@@ -341,7 +360,9 @@ class ItineraryPlanner:
             )
 
         # 8. Build Markdown Reply Text
-        pace_label = "Vừa phải" if pace == "moderate" else ("Thong thả" if pace == "relaxed" else "Dày đặc")
+        pace_label = (
+            "Vừa phải" if pace == "moderate" else ("Thong thả" if pace == "relaxed" else "Dày đặc")
+        )
         markdown_lines = [
             "Dạ chào Quý khách! Dựa trên cơ sở dữ liệu điểm đến chính thức của STAR Travels, em xin gửi gợi ý lịch trình trải nghiệm chi tiết:\n",
             f"**LỊCH TRÌNH KHÁM PHÁ {dest.name.upper()} {days} NGÀY {max(1, days - 1)} ĐÊM**\n",

@@ -1,12 +1,13 @@
 import json
 from unittest.mock import MagicMock, patch
 
+from django.test import override_settings
+
 from assistant.services.jev_router import (
     JevRouteSelector,
     classify_route_deterministic,
     sanitize_for_router,
 )
-from django.test import override_settings
 
 
 def test_sanitize_for_router_masks_pii():
@@ -44,7 +45,9 @@ def test_deterministic_classification_intents():
     assert route_know == "knowledge"
 
     # 6. Ambiguous / Vague input returns None
-    route_amb = classify_route_deterministic("Tôi đang rảnh tuần sau, muốn đi chơi đâu đó nghỉ ngơi")
+    route_amb = classify_route_deterministic(
+        "Tôi đang rảnh tuần sau, muốn đi chơi đâu đó nghỉ ngơi"
+    )
     assert route_amb is None
 
 
@@ -55,7 +58,9 @@ def test_ambiguous_intent_falls_back_when_jev_disabled():
     assert route == "clarify"
     assert source == "deterministic_fallback"
 
-    route_with_chunks, source_with_chunks = JevRouteSelector.select_route(query=query, chunks_count=2)
+    route_with_chunks, source_with_chunks = JevRouteSelector.select_route(
+        query=query, chunks_count=2
+    )
     assert route_with_chunks == "knowledge"
     assert source_with_chunks == "deterministic_fallback"
 
@@ -82,7 +87,13 @@ def test_jev_choice_pilot_invoked_when_enabled():
         call_req = mock_urlopen.call_args[0][0]
         assert call_req.get_header("Authorization") == "Bearer test_jev_secret_key_2026"
         req_body = json.loads(call_req.data.decode("utf-8"))
-        assert req_body["choices"] == ["knowledge", "discovery", "itinerary", "lead_inquiry", "clarify"]
+        assert req_body["choices"] == [
+            "knowledge",
+            "discovery",
+            "itinerary",
+            "lead_inquiry",
+            "clarify",
+        ]
 
 
 @override_settings(

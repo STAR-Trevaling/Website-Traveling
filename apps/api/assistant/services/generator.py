@@ -612,7 +612,10 @@ def generate_response(
                 "[ACCOMMODATION_CARD: topas-ecolodge-sapa]"
             )
             return reply, []
-        if any(k in q_norm for k in ["hà nội", "ha noi", "hanoi", "hn", "thủ đô", "thang long", "ho guom"]):
+        if any(
+            k in q_norm
+            for k in ["hà nội", "ha noi", "hanoi", "hn", "thủ đô", "thang long", "ho guom"]
+        ):
             reply = (
                 "Dạ tại **Hà Nội**, hai kiệt tác lưu trú sang trọng bậc nhất là khách sạn di sản **Sofitel Legend Metropole Hanoi** (thành lập từ năm 1901) "
                 "và khách sạn boutique nghệ thuật Opera **Capella Hanoi**.\n\n"

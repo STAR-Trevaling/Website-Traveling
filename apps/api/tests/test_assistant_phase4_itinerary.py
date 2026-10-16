@@ -1,4 +1,6 @@
 import pytest
+from rest_framework.test import APIClient
+
 from assistant.models import (
     AssistantConversation,
     AssistantKnowledgeChunk,
@@ -7,7 +9,6 @@ from assistant.models import (
 from assistant.services.itinerary_planner import ItineraryPlanner
 from destinations.models import Destination
 from integrations.models import IntegrationOutbox
-from rest_framework.test import APIClient
 from tours.models import Tour
 
 
@@ -233,4 +234,3 @@ def test_plan_itinerary_transit_realism_dalat(db):
     # Verify no unproven optimization claims
     assert "tối ưu dựa trên dữ liệu" not in msg
     assert "gợi ý tham khảo" in msg
-

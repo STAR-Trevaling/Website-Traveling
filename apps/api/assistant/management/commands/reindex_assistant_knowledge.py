@@ -261,7 +261,12 @@ class Command(BaseCommand):
         ]
         for p_slug, p_title, p_vi, p_en in policy_items:
             content_hash = compute_content_hash(p_vi)
-            meta = {"type": "policy", "category": "policy", "slug": p_slug, "content_hash": content_hash}
+            meta = {
+                "type": "policy",
+                "category": "policy",
+                "slug": p_slug,
+                "content_hash": content_hash,
+            }
 
             existing = AssistantKnowledgeChunk.objects.filter(
                 entity_type=AssistantKnowledgeChunk.EntityType.POLICY,

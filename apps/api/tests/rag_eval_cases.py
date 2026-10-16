@@ -85,7 +85,6 @@ RAG_EVAL_FIXTURES: list[dict[str, Any]] = [
         "expected_keywords": ["đà nẵng", "diff", "pháo hoa"],
         "expect_lead": False,
     },
-
     # ─── 2. Heritage & History Inquiries ──────────────────────────────────
     {
         "id": "EVAL-08-HERITAGE-HOIAN",
@@ -120,7 +119,6 @@ RAG_EVAL_FIXTURES: list[dict[str, Any]] = [
         "expected_keywords": ["hoa lư", "tràng an"],
         "expect_lead": False,
     },
-
     # ─── 3. Tour Catalog & Price Lookup ───────────────────────────────────
     {
         "id": "EVAL-11-TOUR-HALONG-PRICE",
@@ -155,7 +153,6 @@ RAG_EVAL_FIXTURES: list[dict[str, Any]] = [
         "expected_keywords": ["hoàn hủy", "50%"],
         "expect_lead": False,
     },
-
     # ─── 4. Accommodations & Restaurants (Referrals) ──────────────────────
     {
         "id": "EVAL-14-HOTEL-PHUQUOC",
@@ -177,7 +174,6 @@ RAG_EVAL_FIXTURES: list[dict[str, Any]] = [
         "expected_keywords": ["gia restaurant", "tầm vị"],
         "expect_lead": False,
     },
-
     # ─── 5. English Queries (Bilingual Verification) ──────────────────────
     {
         "id": "EVAL-16-VISA-EN",
@@ -212,7 +208,6 @@ RAG_EVAL_FIXTURES: list[dict[str, Any]] = [
         "expected_keywords": ["autumn", "weather", "north"],
         "expect_lead": False,
     },
-
     # ─── 6. Zero Data / Honest No-Evidence Queries ────────────────────────
     {
         "id": "EVAL-19-UNKNOWN-DESTINATION",
@@ -236,7 +231,6 @@ RAG_EVAL_FIXTURES: list[dict[str, Any]] = [
         "expected_keywords": ["chưa có", "liên hệ"],
         "expect_lead": False,
     },
-
     # ─── 7. Security: Prompt Injection & Jailbreaks (EV-19 to EV-22) ──────
     {
         "id": "EVAL-21-INJECTION-PRICE-TAMPER",
@@ -283,7 +277,6 @@ RAG_EVAL_FIXTURES: list[dict[str, Any]] = [
         "expected_keywords": ["DROP TABLE"],
         "expect_lead": True,
     },
-
     # ─── 8. Lead Capture & Explicit Consent ───────────────────────────────
     {
         "id": "EVAL-26-LEAD-EXPLICIT-CONSENT",
@@ -306,7 +299,6 @@ RAG_EVAL_FIXTURES: list[dict[str, Any]] = [
         "expect_lead": False,  # MUST NOT auto-create CRM lead
         "has_explicit_consent": False,
     },
-
     # ─── 9. Itinerary Suggestion Requests ─────────────────────────────────
     {
         "id": "EVAL-28-ITINERARY-3D2N-DANANG",
@@ -326,7 +318,6 @@ RAG_EVAL_FIXTURES: list[dict[str, Any]] = [
         "expected_keywords": ["đà lạt", "2 ngày 1 đêm"],
         "expect_lead": False,
     },
-
     # ─── 10. Ambiguous / Clarification Inquiries ──────────────────────────
     {
         "id": "EVAL-30-AMBIGUOUS-TRAVEL",
@@ -346,7 +337,6 @@ RAG_EVAL_FIXTURES: list[dict[str, Any]] = [
         "expected_keywords": ["khu vực", "ẩm thực"],
         "expect_lead": False,
     },
-
     # ─── 11. Season & Cuisine Landmark Queries ────────────────────────────
     {
         "id": "EVAL-32-CUISINE-HALONG",
