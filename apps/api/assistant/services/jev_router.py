@@ -194,7 +194,7 @@ class JevRouteSelector:
                 },
                 method="POST",
             )
-            with urllib.request.urlopen(req, timeout=timeout) as resp:
+            with urllib.request.urlopen(req, timeout=timeout) as resp:  # nosec B310
                 resp_data = json.loads(resp.read().decode("utf-8"))
                 chosen_choice = resp_data.get("choice") or resp_data.get("route")
                 latency_ms = int((time.time() - start_time) * 1000)
