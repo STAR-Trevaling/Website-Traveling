@@ -4,6 +4,7 @@ from typing import Any
 from unittest.mock import MagicMock, patch
 
 import pytest
+
 from assistant.models import AssistantConversation, AssistantLeadCapture
 from integrations.models import IntegrationOutbox
 from integrations.tasks import dispatch_outbox_event
@@ -100,9 +101,11 @@ def test_outbox_dispatch_exhaustion_marks_failed():
         retry_count=0,
     )
 
-    with patch("urllib.request.urlopen", side_effect=Exception("Gateway Timeout 504")):
-        with patch.object(dispatch_task, "max_retries", 1):
-            dispatch_task.apply(args=[str(outbox.id)], retries=1)
+    with (
+        patch("urllib.request.urlopen", side_effect=Exception("Gateway Timeout 504")),
+        patch.object(dispatch_task, "max_retries", 1),
+    ):
+        dispatch_task.apply(args=[str(outbox.id)], retries=1)
 
     outbox.refresh_from_db()
     lead.refresh_from_db()

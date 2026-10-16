@@ -49,6 +49,7 @@ class AssistantLeadCaptureAdmin(admin.ModelAdmin):
 
         from django.contrib import messages
         from django.utils import timezone
+
         from integrations.models import IntegrationOutbox
         from integrations.tasks import dispatch_outbox_event
 

@@ -218,7 +218,9 @@ class AssistantConversationViewSet(viewsets.ModelViewSet):
                         }
                     )
             except Exception as exc:
-                logger.warning("Failed to fetch accommodation referral cards: %s", exc, exc_info=True)
+                logger.warning(
+                    "Failed to fetch accommodation referral cards: %s", exc, exc_info=True
+                )
 
         # 4.2 Fetch Restaurant Referral Cards
         found_res_slugs = re.findall(r"\[RESTAURANT_CARD:\s*([\w-]+)\]", reply_text)
@@ -271,7 +273,10 @@ class AssistantConversationViewSet(viewsets.ModelViewSet):
                             "href": meta.get("guide_route", f"/guide/{gc.entity_slug}"),
                             "title": guide_title,
                             "category": meta.get("category", "guide"),
-                            "shortDesc": (gc.content_en if locale == "en" and gc.content_en else gc.content_vi)[:140] + "...",
+                            "shortDesc": (
+                                gc.content_en if locale == "en" and gc.content_en else gc.content_vi
+                            )[:140]
+                            + "...",
                             "badge": "Cẩm Nang STAR",
                             "iconName": "Compass",
                         }
@@ -343,7 +348,9 @@ class AssistantConversationViewSet(viewsets.ModelViewSet):
                     )
                     cast(Any, dispatch_outbox_event).delay(str(outbox.id))
                 except Exception as exc:
-                    logger.warning("Failed to enqueue ai.lead.created outbox event: %s", exc, exc_info=True)
+                    logger.warning(
+                        "Failed to enqueue ai.lead.created outbox event: %s", exc, exc_info=True
+                    )
 
         # 6. Save Assistant Message
         structured_payload: dict[str, Any] = {

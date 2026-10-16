@@ -1,4 +1,6 @@
 import pytest
+from rest_framework.test import APIClient
+
 from accounts.models import User
 from assistant.models import (
     AssistantConversation,
@@ -6,7 +8,6 @@ from assistant.models import (
     AssistantLeadCapture,
 )
 from integrations.models import IntegrationOutbox
-from rest_framework.test import APIClient
 
 
 @pytest.fixture
@@ -99,10 +100,7 @@ def test_unconsented_phone_does_not_create_crm_lead(api_client):
     # Verify no lead created in DB
     assert AssistantLeadCapture.objects.count() == initial_leads
     # Verify no Outbox event queued to Odoo CRM
-    assert (
-        IntegrationOutbox.objects.filter(event_type="ai.lead.created").count()
-        == initial_outbox
-    )
+    assert IntegrationOutbox.objects.filter(event_type="ai.lead.created").count() == initial_outbox
 
 
 @pytest.mark.django_db
