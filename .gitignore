@@ -92,3 +92,7 @@ scratch/
 *.tmp
 .tempmediaStorage/
 docs/generated/
+playwright-report/
+test-results/
+apps/public-site/playwright-report/
+apps/public-site/test-results/

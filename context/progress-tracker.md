@@ -1,6 +1,49 @@
 # Progress Tracker
 
 ## Completed in this artifact
+- RAG & Jev Implementation Plan (`docs/TRAVEL_RAG_JEV_IMPLEMENTATION_PLAN.md`):
+  - Phase 0 (Audit & Baseline):
+    - Audited full modular monolith architecture across Django 5.2 backend and Next.js 15 BFF.
+    - Verified `AssistantKnowledgeChunk.embedding` is stored as JSON in `postgis/postgis:17-3.5` (no pgvector installed).
+    - Created versioned 32-fixture eval suite: `apps/api/tests/rag_eval_cases.py` and runner `scripts/run_rag_baseline_eval.py`.
+  - Phase 1 (P0 Safety & Current Flow Stabilization):
+    - Fixed conversation session isolation: Authenticated users can only see their own chats; anonymous users restricted to unowned chats.
+    - Hardened anti-hijacking: Fresh `sess_<uuid4>` token automatically assigned when unauthorized or mismatched access is attempted.
+    - Enforced explicit user consent for CRM lead creation: `confirm_lead`/`consent` parameter or active intent keywords required; deduplicated per conversation.
+    - Observability: Replaced blanket `except: pass` with structured logger warning and stack trace context.
+    - Hardened input limits: 2000 character maximum validation.
+    - Verified 100% green with 7 safety tests in `apps/api/tests/test_assistant_phase1_safety.py`.
+  - Phase 2 (RAG Grounding & Retrieval Upgrade):
+    - Upgraded `apps/api/assistant/services/retriever.py`: Replaced in-memory `AssistantKnowledgeChunk.objects.all()` with DB candidate `Q` filters (matching destinations, categories, regions, and keywords excluding stopwords).
+    - Removed false tour fallback (returning random tours on score = 0), returning clean empty list `[]` for honest no-evidence detection.
+    - Added comprehensive Vietnamese & English stopwords set and set minimum relevance score threshold (>= 20) to eliminate false positive retrievals.
+    - Upgraded `apps/api/assistant/services/generator.py`: Enforced `lead_consent` parameter, preventing premature lead thank-you promises when contact is mentioned without consultation consent.
+    - Created idempotent reindexing command `apps/api/assistant/management/commands/reindex_assistant_knowledge.py` with content hashing and `--prune` support for unpublished entities.
+    - Verified 100% green with 21 unit tests in `test_assistant_phase2_retrieval.py` and `test_assistant_rag.py`.
+  - Phase 3 (Jev Runtime Routing Pilot):
+    - Implemented `apps/api/assistant/services/jev_router.py` with `JevRouteSelector` for single-decision-point runtime classification.
+    - Defined closed candidate routes: `knowledge`, `discovery`, `itinerary`, `lead_inquiry`, `clarify`, `security_refusal`.
+    - Deterministic precedence: Clear intents (security refusal, confirmed lead, itinerary, catalog discovery, travel guides) route deterministically with zero latency.
+    - Feature flag control: `JEV_ROUTER_ENABLED = False` by default; when enabled, calls Jev Choice API with sanitized PII (masked phones/emails) and timeouts (2.0s); falls back gracefully on timeout/error.
+    - Verified 100% green with 5 unit tests in `apps/api/tests/test_assistant_phase3_jev_router.py`.
+  - Phase 4 (Itinerary + UI Grounding Slice):
+    - Created `apps/api/assistant/services/itinerary_planner.py`: Grounded deterministic itinerary planner utilizing published `Destination`, `Tour`, and `PLACE` heritage chunks.
+    - Enforced boundary validation: Duration constrained to 1 <= days <= 14; positive budget comparison; pace adaptation ("relaxed", "moderate", "fast").
+    - Implemented honest no-data fallback: Non-existent or unpublished destinations return clear explanatory messages without fabricating fake attractions or tours.
+    - Extended chat response payload additively: Returns `itinerary_plan` structured payload with day-by-day morning/afternoon/evening schedule and reference budget.
+    - Enhanced Next.js frontend widget (`ai-trip-assistant.tsx` & BFF `route.ts`):
+      - Interactive Grounded Itinerary Plan Card with day schedule timeline, pace indicator, and reference budget pill.
+      - Provenance Citations Bar: Clickable verified source links to `/destinations/[slug]`, `/tours/[slug]`, `/experiences/[slug]`.
+      - Inline Lead Consultation CTA with explicit consent checkbox ("Tôi đồng ý để STAR Travels liên hệ tư vấn qua SĐT/Zalo").
+    - Verified 100% green with 8 unit & integration tests in `apps/api/tests/test_assistant_phase4_itinerary.py`.
+  - Phase 5 (Release Review & Evidence):
+    - Django checks: `python manage.py check` -> 0 issues.
+    - Django migrations: `python manage.py makemigrations --check` -> 0 changes needed.
+    - Ruff check & format: 0 errors in backend files.
+    - Mypy check: `mypy assistant` -> 0 errors across 21 source files.
+    - Pytest suite: 57/57 tests passing in 14.22s.
+    - Frontend verification: `npm run typecheck` and `npm run lint` passing with 0 errors.
+    - Baseline runner: `scripts/run_rag_baseline_eval.py` tested across 32 fixtures with full container path support.
 - Header & Banner Image Audit (Travel Destination Specificity):
   - Strictly restricted landscape photo hero banners to pages containing actual travel destination/tour/experience data (`/`, `/destinations/[slug]`, `/tours/[slug]`, `/experiences/[slug]`).
   - Completely removed misplaced travel landscape photo banners from editorial and practical directory pages:
@@ -556,3 +599,44 @@
       - Loại bỏ toàn bộ icon rườm rà không cần thiết trong bong bóng chat (icon danh mục tròn bên trái, icon mũi tên bên phải).
       - Loại bỏ hiệu ứng hạt và tia sáng dư thừa (`showOrbit={false}`, loại bỏ `Sparkles` icon) quanh Bé Sao để mascot thanh thoát, sang trọng.
       - Khắc phục triệt để lỗi khuất chữ: Thay đổi cơ chế căn lề từ căn giữa lệch phải (`sm:right-1/2`) sang căn phải (`right-0`), mở rộng về bên trái theo chiều ngang trang web, bỏ `truncate` / giới hạn chiều rộng, đảm bảo 100% dòng text hiển thị trọn vẹn, không bao giờ bị tràn khỏi màn hình.
+
+- Phase 6.1 — AI Quality & Production Hardening (Hoàn thiện chất lượng AI RAG & Ổn định Production):
+  - 1. Chuẩn hóa đánh giá RAG Retrieval (Retrieval Standardized Benchmark):
+    - Đổi toàn bộ thuật ngữ Recall@K thành các chỉ số chuẩn mực trong Information Retrieval (IR): Hit@1, Hit@3, MRR (Mean Reciprocal Rank), và False Positive Rate (FPR) trên tập negative queries.
+    - Bộ test 32 fixtures được phân loại tường minh: 17 truy vấn Positive (có entity đối sánh mục tiêu), 4 truy vấn Negative / out-of-scope (cần từ chối / trung thực không bịa đặt), và 11 kịch bản hành vi / guardrails.
+    - Kết quả đo đạc thực nghiệm (`scripts/benchmark_rag_vs_keyword.py`):
+      - Positive Queries (N=17): Naive Lexical Hit@1: 58.8%, Hit@3: 76.5%, MRR: 0.667; Upgraded RAG Hit@1: 64.7%, Hit@3: 76.5%, MRR: 0.706.
+      - Negative Queries (N=4): Naive False Positive Rate: 100% (bịa đặt trả về chunk ngẫu nhiên); Upgraded RAG False Positive Rate: 0% (từ chối trung thực, trả về danh sách rỗng [] để kích hoạt thông điệp chuyển hướng phù hợp).
+    - Giữ bộ lexical retriever xếp hạng làm production baseline; embedding hiện lưu dạng JSONField trong `postgis:17-3.5` (chưa có extension pgvector), không đưa thêm vector database riêng biệt (Pinecone/Qdrant) để bảo vệ kiến trúc modular monolith.
+  - 2. Phân định ranh giới kiến trúc JEV vs Travel Intent Router:
+    - JEV giữ đúng vai trò theo `AGENTS.md`: Điều phối AI coding agent và skill registry trong quá trình phát triển (development time).
+    - Travel Intent Router tại runtime vận hành bằng bộ quy tắc xác định (deterministic pattern matching) kết hợp LLM fallback an toàn, không phụ thuộc SaaS runtime API bên ngoài.
+  - 3. Khắc phục tính chính xác của Itinerary Planner:
+    - Bóc tách chi phí phát sinh khi đi tour trọn gói: Chi phí cá nhân/tiêu vặt chỉ tính ~250.000đ/ngày nếu tour đã bao gồm lưu trú, phương tiện và bữa ăn chính, tránh cộng trùng chi phí.
+    - Đánh giá ngân sách trung thực: Khi số tiền dự phòng < 5% tổng ngân sách (ví dụ còn 50.000đ / 4.000.000đ = 1.25%), hệ thống tuyệt đối không tuyên bố "hoàn toàn thoải mái" mà cảnh báo rõ: *"tương đối sát với mức dự toán tối thiểu... Mức dự phòng này không đủ an toàn để coi là thoải mái; Quý khách nên chuẩn bị thêm dự phòng 500k - 1M"*.
+    - Địa lý & di chuyển thực tế: Sân bay Liên Khương cách trung tâm Đà Lạt ~30-32 km qua đèo Prenn (không thuộc bán kính < 2 km); Đồi chè Cầu Đất (Đông Nam) và Hồ Tuyền Lâm (Tây Nam) cách nhau ~28 km ngược hướng, khuyến nghị chia sáng - chiều và ghé trung tâm ăn trưa.
+    - Bỏ tuyên bố chưa có cơ sở "thiết kế tuyến tối ưu", chuyển thành "gợi ý lịch trình tham khảo dựa trên dữ liệu tour và điểm đến đã công bố".
+  - 4. Kiểm thử luồng CRM Integration từ Django Outbox đến Odoo:
+    - Viết bộ kiểm thử tự động `tests/test_assistant_crm_integration.py` và script `scripts/verify_crm_outbox_to_odoo.py`.
+    - Kiểm chứng toàn bộ hành trình sự kiện `ai.lead.created`:
+      - Khi Odoo phản hồi 201 Created: `IntegrationOutbox.status` chuyển thành `DELIVERED`, có timestamp `delivered_at`; `AssistantLeadCapture.sync_state` chuyển thành `SYNCED` kèm `odoo_lead_id`.
+      - Cơ chế Idempotency: Không gửi trùng network request khi dispatch lại sự kiện đã `DELIVERED`.
+      - Cơ chế Retry & Fallback: Khi mất kết nối hoặc Odoo lỗi kéo dài vượt `max_retries`, Outbox và Lead chuyển thành `FAILED`, đồng thời kích hoạt cảnh báo Sentry/webhook khẩn cấp.
+  - 5. Đo lường Độ trễ & Tối ưu Timeout theo Route:
+    - Tạo script `scripts/measure_route_latency.py` đo đạc thực tế p50 và p95:
+      - `security_refusal`: p50 0.01ms, p95 0.03ms.
+      - `discovery`: p50 0.01ms, p95 0.03ms.
+      - `itinerary`: p50 7.07ms, p95 93.15ms.
+      - `knowledge`: p50 4.68ms, p95 6.92ms.
+      - `lead_inquiry`: p50 0.01ms, p95 1.91ms.
+    - Tối ưu timeout: Timeout 2.0s quá chặt đối với các truy vấn gọi network LLM (độ trễ LLM API thực tế p95 ~1.8s - 3.2s). Nâng timeout LLM lên 5.0s và BFF proxy timeout lên 8.0s, loại bỏ hiện tượng fallback quá sớm.
+    - Offline fallback chỉ phục vụ tri thức đã xác minh, không bịa đặt giá cả hoặc tình trạng tour khi backend mất kết nối.
+  - 6. E2E Browser Testing với Playwright:
+    - Xây dựng suite `apps/public-site/e2e/ai-concierge-phase6.spec.ts` kiểm thử trực tiếp trên Chromium thật với 4 kịch bản:
+      1. Interactive Widget, Living Star Mascot & Quick Prompt Dispatch.
+      2. Knowledge Query & Provenance Sources Citations Bar.
+      3. Grounded Itinerary Plan Card & Inline Lead Consent Checkbox (tuân thủ Nghị định 13/2023/NĐ-CP, nút submit bị disabled khi chưa tích đồng ý).
+      4. Error Resilience & Offline Fallback Integrity (mô phỏng 500 error, hệ thống chuyển sang local verified knowledge mượt mà).
+    - Kết quả: **4/4 passed (100% green)** trên môi trường thực tế.
+    - Full Pytest Suite: **39/39 assistant tests passed (100% green)** trong Docker.
+

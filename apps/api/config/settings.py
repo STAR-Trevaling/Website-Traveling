@@ -387,3 +387,10 @@ if SENTRY_DSN:
         import sys
 
         sys.stderr.write(f"Warning: Sentry initialization failed: {_sentry_init_err}\n")
+
+# Jev Runtime Pilot Router Settings (Phase 3)
+JEV_ROUTER_ENABLED = os.getenv("JEV_ROUTER_ENABLED", "0").lower() in ("1", "true", "yes")
+JEV_API_KEY = os.getenv("JEV_API_KEY", "")
+JEV_API_ENDPOINT = os.getenv("JEV_API_ENDPOINT", "https://api.jev.ai/v1/choice")
+JEV_TIMEOUT_SECONDS = float(os.getenv("JEV_TIMEOUT_SECONDS", "2.0"))
+
