@@ -18,35 +18,28 @@ Thumbs.db
 *.pem
 *.key
 !.env.example
+!apps/public-site/.env.example
 
 # ─── Node & Next.js ──────────────────────────────────────────
 node_modules/
-apps/frontend/node_modules/
-frontend/node_modules/
+apps/public-site/node_modules/
+packages/contracts/node_modules/
 .next/
-apps/frontend/.next/
-frontend/.next/
+apps/public-site/.next/
 out/
-apps/frontend/out/
-frontend/out/
+apps/public-site/out/
 .cache/
-apps/frontend/.cache/
-frontend/.cache/
+apps/public-site/.cache/
 build/
-apps/frontend/build/
-frontend/build/
+apps/public-site/build/
 dist/
-apps/frontend/dist/
-frontend/dist/
+apps/public-site/dist/
 .turbo/
-apps/frontend/.turbo/
-frontend/.turbo/
+apps/public-site/.turbo/
 coverage/
-apps/frontend/coverage/
-frontend/coverage/
+apps/public-site/coverage/
 *.tsbuildinfo
-apps/frontend/tsconfig.tsbuildinfo
-frontend/tsconfig.tsbuildinfo
+apps/public-site/tsconfig.tsbuildinfo
 .pnp
 .pnp.js
 npm-debug.log*
@@ -60,46 +53,42 @@ pnpm-debug.log*
 
 # ─── Python / Django / Backend ───────────────────────────────
 __pycache__/
-apps/backend/__pycache__/
-backend/__pycache__/
+apps/api/**/__pycache__/
 **/*.py[cod]
 **/*$py.class
 .Python
 env/
-apps/backend/env/
-backend/env/
+apps/api/env/
 venv/
-apps/backend/venv/
-backend/venv/
+apps/api/venv/
 .venv/
-apps/backend/.venv/
-backend/.venv/
+apps/api/.venv/
 pip-log.txt
 pip-delete-this-directory.txt
 .pytest_cache/
+apps/api/.pytest_cache/
+.ruff_cache/
+apps/api/.ruff_cache/
+.mypy_cache/
+apps/api/.mypy_cache/
 .coverage
 htmlcov/
 *.egg-info/
 *.sqlite3
 db.sqlite3
-apps/backend/db.sqlite3
-backend/db.sqlite3
-apps/backend/staticfiles/
-backend/staticfiles/
-apps/backend/mediafiles/
-backend/mediafiles/
-apps/backend/media/
-backend/media/
+apps/api/db.sqlite3
+apps/api/staticfiles/
+apps/api/mediafiles/
+apps/api/media/
 
 # ─── Docker & Databases ──────────────────────────────────────
 postgres-data/
 redis-data/
 *.db-journal
 
-# ─── Scratch, Temporary & IDE ────────────────────────────────
+# ─── Scratch, Temporary & Generated ──────────────────────────
 scratch/
 *.log
 *.tmp
 .tempmediaStorage/
 docs/generated/
-/frontend/
