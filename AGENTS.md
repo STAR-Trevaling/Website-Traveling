@@ -65,12 +65,14 @@ Then choose the **minimum useful skill set**. Never invoke all skills as a ritua
 | Professional README Crafting | GitHub README, project showcase, developer documentation | code implementation |
 | Brand Identity & Logo | brand name standardization (STAR), logo design, star emblem, visual lockups | permission to override core product architecture |
 | Draw.io Diagramming | interactive drag-and-drop UML diagrams, system architecture .drawio XML | replacing code-level implementation |
+| QA Testing | 7-layer test pyramid (Source, Integration, Business, E2E) + 3 cross-cutting layers (Perf, Sec, Rel), 4-verdict triage for red tests | reason to push all tests to slow expensive E2E |
 
 
 ### Recommended sequences
 - Backend feature: `Jev -> Caveman -> Brainstorming (only if ambiguous) -> TDD -> Superpowers`.
 - Database/schema change: `Jev -> Caveman -> TDD -> Superpowers`, with migration/data review mandatory.
 - Bug fix: `Jev -> Caveman -> TDD -> Superpowers`.
+- Quality Assurance / Test Suite: `Jev -> QA Testing -> TDD -> Web Quality`.
 - Frontend later: `Jev -> UI/UX Pro Max -> Matt Pocock Skills -> TDD -> Web Quality`.
 - Documentation: `Jev -> Caveman -> Humanizer`.
 - Deployment: use deployment skill only after tests/build/config checks pass.

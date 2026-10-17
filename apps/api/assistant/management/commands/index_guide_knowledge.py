@@ -14,6 +14,14 @@ class Command(BaseCommand):
         indexed_count = 0
 
         for item in VIETNAM_TRAVEL_GUIDES:
+            metadata: dict[str, object] = {
+                "category": str(item.get("category", "guide")),
+                "title_en": str(item.get("title_en", "")),
+            }
+            raw_meta = item.get("metadata")
+            if isinstance(raw_meta, dict):
+                metadata.update(raw_meta)
+
             chunk, created = AssistantKnowledgeChunk.objects.update_or_create(
                 entity_type=AssistantKnowledgeChunk.EntityType.GUIDE,
                 entity_slug=str(item["slug"]),
@@ -21,11 +29,7 @@ class Command(BaseCommand):
                     "title": str(item["title"]),
                     "content_vi": str(item["content_vi"]),
                     "content_en": str(item.get("content_en", "")),
-                    "metadata": {
-                        "category": item.get("category", "guide"),
-                        "title_en": item.get("title_en", ""),
-                        **item.get("metadata", {}),
-                    },
+                    "metadata": metadata,
                 },
             )
             action_text = "Đã tạo mới" if created else "Đã cập nhật"

@@ -15,7 +15,12 @@ for _candidate_env in (BASE_DIR.parent.parent / ".env", BASE_DIR / ".env"):
                 _line = _line.strip()
                 if _line and not _line.startswith("#") and "=" in _line:
                     _k, _v = _line.split("=", 1)
-                    os.environ.setdefault(_k.strip(), _v.strip())
+                    _val = _v.strip()
+                    if len(_val) >= 2 and (
+                        (_val[0] == '"' and _val[-1] == '"') or (_val[0] == "'" and _val[-1] == "'")
+                    ):
+                        _val = _val[1:-1]
+                    os.environ.setdefault(_k.strip(), _val)
         break
 
 DEBUG = os.getenv("DJANGO_DEBUG", "0") == "1"
@@ -216,20 +221,12 @@ if not ODOO_INBOUND_API_KEY:
     else:
         raise RuntimeError("ODOO_INBOUND_API_KEY is required when DJANGO_DEBUG=0")
 
-# VNPay Payment Gateway Settings
+# VNPay Payment Gateway Settings (Optional / Not enabled by default)
 VNPAY_PAYMENT_URL = os.getenv(
     "VNPAY_PAYMENT_URL", "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html"
 )
 VNPAY_TMN_CODE = os.getenv("VNPAY_TMN_CODE", "")
-if not VNPAY_TMN_CODE and IS_DEV_OR_TEST:
-    VNPAY_TMN_CODE = "STAR_TMN_DEV_TEST"
-
 VNPAY_HASH_SECRET = os.getenv("VNPAY_HASH_SECRET", "")
-if not VNPAY_HASH_SECRET:
-    if IS_DEV_OR_TEST:
-        VNPAY_HASH_SECRET = "STAR_TEST_SECRET_HASH_KEY_987654321_TEST"
-    else:
-        raise RuntimeError("VNPAY_HASH_SECRET is required when DJANGO_DEBUG=0")
 VNPAY_RETURN_URL = os.getenv("VNPAY_RETURN_URL", "http://localhost:3000/payment/return")
 
 # VietQR Payment Gateway Settings (NAPAS 247 Standard)
@@ -393,3 +390,16 @@ JEV_ROUTER_ENABLED = os.getenv("JEV_ROUTER_ENABLED", "0").lower() in ("1", "true
 JEV_API_KEY = os.getenv("JEV_API_KEY", "")
 JEV_API_ENDPOINT = os.getenv("JEV_API_ENDPOINT", "https://api.jev.ai/v1/choice")
 JEV_TIMEOUT_SECONDS = float(os.getenv("JEV_TIMEOUT_SECONDS", "2.0"))
+
+# Jev + RAG Evidence Gated Retrieval Pipeline (Full System Addon)
+JEV_EVIDENCE_ENABLED = os.getenv("JEV_EVIDENCE_ENABLED", "0").lower() in ("1", "true", "yes")
+TYPESAFE_API_KEY = os.getenv("TYPESAFE_API_KEY", "")
+RAG_EMBEDDING_ENDPOINT = os.getenv("RAG_EMBEDDING_ENDPOINT", "https://api.openai.com/v1/embeddings")
+RAG_EMBEDDING_API_KEY = os.getenv("RAG_EMBEDDING_API_KEY", "")
+RAG_EMBEDDING_MODEL = os.getenv("RAG_EMBEDDING_MODEL", "text-embedding-3-small")
+RAG_EMBEDDING_DIMENSIONS = int(os.getenv("RAG_EMBEDDING_DIMENSIONS", "1536"))
+RAG_CHAT_ENDPOINT = os.getenv("RAG_CHAT_ENDPOINT", "https://api.openai.com/v1/chat/completions")
+RAG_CHAT_API_KEY = os.getenv("RAG_CHAT_API_KEY", "")
+RAG_CHAT_MODEL = os.getenv("RAG_CHAT_MODEL", "gpt-4o-mini")
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")

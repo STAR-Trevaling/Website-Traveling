@@ -27,6 +27,9 @@ services:
   backend:
     build: ./apps/api
     env_file: .env
+    environment:
+      POSTGRES_HOST: db
+      REDIS_URL: redis://redis:6379/0
     command: gunicorn config.wsgi:application --bind 0.0.0.0:8000 --workers 2 --timeout 60
     volumes:
       - ./apps/api:/app
@@ -41,6 +44,9 @@ services:
   worker:
     build: ./apps/api
     env_file: .env
+    environment:
+      POSTGRES_HOST: db
+      REDIS_URL: redis://redis:6379/0
     command: celery -A config worker -l INFO
     volumes:
       - ./apps/api:/app
@@ -54,7 +60,7 @@ services:
     build: ./apps/public-site
     env_file: .env
     environment:
-      BACKEND_URL: ${BACKEND_URL:-http://backend:8000/api/v1}
+      BACKEND_URL: http://backend:8000/api/v1
       NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-http://localhost:3000}
     ports:
       - "3000:3000"

@@ -5,6 +5,7 @@ from .models import (
     AssistantKnowledgeChunk,
     AssistantLeadCapture,
     AssistantMessage,
+    AssistantRagVectorChunk,
 )
 
 
@@ -111,3 +112,26 @@ class AssistantKnowledgeChunkAdmin(admin.ModelAdmin):
     list_filter = ("entity_type", "updated_at")
     search_fields = ("title", "entity_slug", "content_vi")
     readonly_fields = ("id", "created_at", "updated_at")
+
+
+@admin.register(AssistantRagVectorChunk)
+class AssistantRagVectorChunkAdmin(admin.ModelAdmin):
+    list_display = ("title", "source_type", "source_id", "locale", "published", "updated_at")
+    list_filter = ("source_type", "locale", "published", "updated_at")
+    search_fields = ("title", "source_id", "content", "source_url")
+    readonly_fields = (
+        "chunk_id",
+        "source_id",
+        "source_type",
+        "title",
+        "content",
+        "locale",
+        "source_url",
+        "content_hash",
+        "published",
+        "metadata",
+        "updated_at",
+    )
+
+    def has_add_permission(self, request):
+        return False

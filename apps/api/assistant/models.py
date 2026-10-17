@@ -133,3 +133,26 @@ class AssistantKnowledgeChunk(models.Model):
 
     def __str__(self):
         return f"[{self.entity_type}] {self.title}"
+
+
+class AssistantRagVectorChunk(models.Model):
+    chunk_id = models.CharField(max_length=255, primary_key=True)
+    source_id = models.CharField(max_length=255, db_index=True)
+    source_type = models.CharField(max_length=64)
+    title = models.CharField(max_length=255)
+    content = models.TextField()
+    locale = models.CharField(max_length=8, default="vi")
+    source_url = models.CharField(max_length=512)
+    content_hash = models.CharField(max_length=64)
+    published = models.BooleanField(default=False)
+    metadata = models.JSONField(default=dict, blank=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        managed = False
+        db_table = "assistant_rag_vector_chunk"
+        verbose_name = "RAG Vector Chunk"
+        verbose_name_plural = "RAG Vector Chunks"
+
+    def __str__(self):
+        return f"[{self.source_type}] {self.title} ({self.source_id})"

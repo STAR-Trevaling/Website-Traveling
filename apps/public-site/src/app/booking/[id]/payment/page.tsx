@@ -42,11 +42,22 @@ export default async function BookingPaymentPage({
   const isEn = cookieStore.get("star_travels_locale")?.value === "en";
 
   const initialGateway: NonNullable<PaymentClientProps["initialGateway"]> =
-    resolvedSearch.gateway === "cash"
-      ? "cash"
-      : resolvedSearch.gateway === "vnpay"
-      ? "vnpay"
-      : "vietqr";
+    resolvedSearch.gateway === "cash" ? "cash" : "vietqr";
+
+  const tourTitle = typeof resolvedSearch.tour_title === "string" ? resolvedSearch.tour_title : undefined;
+  const tourSlug = typeof resolvedSearch.tour_slug === "string" ? resolvedSearch.tour_slug : undefined;
+  const tourImage = typeof resolvedSearch.tour_image === "string" ? resolvedSearch.tour_image : undefined;
+  const departureDate = typeof resolvedSearch.departure_date === "string" ? resolvedSearch.departure_date : undefined;
+  const guests = typeof resolvedSearch.guests === "string" ? resolvedSearch.guests : undefined;
+
+  const travelerName =
+    (typeof resolvedSearch.traveler_name === "string" && resolvedSearch.traveler_name) ||
+    user.username ||
+    user.email ||
+    "Khách Hàng STAR Travels";
+
+  const travelerPhone =
+    (typeof resolvedSearch.phone === "string" && resolvedSearch.phone) || "";
 
   return (
     <>
@@ -57,6 +68,14 @@ export default async function BookingPaymentPage({
           initialBookingCode={bookingCode}
           initialAmount={amount}
           initialGateway={initialGateway}
+          tourTitle={tourTitle}
+          tourSlug={tourSlug}
+          tourImage={tourImage}
+          departureDate={departureDate}
+          guests={guests}
+          travelerName={travelerName}
+          travelerEmail={user.email || ""}
+          travelerPhone={travelerPhone}
           isEn={isEn}
         />
       </main>

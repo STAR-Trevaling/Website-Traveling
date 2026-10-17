@@ -5,7 +5,7 @@ from .models import PaymentTransaction
 
 class PaymentCreateSerializer(serializers.Serializer):
     booking_code = serializers.CharField(max_length=64, required=True)
-    gateway = serializers.CharField(max_length=32, default="vnpay", required=False)
+    gateway = serializers.CharField(max_length=32, default="vietqr", required=False)
     bank_code = serializers.CharField(max_length=32, required=False, allow_blank=True, default="")
     locale = serializers.CharField(max_length=8, default="vn", required=False)
     return_url = serializers.URLField(required=False, allow_blank=True, default=None)
