@@ -1,5 +1,6 @@
 import os
 import re
+from urllib.parse import urlparse
 
 from django.conf import settings
 
@@ -7,6 +8,18 @@ from assistant.models import AssistantKnowledgeChunk
 
 PHONE_REGEX = re.compile(r"(\+84|0)(3[2-9]|5[6|8|9]|7[0|6-9]|8[1-9]|9[0-9])[0-9]{7}")
 EMAIL_REGEX = re.compile(r"[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+")
+
+
+def _is_google_endpoint(url: str) -> bool:
+    """Validate whether URL belongs to Google APIs hostname safely."""
+    if not url:
+        return False
+    try:
+        parsed = urlparse(url)
+        hostname = (parsed.hostname or "").lower()
+        return hostname == "googleapis.com" or hostname.endswith(".googleapis.com")
+    except Exception:
+        return False
 
 
 def extract_lead_info(message: str) -> dict:
@@ -202,7 +215,7 @@ def generate_response(
     is_gemini = (
         bool(getattr(settings, "GEMINI_API_KEY", "") or os.getenv("GEMINI_API_KEY", ""))
         or "gemini" in model.lower()
-        or "googleapis.com" in endpoint.lower()
+        or _is_google_endpoint(endpoint)
     )
     if is_gemini:
         if not endpoint:
