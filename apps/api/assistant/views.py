@@ -3,6 +3,7 @@ import re
 import uuid
 from typing import Any, cast
 
+from django.conf import settings
 from django.utils import timezone
 from rest_framework import permissions, status, viewsets
 from rest_framework.decorators import action
@@ -146,6 +147,8 @@ class AssistantConversationViewSet(viewsets.ModelViewSet):
 
         itinerary_plan_payload = None
         itinerary_sources = []
+        jev_sources: list[dict[str, Any]] = []
+        jev_status: str | None = None
 
         if route_det == "itinerary":
             params = ItineraryPlanner.extract_itinerary_params(message)
@@ -156,6 +159,41 @@ class AssistantConversationViewSet(viewsets.ModelViewSet):
             if itinerary_res.get("success"):
                 itinerary_plan_payload = itinerary_res.get("structured_plan")
             chunks = []
+        elif getattr(settings, "JEV_EVIDENCE_ENABLED", False):
+            from .jev_rag_v2.django_bridge import make_pipeline
+
+            try:
+                pipeline = make_pipeline(locale=locale)
+                outcome = pipeline.ask(message, locale=locale)
+                reply_text = outcome.text
+                jev_sources = [
+                    {
+                        "entity_type": "knowledge",
+                        "entity_id": None,
+                        "slug": s.get("id", ""),
+                        "title": s.get("title", ""),
+                        "url": s.get("url", ""),
+                    }
+                    for s in outcome.sources
+                ]
+                jev_status = outcome.status
+                chunks = []
+                recommended_tour_slugs = []
+            except Exception as exc:
+                logger.warning(
+                    "Jev evidence pipeline error: %s; falling back to legacy RAG",
+                    exc,
+                    exc_info=True,
+                )
+                chunks = search_knowledge(query=message, locale=locale, limit=4)
+                reply_text, recommended_tour_slugs = generate_response(
+                    query=message,
+                    chunks=chunks,
+                    locale=locale,
+                    lead_consent=has_confirmed_consent,
+                )
+                jev_sources = []
+                jev_status = None
         else:
             # 3. RAG Knowledge Retrieval
             chunks = search_knowledge(query=message, locale=locale, limit=4)
@@ -370,7 +408,7 @@ class AssistantConversationViewSet(viewsets.ModelViewSet):
         )
 
         # 7. Collect verified provenance sources
-        sources = list(itinerary_sources)
+        sources = list(itinerary_sources) + list(jev_sources)
         for c in chunks:
             c_meta = c.metadata or {}
             canonical_url = c_meta.get("guide_route")
@@ -397,6 +435,12 @@ class AssistantConversationViewSet(viewsets.ModelViewSet):
         # 8. Route classification tag (via JevRouteSelector with deterministic priority)
         if route_det == "itinerary":
             route = "itinerary"
+        elif jev_status == "answered":
+            route = "knowledge"
+            if tour_cards or accommodation_cards or restaurant_cards:
+                route = "discovery"
+        elif jev_status == "abstained":
+            route = "clarify"
         else:
             route, _ = JevRouteSelector.select_route(
                 query=message,

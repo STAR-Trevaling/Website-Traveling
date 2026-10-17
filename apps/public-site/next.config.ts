@@ -1,6 +1,30 @@
 import type { NextConfig } from "next";
+import fs from "node:fs";
 import path from "node:path";
 import { withSentryConfig } from "@sentry/nextjs/config";
+
+// Single Source of Truth: Auto-load master environment variables from root .env
+const rootEnvPath = path.resolve(__dirname, "../../.env");
+if (fs.existsSync(rootEnvPath)) {
+  const envContent = fs.readFileSync(rootEnvPath, "utf-8");
+  for (const line of envContent.split("\n")) {
+    const trimmed = line.trim();
+    if (trimmed && !trimmed.startsWith("#") && trimmed.includes("=")) {
+      const idx = trimmed.indexOf("=");
+      const key = trimmed.slice(0, idx).trim();
+      let val = trimmed.slice(idx + 1).trim();
+      if (
+        val.length >= 2 &&
+        ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'")))
+      ) {
+        val = val.slice(1, -1);
+      }
+      if (!(key in process.env)) {
+        process.env[key] = val;
+      }
+    }
+  }
+}
 
 const nextConfig: NextConfig = {
   output: process.env.NEXT_OUTPUT_STANDALONE === "1" || process.platform !== "win32" ? "standalone" : undefined,

@@ -39,7 +39,7 @@ PostgreSQL + PostGIS    Redis <-> Celery worker
 - `experiences`: localized activities, adventure slots, and booking metadata.
 - `bookings`: transactional tour reservations and affiliate referral bookings (`item_type='tour'|'accommodation_referral'|'restaurant_referral'`).
 - `payments`: payment ledger and gateway integrations (VNPay Sandbox, VietQR NAPAS 247, Cash on Arrival) with price tampering protection.
-- `assistant`: AI Concierge RAG engine (pgvector semantic search, prompt injection defense, lead extraction).
+- `assistant`: AI Concierge RAG engine (Jev RAG v2 post-retrieval evidence evaluation, pgvector exact cosine + PostgreSQL FTS via RRF, prompt injection defense, lead extraction).
 - `accommodations`: luxury hotel/resort catalog, amenities, and affiliate referral partner mapping.
 - `restaurants`: dining venues, Michelin Guide spotlights, culinary styles, and table reservation referral mapping.
 - `partners`: B2B partner application state machine (`submitted` -> `under_review` -> `approved`/`rejected`) with row-level locks.
@@ -66,9 +66,18 @@ PostgreSQL/PostGIS is the source of truth. Redis is cache/ephemeral state only. 
 - State transitions are validated server-side and wrapped in transactions.
 - Browser access/refresh tokens are kept in HttpOnly cookies by Next.js BFF routes.
 - Secrets come from environment variables.
+- AI Assistant PII scrubbing: all customer phone numbers and emails are masked before dispatching retrieval passages to external evaluation/inference providers.
 
-## Search strategy
-MVP uses relational filtering, PostgreSQL-compatible text search primitives and PostGIS nearby queries. Introduce OpenSearch only when measured requirements justify it.
+## Search strategy & Jev RAG v2 Pipeline
+- **Vector + Full-Text Search**: In-database `assistant_rag_vector_chunk` table using `pgvector` (`vector(1536)`) for exact cosine distance combined with PostgreSQL GIN indexed `tsvector` via Reciprocal Rank Fusion (RRF, k=60).
+- **Post-Retrieval Evidence Evaluation**:
+  - `HybridRetriever`: Fetches Top-K candidate passages matching the query.
+  - `JevPassageEvaluator`: Calls TypeSafe System One `/v1/questions` with PII-redacted query/passage pairs, computing passage score (0..100) and noul alignment.
+  - `GatePolicy` (`travel-evidence-v1`): Deterministic evidence gate partitioning candidates into `INCLUDE`, `CONFLICT`, or `EXCLUDE` based on score thresholds (default: min 70.0, conflict delta 15.0).
+  - `ChatGenerator`: OpenAI-compatible LLM generating factual Vietnamese/English responses grounded exclusively on gated evidence, with mandatory `[S1]`, `[S2]` citation validation.
+  - Honest Abstention: Emits deterministic polite refusal when no passages meet evidence gates or conflicting data is detected.
+- **Transactional Ingestion**: Ingestion service computes SHA256 chunk hashes (`chunk_hash`) for idempotent upsert, pruning deleted or unpublished content without full table wipes.
+- **Graceful Isolation**: Controlled via `JEV_EVIDENCE_ENABLED` feature flag; transparent fallback to existing lexical/catalog RAG if disabled or credentials are unconfigured.
 
 ## Scaling path
 Scale Next.js and the Django modular monolith horizontally first. Extract services only when independent scaling, ownership, failure isolation or deployment cadence provides measurable value.
