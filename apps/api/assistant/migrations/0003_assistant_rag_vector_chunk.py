@@ -41,6 +41,20 @@ END $$;
 CREATE INDEX IF NOT EXISTS ix_rag_vector_source ON assistant_rag_vector_chunk(source_id);
 CREATE INDEX IF NOT EXISTS ix_rag_vector_fts ON assistant_rag_vector_chunk USING GIN
   (to_tsvector('simple', title || ' ' || content));
+
+DO $$
+BEGIN
+    BEGIN
+        CREATE EXTENSION IF NOT EXISTS unaccent;
+        CREATE OR REPLACE FUNCTION f_unaccent(text) RETURNS text AS $f$
+        SELECT public.unaccent('public.unaccent', $1)
+        $f$ LANGUAGE sql IMMUTABLE PARALLEL SAFE;
+        CREATE INDEX IF NOT EXISTS ix_rag_vector_fts_unaccent ON assistant_rag_vector_chunk USING GIN
+          (to_tsvector('simple', f_unaccent(title || ' ' || content)));
+    EXCEPTION WHEN undefined_function OR undefined_file OR feature_not_supported OR insufficient_privilege THEN
+        NULL;
+    END;
+END $$;
 """
 
 REVERSE_SQL = """

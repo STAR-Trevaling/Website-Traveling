@@ -1,8 +1,16 @@
 import re
+import unicodedata
 
 from django.db.models import Q
 
 from assistant.models import AssistantKnowledgeChunk
+
+
+def strip_vietnamese_diacritics(text: str) -> str:
+    """Normalize Vietnamese diacritics into ASCII equivalent for robust search matching."""
+    text = text.replace("đ", "d").replace("Đ", "D")
+    text = unicodedata.normalize("NFKD", text)
+    return "".join(c for c in text if not unicodedata.combining(c)).lower()
 
 DESTINATION_KEYWORDS = {
     "ha-long": ["hạ long", "ha long", "vịnh hạ long", "lan hạ", "bái tử long"],
@@ -152,18 +160,25 @@ def search_knowledge(
     Uses multi-field search and semantic entity routing.
     """
     clean_query = query.lower().strip()
+    unaccent_query = strip_vietnamese_diacritics(clean_query)
     words = re.findall(r"\w+", clean_query)
 
-    # 1. Identify matched destinations
+    # 1. Identify matched destinations (bilingual & accent-insensitive)
     matched_dest_slugs = []
     for slug, synonyms in DESTINATION_KEYWORDS.items():
-        if any(syn in clean_query for syn in synonyms):
+        if any(
+            syn in clean_query or strip_vietnamese_diacritics(syn) in unaccent_query
+            for syn in synonyms
+        ):
             matched_dest_slugs.append(slug)
 
     # 2. Identify matched regions
     matched_regions = []
     for reg, synonyms in REGION_KEYWORDS.items():
-        if any(syn in clean_query for syn in synonyms):
+        if any(
+            syn in clean_query or strip_vietnamese_diacritics(syn) in unaccent_query
+            for syn in synonyms
+        ):
             matched_regions.append(reg)
 
     # 3. Policy & FAQ inquiry detection

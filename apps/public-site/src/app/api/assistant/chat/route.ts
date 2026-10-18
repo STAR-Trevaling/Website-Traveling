@@ -10,10 +10,11 @@ export async function POST(request: Request) {
     const locale = payload?.locale === "en" ? "en" : "vi";
     const history = Array.isArray(payload?.history) ? payload.history : [];
 
-    // Attempt backend fetch with 8s timeout to support RAG, planning & synthesis
+    // Attempt backend fetch with configurable timeout (default 25s) to support Jev RAG v2, planning & synthesis
     try {
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 8000);
+      const timeoutMs = parseInt(process.env.BFF_ASSISTANT_TIMEOUT_MS || "25000", 10);
+      const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
 
       const backendRes = await fetch(`${BASE_URL}/assistant/conversations/chat/`, {
         method: "POST",

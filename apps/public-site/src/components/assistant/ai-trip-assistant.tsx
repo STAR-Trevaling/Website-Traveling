@@ -984,8 +984,8 @@ export function AITripAssistant() {
                     <CheckCircle2 className="size-4 shrink-0 text-emerald-600" />
                     <span>
                       {isEnglish
-                        ? "Contact info received! Our private travel concierge will reach out in 15 mins."
-                        : "Đã ghi nhận thông tin! Chuyên viên tư vấn STAR sẽ liên hệ lại trong 15 phút."}
+                        ? "Contact info received! A travel concierge will reach out within working hours (8:00 - 18:00)."
+                        : "Đã ghi nhận thông tin! Chuyên viên STAR sẽ liên hệ trong giờ làm việc (8:00 - 18:00) hoặc đầu giờ sáng tiếp theo."}
                     </span>
                   </div>
                 )}
@@ -1102,6 +1102,13 @@ export function AITripAssistant() {
                 <Send className="size-4" />
               </button>
             </form>
+          </div>
+
+          {/* AI Disclosure & Verification Disclaimer */}
+          <div className="px-3 py-1.5 bg-slate-50 border-t border-slate-100 text-[10px] text-slate-400 text-center leading-tight">
+            {isEnglish
+              ? "Trợ lý AI STAR Concierge • Responses are AI-generated for reference. Please verify visa & travel regulations with authorities."
+              : "Trợ lý AI STAR Concierge • Phản hồi tự động mang tính tham khảo. Vui lòng xác thực quy định thị thực & lịch trình với cơ quan chức năng hoặc Hotline 1900 6868."}
           </div>
         </div>
       )}

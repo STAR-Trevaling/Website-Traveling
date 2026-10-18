@@ -1,4 +1,4 @@
-.PHONY: up down migrate seed backend-check frontend-check
+.PHONY: up down migrate seed api-check public-site-check backend-check frontend-check
 up:
 	docker compose up --build
 
@@ -6,17 +6,21 @@ down:
 	docker compose down
 
 migrate:
-	docker compose run --rm backend python manage.py migrate
+	docker compose run --rm api python manage.py migrate
 
 seed:
-	docker compose run --rm backend python manage.py seed_demo
+	docker compose run --rm api python manage.py seed_demo
 
-backend-check:
-	docker compose run --rm backend python manage.py makemigrations --check --dry-run
-	docker compose run --rm backend ruff check .
-	docker compose run --rm backend mypy .
-	docker compose run --rm backend pytest
+api-check:
+	docker compose run --rm api python manage.py makemigrations --check --dry-run
+	docker compose run --rm api ruff check .
+	docker compose run --rm api mypy .
+	docker compose run --rm api pytest
 
-frontend-check:
-	docker compose run --rm frontend npm run typecheck
-	docker compose run --rm frontend npm run build
+backend-check: api-check
+
+public-site-check:
+	docker compose run --rm public-site npm run typecheck
+	docker compose run --rm public-site npm run build
+
+frontend-check: public-site-check

@@ -8,6 +8,7 @@ from django.utils import timezone
 from rest_framework import permissions, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from rest_framework.throttling import AnonRateThrottle, UserRateThrottle
 
 from integrations.models import IntegrationOutbox
 from integrations.tasks import dispatch_outbox_event
@@ -25,6 +26,14 @@ from .serializers import (
 )
 
 logger = logging.getLogger(__name__)
+
+
+class AssistantChatAnonThrottle(AnonRateThrottle):
+    scope = "assistant_chat_anon"
+
+
+class AssistantChatUserThrottle(UserRateThrottle):
+    scope = "assistant_chat_user"
 
 
 class AssistantConversationViewSet(viewsets.ModelViewSet):
@@ -51,7 +60,12 @@ class AssistantConversationViewSet(viewsets.ModelViewSet):
             return AssistantConversation.objects.filter(session_token=token, user__isnull=True)
         return AssistantConversation.objects.none()
 
-    @action(detail=False, methods=("post",), url_path="chat")
+    @action(
+        detail=False,
+        methods=("post",),
+        url_path="chat",
+        throttle_classes=(AssistantChatAnonThrottle, AssistantChatUserThrottle),
+    )
     def chat(self, request):
         from tours.models import Tour
 
@@ -150,7 +164,34 @@ class AssistantConversationViewSet(viewsets.ModelViewSet):
         jev_sources: list[dict[str, Any]] = []
         jev_status: str | None = None
 
-        if route_det == "itinerary":
+        if route_det == "emergency":
+            if locale == "en":
+                reply_text = (
+                    "🚨 **VIETNAM TRAVEL & MEDICAL EMERGENCY HOTLINES (24/7)** 🚨\n\n"
+                    "If you or your travel companions are facing an immediate emergency in Vietnam, please contact national emergency services immediately (toll-free 24/7):\n\n"
+                    "• **115 - Medical Emergency & Ambulance:** Urgent medical treatment, trauma, accidents, food poisoning.\n"
+                    "• **113 - Police & Public Security Rapid Response:** Theft, robbery, assault, fraud, immediate security intervention.\n"
+                    "• **114 - Fire & Rescue Services:** Fire incidents, drowning, landslides on mountain passes, or trapped situations.\n"
+                    "• **1022 - Vietnam Tourist Support Hotline:** Multilingual emergency assistance and visitor incident reporting.\n"
+                    "• **+84 981 84 84 84 - Consular Protection (Ministry of Foreign Affairs):** Urgent protection for foreign tourists, lost passports, and entry visa emergencies.\n\n"
+                    "Please remain calm, stay in a safe location, and follow local authority directions. "
+                    "The STAR Travels Concierge response team is on standby 24/7 to coordinate local assistance via Hotline: **1900 6868** (International: **+84 24 3999 8888**)."
+                )
+            else:
+                reply_text = (
+                    "🚨 **HỖ TRỢ KHẨN CẤP DU LỊCH & Y TẾ VIỆT NAM (EMERGENCY HOTLINES)** 🚨\n\n"
+                    "Nếu Quý khách hoặc người thân đang gặp tình huống nguy cấp, xin vui lòng liên hệ ngay các đường dây nóng quốc gia (miễn cước 24/7):\n\n"
+                    "• **115 - Cấp cứu Y tế Toàn quốc:** Cấp cứu tai nạn, ngộ độc thực phẩm, cấp cứu y khoa.\n"
+                    "• **113 - Công an / Cảnh sát Phản ứng nhanh:** Trình báo mất cắp, hành hung, lừa đảo, an ninh trật tự.\n"
+                    "• **114 - Cứu nạn, Cứu hộ & PCCC:** Sự cố hỏa hoạn, đuối nước, sạt lở đèo dốc hoặc mắc kẹt.\n"
+                    "• **Tổng đài Hỗ trợ Du khách (Việt Nam):** **1022** (hỗ trợ du khách phản ánh sự cố dịch vụ và cứu nạn địa phương).\n"
+                    "• **Tổng đài Bảo hộ Công dân (Bộ Ngoại giao):** **+84 981 84 84 84** (hỗ trợ du khách quốc tế mất hộ chiếu, thị thực khẩn cấp).\n\n"
+                    "Quý khách vui lòng giữ bình tĩnh, giữ liên lạc tại vị trí an toàn và làm theo hướng dẫn của lực lượng cứu hộ địa phương. "
+                    "Đội ngũ STAR Travels luôn sẵn sàng phối hợp hỗ trợ qua Hotline 24/7: **1900 6868** (Quốc tế: **+84 24 3999 8888**)."
+                )
+            chunks = []
+            recommended_tour_slugs = []
+        elif route_det == "itinerary":
             params = ItineraryPlanner.extract_itinerary_params(message)
             itinerary_res = ItineraryPlanner.plan_itinerary(params=params, locale=locale)
             reply_text = itinerary_res["message"]
@@ -160,7 +201,7 @@ class AssistantConversationViewSet(viewsets.ModelViewSet):
                 itinerary_plan_payload = itinerary_res.get("structured_plan")
             chunks = []
         elif getattr(settings, "JEV_EVIDENCE_ENABLED", False):
-            from .jev_rag_v2.django_bridge import make_pipeline
+            from .jev_rag.django_bridge import make_pipeline
 
             try:
                 pipeline = make_pipeline(locale=locale)
@@ -210,9 +251,11 @@ class AssistantConversationViewSet(viewsets.ModelViewSet):
                 recommended_tour_slugs.append(s)
 
         tour_cards = []
+        valid_tour_slugs = set()
         if recommended_tour_slugs:
             matched_tours = Tour.objects.filter(slug__in=recommended_tour_slugs, is_published=True)
             for t in matched_tours:
+                valid_tour_slugs.add(t.slug)
                 tour_cards.append(
                     {
                         "slug": t.slug,
@@ -228,9 +271,15 @@ class AssistantConversationViewSet(viewsets.ModelViewSet):
                     }
                 )
 
+        # Server-side scrubbing: Remove any hallucinated or non-existent [TOUR_CARD] slugs from reply text
+        for s in found_slugs:
+            if s not in valid_tour_slugs:
+                reply_text = re.sub(rf"\[TOUR_CARD:\s*{re.escape(s)}\]", "", reply_text).strip()
+
         # 4.1 Fetch Accommodation Referral Cards
         found_acc_slugs = re.findall(r"\[ACCOMMODATION_CARD:\s*([\w-]+)\]", reply_text)
         accommodation_cards = []
+        valid_acc_slugs = set()
         if found_acc_slugs:
             try:
                 from accommodations.models import Accommodation
@@ -239,6 +288,7 @@ class AssistantConversationViewSet(viewsets.ModelViewSet):
                     slug__in=found_acc_slugs, is_active=True
                 )
                 for acc in matched_accs:
+                    valid_acc_slugs.add(acc.slug)
                     accommodation_cards.append(
                         {
                             "id": str(acc.id),
@@ -260,15 +310,22 @@ class AssistantConversationViewSet(viewsets.ModelViewSet):
                     "Failed to fetch accommodation referral cards: %s", exc, exc_info=True
                 )
 
+        # Server-side scrubbing: Remove non-existent accommodation cards
+        for s in found_acc_slugs:
+            if s not in valid_acc_slugs:
+                reply_text = re.sub(rf"\[ACCOMMODATION_CARD:\s*{re.escape(s)}\]", "", reply_text).strip()
+
         # 4.2 Fetch Restaurant Referral Cards
         found_res_slugs = re.findall(r"\[RESTAURANT_CARD:\s*([\w-]+)\]", reply_text)
         restaurant_cards = []
+        valid_res_slugs = set()
         if found_res_slugs:
             try:
                 from restaurants.models import Restaurant
 
                 matched_ress = Restaurant.objects.filter(slug__in=found_res_slugs, is_active=True)
                 for res_item in matched_ress:
+                    valid_res_slugs.add(res_item.slug)
                     restaurant_cards.append(
                         {
                             "id": str(res_item.id),
@@ -289,9 +346,15 @@ class AssistantConversationViewSet(viewsets.ModelViewSet):
             except Exception as exc:
                 logger.warning("Failed to fetch restaurant referral cards: %s", exc, exc_info=True)
 
+        # Server-side scrubbing: Remove non-existent restaurant cards
+        for s in found_res_slugs:
+            if s not in valid_res_slugs:
+                reply_text = re.sub(rf"\[RESTAURANT_CARD:\s*{re.escape(s)}\]", "", reply_text).strip()
+
         # 4.3 Fetch Guide Cards
         found_guide_slugs = re.findall(r"\[GUIDE_CARD:\s*([\w-]+)\]", reply_text)
         guide_cards = []
+        valid_guide_slugs = set()
         if found_guide_slugs:
             try:
                 guide_chunks = AssistantKnowledgeChunk.objects.filter(
@@ -299,6 +362,7 @@ class AssistantConversationViewSet(viewsets.ModelViewSet):
                     entity_slug__in=found_guide_slugs,
                 )
                 for gc in guide_chunks:
+                    valid_guide_slugs.add(gc.entity_slug)
                     meta = gc.metadata or {}
                     guide_title = (
                         str(meta.get("title_en") or gc.title)
@@ -321,6 +385,13 @@ class AssistantConversationViewSet(viewsets.ModelViewSet):
                     )
             except Exception as exc:
                 logger.warning("Failed to fetch guide cards: %s", exc, exc_info=True)
+
+        # Server-side scrubbing: Remove non-existent guide cards
+        for s in found_guide_slugs:
+            if s not in valid_guide_slugs:
+                reply_text = re.sub(rf"\[GUIDE_CARD:\s*{re.escape(s)}\]", "", reply_text).strip()
+
+        reply_text = re.sub(r"\n{3,}", "\n\n", reply_text).strip()
 
         # 5. Lead Information Capture & Odoo CRM Sync with Consent & Idempotency
         lead_captured = False
@@ -433,7 +504,9 @@ class AssistantConversationViewSet(viewsets.ModelViewSet):
             )
 
         # 8. Route classification tag (via JevRouteSelector with deterministic priority)
-        if route_det == "itinerary":
+        if route_det == "emergency":
+            route = "emergency"
+        elif route_det == "itinerary":
             route = "itinerary"
         elif jev_status == "answered":
             route = "knowledge"
@@ -451,11 +524,12 @@ class AssistantConversationViewSet(viewsets.ModelViewSet):
             )
             if (tour_cards or accommodation_cards or restaurant_cards) and route not in (
                 "security_refusal",
+                "emergency",
                 "lead_inquiry",
                 "itinerary",
             ):
                 route = "discovery"
-            elif not chunks and route not in ("security_refusal", "lead_inquiry", "itinerary"):
+            elif not chunks and route not in ("security_refusal", "emergency", "lead_inquiry", "itinerary"):
                 route = "clarify"
 
         return Response(
@@ -471,6 +545,11 @@ class AssistantConversationViewSet(viewsets.ModelViewSet):
                 "route": route,
                 "status": "ok",
                 "lead_captured": lead_captured,
+                "is_ai_generated": True,
+                "ai_disclaimer": (
+                    "Câu trả lời được sinh tự động bởi Trợ lý AI STAR Concierge. "
+                    "Giá niêm yết và tình trạng chỗ trống được đối chiếu trực tiếp từ cơ sở dữ liệu STAR Travels."
+                ),
             }
         )
 
