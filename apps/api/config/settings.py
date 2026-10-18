@@ -178,6 +178,8 @@ REST_FRAMEWORK = {
         "user": os.getenv("DRF_THROTTLE_USER", "2000/day"),
         "auth": os.getenv("DRF_THROTTLE_AUTH", "10/minute"),
         "payment": os.getenv("DRF_THROTTLE_PAYMENT", "30/minute"),
+        "assistant_chat_anon": os.getenv("DRF_THROTTLE_ASSISTANT_CHAT_ANON", "15/minute"),
+        "assistant_chat_user": os.getenv("DRF_THROTTLE_ASSISTANT_CHAT_USER", "30/minute"),
     },
 }
 SIMPLE_JWT = {
@@ -398,8 +400,12 @@ RAG_EMBEDDING_ENDPOINT = os.getenv("RAG_EMBEDDING_ENDPOINT", "https://api.openai
 RAG_EMBEDDING_API_KEY = os.getenv("RAG_EMBEDDING_API_KEY", "")
 RAG_EMBEDDING_MODEL = os.getenv("RAG_EMBEDDING_MODEL", "text-embedding-3-small")
 RAG_EMBEDDING_DIMENSIONS = int(os.getenv("RAG_EMBEDDING_DIMENSIONS", "1536"))
-RAG_CHAT_ENDPOINT = os.getenv("RAG_CHAT_ENDPOINT", "https://api.openai.com/v1/chat/completions")
-RAG_CHAT_API_KEY = os.getenv("RAG_CHAT_API_KEY", "")
-RAG_CHAT_MODEL = os.getenv("RAG_CHAT_MODEL", "gpt-4o-mini")
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
+RAG_CHAT_ENDPOINT = os.getenv(
+    "RAG_CHAT_ENDPOINT",
+    "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions" if GEMINI_API_KEY else "https://api.openai.com/v1/chat/completions"
+)
+RAG_CHAT_API_KEY = os.getenv("RAG_CHAT_API_KEY", GEMINI_API_KEY or OPENAI_API_KEY)
+RAG_CHAT_MODEL = os.getenv("RAG_CHAT_MODEL", "gemini-1.5-flash-002" if GEMINI_API_KEY else "gpt-4o-mini")
+

@@ -11,9 +11,9 @@ import os
 from django.core.management.base import BaseCommand, CommandError
 from django.db import connection, transaction
 
-from assistant.jev_rag_v2.curation import IngestionService
-from assistant.jev_rag_v2.embedding import EmbeddingClient
-from assistant.jev_rag_v2.store import PgVectorStore
+from assistant.jev_rag.curation import IngestionService
+from assistant.jev_rag.embedding import EmbeddingClient
+from assistant.jev_rag.store import PgVectorStore
 
 
 class Command(BaseCommand):

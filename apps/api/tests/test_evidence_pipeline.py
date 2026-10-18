@@ -7,14 +7,14 @@ import unittest
 from pathlib import Path
 from unittest.mock import Mock, patch
 
-from assistant.jev_rag_v2.contracts import Judgement, Passage
-from assistant.jev_rag_v2.gating import GatePolicy
-from assistant.jev_rag_v2.generation import ChatGenerator
-from assistant.jev_rag_v2.http_client import ProviderError
-from assistant.jev_rag_v2.ingestion import chunk_text, extract_local_file
-from assistant.jev_rag_v2.jev import JevJudge, redact_pii
-from assistant.jev_rag_v2.pipeline import JevRagPipeline
-from assistant.jev_rag_v2.store import PgVectorStore
+from assistant.jev_rag.contracts import Judgement, Passage
+from assistant.jev_rag.gating import GatePolicy
+from assistant.jev_rag.generation import ChatGenerator
+from assistant.jev_rag.http_client import ProviderError
+from assistant.jev_rag.ingestion import chunk_text, extract_local_file
+from assistant.jev_rag.jev import JevJudge, redact_pii
+from assistant.jev_rag.pipeline import JevRagPipeline
+from assistant.jev_rag.store import PgVectorStore
 
 
 def doc(code="one", txt="Vịnh Hạ Long thuộc Quảng Ninh."):
@@ -118,7 +118,7 @@ class TestJev(unittest.TestCase):
                 "premise_conflict": {"type": "noul", "noul": 0.02},
             }
         }
-        with patch("assistant.jev_rag_v2.jev.post_json", return_value=payload) as request:
+        with patch("assistant.jev_rag.jev.post_json", return_value=payload) as request:
             decision = JevJudge("fake-api-key").assess("Phone: 0911223344", doc())
         self.assertEqual(decision.relevance, 1.0)
         args = request.call_args.args
@@ -132,7 +132,7 @@ class TestJev(unittest.TestCase):
 
     def test_malformed_decisions_are_not_treated_as_positive(self):
         with (
-            patch("assistant.jev_rag_v2.jev.post_json", return_value={"answers": {}}),
+            patch("assistant.jev_rag.jev.post_json", return_value={"answers": {}}),
             self.assertRaises(ProviderError),
         ):
             JevJudge("fake-key").assess("question", doc())
@@ -181,7 +181,7 @@ class TestGeneration(unittest.TestCase):
     def test_rejects_hallucinated_citation_ids(self):
         result = {"choices": [{"message": {"content": "Unknown [S9]"}}]}
         with (
-            patch("assistant.jev_rag_v2.generation.post_json", return_value=result),
+            patch("assistant.jev_rag.generation.post_json", return_value=result),
             self.assertRaises(ProviderError),
         ):
             ChatGenerator("https://example.com/v1/chat/completions", "key", "model").generate(
@@ -191,7 +191,7 @@ class TestGeneration(unittest.TestCase):
     def test_rejects_answers_without_citation(self):
         result = {"choices": [{"message": {"content": "Unknown"}}]}
         with (
-            patch("assistant.jev_rag_v2.generation.post_json", return_value=result),
+            patch("assistant.jev_rag.generation.post_json", return_value=result),
             self.assertRaises(ProviderError),
         ):
             ChatGenerator("https://example.com/v1/chat/completions", "key", "model").generate(
@@ -201,7 +201,7 @@ class TestGeneration(unittest.TestCase):
 
 class TestCuration(unittest.TestCase):
     def test_unchanged_source_avoids_embedding_call(self):
-        from assistant.jev_rag_v2.curation import IngestionService
+        from assistant.jev_rag.curation import IngestionService
 
         store = Mock()
         store.source_unchanged.return_value = True
@@ -219,7 +219,7 @@ class TestCuration(unittest.TestCase):
         store.upsert_chunks.assert_not_called()
 
     def test_unpublish_removes_vectors_without_embedding(self):
-        from assistant.jev_rag_v2.curation import IngestionService
+        from assistant.jev_rag.curation import IngestionService
 
         store, emb = Mock(), Mock()
         result = IngestionService(store, emb).index_text(
@@ -250,11 +250,7 @@ class TestCuration(unittest.TestCase):
 
 class TestEvaluation(unittest.TestCase):
     def test_hit_metrics_and_false_abstention(self):
-        import sys
-        from pathlib import Path
-
-        sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "scripts"))
-        from eval_predictions import evaluate
+        from assistant.jev_rag.evaluation import evaluate
 
         report = evaluate(
             [

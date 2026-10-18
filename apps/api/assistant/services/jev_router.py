@@ -21,6 +21,7 @@ ALLOWED_ROUTES = (
     "lead_inquiry",
     "clarify",
     "security_refusal",
+    "emergency",
 )
 
 
@@ -49,7 +50,44 @@ def classify_route_deterministic(
     if guardrail_reply:
         return "security_refusal"
 
-    # 2. Lead Inquiry with confirmed consent
+    # 2. Emergency & Safety Inquiries (medical, police, rescue, natural disaster)
+    emergency_indicators = [
+        "cấp cứu",
+        "cap cuu",
+        "tai nạn",
+        "tai nan",
+        "ngộ độc",
+        "ngo doc",
+        "cứu hộ",
+        "cuu ho",
+        "chìm tàu",
+        "chim tau",
+        "sạt lở",
+        "sat lo",
+        "mất hộ chiếu",
+        "mat ho chieu",
+        "bị cướp",
+        "bi cuop",
+        "bị lừa đảo",
+        "bi lua dao",
+        "hotline khẩn cấp",
+        "hotline khan cap",
+        "công an",
+        "cong an",
+        "cảnh sát",
+        "canh sat",
+        "113",
+        "114",
+        "115",
+        "emergency",
+        "ambulance",
+        "police",
+        "hospital",
+    ]
+    if any(ind in q_lower for ind in emergency_indicators):
+        return "emergency"
+
+    # 3. Lead Inquiry with confirmed consent
     if has_contact and has_confirmed_consent:
         return "lead_inquiry"
 

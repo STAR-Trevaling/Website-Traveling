@@ -200,8 +200,8 @@ docker compose run --rm backend python manage.py seed_demo
 ### 3. Launch Services
 
 ```bash
-# Start Django backend, Celery async worker, and Next.js frontend
-docker compose up --build -d backend worker frontend
+# Start Django API backend, Celery async worker, and Next.js public-site
+docker compose up --build -d api worker public-site
 ```
 
 ### 4. Verified Services & Credentials
@@ -305,7 +305,7 @@ All backend API endpoints are versioned under `/api/v1/`:
 |---|---|---|---|
 | `DJANGO_SECRET_KEY` | Backend | `dev-only-change-me` | Cryptographic signing key for Django |
 | `DJANGO_DEBUG` | Backend | `1` | Enable debug mode (`1` for dev, `0` for production) |
-| `DJANGO_ALLOWED_HOSTS` | Backend | `localhost,127.0.0.1,backend` | Permitted hostnames for incoming HTTP requests |
+| `DJANGO_ALLOWED_HOSTS` | Backend | `localhost,127.0.0.1,backend,api` | Permitted hostnames for incoming HTTP requests |
 | `POSTGRES_DB` | Database | `travel` | PostgreSQL database name |
 | `POSTGRES_USER` | Database | `travel` | PostgreSQL username |
 | `POSTGRES_PASSWORD` | Database | `travel` | PostgreSQL password |
@@ -313,7 +313,7 @@ All backend API endpoints are versioned under `/api/v1/`:
 | `POSTGRES_PORT` | Database | `5432` | PostgreSQL listening port |
 | `REDIS_URL` | Cache/Celery | `redis://redis:6379/0` | Redis connection URI |
 | `DJANGO_CSRF_TRUSTED_ORIGINS` | Backend | `http://localhost:3000` | Allowed origins for CSRF protection |
-| `BACKEND_URL` | Frontend | `http://backend:8000/api/v1` | Backend API root for Next.js SSR / BFF requests |
+| `BACKEND_URL` | Frontend | `http://api:8000/api/v1` | Backend API root for Next.js SSR / BFF requests |
 | `NEXT_PUBLIC_SITE_URL` | Frontend | `http://localhost:3000` | Canonical frontend domain for OpenGraph & metadata |
 | `NEXT_PUBLIC_USE_LOCAL_ANIMA_ASSETS`| Frontend | `0` | Flag to use local fallback assets when offline |
 

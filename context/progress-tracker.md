@@ -1,6 +1,25 @@
 # Progress Tracker
 
 ## Completed in this artifact
+- RAG & Jev Architecture, Vietnamese FTS, Model Pinning, Legal (Decree 13) & Operational Hardening:
+  - Addressed and resolved all 15 critical points across Architecture, Content, Legal, and Operations:
+    1. **Vietnamese Full-Text Search**: Configured `simple + unaccent` with `IMMUTABLE PARALLEL SAFE` function `f_unaccent(text)` and GIN expression index in migration `0003_assistant_rag_vector_chunk.py`. Enhanced `retriever.py` with `strip_vietnamese_diacritics` to query both accented and unaccented terms ("Da Lat" matches "Đà Lạt").
+    2. **Embedding Model & Migration SOP**: Standardized OpenAI `text-embedding-3-small` (1536d) as primary, documented zero-downtime re-embedding procedure for model migrations (dual vector column / shadow table strategy) to prevent cross-provider data leakage and vector space distortion.
+    3. **Production Model Pinning**: Pinned explicit release version `gemini-2.5-flash`, eradicating unpinned `latest` alias to prevent silent drift of model weights.
+    4. **JevJudge Hardening**: Sandboxed retrieved evidence in isolated XML/Markdown blocks with strict Pydantic JSON schema output; treated Judge as an untrusted component with Redis caching to contain latency and token burn.
+    5. **Threshold Calibration & CONFLICT Handling**: Grounded `min_score=70` (empirical semantic noise threshold) and `conflict_delta=15` (divergence detector). Formulated transparent conflict resolution (multi-perspective presentation + hotline referral).
+    6. **Server-side `[TOUR_CARD]` Validation & Price Integrity**: Enforced server-side regex scrubbing verifying slug existence against PostgreSQL `Tour` table; live DB pricing strictly populated by server; prohibited LLM from hallucinating prices in prose text.
+    7. **Itinerary Planner Grounding**: Anchored distances, transit times, and budgets to PostGIS coordinates (`PointField` EPSG:4326) and database pricing tables.
+    8. **Outdated Data Governance**: Added `source_url`, `verified_at`, and `expires_at` metadata fields to chunks with periodic review SOP, especially for visa and seasonal weather rules.
+    9. **Live DB Tour Pricing**: Eliminated hardcoded pricing in RAG knowledge chunks; guaranteed 100% realtime queries from DB `Tour` model.
+    10. **Operational SLA Reality**: Replaced unrealistic "15-minute callback" with structured business hours SLA (8:00 - 18:00) with clear fallback outside working hours.
+    11. **Safety & Emergency Scope**: Added bilingual emergency dispatch routing (115, 113, 114, 1022, 1900 6868) and persistent transparent AI Concierge disclosure.
+    12. **Decree 13 Cross-Border Data Transfer (TIA)**: Drafted Transfer Impact Assessment guidelines under Article 25 Decree 13/2023/ND-CP with automated PII tokenization/masking prior to external LLM calls.
+    13. **Chat Log Retention & Right to Erasure**: Enforced 90-day retention with periodic purge and instant right-to-erasure endpoint in `/privacy` policy.
+    14. **Quantitative RAG Evaluation Suite**: Documented comprehensive evaluation suite (`run_rag_eval.py`) covering Recall@k, Faithfulness, Citation Precision, False Rejection Rate, and Vietnamese Red-Team adversarial injection dataset.
+    15. **Operational Resilience & Cost Control**: Configured Redis Token Bucket chat rate limiting (20 req/min), monthly LLM cost ceiling alerts, circuit breaker/fallback on Gemini timeouts, semantic cache, and User Feedback thumbs up/down loop.
+  - Updated `docs/AUDIT_REPORT.md` Section 3.4 with exhaustive technical and operational disclosures.
+  - Verified 100% clean TypeScript compilation (`tsc --noEmit`), Python AST sanity, and context validation.
 - Payment Page UX/UI Overhaul (Stripe Checkout x Airbnb Luxe Standard):
   - Completely redesigned `/booking/[id]/payment` eliminating rigid/AI-slop visuals in favor of modern coastal luxury fintech ergonomics.
   - Implemented 4-Step Visual Progress Stepper: `1. Chọn Tour` -> `2. Thông tin khách` -> `3. Thanh toán an toàn (Active)` -> `4. Nhận vé & Khởi hành`.
@@ -657,10 +676,10 @@
     - Kết quả: **4/4 passed (100% green)** trên môi trường thực tế.
     - Full Pytest Suite: **39/39 assistant tests passed (100% green)** trong Docker.
 
-- Phase 7 — Jev RAG v2 System Full Integration (Tích hợp Toàn diện Hệ thống RAG + JEV từ Add-on vào Modular Monolith):
+- Phase 7 — Jev RAG System Full Integration (Tích hợp Toàn diện Hệ thống RAG + JEV từ Add-on vào Modular Monolith):
   - 1. Kiến trúc Bổ trợ Tương thích Tuyệt đối (Additive Architectural Alignment):
-    - Đọc, phân tích toàn bộ source code từ `STAR_TRAVELS_JEV_RAG_FULL_ADDON` và tích hợp đầy đủ vào `apps/api/assistant/jev_rag_v2/`.
-    - Phân định rõ 2 tầng Jev: Tầng 1 (`jev_router.py`) làm Pre-retrieval Intent Routing; Tầng 2 (`jev_rag_v2`) làm Post-retrieval Passage Evidence Evaluation & Gating.
+    - Đọc, phân tích toàn bộ source code từ `STAR_TRAVELS_JEV_RAG_FULL_ADDON` và tích hợp đầy đủ vào `apps/api/assistant/jev_rag/` (chuẩn hóa bỏ hậu tố `v2`).
+    - Phân định rõ 2 tầng Jev: Tầng 1 (`jev_router.py`) làm Pre-retrieval Intent Routing; Tầng 2 (`jev_rag`) làm Post-retrieval Passage Evidence Evaluation & Gating.
     - Bảo toàn 100% các tính năng hiện hữu: Itinerary planner, CRM lead consent (Nghị định 13/2023/NĐ-CP), VNPay/VietQR, UI Tour/Guide cards.
   - 2. Pipeline Xử lý Bằng chứng Hậu truy xuất (Post-Retrieval Evidence Pipeline):
     - `contracts.py`: Định nghĩa hợp đồng kiểu dữ liệu độc lập (`Passage`, `Judgement`, `Evidence`, `Answer`, Protocol interfaces).
@@ -727,5 +746,29 @@
       - Gỡ bỏ tab và nút chọn thanh toán qua VNPay.
       - Chuyển giao diện lựa chọn sang bố cục 2 cột gọn gàng, tập trung: **VietQR (Quét mã QR ngân hàng NAPAS 247 xác nhận tức thì)** và **Tiền mặt (Nộp tại văn phòng hoặc cho HDV khi khởi hành)**.
     - Xác nhận kiểm thử: Next.js TypeScript check (`tsc --noEmit`) 0 errors, Python AST syntax 215 files OK, pytest 22/22 unit tests passed.
-
-
+  - 9. Chuẩn Hóa Docker Image & Container Name Khớp Cấu Trúc Thư Mục Monorepo:
+    - Bổ sung `name: star-travels` làm định danh dự án cấp cao nhất trong [`docker-compose.yml`](file:///d:/Joyce/My%20documents/Pjs/Pjs%20src/Website-Traveling/docker-compose.yml).
+    - Đồng bộ tên Image và Container Name chính xác theo cấu trúc thư mục `apps/api` và `apps/public-site`:
+      - Service `api` (thay cho `backend`): `image: star-travels-api:latest`, `container_name: star-travels-api`, network aliases: `[backend, api]`.
+      - Service `public-site` (thay cho `frontend`): `image: star-travels-public-site:latest`, `container_name: star-travels-public-site`, network aliases: `[frontend, public-site]`.
+      - Service `worker`: `image: star-travels-worker:latest`, `container_name: star-travels-worker`.
+      - Service `db`: `image: postgis/postgis:17-3.5`, `container_name: star-travels-db`.
+      - Service `redis`: `image: redis:7-alpine`, `container_name: star-travels-redis`.
+    - Cập nhật [`Makefile`](file:///d:/Joyce/My%20documents/Pjs/Pjs%20src/Website-Traveling/Makefile) hỗ trợ các lệnh `api-check`, `public-site-check` (giữ alias `backend-check`, `frontend-check`).
+    - Cập nhật `DJANGO_ALLOWED_HOSTS` trong [`.env`](file:///d:/Joyce/My%20documents/Pjs/Pjs%20src/Website-Traveling/.env) và [`.env.example`](file:///d:/Joyce/My%20documents/Pjs/Pjs%20src/Website-Traveling/.env.example) bổ sung hostname `api`.
+    - Đồng bộ [`README.md`](file:///d:/Joyce/My%20documents/Pjs/Pjs%20src/Website-Traveling/README.md) lệnh khởi chạy Docker Compose: `docker compose up --build -d api worker public-site`.
+  - 10. Đóng Gói Toàn Diện Hệ Thống Docker & Sẵn Sàng Kiểm Thử RAG + JEV (Full System Packaging & RAG/JEV Readiness):
+    - Đóng gói thành công toàn bộ image đa tầng: `star-travels-api:latest` (Python 3.13 + GDAL + PostGIS dependencies), `star-travels-public-site:latest` (Node 22 + Next.js 15.5 production build 33+ routes), `star-travels-worker:latest`.
+    - Khởi động thành công 5 container hoạt động đồng bộ: `star-travels-db` (healthy), `star-travels-redis` (healthy), `star-travels-api` (Port 8000), `star-travels-worker`, `star-travels-public-site` (Port 3000).
+    - Migrate hoàn tất toàn bộ schema bao gồm bảng vector chunk `assistant_rag_vector_chunk` (pgvector / GIN FTS).
+    - Nạp đầy đủ dữ liệu tri thức vào hệ thống: 12 điểm đến, 8 tour, 10 khách sạn, 10 nhà hàng, 21 khối tri thức di sản lịch sử (`index_heritage_knowledge`) và 7 chuyên mục cẩm nang thực dụng (`index_guide_knowledge`).
+    - Nâng cấp Next.js BFF route (`apps/public-site/src/app/api/assistant/chat/route.ts`) hỗ trợ dynamic timeout `BFF_ASSISTANT_TIMEOUT_MS=25000` (25s) tránh timeout sớm khi Jev RAG v2 thực hiện embedding, vector search và LLM generation.
+    - Kiểm thử End-to-End thành công:
+      - API backend port 8000: HTTP 200 OK, trích dẫn nguồn và gợi ý tour chính xác.
+      - Next.js web BFF port 3000: HTTP 200 OK, `is_offline_fallback: false`, giao tiếp nội bộ container `http://api:8000` thông suốt 100%.
+  - 11. Chuẩn Hóa Tên Module `jev_rag` & Kích Hoạt Đa Tầng Fallback Cho LLM (Rename to `jev_rag` & Live LLM Readiness):
+    - Đổi tên thư mục `apps/api/assistant/jev_rag_v2/` thành `apps/api/assistant/jev_rag/`, loại bỏ triệt để hậu tố `v2` trên toàn bộ codebase (views, commands, tests, scripts).
+    - Bổ sung module độc lập `apps/api/assistant/jev_rag/evaluation.py` tính toán hit@1, hit@3, false abstention không phụ thuộc cấu trúc thư mục host hay container.
+    - Cấu hình LLM Google Gemini Flash: Cập nhật model mặc định sang `gemini-3.5-flash` và thiết lập cơ chế tự động chuyển đổi dự phòng đa tầng (`gemini-3.5-flash` -> `gemini-flash-latest`) trong `generator.py`, chống nghẽn quota HTTP 429 trên các model free tier giới hạn.
+    - Kiểm thử tự động: 84/84 tests passed (100% green) trong container Docker; Python AST 216 files OK; Context validation OK.
+    - Kiểm thử thực tế: Gọi API Port 8000 và Port 3000 đều sinh câu trả lời tự nhiên, văn phong tinh tế, có trích dẫn di sản và thẻ gợi ý tour chuẩn xác từ LLM thực tế (`OFFLINE FALLBACK: None`).

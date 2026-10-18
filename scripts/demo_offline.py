@@ -6,8 +6,8 @@ if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "apps/api"))
-from assistant.jev_rag_v2.contracts import Judgement, Passage
-from assistant.jev_rag_v2.pipeline import JevRagPipeline
+from assistant.jev_rag.contracts import Judgement, Passage
+from assistant.jev_rag.pipeline import JevRagPipeline
 
 
 class DemoRetriever:

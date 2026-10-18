@@ -13,7 +13,7 @@ from pathlib import Path
 from django.core.management.base import BaseCommand, CommandError
 from django.db import transaction
 
-from assistant.jev_rag_v2.curation import IngestionService
+from assistant.jev_rag.curation import IngestionService
 
 
 class Command(BaseCommand):
@@ -34,8 +34,8 @@ class Command(BaseCommand):
         # that having a local file makes the content publicly releasable.
         from django.db import connection
 
-        from assistant.jev_rag_v2.embedding import EmbeddingClient
-        from assistant.jev_rag_v2.store import PgVectorStore
+        from assistant.jev_rag.embedding import EmbeddingClient
+        from assistant.jev_rag.store import PgVectorStore
 
         source_id = options["source_id"]
         dim = int(os.environ.get("RAG_EMBEDDING_DIMENSIONS", "1536"))

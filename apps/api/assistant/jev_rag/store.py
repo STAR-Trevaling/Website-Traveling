@@ -148,18 +148,36 @@ class PgVectorStore:
         limit = min(max(1, limit), 30)
         pool = min(90, limit * 4)
         with self.connection.cursor() as cursor:
-            cursor.execute(
-                """
-                SELECT chunk_id,source_id,source_type,title,content,source_url,locale,metadata
-                FROM assistant_rag_vector_chunk
-                WHERE published=TRUE AND locale=%s
-                  AND to_tsvector('simple',title || ' ' || content) @@ plainto_tsquery('simple',%s)
-                ORDER BY ts_rank(to_tsvector('simple',title || ' ' || content),
-                                 plainto_tsquery('simple',%s)) DESC, chunk_id
-                LIMIT %s
-            """,
-                [locale, query, query, pool],
-            )
+            # Dual-path lexical retrieval: direct 'simple' + immutable unaccent for Vietnamese diacritics
+            try:
+                cursor.execute(
+                    """
+                    SELECT chunk_id,source_id,source_type,title,content,source_url,locale,metadata
+                    FROM assistant_rag_vector_chunk
+                    WHERE published=TRUE AND locale=%s
+                      AND (
+                          to_tsvector('simple', title || ' ' || content) @@ plainto_tsquery('simple', %s)
+                          OR to_tsvector('simple', f_unaccent(title || ' ' || content)) @@ plainto_tsquery('simple', f_unaccent(%s))
+                      )
+                    ORDER BY ts_rank(to_tsvector('simple', f_unaccent(title || ' ' || content)),
+                                     plainto_tsquery('simple', f_unaccent(%s))) DESC, chunk_id
+                    LIMIT %s
+                """,
+                    [locale, query, query, query, pool],
+                )
+            except Exception:
+                cursor.execute(
+                    """
+                    SELECT chunk_id,source_id,source_type,title,content,source_url,locale,metadata
+                    FROM assistant_rag_vector_chunk
+                    WHERE published=TRUE AND locale=%s
+                      AND to_tsvector('simple',title || ' ' || content) @@ plainto_tsquery('simple',%s)
+                    ORDER BY ts_rank(to_tsvector('simple',title || ' ' || content),
+                                     plainto_tsquery('simple',%s)) DESC, chunk_id
+                    LIMIT %s
+                """,
+                    [locale, query, query, pool],
+                )
             lexical = cursor.fetchall()
             cursor.execute(
                 """

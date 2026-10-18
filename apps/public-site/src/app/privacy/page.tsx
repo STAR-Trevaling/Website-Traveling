@@ -127,16 +127,53 @@ export default async function PrivacyPage() {
                 <AlertCircle className="size-5 text-[#da251d]" />
                 {isEn ? "5. Contact Data Protection Officer (DPO)" : "5. Kênh Liên Hệ Bảo Vệ Dữ Liệu Cá Nhân"}
               </h2>
-              <p className="mt-3 text-xs sm:text-sm">
-                {isEn
-                  ? "To exercise any of your rights or report privacy concerns, please contact our Data Protection Officer:"
-                  : "Để thực hiện các quyền của mình hoặc phản ánh thắc mắc về bảo mật dữ liệu, quý khách vui lòng liên hệ:"}
-              </p>
-              <div className="mt-3 p-4 bg-red-50/50 rounded border border-red-100 text-xs sm:text-sm space-y-1">
+              <div className="mt-4 space-y-2 text-xs sm:text-sm">
                 <p><strong>Bộ phận Bảo vệ Dữ liệu (DPO) - STAR Travels Vietnam</strong></p>
                 <p>Email: <a href="mailto:privacy@startravels.vn" className="text-[#da251d] font-semibold underline">privacy@startravels.vn</a></p>
                 <p>Hotline: <strong>1900 6868</strong> (Phục vụ 24/7)</p>
                 <p>Địa chỉ: Tòa nhà Heritage, 18 Phố Tràng Tiền, Hoàn Kiếm, Hà Nội</p>
+              </div>
+            </section>
+
+            <section className="rounded-[2px] bg-white p-6 sm:p-8 shadow-sm border border-slate-100">
+              <h2 className="flex items-center gap-2 text-base sm:text-lg font-bold text-slate-900 border-b border-slate-100 pb-3">
+                <ShieldCheck className="size-5 text-[#0098a2]" />
+                {isEn
+                  ? "6. AI Assistant Processing, Chat Log Retention & Cross-Border Transfers"
+                  : "6. Trợ Lý AI, Lưu Trữ Log Chat & Chuyển Dữ Liệu Ra Nước Ngoài"}
+              </h2>
+              <div className="mt-4 space-y-3 text-xs sm:text-sm text-slate-600">
+                <p>
+                  {isEn
+                    ? "STAR Travels employs generative AI travel concierges (powered by enterprise Google Gemini & OpenAI cloud infrastructure) to assist travelers with itinerary planning and destination knowledge."
+                    : "STAR Travels ứng dụng công nghệ Trợ lý Du lịch AI (vận hành trên hạ tầng đám mây Google Gemini & OpenAI) để hỗ trợ gợi ý điểm đến, cẩm nang văn hóa và lên lịch trình du lịch."}
+                </p>
+                <ul className="list-disc pl-5 space-y-1.5">
+                  <li>
+                    <strong>{isEn ? "Mandatory PII Scrubbing:" : "Khử định danh tự động (PII Redaction):"}</strong>{" "}
+                    {isEn
+                      ? "Phone numbers, emails, identification numbers, and payment details are scrubbed or masked on the server before transmitting text to AI inference endpoints."
+                      : "Mọi thông tin nhạy cảm (số điện thoại, email, CCCD, thông tin thanh toán) đều được máy chủ che mờ hoặc khử định danh trước khi chuyển đến mô hình AI xử lý ngôn ngữ."}
+                  </li>
+                  <li>
+                    <strong>{isEn ? "Cross-Border Transfer Assessment (Article 25, Decree 13):" : "Đánh giá tác động chuyển dữ liệu ra nước ngoài (Điều 25 Nghị định 13):"}</strong>{" "}
+                    {isEn
+                      ? "In compliance with Article 25 Decree 13/2023/ND-CP, STAR Travels maintains a Transfer Impact Assessment (TIA) dossier on file and requires all foreign cloud infrastructure providers to uphold ISO 27001 / SOC 2 enterprise data protection standards."
+                      : "STAR Travels duy trì Hồ sơ đánh giá tác động chuyển dữ liệu cá nhân ra nước ngoài theo đúng quy định tại Điều 25 Nghị định 13/2023/NĐ-CP, đồng thời cam kết các nhà cung cấp hạ tầng AI quốc tế tuân thủ tiêu chuẩn an toàn thông tin ISO 27001 và SOC 2 Type II."}
+                  </li>
+                  <li>
+                    <strong>{isEn ? "Chat Log Retention Policy:" : "Thời hạn lưu trữ Log Chat:"}</strong>{" "}
+                    {isEn
+                      ? "Anonymous conversation sessions are retained for a maximum of 90 days strictly for system quality auditing, after which they are permanently purged. Chat histories are never sold or used for unauthorized profiling."
+                      : "Lịch sử hội thoại được lưu trữ tối đa trong vòng 90 ngày nhằm mục đích duy nhất là kiểm định chất lượng phản hồi, sau thời hạn này dữ liệu sẽ được xóa bỏ vĩnh viễn. Tuyệt đối không chia sẻ hoặc bán dữ liệu trò chuyện cho bên thứ ba."}
+                  </li>
+                  <li>
+                    <strong>{isEn ? "Right to Immediate Erasure:" : "Quyền yêu cầu xóa log trò chuyện tức thì:"}</strong>{" "}
+                    {isEn
+                      ? "You may request immediate erasure of your chat logs at any time by clearing your browser session token or emailing privacy@startravels.vn with your session ID."
+                      : "Quý khách có quyền yêu cầu xóa ngay lập tức toàn bộ log trò chuyện bằng cách xóa bộ nhớ phiên làm việc trên trình duyệt hoặc gửi email yêu cầu tới privacy@startravels.vn."}
+                  </li>
+                </ul>
               </div>
             </section>
           </div>
