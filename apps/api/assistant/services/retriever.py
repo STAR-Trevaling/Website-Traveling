@@ -12,6 +12,7 @@ def strip_vietnamese_diacritics(text: str) -> str:
     text = unicodedata.normalize("NFKD", text)
     return "".join(c for c in text if not unicodedata.combining(c)).lower()
 
+
 DESTINATION_KEYWORDS = {
     "ha-long": ["hạ long", "ha long", "vịnh hạ long", "lan hạ", "bái tử long"],
     "da-lat": ["đà lạt", "da lat", "thành phố ngàn hoa", "langbiang", "tuyền lâm"],

@@ -18,6 +18,7 @@ def normalize_text_unaccent(text: str) -> str:
     nfkd = unicodedata.normalize("NFKD", text)
     return "".join(c for c in nfkd if not unicodedata.combining(c)).lower()
 
+
 PHONE_REGEX = re.compile(r"(\+84|0)(3[2-9]|5[6|8|9]|7[0|6-9]|8[1-9]|9[0-9])[0-9]{7}")
 EMAIL_REGEX = re.compile(r"[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+")
 
@@ -438,7 +439,9 @@ def check_false_premise_guardrail(query: str, locale: str = "vi") -> str | None:
         )
 
     # 10. Ba Na Hills cable car from Saigon
-    if "ba na" in q_unaccent and any(loc in q_unaccent for loc in ["sai gon", "tphcm", "ho chi minh"]):
+    if "ba na" in q_unaccent and any(
+        loc in q_unaccent for loc in ["sai gon", "tphcm", "ho chi minh"]
+    ):
         return (
             "Dạ xin lưu ý Quý khách: Quần thể du lịch **Bà Nà Hills nằm trên đỉnh núi Chúa thuộc thành phố Đà Nẵng**, cách Sài Gòn gần 1.000km ạ! "
             "Hệ thống cáp treo chỉ nối từ chân núi Hòa Vang lên đỉnh Bà Nà, hoàn toàn không có tuyến cáp treo nào nối từ Sài Gòn."
@@ -497,9 +500,7 @@ def check_false_premise_guardrail(query: str, locale: str = "vi") -> str | None:
 
     # 18. Tam Coc in Nha Trang
     if "tam coc" in q_unaccent and any(loc in q_unaccent for loc in ["nha trang", "khanh hoa"]):
-        return (
-            "Dạ danh thắng **Tam Cốc - Bích Động** thuộc **tỉnh Ninh Bình**, hoàn toàn không thuộc thành phố biển Nha Trang (Khánh Hòa) ạ!"
-        )
+        return "Dạ danh thắng **Tam Cốc - Bích Động** thuộc **tỉnh Ninh Bình**, hoàn toàn không thuộc thành phố biển Nha Trang (Khánh Hòa) ạ!"
 
     # 19. Dinh Doc Lap in Hue
     if "dinh doc lap" in q_unaccent and any(loc in q_unaccent for loc in ["hue", "thua thien"]):
@@ -591,14 +592,20 @@ def generate_response(
         return reply, []
 
     # If external LLM (Gemini / OpenAI / custom endpoint) is available, invoke LLM API (skip in automated test runner)
-    is_under_test = bool(os.environ.get("PYTEST_CURRENT_TEST") or getattr(settings, "TESTING", False))
-    api_key = "" if is_under_test else (
-        getattr(settings, "RAG_CHAT_API_KEY", "")
-        or getattr(settings, "GEMINI_API_KEY", "")
-        or getattr(settings, "OPENAI_API_KEY", "")
-        or os.getenv("RAG_CHAT_API_KEY", "")
-        or os.getenv("GEMINI_API_KEY", "")
-        or os.getenv("OPENAI_API_KEY", "")
+    is_under_test = bool(
+        os.environ.get("PYTEST_CURRENT_TEST") or getattr(settings, "TESTING", False)
+    )
+    api_key = (
+        ""
+        if is_under_test
+        else (
+            getattr(settings, "RAG_CHAT_API_KEY", "")
+            or getattr(settings, "GEMINI_API_KEY", "")
+            or getattr(settings, "OPENAI_API_KEY", "")
+            or os.getenv("RAG_CHAT_API_KEY", "")
+            or os.getenv("GEMINI_API_KEY", "")
+            or os.getenv("OPENAI_API_KEY", "")
+        )
     )
     endpoint = getattr(settings, "RAG_CHAT_ENDPOINT", "") or os.getenv("RAG_CHAT_ENDPOINT", "")
     model = getattr(settings, "RAG_CHAT_MODEL", "") or os.getenv("RAG_CHAT_MODEL", "")
@@ -659,7 +666,9 @@ def generate_response(
                         {
                             "system_instruction": {
                                 "parts": [
-                                    {"text": f"{system_prompt}\n\n[KNOWLEDGE BASE]:\n{context_texts}"}
+                                    {
+                                        "text": f"{system_prompt}\n\n[KNOWLEDGE BASE]:\n{context_texts}"
+                                    }
                                 ]
                             },
                             "contents": [{"role": "user", "parts": [{"text": query}]}],
