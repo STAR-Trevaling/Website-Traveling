@@ -1343,16 +1343,16 @@ def generate_response(
         return (
             "Thank you for contacting STAR Travels Concierge! ✨ While I could not locate an exact pre-packaged itinerary "
             "matching this specific query in our verified catalog, our bespoke travel designers craft tailored journeys across Vietnam:\n\n"
-            "• **Ha Long & Lan Ha Bay:** 5-star luxury cruise experiences [TOUR_CARD: tour-ha-long-cruise-2n1d]\n"
-            "• **Hoi An & Da Nang:** Heritage culture & memories [TOUR_CARD: tour-hoi-an-memories-show]\n\n"
+            "• **Ha Long & Lan Ha Bay:** 5-star luxury cruise experiences\n"
+            "• **Hoi An & Da Nang:** Heritage culture & memories\n\n"
             "Feel free to share your preferred travel dates, destinations, or reach our concierge team 24/7 at +84 (0) 24 3999 8888!",
-            ["tour-ha-long-cruise-2n1d", "tour-hoi-an-memories-show"],
+            [],
         )
     return (
         "Dạ cảm ơn Quý khách đã chia sẻ cùng Bé Star! ✨ Hiện tại trong danh mục tour niêm yết sẵn có thể chưa có gói hành trình "
         "trùng khớp 100% với yêu cầu riêng này, nhưng STAR Travels luôn sẵn sàng thiết kế lịch trình cá nhân hóa theo mọi mong muốn của Quý khách:\n\n"
-        "• **Vịnh Hạ Long & Lan Hạ:** Du thuyền 5 sao đẳng cấp [TOUR_CARD: tour-ha-long-cruise-2n1d]\n"
-        "• **Hội An & Miền Trung:** Ký ức di sản & văn hóa [TOUR_CARD: tour-hoi-an-memories-show]\n\n"
+        "• **Vịnh Hạ Long & Lan Hạ:** Du thuyền 5 sao đẳng cấp\n"
+        "• **Hội An & Miền Trung:** Ký ức di sản & văn hóa\n\n"
         "Quý khách có thể nhắn thêm số ngày dự kiến, điểm khởi hành hoặc để lại số điện thoại để chuyên viên STAR liên hệ hỗ trợ chu đáo nhất nhé ạ!",
-        ["tour-ha-long-cruise-2n1d", "tour-hoi-an-memories-show"],
+        [],
     )

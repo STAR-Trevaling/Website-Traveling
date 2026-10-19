@@ -301,22 +301,12 @@ class JevRouteSelector:
 
         if not is_jev_enabled or not api_key:
             # Deterministic fallback when Jev pilot is disabled
-            if chunks_count > 0:
-                fallback_route = "knowledge"
-            else:
-                fallback_route = "conversational" if len(query.strip()) < 80 else "clarify"
+            fallback_route = "knowledge" if chunks_count > 0 else "clarify"
             return fallback_route, "deterministic_fallback"
 
         # 3. Invoke Jev Choice API with sanitized input and closed choices
         sanitized_query = sanitize_for_router(query)
-        candidate_choices = [
-            "knowledge",
-            "discovery",
-            "itinerary",
-            "lead_inquiry",
-            "conversational",
-            "clarify",
-        ]
+        candidate_choices = ["knowledge", "discovery", "itinerary", "lead_inquiry", "clarify"]
 
         payload = {
             "task": "Classify user travel inquiry into exactly one candidate route.",
