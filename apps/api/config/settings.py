@@ -252,10 +252,12 @@ if not IS_DEV_OR_TEST:
 
 # Odoo 18 ERP Integration Settings
 ODOO_BASE_URL = os.getenv("ODOO_BASE_URL", "http://host.docker.internal:8069")
-ODOO_WEBHOOK_SECRET = os.getenv(
-    "ODOO_WEBHOOK_SECRET", "e7b4c8d9f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8"
-)
-ODOO_INBOUND_API_KEY = os.getenv("ODOO_INBOUND_API_KEY", "odoo_inbound_sec_key_9876543210fedcba")
+ODOO_WEBHOOK_SECRET = os.getenv("ODOO_WEBHOOK_SECRET", "")
+if not ODOO_WEBHOOK_SECRET and IS_DEV_OR_TEST:
+    ODOO_WEBHOOK_SECRET = "dev-only-odoo-webhook-secret"
+ODOO_INBOUND_API_KEY = os.getenv("ODOO_INBOUND_API_KEY", "")
+if not ODOO_INBOUND_API_KEY and IS_DEV_OR_TEST:
+    ODOO_INBOUND_API_KEY = "dev-only-odoo-inbound-key"
 
 # VNPay Payment Gateway Settings (Optional / Not enabled by default)
 VNPAY_PAYMENT_URL = os.getenv(
