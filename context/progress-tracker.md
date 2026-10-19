@@ -1,11 +1,9 @@
 # Progress Tracker
 
 ## Completed in this artifact
-- Production-Grade CI/CD Pipeline & Monorepo Cloud Delivery (`.github/workflows/ci.yml`, `.github/workflows/cd.yml`, `apps/public-site/vercel.json`):
+- Production-Grade CI Pipeline & Monorepo Cloud Setup (`.github/workflows/ci.yml`, `apps/public-site/vercel.json`):
   - **CI Quality Gates**: Enhanced `.github/workflows/ci.yml` with concurrency control (`group: ${{ github.workflow }}-${{ github.ref }}`, `cancel-in-progress: true`), full multi-service testing (PostGIS 17 + Redis 7), Django system deployment checks (`check --deploy`), Ruff linting/formatting, Mypy typechecking (198 files), Bandit security auditing (0 high/medium vulnerabilities), and Docker Buildx container verification for both `apps/api` and `apps/public-site`.
-  - **Automated Continuous Delivery (CD)**: Created `.github/workflows/cd.yml` supporting both `push: [main]` and `workflow_dispatch` with atomic non-cancelling concurrency (`cd-production`).
-    - *Backend*: Builds and publishes multi-platform Docker container images to GitHub Container Registry (`ghcr.io/${{ github.repository }}/backend:latest` and SHA tags) with Aqua Security Trivy vulnerability scanning.
-    - *Frontend*: Automates Next.js production deployment to Vercel with live post-deployment HTTP smoke tests and helpful setup summaries.
+  - **Frontend Vercel Integration**: Configured `apps/public-site/vercel.json` with framework specifications and build optimizations, seamlessly integrating with Vercel's native deployment engine.
   - **Safe Booking & Account Type Fix**: Resolved `user.email` type warning on `AbstractBaseUser | AnonymousUser` in `apps/api/bookings/views.py` using defensive `getattr(user, "email", None)`.
   - **Verification**: 100% clean Next.js production build (`76/76` pages generated), 0 Mypy errors across 198 source files, 0 Ruff errors, 0 Bandit security issues, and passing context/static sanity scripts.
 - Soulful AI Concierge ("Bé Sao STAR") & Intelligent JEV Request Routing Layer:
