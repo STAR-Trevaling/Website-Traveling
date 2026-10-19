@@ -22,6 +22,7 @@ ALLOWED_ROUTES = (
     "clarify",
     "security_refusal",
     "emergency",
+    "conversational",
 )
 
 
@@ -87,11 +88,92 @@ def classify_route_deterministic(
     if any(ind in q_lower for ind in emergency_indicators):
         return "emergency"
 
+    # 2.5 Conversational & Persona Inquiries (Greetings, self-intro, chit-chat, thanks)
+    conversational_indicators = [
+        "xin chào",
+        "xin chao",
+        "chào em",
+        "chao em",
+        "chào bạn",
+        "chao ban",
+        "chào bé sao",
+        "chao be sao",
+        "hello",
+        "hi em",
+        "hi bạn",
+        "hey",
+        "alo",
+        "bạn là ai",
+        "em là ai",
+        "ban la ai",
+        "em là ai thế",
+        "em ten gi",
+        "bạn tên gì",
+        "bạn có khỏe không",
+        "em khỏe không",
+        "hôm nay thế nào",
+        "kể chuyện",
+        "kể cho tôi nghe",
+        "tại sao nên đi du lịch",
+        "cảm ơn",
+        "cam on",
+        "thank you",
+        "thanks",
+        "tạm biệt",
+        "tam biet",
+        "bye",
+        "good morning",
+        "good evening",
+        "ngủ ngon",
+    ]
+    q_stripped = q_lower.strip().strip("!?,.")
+    if q_stripped in {
+        "chao",
+        "chào",
+        "hi",
+        "hello",
+        "hey",
+        "alo",
+        "xin chao",
+        "xin chào",
+        "hi em",
+        "chào em",
+        "chao em",
+        "chào bạn",
+        "chao ban",
+        "bạn là ai",
+        "em là ai",
+        "ban la ai",
+    }:
+        return "conversational"
+
+    has_tour_indicators = any(
+        k in q_lower
+        for k in [
+            "giá tour",
+            "đặt tour",
+            "bao nhiêu tiền",
+            "báo giá",
+            "lịch trình",
+            "resort",
+            "khách sạn",
+            "hotel",
+            "2 ngày",
+            "3 ngày",
+            "4 ngày",
+            "e-visa",
+            "thị thực",
+            "thời tiết",
+        ]
+    )
+    if any(ind in q_lower for ind in conversational_indicators) and not has_tour_indicators:
+        return "conversational"
+
     # 3. Lead Inquiry with confirmed consent
     if has_contact and has_confirmed_consent:
         return "lead_inquiry"
 
-    # 3. Itinerary Planning Intent
+    # 4. Itinerary Planning Intent
     itinerary_indicators = [
         "lịch trình",
         "2 ngày 1 đêm",
@@ -205,12 +287,22 @@ class JevRouteSelector:
 
         if not is_jev_enabled or not api_key:
             # Deterministic fallback when Jev pilot is disabled
-            fallback_route = "knowledge" if chunks_count > 0 else "clarify"
+            if chunks_count > 0:
+                fallback_route = "knowledge"
+            else:
+                fallback_route = "conversational" if len(query.strip()) < 80 else "clarify"
             return fallback_route, "deterministic_fallback"
 
         # 3. Invoke Jev Choice API with sanitized input and closed choices
         sanitized_query = sanitize_for_router(query)
-        candidate_choices = ["knowledge", "discovery", "itinerary", "lead_inquiry", "clarify"]
+        candidate_choices = [
+            "knowledge",
+            "discovery",
+            "itinerary",
+            "lead_inquiry",
+            "conversational",
+            "clarify",
+        ]
 
         payload = {
             "task": "Classify user travel inquiry into exactly one candidate route.",

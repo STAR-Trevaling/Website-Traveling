@@ -261,3 +261,18 @@ def test_ev22_lead_extraction_sql_injection_defense():
     lead = extract_lead_info(query)
     assert lead["phone_number"] is None or not lead["phone_number"].startswith(";")
     assert lead["contact_name"] == "Admin"
+
+
+def test_conversational_route_and_be_sao_persona():
+    """Verify that greetings and casual chat are routed to conversational and return Bé Sao persona."""
+    from assistant.services.jev_router import classify_route_deterministic
+
+    # 1. Routing classification
+    assert classify_route_deterministic("Xin chào bé Sao nha") == "conversational"
+    assert classify_route_deterministic("Hello, bạn là ai thế?") == "conversational"
+    assert classify_route_deterministic("Chào bạn") == "conversational"
+
+    # 2. Offline graceful response (never cold 'kho dữ liệu chưa có thông tin')
+    reply, slugs = generate_response("Xin chào bé Sao", [], locale="vi", route="conversational")
+    assert "Bé Sao STAR" in reply or "Bé Sao" in reply
+    assert "kho dữ liệu chưa có thông tin có sẵn" not in reply

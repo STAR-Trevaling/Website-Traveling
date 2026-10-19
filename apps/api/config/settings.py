@@ -446,5 +446,5 @@ RAG_CHAT_ENDPOINT = os.getenv(
 )
 RAG_CHAT_API_KEY = os.getenv("RAG_CHAT_API_KEY", GEMINI_API_KEY or OPENAI_API_KEY)
 RAG_CHAT_MODEL = os.getenv(
-    "RAG_CHAT_MODEL", "gemini-1.5-flash-002" if GEMINI_API_KEY else "gpt-4o-mini"
+    "RAG_CHAT_MODEL", "gemini-flash-latest" if GEMINI_API_KEY else "gpt-4o-mini"
 )
