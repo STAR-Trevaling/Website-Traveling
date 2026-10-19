@@ -14,7 +14,7 @@ class Command(BaseCommand):
 
         for item in VIETNAM_HERITAGE_HISTORY:
             dest_slug = str(item.get("destination_slug") or "")
-            dest = Destination.objects.filter(slug=dest_slug).first()
+            dest = Destination.objects.filter(slug=dest_slug).only("id").first()
 
             chunk, created = AssistantKnowledgeChunk.objects.update_or_create(
                 entity_type=AssistantKnowledgeChunk.EntityType.PLACE,

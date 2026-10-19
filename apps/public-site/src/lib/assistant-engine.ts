@@ -588,7 +588,7 @@ export function queryAssistantKnowledge(
     return {
       message: isEn ? cultureEn : cultureVi,
       recommended_tours: [findTour("tour-da-nang-hoi-an-trail")].filter(Boolean).map((t) => mapTourToCard(t!, isEn)),
-      recommended_stories: [findStory("hoi-an-sac-mau-pho-co")].filter(Boolean).map((s) => mapStoryToCard(s!)),
+      recommended_stories: [findStory("cam-nang-am-thuc-hoi-an")].filter(Boolean).map((s) => mapStoryToCard(s!)),
       recommended_destinations: [findDest("hoi-an")].filter(Boolean).map((d) => mapDestinationToCard(d!, isEn)),
       recommended_guides: guideCard ? [guideCard] : [],
       contactRequired: false,
@@ -1189,7 +1189,7 @@ export function queryAssistantKnowledge(
     q.includes("ngan hoa")
   ) {
     const daLatTour = findTour("tour-da-lat-3n2d");
-    const cloudStory = findStory("bi-quyet-san-may-ta-xua");
+    const cloudStory = findStory("kinh-nghiem-du-lich-da-lat-tu-tuc");
     const daLatDest = findDest("da-lat");
 
     const textVi =
@@ -1342,6 +1342,72 @@ export function queryAssistantKnowledge(
     };
   }
 
+  // 8.5 Mũi Né / Phan Thiết / Đồi Cát Bay / Bàu Trắng
+  if (
+    q.includes("mui ne") ||
+    q.includes("phan thiet") ||
+    q.includes("doi cat") ||
+    q.includes("bau trang") ||
+    q.includes("suoi tien")
+  ) {
+    const muiNeTour = findTour("tour-mui-ne-phan-thiet-2n1d");
+    const muiNeStory = findStory("cam-nang-du-lich-mui-ne-phan-thiet");
+    const muiNeDest = findDest("mui-ne");
+
+    const textVi =
+      "Dạ chào Quý khách! **Mũi Né — Phan Thiết** là thiên đường biển xanh cát trắng nắng vàng của miền duyên hải Nam Trung Bộ. Quý khách sẽ được trải nghiệm xe Jeep địa hình băng qua Đồi Cát Trắng Bàu Trắng, lội Suối Tiên kỳ ảo và ngắm hoàng hôn trên đồi cát đỏ rực.\n\n" +
+      "STAR Travels trân trọng gửi Quý khách gói tour Mũi Né trọn gói và cẩm nang kinh nghiệm chi tiết bên dưới:";
+
+    const textEn =
+      "**Mui Ne — Phan Thiet** is Vietnam's coastal playground famed for rolling red and white sand dunes, jeep safaris at Bau Trang, and fresh seafood by the sea.\n\n" +
+      "Explore our curated 2D1N Mui Ne tour and travel handbook below:";
+
+    const tours = muiNeTour ? [mapTourToCard(muiNeTour, isEn)] : [];
+    const stories = muiNeStory ? [mapStoryToCard(muiNeStory)] : [];
+    const dests = muiNeDest ? [mapDestinationToCard(muiNeDest, isEn)] : [];
+
+    return {
+      message: isEn ? textEn : textVi,
+      recommended_tours: tours,
+      recommended_stories: stories,
+      recommended_destinations: dests,
+      contactRequired: false,
+    };
+  }
+
+  // 8.6 Cố Đô Huế / Sông Hương / Đại Nội
+  if (
+    q.includes("hue") ||
+    q.includes("co do") ||
+    q.includes("song huong") ||
+    q.includes("dai noi") ||
+    q.includes("thien mu")
+  ) {
+    const hueTour = findTour("tour-hue-di-san-2n1d");
+    const hueDest = findDest("hue");
+    const heritageStory = findStory("hanh-trinh-xuyen-viet");
+
+    const textVi =
+      "Dạ chào Quý khách! **Cố Đô Huế** mang vẻ đẹp trầm mặc, cổ kính với Quần thể Di tích Cố đô Huế, Đại Nội nguy nga, các lăng tẩm vua chúa triều Nguyễn và trải nghiệm du thuyền rồng nghe ca Huế trên sông Hương thơ mộng.\n\n" +
+      "Mời Quý khách tham khảo gói tour di sản Cố Đô Huế 2N1Đ trọn gói:";
+
+    const textEn =
+      "**Imperial City of Hue** is Vietnam's cultural heartland featuring ancient citadels, royal tombs along the Perfume River, and UNESCO traditional court music.\n\n" +
+      "Explore our handcrafted Hue heritage tour package:";
+
+    const tours = hueTour ? [mapTourToCard(hueTour, isEn)] : [];
+    const stories = heritageStory ? [mapStoryToCard(heritageStory)] : [];
+    const dests = hueDest ? [mapDestinationToCard(hueDest, isEn)] : [];
+
+    return {
+      message: isEn ? textEn : textVi,
+      recommended_tours: tours,
+      recommended_stories: stories,
+      recommended_destinations: dests,
+      contactRequired: false,
+    };
+  }
+
   // 9. Gia đình / Nhóm
   if (
     q.includes("gia dinh") ||
@@ -1440,64 +1506,63 @@ export function queryAssistantKnowledge(
       slug: "da-nang",
       keywords: ["da nang", "danang", "ba na", "bana", "cau vang", "my khe", "son tra", "ngu hanh son", "cau rong"],
       tourSlug: "tour-da-nang-hoi-an-trail",
-      storySlug: "top-10-mon-ngon-hoi-an",
+      storySlug: "cam-nang-am-thuc-hoi-an",
     },
     {
       slug: "hoi-an",
       keywords: ["hoi an", "hoian", "chua cau", "song hoai", "den long", "pho co hoi an"],
       tourSlug: "tour-da-nang-hoi-an-trail",
-      storySlug: "top-10-mon-ngon-hoi-an",
+      storySlug: "cam-nang-am-thuc-hoi-an",
     },
     {
       slug: "phu-quoc",
       keywords: ["phu quoc", "phuquoc", "dao ngoc", "bai khem", "bai sao", "hon thom", "sunset town", "lan san ho", "lan bien", "diving"],
-      tourSlug: "tour-phu-quoc-coral-diving",
-      storySlug: "huong-dan-lan-bien-phu-quoc",
+      tourSlug: "tour-phu-quoc-nam-dao-4n3d",
+      storySlug: "lan-ngam-san-ho-phu-quoc",
     },
     {
       slug: "da-lat",
       keywords: ["da lat", "dalat", "thanh pho ngan hoa", "tuyen lam", "langbiang", "xuan huong", "suong mu"],
-      tourSlug: "tour-da-lat-flower-city",
-      storySlug: "top-quan-cafe-dep-nhat-da-lat",
+      tourSlug: "tour-da-lat-3n2d",
+      storySlug: "kinh-nghiem-du-lich-da-lat-tu-tuc",
     },
     {
       slug: "ninh-binh",
       keywords: ["ninh binh", "ninhbinh", "trang an", "tam coc", "bich dong", "hang mua", "hoa lu", "bai dinh"],
       tourSlug: "tour-trang-an-hang-mua-1n",
-      storySlug: "kinh-nghiem-kham-pha-trang-an",
+      storySlug: "hanh-trinh-xuyen-viet",
     },
     {
       slug: "ha-giang",
       keywords: ["ha giang", "hagiang", "ma pi leng", "dong van", "nho que", "meo vac", "lung cu", "tam giac mach"],
-      tourSlug: "tour-ha-giang-ma-pi-leng",
-      storySlug: "cam-nang-chinh-phuc-ma-pi-leng",
+      tourSlug: "tour-ha-giang-dong-van-3n2d",
+      storySlug: "bi-quyet-san-may-ta-xua",
     },
     {
       slug: "hue",
       keywords: ["hue", "co do hue", "song huong", "thien mu", "dai noi", "lang tu duc", "lang khai dinh"],
-      tourSlug: "tour-hue-imperial-heritage",
-      storySlug: "net-dep-co-do-hue",
+      tourSlug: "tour-hue-di-san-2n1d",
+      storySlug: "hanh-trinh-xuyen-viet",
     },
     {
       slug: "phong-nha",
       keywords: ["phong nha", "phongnha", "ke bang", "son doong", "hang en", "dong thien duong", "quang binh"],
-      tourSlug: "tour-phong-nha-ke-bang",
-      storySlug: "bi-mat-son-doong-phong-nha",
     },
     {
       slug: "con-dao",
       keywords: ["con dao", "condao", "hang duong", "dam trau", "rua bien"],
-      tourSlug: "tour-con-dao-legend",
-      storySlug: "vi-sao-con-dao-quyen-ru",
     },
     {
       slug: "can-tho",
       keywords: ["can tho", "cantho", "cai rang", "cho noi", "ben tre", "bentre", "mien tay", "song nuoc", "me kong", "mekong", "miet vuon"],
       tourSlug: "tour-mekong-delta-floating-market",
+      storySlug: "hanh-trinh-xuyen-viet",
     },
     {
       slug: "mui-ne",
-      keywords: ["mui ne", "muine", "phan thiet", "phanthiet", "doi cat bay", "bau trang"],
+      keywords: ["mui ne", "muine", "phan thiet", "phanthiet", "doi cat bay", "bau trang", "suoi tien", "poshanu"],
+      tourSlug: "tour-mui-ne-phan-thiet-2n1d",
+      storySlug: "cam-nang-du-lich-mui-ne-phan-thiet",
     },
     {
       slug: "ha-noi",
@@ -1517,7 +1582,7 @@ export function queryAssistantKnowledge(
         "capella",
       ],
       tourSlug: "tour-ha-long-cruise-2n1d",
-      storySlug: "cam-nang-chinh-phuc-ma-pi-leng",
+      storySlug: "kham-pha-36-pho-phuong-ha-noi",
     },
     {
       slug: "nha-trang",

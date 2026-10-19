@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { cookies } from "next/headers";
-import { ArrowRight, MapPin } from "lucide-react";
+import { ArrowRight, MapPin, BookOpen } from "lucide-react";
 import type { Destination } from "@/lib/types";
 import { VIETNAM_IMAGES } from "@/lib/assets";
 
@@ -52,23 +52,9 @@ export async function DestinationCard({ destination }: DestinationCardProps) {
       </div>
 
       <div className="p-5 pt-0 border-t border-slate-100 mt-2 flex items-center justify-between">
-        <div>
-          {destination.starting_price ? (
-            <div>
-              <span className="text-[10px] text-slate-400 font-light block uppercase tracking-wider">
-                {isEn ? "From" : "Từ"}
-              </span>
-              <strong className="text-xs sm:text-sm font-black text-slate-900">
-                {isEn
-                  ? `${Number(destination.starting_price).toLocaleString("en-US")} VND`
-                  : new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(Number(destination.starting_price))}
-              </strong>
-            </div>
-          ) : (
-            <span className="text-xs text-slate-400 font-light">
-              {isEn ? "Featured Destination" : "Điểm đến nổi bật"}
-            </span>
-          )}
+        <div className="flex items-center gap-1.5 text-xs text-slate-500 font-medium">
+          <BookOpen className="size-3.5 text-[#0098a2]" />
+          <span>{isEn ? "Travel Guide & Heritage" : "Cẩm nang & Di sản"}</span>
         </div>
 
         <span className="text-xs font-semibold uppercase tracking-wider text-slate-700 group-hover:text-[#da251d] flex items-center gap-1 transition-colors">

@@ -950,6 +950,108 @@ class Command(BaseCommand):
                 ["Dịch vụ lặn bình khí sâu (Scuba diving chuyên nghiệp)", "Chi phí cá nhân"],
                 True,
             ),
+            (
+                "tour-mui-ne-phan-thiet-2n1d",
+                "Tour Mũi Né — Đồi Cát Bay & Jeep Safari Bàu Trắng — Phan Thiết",
+                "Mui Ne Tour — Flying Sand Dunes & Bau Trang Jeep Safari",
+                "mui-ne",
+                "Mũi Né — Phan Thiết, Bình Thuận",
+                "Mui Ne — Phan Thiet, Binh Thuan",
+                "south",
+                "2 Ngày 1 Đêm",
+                "2 Days 1 Night",
+                "TP. Hồ Chí Minh",
+                "Ho Chi Minh City",
+                "Tối đa 16 khách",
+                Decimal("1850000"),
+                Decimal("2250000"),
+                Decimal("4.9"),
+                165,
+                VIETNAM_PHOTO_MAP["mui-ne"],
+                "Hành trình kỳ thú khám phá sa mạc cát nhiệt đới Mũi Né, xe Jeep vượt đồi cát Bàu Trắng đón bình minh và thưởng thức đại tiệc hải sản làng chài.",
+                "Exciting desert discovery in Mui Ne with sunrise Bau Trang jeep safaris, fairy streams, and coastal fishing village seafood feasts.",
+                [
+                    "Xe Jeep địa hình lướt trên đồi cát trắng Bàu Trắng đón bình minh",
+                    "Lội Suối Tiên chân trần ngắm hẻm núi đất đỏ kỳ vĩ",
+                    "Viếng Tháp Chàm Poshanư thế kỷ thứ 8",
+                    "Thưởng thức Lẩu thả Phan Thiết 5 màu truyền thống",
+                ],
+                [
+                    {
+                        "day": 1,
+                        "title": "TP.HCM — Phan Thiết — Tháp Poshanư — Đồi Cát Bay",
+                        "morning": "Xe đón tại TP.HCM đi Phan Thiết, thăm Tháp Chàm Poshanư",
+                        "afternoon": "Nhận phòng resort, tắm biển, trượt cát Đồi Cát Bay hoàng hôn",
+                        "evening": "Bữa tối hải sản bờ kè Hàm Tiến, ngắm rặng dừa lộng gió",
+                    },
+                    {
+                        "day": 2,
+                        "title": "Bình Minh Bàu Trắng Jeep Safari — Suối Tiên — TP.HCM",
+                        "morning": "Xe Jeep đón đi ngắm mặt trời mọc Đồi Cát Trắng Bàu Sen",
+                        "afternoon": "Lội suối Tiên, thăm làng chài Mũi Né, mua nước mắm đặc sản",
+                        "evening": "Khởi hành về lại TP.HCM an toàn",
+                    },
+                ],
+                [
+                    "Xe ô tô du lịch cao tốc khứ hồi",
+                    "Resort 4 sao ven biển 1 đêm",
+                    "Tour xe Jeep địa hình Bàu Trắng & Suối Tiên",
+                    "Các bữa ăn chính gồm hải sản và lẩu thả",
+                ],
+                ["Xe ATV mô tô địa hình tự lái", "Chi phí cá nhân"],
+                True,
+            ),
+            (
+                "tour-mekong-delta-floating-market",
+                "Mê Kông Sông Nước — Chợ Nổi Cái Răng & Miệt Vườn Cần Thơ",
+                "Mekong Riverways — Cai Rang Floating Market & Can Tho Orchards",
+                "can-tho",
+                "Cần Thơ & Bến Tre",
+                "Can Tho & Ben Tre",
+                "south",
+                "2 Ngày 1 Đêm",
+                "2 Days 1 Night",
+                "TP. Hồ Chí Minh",
+                "Ho Chi Minh City",
+                "Tối đa 18 khách",
+                Decimal("1950000"),
+                Decimal("2400000"),
+                Decimal("4.8"),
+                142,
+                VIETNAM_PHOTO_MAP["can-tho"],
+                "Hành trình sông nước miệt vườn miền Tây Nam Bộ, xuôi thuyền chèo rợp bóng dừa Bến Tre và ngắm bình minh chợ nổi Cái Răng.",
+                "Authentic Mekong Delta journey with sampan rides through shaded coconut canals and vibrant dawn floating markets.",
+                [
+                    "Xuôi thuyền nan ba lá len lỏi giữa rặng dừa nước Bến Tre",
+                    "Trải nghiệm chợ nổi Cái Răng Cần Thơ nhộn nhịp lúc bình minh",
+                    "Thưởng thức đờn ca tài tử và tự tay làm kẹo dừa",
+                    "Đại tiệc ẩm thực miệt vườn: cá tai tượng chiên xù, lẩu mắm",
+                ],
+                [
+                    {
+                        "day": 1,
+                        "title": "TP.HCM — Bến Tre Xứ Dừa — Cần Thơ",
+                        "morning": "Khởi hành đi Bến Tre, đi thuyền du ngoạn sông Tiền",
+                        "afternoon": "Nghe đờn ca tài tử, ăn trưa cá tai tượng, về Cần Thơ",
+                        "evening": "Du thuyền Cần Thơ ăn tối, ngắm cầu Cần Thơ",
+                    },
+                    {
+                        "day": 2,
+                        "title": "Chợ Nổi Cái Răng — Miệt Vườn Trái Cây — Về TP.HCM",
+                        "morning": "Đi tàu khám phá Chợ nổi Cái Răng, ăn bún riêu trên sông",
+                        "afternoon": "Thăm lò hủ tiếu, miệt vườn hái trái cây, ăn trưa dân dã",
+                        "evening": "Khởi hành về TP.HCM",
+                    },
+                ],
+                [
+                    "Xe du lịch đời mới máy lạnh khứ hồi",
+                    "Khách sạn 4 sao trung tâm Cần Thơ",
+                    "Thuyền tham quan cù lao và chợ nổi Cái Răng",
+                    "Ăn uống theo chương trình",
+                ],
+                ["Chi tiêu cá nhân ngoài thực đơn"],
+                True,
+            ),
         ]
 
         for (
@@ -1084,6 +1186,57 @@ class Command(BaseCommand):
                 "Vũ Tuấn Kiệt",
                 "Huấn luyện viên lặn biển PADI",
                 ["Phú Quốc", "Lặn biển", "San hô", "An Thới"],
+            ),
+            (
+                "cam-nang-du-lich-mui-ne-phan-thiet",
+                "Cẩm nang du lịch Mũi Né — Phan Thiết: Đồi Cát Bay, Bàu Trắng và hải sản làng chài",
+                "Bí quyết chinh phục tiểu sa mạc cát nhiệt đới, trải nghiệm xe Jeep Safari đón bình minh và thưởng thức lẩu thả Phan Thiết.",
+                (
+                    "Mũi Né — Phan Thiết từ lâu đã khẳng định vị thế là thủ phủ resort và thiên đường sa mạc biển độc nhất vô nhị. "
+                    "Nơi đây sở hữu khí hậu nắng ấm quanh năm, những đồi cát trắng và cát đỏ đổi màu theo từng cơn gió, "
+                    "trải nghiệm xe Jeep safari vượt đỉnh Bàu Trắng ngắm mặt trời mọc, lội suối Tiên và thưởng thức món lẩu thả 5 màu trứ danh."
+                ),
+                VIETNAM_PHOTO_MAP["mui-ne"],
+                destinations["mui-ne"],
+                "6 phút đọc",
+                "Cẩm Nang Điểm Đến",
+                "Lê Nhật Quang",
+                "Chuyên gia khám phá duyên hải miền Trung",
+                ["Mũi Né", "Phan Thiết", "Bàu Trắng", "Đồi cát", "Jeep Safari", "Lẩu thả"],
+            ),
+            (
+                "kham-pha-36-pho-phuong-ha-noi",
+                "Hà Nội 36 phố phường: Cẩm nang dạo bước nghìn năm văn hiến và ẩm thực vỉa hè",
+                "Khám phá nét duyên thầm Thăng Long qua những con ngõ cổ, cà phê trứng Giảng nức tiếng và bát phở bò gia truyền.",
+                (
+                    "Hà Nội — trái tim nghìn năm văn hiến của dân tộc. Dạo bước qua 36 phố phường rêu phong, "
+                    "ngắm mặt nước Hồ Gươm trong xanh, thưởng thức cà phê trứng béo ngậy và bát phở gia truyền thơm lừng "
+                    "chính là cách cảm nhận trọn vẹn nhịp đập tâm hồn của đất kinh kỳ."
+                ),
+                VIETNAM_PHOTO_MAP["ha-long"],
+                destinations["ha-long"],
+                "7 phút đọc",
+                "Văn Hóa & Di Sản",
+                "Nguyễn Thu An",
+                "Nhà nghiên cứu văn hóa Hà Nội",
+                ["Hà Nội", "Phố cổ", "36 phố phường", "Hồ Gươm", "Ẩm thực"],
+            ),
+            (
+                "kinh-nghiem-du-lich-da-lat-tu-tuc",
+                "Kinh nghiệm du lịch Đà Lạt tự túc: Săn mây đồi chè Cầu Đất và top quán cà phê chill",
+                "Hành trình khám phá thành phố sương mù, mẹo săn biển mây bình minh Cầu Đất và các tọa độ check-in rừng thông lãng mạn.",
+                (
+                    "Đà Lạt nằm trên cao nguyên Lâm Viên với khí hậu mát lạnh quanh năm và rừng thông xanh ngát. "
+                    "Thức dậy sớm săn biển mây bồng bềnh tại đồi chè Cầu Đất, chèo SUP hồ Tuyền Lâm phẳng lặng "
+                    "và quây quần bên nồi lẩu gà lá é trong đêm lạnh là trải nghiệm không thể quên."
+                ),
+                VIETNAM_PHOTO_MAP["da-lat"],
+                destinations["da-lat"],
+                "6 phút đọc",
+                "Cẩm Nang Du Lịch",
+                "Đỗ Minh Quân",
+                "Nhiếp ảnh gia & Travel Blogger",
+                ["Đà Lạt", "Săn mây", "Cầu Đất", "Hồ Tuyền Lâm", "Cà phê"],
             ),
         ]
 

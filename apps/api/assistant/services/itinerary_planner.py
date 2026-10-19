@@ -425,13 +425,32 @@ class ItineraryPlanner:
                 "url": f"/tours/{t.slug}",
             }
             sources.append(t_source)
+        ADVENTURE_EXPERIENCE_SLUGS = {
+            "canal-cruise",
+            "sailing",
+            "hiking",
+            "camping",
+            "scuba-diving",
+            "kayaking",
+            "rock-climbing",
+            "paragliding",
+        }
         for p in place_chunks:
+            p_meta = p.metadata or {}
+            dest_slug = p_meta.get("destination_slug") or dest.slug
+            if p.entity_slug in ADVENTURE_EXPERIENCE_SLUGS:
+                place_url = f"/experiences/{p.entity_slug}"
+            elif dest_slug:
+                place_url = f"/destinations/{dest_slug}"
+            else:
+                place_url = f"/destinations/{dest.slug}"
+
             p_source: dict[str, str | None] = {
                 "entity_type": "place",
                 "entity_id": str(p.entity_id) if p.entity_id else None,
                 "slug": p.entity_slug,
                 "title": p.title,
-                "url": f"/experiences/{p.entity_slug}",
+                "url": place_url,
             }
             sources.append(p_source)
 

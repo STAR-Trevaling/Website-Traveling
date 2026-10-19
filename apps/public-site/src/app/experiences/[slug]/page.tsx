@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { MapPin, Star, Clock, Users, ShieldCheck, Compass, CheckCircle2 } from "lucide-react";
 import { PageHero } from "@/components/layout/page-hero";
@@ -12,7 +12,7 @@ import { PlaceCard } from "@/components/shared/place-card";
 import { getCurrentUser } from "@/lib/auth";
 import { publicApi, safe } from "@/lib/api";
 import { VIETNAM_IMAGES } from "@/lib/assets";
-import { VIETNAM_EXPERIENCES } from "@/data/seed";
+import { VIETNAM_EXPERIENCES, ALL_VIETNAM_DESTINATIONS } from "@/data/seed";
 import { DICTIONARY } from "@/lib/i18n/dictionary";
 import type { Locale } from "@/lib/i18n/types";
 
@@ -54,6 +54,15 @@ export default async function ExperienceDetail({ params }: ExperienceDetailProps
   } catch {
     place = VIETNAM_EXPERIENCES.find((e) => e.slug === slug);
     if (!place) {
+      // Graceful destination redirection fallback for heritage and place items
+      const matchedDest = ALL_VIETNAM_DESTINATIONS.find(
+        (d) =>
+          slug.includes(d.slug) ||
+          Boolean(d.aliases?.some((a: string) => slug.includes(a)))
+      );
+      if (matchedDest) {
+        redirect(`/destinations/${matchedDest.slug}`);
+      }
       notFound();
     }
   }

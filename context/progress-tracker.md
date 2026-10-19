@@ -1,6 +1,13 @@
 # Progress Tracker
 
 ## Completed in this artifact
+- Production-Grade CI/CD Pipeline & Monorepo Cloud Delivery (`.github/workflows/ci.yml`, `.github/workflows/cd.yml`, `apps/public-site/vercel.json`):
+  - **CI Quality Gates**: Enhanced `.github/workflows/ci.yml` with concurrency control (`group: ${{ github.workflow }}-${{ github.ref }}`, `cancel-in-progress: true`), full multi-service testing (PostGIS 17 + Redis 7), Django system deployment checks (`check --deploy`), Ruff linting/formatting, Mypy typechecking (198 files), Bandit security auditing (0 high/medium vulnerabilities), and Docker Buildx container verification for both `apps/api` and `apps/public-site`.
+  - **Automated Continuous Delivery (CD)**: Created `.github/workflows/cd.yml` supporting both `push: [main]` and `workflow_dispatch` with atomic non-cancelling concurrency (`cd-production`).
+    - *Backend*: Builds and publishes multi-platform Docker container images to GitHub Container Registry (`ghcr.io/${{ github.repository }}/backend:latest` and SHA tags) with Aqua Security Trivy vulnerability scanning.
+    - *Frontend*: Automates Next.js production deployment to Vercel with live post-deployment HTTP smoke tests and helpful setup summaries.
+  - **Safe Booking & Account Type Fix**: Resolved `user.email` type warning on `AbstractBaseUser | AnonymousUser` in `apps/api/bookings/views.py` using defensive `getattr(user, "email", None)`.
+  - **Verification**: 100% clean Next.js production build (`76/76` pages generated), 0 Mypy errors across 198 source files, 0 Ruff errors, 0 Bandit security issues, and passing context/static sanity scripts.
 - Soulful AI Concierge ("Bé Sao STAR") & Intelligent JEV Request Routing Layer:
   - **Gemini Model Refresh**: Pinned active, authenticated models (`gemini-flash-latest`, `gemini-3.8-flash`, `gemini-3.5-flash`), eradicating deprecated endpoints (`gemini-1.5-flash-002`, `gemini-2.0-flash`) that caused silent 404s and forced fallback to canned scripts.
   - **JEV Request Analysis Layer (`apps/api/assistant/services/jev_router.py`)**: Analyzes incoming queries to decide when to use RAG vs when NOT to use RAG:

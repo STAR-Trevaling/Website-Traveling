@@ -630,7 +630,7 @@ VIETNAM_HERITAGE_HISTORY = [
             "Cặp đôi thích biển & ẩm thực",
             "Du khách chăm sóc sức khỏe & tắm khoáng",
         ],
-        "recommended_tour_slugs": ["tour-da-lat-thanh-pho-ngan-hoa-3n2d"],
+        "recommended_tour_slugs": [],
         "content_vi": (
             "1. Lịch sử Tháp Bà Ponagar: Được xây dựng từ thế kỷ 8 đến thế kỷ 13 trên đồi Cù Lao nhìn ra cửa sông Cái, "
             "quần thể đền tháp Champa Kauthara thờ Nữ thần Po Ino Nagar (Mẹ Xứ Sở). Kiến trúc tháp gạch nung đỏ rực "
@@ -694,7 +694,7 @@ VIETNAM_HERITAGE_HISTORY = [
             "Khách thể thao lướt ván mạo hiểm",
             "Gia đình nghỉ dưỡng biển",
         ],
-        "recommended_tour_slugs": ["tour-phu-quoc-thien-duong-dao-ngoc-3n2d"],
+        "recommended_tour_slugs": ["tour-mui-ne-phan-thiet-2n1d"],
         "content_vi": (
             "1. Lịch sử Tháp Chàm Poshanư: Tọa lạc trên đồi Bà Nài nhìn ra biển Phan Thiết, tháp Poshanư được xây dựng từ cuối thế kỷ 8 đầu thế kỷ 9 "
             "theo phong cách nghệ thuật Hòa Lai Champa để tôn thờ thần tối cao Shiva. Thế kỷ 15, người Chăm dựng thêm đền thờ tưởng nhớ "
@@ -757,7 +757,7 @@ VIETNAM_HERITAGE_HISTORY = [
             "Du khách quốc tế muốn trải nghiệm văn hóa bản địa chân thực",
             "Những ai yêu thích ẩm thực miệt vườn",
         ],
-        "recommended_tour_slugs": ["tour-phu-quoc-thien-duong-dao-ngoc-3n2d"],
+        "recommended_tour_slugs": ["tour-mekong-delta-floating-market"],
         "content_vi": (
             "1. Lịch sử Cần Thơ — Đô thị Tây Đô: Nằm ở hạ lưu sông Hậu, Cần Thơ được hình thành từ công cuộc khai khẩn đất phương Nam "
             "của các bậc tiền nhân thế kỷ 18. Đến thời thuộc địa Pháp, Cần Thơ được mệnh danh là 'Tây Đô' — trung tâm kinh tế, văn hóa sầm uất bậc nhất miền Tây Nam Bộ.\n\n"
@@ -1129,7 +1129,7 @@ VIETNAM_HERITAGE_HISTORY = [
             "Gia đình",
             "Doanh nhân & khách MICE",
         ],
-        "recommended_tour_slugs": ["tour-phu-quoc-thien-duong-dao-ngoc-3n2d"],
+        "recommended_tour_slugs": ["tour-mekong-delta-floating-market"],
         "content_vi": (
             "1. Lịch sử 300 năm mở cõi đất Sài Gòn: Năm 1698, Kinh lược sứ Lễ Thành Hầu Nguyễn Hữu Cảnh vâng lệnh Chúa Nguyễn kinh lý phương Nam, "
             "thành lập phủ Gia Định, chính thức đặt nền móng hành chính vững chắc cho mảnh đất Sài Gòn - TP. Hồ Chí Minh hôm nay.\n\n"
@@ -1192,7 +1192,7 @@ VIETNAM_HERITAGE_HISTORY = [
             "Người yêu thiên nhiên biển đảo nguyên sơ",
             "Cặp đôi thích sự yên tĩnh",
         ],
-        "recommended_tour_slugs": ["tour-phu-quoc-thien-duong-dao-ngoc-3n2d"],
+        "recommended_tour_slugs": [],
         "content_vi": (
             "1. Lịch sử Bi tráng Nhà tù Côn Đảo 113 năm: Trong suốt hơn 1 thế kỷ (1862–1975), Côn Đảo từng bị biến thành 'Địa ngục trần gian' "
             "với hệ thống Chuồng Cọp Pháp, Chuồng Cọp Mỹ và hầm phân bò tàn khốc giam giữ hàng vạn chiến sĩ yêu nước, nhà cách mạng kiên trung. "
@@ -1257,7 +1257,7 @@ VIETNAM_HERITAGE_HISTORY = [
             "Gia đình yêu lịch sử hào hùng",
             "Nhóm bạn trẻ yêu thích chụp ảnh thiên nhiên",
         ],
-        "recommended_tour_slugs": ["tour-hoi-an-da-nang-3n2d"],
+        "recommended_tour_slugs": [],
         "content_vi": (
             "1. Miền Đất Võ & Vương triều Tây Sơn: Bình Định là cội nguồn phát tích của phong trào khởi nghĩa Tây Sơn hào hùng thế kỷ 18 "
             "với anh hùng áo vải cờ đào Quang Trung - Nguyễn Huệ, vị hoàng đế bách chiến bách thắng đã chỉ huy chiến dịch thần tốc đại phá 29 vạn quân Mãn Thanh năm 1789.\n\n"
@@ -1318,7 +1318,7 @@ VIETNAM_HERITAGE_HISTORY = [
             "Khách du lịch yêu phong cảnh lãng mạn",
             "Nhiếp ảnh gia bình minh",
         ],
-        "recommended_tour_slugs": ["tour-da-lat-thanh-pho-ngan-hoa-3n2d"],
+        "recommended_tour_slugs": [],
         "content_vi": (
             "1. Tuyệt tác Địa chất Gành Đá Đĩa: Được hình thành từ quá trình dung nham núi lửa phun trào cách đây hàng triệu năm gặp nước biển lạnh "
             "đông cứng lại và rạn nứt thành hàng vạn cột đá bazan hình lục lăng, ngũ lăng xếp chồng khít khao lên nhau như một tổ ong khổng lồ vươn ra biển khơi, "

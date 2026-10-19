@@ -85,7 +85,48 @@ interface ChatMessage {
  */
 function getSafeHref(url: string): string {
   if (!url || typeof url !== "string") return "#";
-  const trimmed = url.trim();
+  let trimmed = url.trim();
+
+  // Defensive sanitization: if heritage or non-adventure experience URL, route to destination
+  if (trimmed.startsWith("/experiences/")) {
+    const expSlug = trimmed.replace("/experiences/", "").split("/")[0].split("?")[0];
+    const ADVENTURE_SLUGS = [
+      "canal-cruise", "sailing", "hiking", "camping",
+      "scuba-diving", "kayaking", "rock-climbing", "paragliding"
+    ];
+    if (!ADVENTURE_SLUGS.includes(expSlug)) {
+      if (expSlug.includes("mui-ne") || expSlug.includes("phan-thiet") || expSlug.includes("poshanu")) {
+        trimmed = "/destinations/mui-ne";
+      } else if (expSlug.includes("da-lat")) {
+        trimmed = "/destinations/da-lat";
+      } else if (expSlug.includes("ha-long")) {
+        trimmed = "/destinations/ha-long";
+      } else if (expSlug.includes("sapa") || expSlug.includes("sa-pa")) {
+        trimmed = "/destinations/sapa";
+      } else if (expSlug.includes("hoi-an")) {
+        trimmed = "/destinations/hoi-an";
+      } else if (expSlug.includes("da-nang")) {
+        trimmed = "/destinations/da-nang";
+      } else if (expSlug.includes("phu-quoc")) {
+        trimmed = "/destinations/phu-quoc";
+      } else if (expSlug.includes("ninh-binh")) {
+        trimmed = "/destinations/ninh-binh";
+      } else if (expSlug.includes("ha-giang")) {
+        trimmed = "/destinations/ha-giang";
+      } else if (expSlug.includes("hue")) {
+        trimmed = "/destinations/hue";
+      } else if (expSlug.includes("nha-trang")) {
+        trimmed = "/destinations/nha-trang";
+      } else if (expSlug.includes("con-dao")) {
+        trimmed = "/destinations/con-dao";
+      } else if (expSlug.includes("can-tho") || expSlug.includes("mekong")) {
+        trimmed = "/destinations/can-tho";
+      } else {
+        trimmed = "/destinations";
+      }
+    }
+  }
+
   if (trimmed.startsWith("/") && !trimmed.startsWith("//") && !trimmed.startsWith("/\\")) {
     return encodeURI(trimmed);
   }

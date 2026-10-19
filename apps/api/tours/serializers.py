@@ -10,9 +10,9 @@ class TourSerializer(serializers.ModelSerializer):
     destination = serializers.SerializerMethodField()
     destination_en = serializers.CharField(source="destination_name_en", read_only=True)
     groupSize = serializers.CharField(source="group_size", read_only=True)
-    originalPrice = serializers.DecimalField(
-        source="original_price", max_digits=12, decimal_places=0, read_only=True
-    )
+    price = serializers.IntegerField(read_only=True)
+    originalPrice = serializers.IntegerField(source="original_price", read_only=True)
+    rating = serializers.FloatField(read_only=True)
     reviewCount = serializers.IntegerField(source="review_count", read_only=True)
     featured = serializers.BooleanField(source="is_featured", read_only=True)
 

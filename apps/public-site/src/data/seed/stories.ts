@@ -189,6 +189,121 @@ Một du thuyền đẳng cấp luôn đảm bảo 100% phòng nghỉ có ban c�
     authorRole: "Huấn luyện viên lặn biển PADI",
     tags: ["Phú Quốc", "Lặn biển", "San hô", "An Thới"],
   },
+  {
+    id: "story-cam-nang-du-lich-mui-ne-phan-thiet",
+    slug: "cam-nang-du-lich-mui-ne-phan-thiet",
+    title: "Cẩm nang du lịch Mũi Né — Phan Thiết: Đồi Cát Bay, Bàu Trắng và hải sản làng chài",
+    excerpt: "Bí quyết chinh phục tiểu sa mạc cát nhiệt đới, trải nghiệm xe Jeep Safari đón bình minh và thưởng thức lẩu thả Phan Thiết.",
+    body: `Mũi Né — Phan Thiết (tỉnh Bình Thuận) từ lâu đã khẳng định vị thế là 'thủ phủ resort' và thiên đường biển sa mạc độc nhất vô nhị của Việt Nam. Nơi đây sở hữu khí hậu nắng ấm quanh năm, những đồi cát trắng và cát đỏ đổi màu theo từng cơn gió biển, cùng cung đường ven biển lộng gió đẹp như tranh vẽ.
+
+### Thời điểm vàng du lịch Mũi Né
+
+Thời tiết Mũi Né phân hóa thành hai mùa rõ rệt. Mùa khô kéo dài từ tháng 11 đến tháng 4 năm sau với bầu trời trong xanh ngắt, gió lộng và biển êm, đặc biệt lý tưởng cho các bộ môn thể thao mạo hiểm như lướt ván diều, lướt sóng và trượt cát.
+
+### Những trải nghiệm đỉnh cao không thể bỏ lỡ
+
+1. **Jeep Safari đón bình minh tại Đồi Cát Trắng (Bàu Trắng)**: Thức dậy từ 4h30 sáng, vi vu trên những chiếc xe Jeep địa hình rực rỡ sắc màu lao dốc vượt qua những cồn cát trắng uốn lượn ngoạn mục. Đứng giữa hồ sen nước ngọt phẳng lặng giữa lòng sa mạc ngắm mặt trời nhô lên từ chân trời biển Đông là khoảnh khắc kỳ diệu khó quên.
+2. **Lội chân trần khám phá Suối Tiên (Fairy Stream)**: Dòng suối cạn nước đỏ au len lỏi giữa những vách nhũ cát phong hóa hàng ngàn năm tạo nên hẻm núi mini Grand Canyon kỳ vĩ.
+3. **Thăm làng chài Mũi Né lúc sáng sớm**: Chiêm ngưỡng bức tranh sinh hoạt nhộn nhịp của ngư dân khi hàng trăm chiếc thuyền thúng cập bờ đầy ắp tôm cá tươi rói.
+4. **Viếng quần thể Tháp Chàm Poshanư**: Cụm tháp cổ xây dựng từ thế kỷ thứ 8 thờ thần Shiva và công chúa Poshanu, mang đậm dấu ấn kiến trúc Hòa Lai Champa huyền bí.
+
+### Ẩm thực tinh hoa xứ biển Phan Thiết
+
+Đến Mũi Né, bạn nhất định phải thưởng thức món **Lẩu Thả Phan Thiết** — món ăn được bài trí công phu trên các bẹ hoa chuối đại diện cho ngũ hành Kim, Mộc, Thủy, Hỏa, Thổ. Ngoài ra, bánh căn xíu mại cá nục, răng mực nướng bơ tỏi và mực một nắng nướng sa tế tại bờ kè Hàm Tiến sẽ khiến chuyến đi của bạn thêm phần trọn vẹn.`,
+    cover_image: VIETNAM_IMAGES.oceanBanner,
+    destination: {
+      id: "mui-ne",
+      slug: "mui-ne",
+      name: "Mũi Né — Đồi Cát Bay",
+      country: "Bình Thuận, Việt Nam",
+      summary: "Tiểu sa mạc cát nhiệt đới và thủ phủ nghỉ dưỡng biển.",
+      description: "Thiên đường đồi cát kỳ thú và cung đường biển lộng gió.",
+      image_url: VIETNAM_IMAGES.oceanBanner,
+      hero_image_url: VIETNAM_IMAGES.oceanBanner,
+      starting_price: "1850000",
+      center: { lat: 10.9333, lng: 108.2833 },
+    },
+    published_at: "2026-10-05T08:00:00Z",
+    readTime: "6 phút đọc",
+    category: "Cẩm Nang Điểm Đến",
+    authorName: "Lê Nhật Quang",
+    authorRole: "Chuyên gia khám phá duyên hải miền Trung",
+    tags: ["Mũi Né", "Phan Thiết", "Bàu Trắng", "Đồi cát", "Jeep Safari", "Lẩu thả"],
+  },
+  {
+    id: "story-kham-pha-36-pho-phuong-ha-noi",
+    slug: "kham-pha-36-pho-phuong-ha-noi",
+    title: "Hà Nội 36 phố phường: Cẩm nang dạo bước nghìn năm văn hiến và ẩm thực vỉa hè",
+    excerpt: "Khám phá nét duyên thầm Thăng Long qua những con ngõ cổ, cà phê trứng Giảng nức tiếng và bát phở bò gia truyền.",
+    body: `Hà Nội — trái tim của non sông Việt Nam, là nơi hội tụ tinh hoa văn hóa nghìn năm Thăng Long - Đông Đô. Dù thời gian trôi qua với nhịp sống hiện đại hối hả, thủ đô vẫn giữ trọn vẹn nét thanh lịch, cổ kính qua những mái ngói rêu phong của 36 phố phường, mặt nước Hồ Gươm xanh biếc và tiếng rao đêm trầm ấm len lỏi qua từng ngõ nhỏ.
+
+### Dạo bước 36 phố phường phố cổ
+
+Mỗi con phố Hà Nội xưa gắn liền với một nghề thủ công truyền thống: Hàng Gai lụa tơ tằm óng ả, Hàng Bạc kim hoàn tinh xảo, Hàng Mã rực rỡ sắc màu giấy lồng đèn. Hãy bách bộ quanh Hồ Hoàn Kiếm, ghé thăm Đền Ngọc Sơn qua cầu Thê Húc son đỏ, hoặc ngồi xe điện dạo quanh khu phố cổ để lắng nghe nhịp thở đời thường của người Tràng An.
+
+### Tinh hoa ẩm thực Hà Thành
+
+Ẩm thực Hà Nội không chỉ là ăn uống mà là một nét nghệ thuật thưởng thức:
+- **Phở Hà Nội**: Nước dùng trong veo, ngọt thanh từ xương ống ninh kỹ nhiều giờ, ăn kèm thịt bò tái lăn và chút quẩy giòn tan.
+- **Cà phê trứng**: Sáng tạo độc đáo của cụ Giảng từ thập niên 1940, với lớp kem trứng béo ngậy đánh bông phủ trên lớp cà phê phin đậm đặc thơm lừng.
+- **Bún chả Hà Nội**: Thịt ba chỉ và chả viên nướng xém cạnh trên than hoa, chấm cùng bát nước mắm chua ngọt pha tỏi ớt và đu đủ giòn.`,
+    cover_image: VIETNAM_IMAGES.hero,
+    destination: {
+      id: "ha-noi",
+      slug: "ha-noi",
+      name: "Thủ đô Hà Nội",
+      country: "Việt Nam",
+      summary: "Trái tim nghìn năm văn hiến và tinh hoa ẩm thực đất kinh kỳ.",
+      description: "Thủ đô thanh lịch với 36 phố phường và nét đẹp di sản.",
+      image_url: VIETNAM_IMAGES.hero,
+      hero_image_url: VIETNAM_IMAGES.hero,
+      starting_price: "1200000",
+      center: { lat: 21.0285, lng: 105.8542 },
+    },
+    published_at: "2026-10-06T09:30:00Z",
+    readTime: "7 phút đọc",
+    category: "Văn Hóa & Di Sản",
+    authorName: "Nguyễn Thu An",
+    authorRole: "Nhà nghiên cứu văn hóa Hà Nội",
+    tags: ["Hà Nội", "Phố cổ", "36 phố phường", "Hồ Gươm", "Ẩm thực"],
+  },
+  {
+    id: "story-kinh-nghiem-du-lich-da-lat-tu-tuc",
+    slug: "kinh-nghiem-du-lich-da-lat-tu-tuc",
+    title: "Kinh nghiệm du lịch Đà Lạt tự túc: Săn mây đồi chè Cầu Đất và top quán cà phê chill",
+    excerpt: "Hành trình khám phá thành phố sương mù, mẹo săn biển mây bình minh Cầu Đất và các tọa độ check-in rừng thông lãng mạn.",
+    body: `Đà Lạt (Lâm Đồng) nằm trên cao nguyên Lâm Viên với độ cao 1.500m so với mực nước biển, được mệnh danh là 'Thành phố ngàn hoa' hay 'Tiểu Paris' của Việt Nam. Khí hậu mát lạnh quanh năm cùng rừng thông bạt ngàn tạo nên một không gian nghỉ dưỡng tái tạo năng lượng hoàn hảo cho mọi lứa tuổi.
+
+### Cẩm nang săn mây Cầu Đất Panorama
+
+Để săn trọn biển mây bồng bềnh tại đồi chè Cầu Đất, thời điểm lý tưởng nhất là từ 4h30 đến 6h00 sáng vào những tháng cuối năm (tháng 10 đến tháng 3). Đứng trên thảm gỗ cầu mây ngắm ánh bình minh vàng cam rực rỡ xuyên qua lớp sương sớm cuồn cuộn là một trải nghiệm thị giác ngoạn mục.
+
+### Top điểm đến không thể bỏ qua tại Đà Lạt
+
+1. **Hồ Tuyền Lâm & Thiền Viện Trúc Lâm**: Mặt hồ xanh biếc phẳng lặng bao bọc bởi đồi thông, rất lý tưởng để chèo SUP hoặc dã ngoại cắm trại.
+2. **Dinh III Bảo Đại**: Biệt điện nghỉ dưỡng cổ kính của vị hoàng đế cuối cùng triều Nguyễn, lưu giữ nguyên vẹn đồ dùng hoàng gia và kiến trúc Art Deco sang trọng.
+3. **Thác Datanla**: Trải nghiệm hệ thống máng trượt xuyên rừng thông dài nhất Đông Nam Á cho những ai yêu thích cảm giác mạnh.
+4. **Lẩu gà lá é & Bánh tráng nướng chợ đêm**: Thưởng thức nồi lẩu gà lá é chua thanh cay nồng trong đêm lạnh 16 độ C là trải nghiệm ẩm thực đặc sắc nhất phố núi.`,
+    cover_image: VIETNAM_IMAGES.daLat,
+    destination: {
+      id: "da-lat",
+      slug: "da-lat",
+      name: "Đà Lạt — Ngàn Hoa",
+      country: "Lâm Đồng, Việt Nam",
+      summary: "Xứ sở sương mù mộng mơ và đồi thông xanh ngát.",
+      description: "Thành phố tình yêu và nghỉ dưỡng cao nguyên lãng mạn.",
+      image_url: VIETNAM_IMAGES.daLat,
+      hero_image_url: VIETNAM_IMAGES.daLat,
+      starting_price: "1400000",
+      center: { lat: 11.9404, lng: 108.4583 },
+    },
+    published_at: "2026-10-07T11:00:00Z",
+    readTime: "6 phút đọc",
+    category: "Cẩm Nang Du Lịch",
+    authorName: "Đỗ Minh Quân",
+    authorRole: "Nhiếp ảnh gia & Travel Blogger",
+    tags: ["Đà Lạt", "Săn mây", "Cầu Đất", "Hồ Tuyền Lâm", "Cà phê"],
+  },
 ];
 
 export function getStoryBySlug(slug: string): StoryItem | undefined {

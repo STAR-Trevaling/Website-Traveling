@@ -56,7 +56,7 @@ export default async function AccommodationDetailPage({
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col justify-between">
+    <div className="min-h-screen bg-[#faf8f5] flex flex-col justify-between text-slate-900">
       <SiteHeader />
       <main className="flex-1">
         <AccommodationDetailView accommodation={accommodation} />

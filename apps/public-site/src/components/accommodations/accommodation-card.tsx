@@ -67,10 +67,10 @@ export function AccommodationCard({
   return (
     <>
       <article
-        className={`group travel-card-lift flex flex-col justify-between overflow-hidden rounded-[2px] bg-white border shadow-sm transition-all ${
+        className={`group travel-card-lift flex flex-col justify-between overflow-hidden rounded-[2px] bg-white border transition-all ${
           isRecommended
-            ? "border-amber-400 ring-2 ring-amber-400/40 shadow-lg"
-            : "border-slate-100 hover:border-amber-300/60"
+            ? "border-amber-400 ring-2 ring-amber-400/40 shadow-md"
+            : "border-[#e5dccb] hover:border-amber-400/80 hover:shadow-md"
         }`}
       >
         <div>
@@ -117,8 +117,9 @@ export function AccommodationCard({
                 <span className="truncate">{accommodation.address}</span>
               </div>
               {distanceKm !== undefined && (
-                <span className="shrink-0 rounded-[2px] bg-emerald-600/90 text-white px-1.5 py-0.5 text-[10px] font-bold shadow-sm whitespace-nowrap">
-                  ~{formatDistance(distanceKm)}
+                <span className="shrink-0 rounded-[2px] bg-emerald-600/95 text-white px-2 py-0.5 text-[10px] font-bold shadow-xs whitespace-nowrap flex items-center gap-1 border border-emerald-400/40">
+                  <MapPin className="size-2.5" />
+                  <span>Cách ~{formatDistance(distanceKm)}</span>
                 </span>
               )}
             </div>
@@ -176,9 +177,9 @@ export function AccommodationCard({
         </div>
 
         {/* Card Footer & Action */}
-        <div className="border-t border-slate-100 bg-slate-50/50 p-5 pt-3">
+        <div className="border-t border-[#f0ebd9] bg-[#faf8f5]/90 p-5 pt-3.5">
           <div className="flex items-baseline justify-between mb-3">
-            <span className="text-[11px] uppercase tracking-wider text-slate-400 font-medium">
+            <span className="text-[11px] uppercase tracking-wider text-slate-500 font-medium">
               Giá khởi điểm
             </span>
             <div className="text-right">
@@ -193,18 +194,18 @@ export function AccommodationCard({
             type="button"
             onClick={handlePartnerClick}
             disabled={isRedirecting}
-            className="w-full rounded-[2px] bg-[#da251d] py-2.5 px-4 text-xs font-bold uppercase tracking-wider text-white transition-all hover:bg-[#b01b14] shadow-sm flex items-center justify-center gap-2 cursor-pointer disabled:opacity-75"
+            className="w-full rounded-[2px] bg-[#da251d] py-2.5 px-4 text-xs font-bold uppercase tracking-wider text-white transition-all hover:bg-[#b01b14] shadow-xs flex items-center justify-center gap-2 cursor-pointer disabled:opacity-75"
           >
             <span>Đặt ngay trên {accommodation.partner_name}</span>
             <ExternalLink className="size-3.5" />
           </button>
 
           {/* Secondary Option: Ask STAR Consultation */}
-          <div className="mt-2 flex items-center justify-center">
+          <div className="mt-2.5 flex items-center justify-center">
             <button
               type="button"
               onClick={() => setIsModalOpen(true)}
-              className="text-[11px] font-semibold text-amber-700 hover:text-amber-900 transition-colors inline-flex items-center cursor-pointer py-1"
+              className="text-[11px] font-semibold text-amber-800 hover:text-amber-950 transition-colors inline-flex items-center cursor-pointer py-1"
             >
               <span>Để STAR tư vấn thêm trước khi đặt?</span>
             </button>
