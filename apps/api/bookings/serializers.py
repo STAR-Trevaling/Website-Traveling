@@ -38,6 +38,8 @@ class BookingSerializer(serializers.ModelSerializer):
             "total_amount",
             "currency",
             "status",
+            "payment_method",
+            "payment_status",
             "special_requests",
             "metadata",
             "odoo_order_id",

@@ -81,7 +81,7 @@ export const VIETNAM_HERITAGE_HISTORY: HeritageHistoryItem[] = [
       "Người Nhật thời xưa tin rằng dưới đáy đại dương có một con thủy quái khổng lồ tên là Mamazu (người Việt gọi là con Cù). Đầu của con quái vật nằm ở tận xứ Phù Tang (Nhật Bản), thân mình vắt qua bờ biển Hội An (Việt Nam), và đuôi thì vươn tận Ấn Độ. Mỗi lần con Mamazu trở mình quẫy đuôi, đất nước Nhật Bản sẽ hứng chịu động đất sóng thần kinh hoàng, còn Hội An sẽ bị lũ lụt tàn phá. Đầu thế kỷ 17, các thương nhân Nhật Bản tại Hội An đã chung tay xây dựng chiếc Cầu Mái Ngói bắc ngang qua lạch nước nhỏ để cắm thẳng một thanh kiếm thiêng vào lưng con quái vật, yểm phục không cho nó cựa mình.",
     legendStoryEn:
       "Japanese traders believed a subterranean leviathan named Mamazu (the Cu monster) lay across Asia: head in Japan, torso in Hoi An, tail in India. Its movements triggered earthquakes and tidal waves. In the early 1600s, Japanese merchants erected the Covered Bridge as a sacred sword pinned into Mamazu's back to keep peace and fortune across the port.",
-    recommendedTourSlugs: ["tour-hoi-an-memories-show"],
+    recommendedTourSlugs: ["tour-da-nang-hoi-an-trail"],
   },
   {
     id: "hist-03",
@@ -107,7 +107,7 @@ export const VIETNAM_HERITAGE_HISTORY: HeritageHistoryItem[] = [
       "Huyền tích kể về thuở ấu thơ của Đinh Bộ Lĩnh chăn trâu ở thung lũng Gia Viễn. Cậu bé thông minh đã tập hợp trẻ mục đồng chia phe đánh trận giả, bẻ bông lau làm cờ xuất quân. Khi thắng trận, đám bạn mục đồng đan tay làm kiệu rước cậu bé như một vị thiên tử. Lớn lên, dựa vào dãy núi đá vôi Tràng An 'thành thông cắt lối', ông dùng chiến thuật khép mở dòng nước để dẹp tan 12 sứ quân cát cứ, mở ra thời kỳ độc lập tự chủ vàng son cho dân tộc.",
     legendStoryEn:
       "Legend tells of young Dinh Bo Linh herding water buffalo in the karst valleys, organizing mock battles with reed flowers as imperial flags. His innate charisma led him to rally the people, conquer the 12 feuding warlords, and crown himself the first emperor of independent feudal Vietnam.",
-    recommendedTourSlugs: ["tour-ninh-binh-trang-an-1d"],
+    recommendedTourSlugs: ["tour-trang-an-hang-mua-1n"],
   },
   {
     id: "hist-04",
@@ -133,7 +133,7 @@ export const VIETNAM_HERITAGE_HISTORY: HeritageHistoryItem[] = [
       "Dòng Sông Hương mang huyền tích về hương thơm kỳ lạ của cỏ Thạch bồn mọc hai bên bờ đầu nguồn trôi xuôi về cố đô. Nhưng nổi tiếng nhất là truyền thuyết lập Chùa Thiên Mụ: Năm 1601, Chúa Tiên Nguyễn Hoàng đi kinh lý vùng đất Thuận Hóa, đến bên đồi Hà Khê thấy sông Hương uốn lượn như dải lụa. Dân làng kể rằng ban đêm thường có một bà lão áo đỏ quần lục tóc bạc phơ hiện ra trên đồi, báo trước rằng sẽ có vị chân chúa đến đây dựng chùa tụ khí linh thiêng cho nước nhà bền vững.",
     legendStoryEn:
       "Legend states that in 1601, Lord Nguyen Hoang met local villagers on Ha Khe hill by the Perfume River who spoke of a celestial lady dressed in red who prophesied that a true ruler would build a pagoda on this hill to channel divine energy for the nation's eternal peace.",
-    recommendedTourSlugs: ["tour-hue-heritage-1d"],
+    recommendedTourSlugs: ["tour-hue-di-san-2n1d"],
   },
   {
     id: "hist-05",
@@ -159,7 +159,7 @@ export const VIETNAM_HERITAGE_HISTORY: HeritageHistoryItem[] = [
       "Tên gọi 'Mã Pí Lèng' trong tiếng Quan Hỏa có nghĩa là 'sống mũi con ngựa' — tượng trưng cho đỉnh núi dốc đứng đến mức ngựa leo lên phải tắt thở. Để đục mở đoạn đèo 20km treo leo qua hẻm vực Tu Sản sâu ngút ngàn, đội 'cảm tử quân' gồm 17 chàng thanh niên đã tình nguyện đeo dây thừng lơ lửng trên vách đá ròng rã suốt 11 tháng trời, dùng búa tạ và xà beng đục từng tấc đá mở đường.",
     legendStoryEn:
       "Ma Pi Leng means 'horse's bridge of the nose' in Chinese Mandarin dialect, describing an ascent so sheer that horses died of exhaustion. The 20-kilometer pass over Tu San Canyon was conquered by a suicide-volunteer squad of 17 young men who hung from ropes over the abyss for 11 straight months chisel by chisel.",
-    recommendedTourSlugs: ["tour-ha-giang-loop-3n2d"],
+    recommendedTourSlugs: ["tour-ha-giang-dong-van-3n2d"],
   },
   {
     id: "hist-06",
@@ -211,7 +211,7 @@ export const VIETNAM_HERITAGE_HISTORY: HeritageHistoryItem[] = [
       "Chuyện tình huyền thoại Langbiang: Chàng K'Lang (tộc Lát) và nàng H'Biang (tộc Chil) yêu nhau tha thiết nhưng vấp phải luật tục cấm kỵ giữa hai bộ tộc thù địch. Hai người trốn lên đỉnh núi sinh sống. Khi quân làng đuổi theo truy sát bắn tên độc vào chàng K'Lang, nàng H'Biang đã lấy thân mình đỡ tên và hy sinh. Chàng K'Lang khóc cạn nước mắt rồi chết theo nàng. Nước mắt chàng hóa thành dòng suối Vàng (Đạ Đằng), còn thi hài hai người hóa thành hai ngọn núi đôi sừng sững gối đầu vào nhau — đỉnh Langbiang vĩnh hằng.",
     legendStoryEn:
       "The legend of Langbiang: Chieftain son K'Lang and maiden H'Biang fell deeply in love despite ancient tribal blood feuds. Banished together onto the mountains, when warriors fired a poisoned arrow at K'Lang, H'Biang shielded him with her chest and died in his arms. His grief formed the Golden Stream, and their entwined bodies formed the twin peaks of Mount Langbiang.",
-    recommendedTourSlugs: ["tour-da-lat-healing-retreat-3n2d"],
+    recommendedTourSlugs: ["tour-da-lat-3n2d"],
   },
   {
     id: "hist-08",
@@ -237,7 +237,7 @@ export const VIETNAM_HERITAGE_HISTORY: HeritageHistoryItem[] = [
       "Tương truyền trong những ngày bôn tẩu trốn chạy quân Tây Sơn, Chúa Nguyễn Ánh (sau này là Vua Gia Long) cùng tùy tùng đã dạt vào đảo Phú Quốc trong cảnh thiếu lương thực và nước ngọt trầm trọng. Chúa bèn rút thanh gươm báu cắm sâu vào tảng đá hoa cương và ngửa mặt lên trời khấn nguyện: 'Nếu trời cho ta làm vua, hãy ban nước ngọt cho quân ta sống sót'. Khi rút kiếm ra, một dòng nước ngọt mát lành tuôn trào không bao giờ cạn — đó chính là Giếng Ngự (Giếng Tiên) tại An Thới ngày nay.",
     legendStoryEn:
       "When fleeing pursuing forces, Lord Nguyen Anh (later Emperor Gia Long) landed on Phu Quoc without fresh water. Thrusting his royal sword into the solid rock, he prayed to heaven for salvation. As he drew the sword back, sweet spring water gushed forth from the bedrock—known today as the Sacred Well of An Thoi.",
-    recommendedTourSlugs: ["tour-phu-quoc-sunset-san-ho-4n3d"],
+    recommendedTourSlugs: ["tour-phu-quoc-nam-dao-4n3d"],
   },
   {
     id: "hist-09",
@@ -263,7 +263,7 @@ export const VIETNAM_HERITAGE_HISTORY: HeritageHistoryItem[] = [
       "Truyền thuyết xưa kể rằng, một buổi sáng sớm có một cụ già ngư dân thấy một con Giao Long (rồng biển khổng lồ) từ ngoài khơi bơi vào đẻ một quả trứng lớn trên bãi cát ven biển. Thần Kim Quy (Rùa Vàng) liền hiện lên, đào một lỗ chôn quả trứng và trao cho ông lão một chiếc móng rùa để bảo vệ trứng khỏi diều hâu hung dữ. Qua năm tháng, quả trứng lớn dần rồi nứt ra một nàng tiên nữ xinh đẹp tuyệt trần bước ra, còn 5 mảnh vỏ trứng vỡ hóa thành 5 ngọn núi Ngũ Hành Sơn sừng sững che chở cho ngư dân.",
     legendStoryEn:
       "A golden turtle deity buried a dragon's celestial egg on the shore of Da Nang. When the egg hatched, a radiant princess stepped forth into the light, and the five remaining eggshells transformed into the sacred Marble Mountains guarding the coast against storms.",
-    recommendedTourSlugs: ["tour-ba-na-hills-golden-bridge-1d"],
+    recommendedTourSlugs: ["tour-da-nang-hoi-an-trail"],
   },
   {
     id: "hist-10",
@@ -289,7 +289,7 @@ export const VIETNAM_HERITAGE_HISTORY: HeritageHistoryItem[] = [
       "Huyền tích Thiên Y A Na: Xưa kia tại núi Đại An có vợ chồng tiều phu già trồng dưa hấu. Nàng tiên nữ giáng trần ngụ trong trái dưa được ông bà nhận làm con nuôi. Khi xảy ra thiên tai lũ lớn, nàng hóa thân vào một khúc gỗ kỳ nam quý trôi dạt sang phương Bắc và nên duyên cùng Thái tử nước bạn. Sau đó nàng cưỡi khúc gỗ kỳ nam vượt biển trở về quê hương, dạy cho dân làng cách cày cấy, dệt vải, gieo hạt, xua đuổi thú dữ. Sau khi hoàn thành sứ mệnh chở che nhân gian, bà cùng hai con cưỡi hạc bay về trời.",
     legendStoryEn:
       "Po Nagar (Thien Y A Na) descended to Earth, adopted by an elderly melon farming couple. She taught the villagers farming, silkworm weaving, and herbal medicine. Upon fulfilling her divine calling, she ascended back to heaven on the back of a sacred crane from the summit of the tower hill.",
-    recommendedTourSlugs: ["tour-da-lat-healing-retreat-3n2d"],
+    recommendedTourSlugs: [],
   },
   {
     id: "hist-11",
@@ -315,7 +315,7 @@ export const VIETNAM_HERITAGE_HISTORY: HeritageHistoryItem[] = [
       "Nguồn gốc tên gọi 'Mũi Né': Xưa kia khi bão biển tràn vào biển Nam Trung Bộ, các đoàn thuyền chài của ngư dân thường tìm đến dải đất nhô ra biển có bãi cát thoai thoải để 'né bão', lâu dần thành tên gọi Mũi Né. Tại đây, Công chúa Poshanu yêu chàng công tử Po Sah Bian nhưng bị người em trai ganh ghét bày mưu ly gián. Nàng đã nén đau thương, một lòng ở lại vùng đồi biển dạy dỗ chở che cho thần dân cho đến hơi thở cuối cùng.",
     legendStoryEn:
       "The name 'Mui Ne' originates from fishermen steering their boats into this protected cape to 'avoid' ('Né' in Vietnamese) sudden sea typhoons. Legend also commemorates Princess Poshanu's enduring benevolence, who stayed on the coastal hills dedicating her life to welfare and peace for her people.",
-    recommendedTourSlugs: ["tour-phu-quoc-sunset-san-ho-4n3d"],
+    recommendedTourSlugs: ["tour-mui-ne-phan-thiet-2n1d"],
   },
   {
     id: "hist-12",
@@ -341,7 +341,7 @@ export const VIETNAM_HERITAGE_HISTORY: HeritageHistoryItem[] = [
       "Truyền thuyết tên gọi 'Cái Răng': Xưa kia có một con cá sấu khổng lồ dạt vào đây, răng của nó cắm sâu vào bờ đất tạo thành khúc sông sầm uất, sau này người dân gọi trại thành Cái Răng. Nơi đây lưu giữ sự hòa hợp tuyệt vời giữa con người và dòng nước Cửu Long hiền hòa.",
     legendStoryEn:
       "Legend says a mythical giant crocodile washed ashore, its tooth embedded in the riverbank giving rise to the name 'Cai Rang'. The waterways reflect centuries of peaceful harmony between pioneers and the Mekong.",
-    recommendedTourSlugs: ["tour-phu-quoc-sunset-san-ho-4n3d"],
+    recommendedTourSlugs: ["tour-mekong-delta-floating-market"],
   },
   {
     id: "hist-13",
@@ -367,7 +367,7 @@ export const VIETNAM_HERITAGE_HISTORY: HeritageHistoryItem[] = [
       "Người bản địa lưu truyền rằng những hang động ngầm sâu thẳm trong lòng dãy Trường Sơn chính là nơi ngự trị của các vị thần canh giữ mạch nguồn của non sông Đại Việt, che chở cho đoàn quân ra trận trên tuyến đường Trường Sơn huyền thoại.",
     legendStoryEn:
       "Indigenous folklore tells of subterranean mountain spirits guarding the vital lifeblood of the Truong Son range, shielding heroes traversing the Ho Chi Minh Trail.",
-    recommendedTourSlugs: ["tour-hue-heritage-1d"],
+    recommendedTourSlugs: ["tour-hue-di-san-2n1d"],
   },
   {
     id: "hist-14",
@@ -393,7 +393,7 @@ export const VIETNAM_HERITAGE_HISTORY: HeritageHistoryItem[] = [
       "Đỉnh núi Chúa nhìn từ xa giống như một ngọn măng đá khổng lồ vươn lên bầu trời, được xem là đỉnh núi thiêng Meru nơi các vị thần Hindu ngự trị và ban phước lành cho vương quốc trường tồn.",
     legendStoryEn:
       "The sacred summit of Mount Cat's Tooth resembles Mount Meru of Hindu cosmology, home to deities bestowing protection upon the realm.",
-    recommendedTourSlugs: ["tour-hoi-an-memories-show"],
+    recommendedTourSlugs: ["tour-da-nang-hoi-an-trail"],
   },
   {
     id: "hist-15",
@@ -419,7 +419,7 @@ export const VIETNAM_HERITAGE_HISTORY: HeritageHistoryItem[] = [
       "Truyền thuyết người Tày kể về mối tình thủy chung của nàng tiên giáng trần yêu chàng trai bản nghèo. Dòng nước thác trắng xóa chính là nước mắt hạnh phúc của nàng tiên hóa thân thành dòng sông chở che cho bản làng no ấm.",
     legendStoryEn:
       "Tay ethnic folklore celebrates a celestial maiden who fell in love with a mortal village youth; her tears formed the cascading white falls nourishing the harvest valley.",
-    recommendedTourSlugs: ["tour-ha-giang-loop-3n2d"],
+    recommendedTourSlugs: ["tour-ha-giang-dong-van-3n2d"],
   },
   {
     id: "hist-16",
@@ -471,7 +471,7 @@ export const VIETNAM_HERITAGE_HISTORY: HeritageHistoryItem[] = [
       "Địa danh đi vào thi ca kháng chiến hào hùng của nhà thơ Quang Dũng: 'Mai Châu mùa em thơm nếp xôi', biểu tượng của tình quân dân keo sơn giữa non ngàn.",
     legendStoryEn:
       "Immortalized in wartime poetry, the fragrant sticky rice of Mai Chau symbolizes the timeless hospitality of highland valley tribes.",
-    recommendedTourSlugs: ["tour-ninh-binh-trang-an-1d"],
+    recommendedTourSlugs: ["tour-trang-an-hang-mua-1n"],
   },
   {
     id: "hist-18",
@@ -497,7 +497,7 @@ export const VIETNAM_HERITAGE_HISTORY: HeritageHistoryItem[] = [
       "Địa đạo Củ Chi được đào hoàn toàn bằng tay và lưỡi cuốc thô sơ của người dân, trở thành một 'thành phố ngầm' huyền thoại kiên cường che chở cho cuộc sống và chiến đấu dưới làn bom đạn khốc liệt.",
     legendStoryEn:
       "Carved entirely by hand, the Cu Chi underground network served as a living subterranean city enduring intense aerial bombardments.",
-    recommendedTourSlugs: ["tour-phu-quoc-sunset-san-ho-4n3d"],
+    recommendedTourSlugs: ["tour-mekong-delta-floating-market"],
   },
   {
     id: "hist-19",
@@ -523,7 +523,7 @@ export const VIETNAM_HERITAGE_HISTORY: HeritageHistoryItem[] = [
       "Truyền thuyết Thứ phi Phi Yến và Hoàng tử Cải gắn với câu ca dao: 'Gió đưa cây cải về trời / Rau răm ở lại chịu lời đắng cay', nhắc nhớ tấm lòng kiên trinh vì nước vì dân.",
     legendStoryEn:
       "The tragic folk legend of Lady Phi Yen and Prince Cai lives on in timeless Vietnamese verses commemorating enduring loyalty.",
-    recommendedTourSlugs: ["tour-phu-quoc-sunset-san-ho-4n3d"],
+    recommendedTourSlugs: [],
   },
   {
     id: "hist-20",
@@ -549,7 +549,7 @@ export const VIETNAM_HERITAGE_HISTORY: HeritageHistoryItem[] = [
       "Tiếng trống trận Tây Sơn giục giã và đường quyền võ cổ truyền đã hun đúc nên khí phách quật cường 'nơi ngựa hí quân reo, đạn lửa rền vang phá tan giặc ngoại xâm'.",
     legendStoryEn:
       "The thunderous battle drums of Tay Son and traditional martial arts embody the fearless spirit of central Vietnam's warrior heritage.",
-    recommendedTourSlugs: ["tour-ba-na-hills-golden-bridge-1d"],
+    recommendedTourSlugs: ["tour-da-nang-hoi-an-trail"],
   },
   {
     id: "hist-21",
@@ -575,7 +575,7 @@ export const VIETNAM_HERITAGE_HISTORY: HeritageHistoryItem[] = [
       "Vịnh Vũng Rô là bến đỗ lịch sử của những chuyến Tàu Không Số cảm tử chi viện vũ khí cho chiến trường miền Nam, một biểu tượng của lòng dũng cảm bất tử.",
     legendStoryEn:
       "Vung Ro Cove honors the heroic clandestine 'Unnumbered Ships' naval squadron that transported supplies during wartime.",
-    recommendedTourSlugs: ["tour-da-lat-healing-retreat-3n2d"],
+    recommendedTourSlugs: [],
   },
 ];
 

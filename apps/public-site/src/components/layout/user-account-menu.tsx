@@ -98,46 +98,51 @@ export function UserAccountMenu({ user, overlay = false }: UserAccountMenuProps)
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      {/* Icon-Only Trigger Button (No Text Label) */}
+      {/* Icon/Avatar Trigger Button (No Native Tooltip) */}
       <button
         type="button"
         onClick={toggleOpen}
         aria-expanded={isOpen}
         aria-haspopup="true"
         aria-label={user ? user.username : isEnglish ? "User Account" : "Tài khoản người dùng"}
-        title={user ? user.username : isEnglish ? "Account Profile" : "Thông tin cá nhân"}
         className={`flex size-8 sm:size-9 items-center justify-center rounded-full transition-all duration-200 cursor-pointer ${
           overlay
             ? "text-white/90 hover:text-white hover:bg-white/15 active:scale-95"
             : "text-slate-700 hover:text-slate-950 hover:bg-slate-100 active:scale-95"
         } ${isOpen ? (overlay ? "bg-white/20 text-white" : "bg-slate-100 text-slate-950") : ""}`}
       >
-        <UserRound className="size-4 sm:size-[18px]" strokeWidth={2} />
+        {user ? (
+          <span className="flex size-7 sm:size-8 items-center justify-center rounded-full bg-gradient-to-br from-[#da251d] to-[#991b1b] text-white font-bold text-xs shadow-xs border border-white/40">
+            {user.username.charAt(0).toUpperCase()}
+          </span>
+        ) : (
+          <UserRound className="size-4 sm:size-[18px]" strokeWidth={2} />
+        )}
       </button>
 
       {/* Dropdown Menu / Popup Profile (Thông tin cá nhân) */}
       {isOpen && (
         <div
           role="menu"
-          className="absolute right-0 top-full mt-2 w-72 sm:w-80 rounded-[2px] bg-white text-slate-800 shadow-[0_15px_35px_rgba(0,0,0,0.18)] border border-slate-100 z-50 overflow-hidden animate-in fade-in-50 zoom-in-95 duration-150"
+          className="absolute right-0 top-full mt-2 w-72 sm:w-80 rounded-[2px] bg-white text-slate-800 shadow-[0_16px_45px_rgba(0,0,0,0.12)] border border-[#e5dccb] z-50 overflow-hidden animate-in fade-in-50 zoom-in-95 duration-150"
         >
           {user ? (
             /* ── Authenticated User State ── */
             <div>
               {/* Header: User Profile Info (Thông tin cá nhân) */}
-              <div className="bg-gradient-to-r from-slate-900 to-slate-800 p-4 text-white">
+              <div className="bg-gradient-to-b from-[#faf8f5] to-[#f4eee2] p-4.5 border-b border-[#e5dccb] text-slate-900">
                 <div className="flex items-center gap-3">
-                  <div className="flex size-11 items-center justify-center rounded-full bg-white/15 text-white font-bold text-base border border-white/20 shrink-0">
+                  <div className="flex size-11 items-center justify-center rounded-full bg-gradient-to-br from-[#da251d] to-[#991b1b] text-white font-bold text-base shadow-xs shrink-0 border border-white/50">
                     {user.username.charAt(0).toUpperCase()}
                   </div>
                   <div className="min-w-0 flex-1">
-                    <p className="text-sm font-bold truncate text-white">
+                    <p className="text-sm font-bold truncate text-[#0f172a]">
                       {user.username}
                     </p>
-                    <p className="text-[11px] text-white/70 truncate">
+                    <p className="text-[11px] text-slate-500 truncate">
                       {user.email || `${user.username}@star.vn`}
                     </p>
-                    <span className="inline-block mt-1 font-mono text-[9px] font-bold uppercase tracking-wider text-amber-300 bg-amber-400/20 px-2 py-0.5 rounded-[2px]">
+                    <span className="inline-flex items-center gap-1 mt-1 font-mono text-[9px] font-bold uppercase tracking-wider text-amber-900 bg-amber-100 border border-amber-300/80 px-2 py-0.5 rounded-full">
                       {roleLabel}
                     </span>
                   </div>
@@ -149,9 +154,9 @@ export function UserAccountMenu({ user, overlay = false }: UserAccountMenuProps)
                 <Link
                   href="/account"
                   onClick={() => setIsOpen(false)}
-                  className="flex items-center justify-between p-2.5 rounded-[2px] hover:bg-slate-50 transition text-slate-700 hover:text-slate-900"
+                  className="flex items-center justify-between p-2.5 rounded-[2px] hover:bg-amber-50/60 transition text-slate-700 hover:text-slate-950 font-medium"
                 >
-                  <div className="flex items-center gap-2.5 font-medium">
+                  <div className="flex items-center gap-2.5">
                     <UserRound className="size-4 text-slate-500" />
                     <span>{isEnglish ? "Personal Profile" : "Thông tin cá nhân"}</span>
                   </div>
@@ -161,9 +166,9 @@ export function UserAccountMenu({ user, overlay = false }: UserAccountMenuProps)
                 <Link
                   href="/account/bookings"
                   onClick={() => setIsOpen(false)}
-                  className="flex items-center justify-between p-2.5 rounded-[2px] hover:bg-slate-50 transition text-slate-700 hover:text-slate-900"
+                  className="flex items-center justify-between p-2.5 rounded-[2px] hover:bg-amber-50/60 transition text-slate-700 hover:text-slate-950 font-medium"
                 >
-                  <div className="flex items-center gap-2.5 font-medium">
+                  <div className="flex items-center gap-2.5">
                     <CalendarCheck className="size-4 text-slate-500" />
                     <span>{isEnglish ? "My Bookings" : "Lịch sử đặt tour & vé"}</span>
                   </div>
@@ -172,7 +177,7 @@ export function UserAccountMenu({ user, overlay = false }: UserAccountMenuProps)
               </div>
 
               {/* Footer: Logout Button */}
-              <div className="p-2 pt-1 border-t border-slate-100">
+              <div className="p-2 pt-1 border-t border-[#f0ebd9] bg-[#faf8f5]/60">
                 <button
                   type="button"
                   disabled={isLoading}
@@ -180,7 +185,7 @@ export function UserAccountMenu({ user, overlay = false }: UserAccountMenuProps)
                     setIsOpen(false);
                     await logout();
                   }}
-                  className="w-full flex items-center justify-center gap-2 py-2 text-xs font-semibold uppercase tracking-wider text-red-600 hover:bg-red-50 rounded-[2px] transition cursor-pointer disabled:opacity-50"
+                  className="w-full flex items-center justify-center gap-2 py-2 text-xs font-bold uppercase tracking-wider text-[#da251d] hover:bg-rose-50 rounded-[2px] transition cursor-pointer disabled:opacity-50"
                 >
                   <LogOut className="size-3.5" />
                   <span>{isEnglish ? "Sign Out" : "Đăng Xuất"}</span>

@@ -9,6 +9,7 @@ import {
   calculateDistanceKm,
   findNearestDestination,
   formatDistance,
+  DESTINATION_COORDINATES,
   type UserCoordinates,
 } from "@/lib/geo-utils";
 import { AccommodationCard } from "./accommodation-card";
@@ -22,15 +23,17 @@ interface RegionOption {
 
 const REGION_LIST: RegionOption[] = [
   { slug: "all", name: "Tất cả khu vực", destSlug: "all" },
-  { slug: "phu-quoc", name: "Phú Quốc", destSlug: "phu-quoc" },
+  { slug: "ha-noi", name: "Hà Nội", destSlug: "ha-noi" },
+  { slug: "tp-ho-chi-minh", name: "TP. Hồ Chí Minh", destSlug: "tp-ho-chi-minh" },
   { slug: "da-nang", name: "Đà Nẵng", destSlug: "da-nang" },
   { slug: "hoi-an", name: "Hội An", destSlug: "hoi-an" },
+  { slug: "nha-trang", name: "Nha Trang", destSlug: "nha-trang" },
+  { slug: "phu-quoc", name: "Phú Quốc", destSlug: "phu-quoc" },
   { slug: "ha-long", name: "Hạ Long", destSlug: "ha-long" },
   { slug: "sa-pa", name: "Sa Pa", destSlug: "sa-pa" },
-  { slug: "ha-noi", name: "Hà Nội", destSlug: "ha-noi" },
   { slug: "hue", name: "Huế", destSlug: "hue" },
-  { slug: "nha-trang", name: "Nha Trang", destSlug: "nha-trang" },
   { slug: "ninh-binh", name: "Ninh Bình", destSlug: "ninh-binh" },
+  { slug: "da-lat", name: "Đà Lạt", destSlug: "da-lat" },
 ];
 
 const VIBE_OPTIONS = [
@@ -43,14 +46,25 @@ const VIBE_OPTIONS = [
 ];
 
 const POPULAR_ACCOMMODATION_TAGS = [
-  "Phú Quốc",
+  "Hà Nội",
+  "TP. Hồ Chí Minh",
   "Đà Nẵng",
+  "Phú Quốc",
+  "Nha Trang",
   "Resort ven biển",
   "Khách sạn di sản",
   "Hồ bơi vô cực",
   "Boutique",
   "Sa Pa",
-  "Hạ Long",
+];
+
+const QUICK_CITY_COORDINATES = [
+  { name: "Hà Nội", slug: "ha-noi", lat: 21.0285, lng: 105.8542 },
+  { name: "TP. Hồ Chí Minh", slug: "tp-ho-chi-minh", lat: 10.8231, lng: 106.6297 },
+  { name: "Đà Nẵng", slug: "da-nang", lat: 16.0544, lng: 108.2022 },
+  { name: "Nha Trang", slug: "nha-trang", lat: 12.2388, lng: 109.1967 },
+  { name: "Phú Quốc", slug: "phu-quoc", lat: 10.2899, lng: 103.984 },
+  { name: "Hạ Long", slug: "ha-long", lat: 20.9599, lng: 107.0425 },
 ];
 
 interface AccommodationsCatalogProps {
@@ -80,19 +94,26 @@ function AccommodationsCatalogContent({
       const coords = await requestUserCoordinates();
       setUserCoords(coords);
       const { destination } = findNearestDestination(coords.lat, coords.lng);
-      setDetectedCity(destination.name);
+      const cityName = coords.city || destination.name;
+      setDetectedCity(cityName);
       setSortBy("distance");
-      const reg = REGION_LIST.find((r) => r.slug === destination.slug);
-      if (reg) {
-        setSelectedRegion(reg.slug);
-      }
-      setGeoNotice(`Đã định vị thành công! Đang ưu tiên các điểm dừng chân gần khu vực ${destination.name}.`);
+      // Keep region set to "all" so all hotels are visible in order of proximity
+      setSelectedRegion("all");
+      setGeoNotice(`Đã định vị thành công (khu vực ${cityName}). Đang sắp xếp các khách sạn & resort từ gần bạn nhất.`);
     } catch (err: unknown) {
-      const errorMsg = err instanceof Error ? err.message : "Không thể lấy vị trí hiện tại.";
+      const errorMsg = err instanceof Error ? err.message : "Không thể xác định vị trí.";
       setGeoNotice(errorMsg);
     } finally {
       setIsLocating(false);
     }
+  };
+
+  const handleSelectManualCity = (city: typeof QUICK_CITY_COORDINATES[0]) => {
+    setUserCoords({ lat: city.lat, lng: city.lng, city: city.name });
+    setDetectedCity(city.name);
+    setSortBy("distance");
+    setSelectedRegion("all");
+    setGeoNotice(`Đã chọn vị trí mốc: ${city.name}. Đang sắp xếp các khách sạn & resort từ gần ${city.name} nhất.`);
   };
 
   const handleClearLocation = () => {
@@ -249,23 +270,26 @@ function AccommodationsCatalogContent({
 
   return (
     <div className="w-full">
-      {/* ─── 1. SMART RECOMMENDATION CONCIERGE WIZARD ─── */}
-      <div className="mb-8 rounded-[2px] bg-gradient-to-br from-slate-900 via-[#1e293b] to-slate-900 p-6 sm:p-8 text-white shadow-xl border border-amber-500/30 relative overflow-hidden">
-        {/* Decorative lighting */}
-        <div className="absolute top-0 right-0 w-80 h-80 bg-red-600/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-60 h-60 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
+      {/* ─── 1. LUXURY LIGHT SMART RECOMMENDATION CONCIERGE WIZARD ─── */}
+      <div className="mb-8 rounded-[2px] bg-white/95 backdrop-blur-md p-6 sm:p-8 text-slate-900 shadow-[0_4px_24px_rgba(180,83,9,0.06)] border border-[#e5d5be] relative overflow-hidden">
+        {/* Luxury top golden accent stripe */}
+        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-400 via-[#da251d] to-amber-500" />
+        
+        {/* Subtle decorative lighting */}
+        <div className="absolute -top-12 -right-12 w-56 h-56 bg-amber-100/60 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-12 -left-12 w-56 h-56 bg-rose-50/70 rounded-full blur-3xl pointer-events-none" />
 
-        {/* Header Title & AI Action */}
+        {/* Header Title & Actions */}
         <div className="relative z-10 flex flex-wrap items-center justify-between gap-4 mb-6">
           <div>
-            <div className="inline-flex items-center gap-1.5 rounded-full bg-amber-500/15 px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-amber-300 border border-amber-400/25">
-              <Sparkles className="size-3 text-amber-400" />
+            <div className="inline-flex items-center gap-1.5 rounded-full bg-amber-50 px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-amber-900 border border-amber-300/60">
+              <Sparkles className="size-3 text-amber-600" />
               <span>Gợi ý thông minh STAR</span>
             </div>
-            <h2 className="script-title text-2xl sm:text-4xl font-extrabold mt-2 text-white">
+            <h2 className="script-title text-2xl sm:text-4xl font-extrabold mt-2 text-[#0f172a] leading-tight">
               Quý khách muốn tìm kiếm điểm dừng chân tại khu vực nào?
             </h2>
-            <p className="text-xs sm:text-sm text-slate-300 mt-1.5 max-w-2xl leading-relaxed">
+            <p className="text-xs sm:text-sm text-slate-600 mt-1.5 max-w-2xl leading-relaxed">
               Chọn nhanh khu vực hoặc phong cách nghỉ dưỡng bên dưới để STAR gợi ý những khách sạn 5 sao, resort biệt lập và dinh thự di sản phù hợp nhất cho kỳ nghỉ của bạn.
             </p>
           </div>
@@ -275,54 +299,77 @@ function AccommodationsCatalogContent({
               type="button"
               onClick={handleLocateMe}
               disabled={isLocating}
-              className="inline-flex items-center gap-1.5 rounded-[2px] bg-white/10 hover:bg-white/20 px-3.5 py-2.5 text-xs font-semibold text-white border border-white/20 transition cursor-pointer disabled:opacity-50"
+              className={`inline-flex items-center gap-1.5 rounded-[2px] px-4 py-2.5 text-xs font-semibold transition cursor-pointer disabled:opacity-60 shadow-xs ${
+                userCoords
+                  ? "bg-emerald-50 text-emerald-900 border border-emerald-300 ring-1 ring-emerald-300"
+                  : "bg-white hover:bg-amber-50/80 text-slate-800 border border-amber-300/80 hover:border-amber-400"
+              }`}
             >
-              <Navigation className="size-3.5 text-amber-300" />
-              <span>{isLocating ? "Đang định vị..." : "Tìm gần vị trí của tôi"}</span>
+              <Navigation className={`size-3.5 ${isLocating ? "animate-spin text-amber-600" : userCoords ? "text-emerald-600" : "text-amber-600"}`} />
+              <span>{isLocating ? "Đang định vị..." : userCoords ? `Vị trí: ${detectedCity || "Gần bạn"}` : "Tìm gần vị trí của tôi"}</span>
             </button>
 
             <button
               type="button"
               onClick={() => openAiAssistant(activeRegionObj?.name)}
-              className="inline-flex items-center gap-2 rounded-[2px] bg-gradient-to-r from-[#da251d] to-[#b01b14] px-4 py-2.5 text-xs font-bold text-white shadow-lg hover:from-[#b01b14] hover:to-[#8a140f] hover:scale-105 transition-all duration-200 cursor-pointer border border-red-400/30"
+              className="inline-flex items-center gap-2 rounded-[2px] bg-[#da251d] hover:bg-[#b01b14] px-4 py-2.5 text-xs font-bold text-white shadow-xs transition hover:scale-[1.02] cursor-pointer"
             >
-              <Sparkles className="size-3.5 text-amber-300" />
+              <Sparkles className="size-3.5 text-amber-200" />
               <span>Hỏi Trợ Lý AI Tư Vấn Riêng</span>
             </button>
           </div>
         </div>
 
-        {/* Location Notification Banner */}
-        {geoNotice && (
-          <div className="relative z-10 mb-4 rounded-[2px] bg-amber-400/10 border border-amber-400/30 px-3.5 py-2 text-xs text-amber-200 flex items-center justify-between">
-            <span className="flex items-center gap-2">
-              <MapPin className="size-3.5 text-amber-400 shrink-0" />
+        {/* Location Notification Banner & Quick City Shortcuts */}
+        {geoNotice ? (
+          <div className="relative z-10 mb-5 rounded-[2px] bg-emerald-50/90 border border-emerald-200/90 px-4 py-2.5 text-xs text-emerald-900 flex flex-wrap items-center justify-between gap-2 shadow-xs">
+            <span className="flex items-center gap-2 font-medium">
+              <MapPin className="size-4 text-emerald-600 shrink-0" />
               <span>{geoNotice}</span>
             </span>
             {userCoords && (
               <button
                 type="button"
                 onClick={handleClearLocation}
-                className="text-[11px] text-amber-300 hover:text-white underline ml-2 cursor-pointer shrink-0"
+                className="text-xs text-emerald-800 hover:text-emerald-950 underline font-semibold cursor-pointer shrink-0 ml-auto"
               >
-                Hủy định vị
+                Hủy định vị (Xem mặc định)
               </button>
             )}
+          </div>
+        ) : (
+          <div className="relative z-10 mb-5 flex flex-wrap items-center gap-2 text-xs text-slate-500 pt-1">
+            <span className="text-[11px] font-medium text-slate-600 flex items-center gap-1">
+              <MapPin className="size-3 text-amber-600" />
+              <span>Hoặc chọn nhanh vị trí của bạn:</span>
+            </span>
+            <div className="flex flex-wrap gap-1.5">
+              {QUICK_CITY_COORDINATES.map((city) => (
+                <button
+                  key={city.slug}
+                  type="button"
+                  onClick={() => handleSelectManualCity(city)}
+                  className="rounded-full bg-slate-100 hover:bg-amber-100/70 text-slate-700 hover:text-amber-900 px-2.5 py-0.5 text-[11px] font-medium transition cursor-pointer border border-slate-200/60"
+                >
+                  {city.name}
+                </button>
+              ))}
+            </div>
           </div>
         )}
 
         {/* 1. Regional Selection Pills */}
         <div className="relative z-10 mb-5">
           <div className="flex items-center justify-between mb-2.5">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-amber-200/90 flex items-center gap-1.5">
-              <MapPin className="size-3.5 text-amber-400" />
+            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
+              <MapPin className="size-3.5 text-amber-600" />
               <span>Khu vực điểm đến:</span>
             </span>
             {selectedRegion !== "all" && (
               <button
                 type="button"
                 onClick={() => setSelectedRegion("all")}
-                className="text-[11px] text-slate-400 hover:text-white underline cursor-pointer"
+                className="text-[11px] text-amber-800 hover:text-amber-950 underline cursor-pointer font-medium"
               >
                 Xem tất cả khu vực
               </button>
@@ -338,15 +385,15 @@ function AccommodationsCatalogContent({
                   onClick={() => setSelectedRegion(r.slug)}
                   className={`rounded-[2px] px-3.5 py-1.5 text-xs font-semibold tracking-wide transition-all cursor-pointer flex items-center gap-1.5 ${
                     isSelected
-                      ? "bg-[#da251d] text-white shadow-md border border-red-400 ring-2 ring-red-400/40"
-                      : "bg-white/10 text-slate-200 hover:bg-white/20 hover:text-white border border-white/10"
+                      ? "bg-[#da251d] text-white shadow-xs border border-[#da251d]"
+                      : "bg-slate-100/90 text-slate-700 hover:bg-amber-50 hover:text-amber-900 border border-slate-200/80 hover:border-amber-300"
                   }`}
                 >
                   <span>{r.name}</span>
                   {r.count !== undefined && r.count > 0 && (
                     <span
                       className={`text-[10px] px-1.5 py-0.2 rounded-full font-bold ${
-                        isSelected ? "bg-white/25 text-white" : "bg-black/40 text-slate-300"
+                        isSelected ? "bg-white/25 text-white" : "bg-slate-200/80 text-slate-600"
                       }`}
                     >
                       {r.count}
@@ -360,7 +407,7 @@ function AccommodationsCatalogContent({
 
         {/* 2. Vibe & Style Filter Chips */}
         <div className="relative z-10">
-          <span className="text-[11px] font-bold uppercase tracking-wider text-amber-200/90 block mb-2.5">
+          <span className="text-[11px] font-bold uppercase tracking-wider text-slate-700 block mb-2.5">
             Phong cách nghỉ dưỡng:
           </span>
           <div className="flex flex-wrap gap-2">
@@ -373,8 +420,8 @@ function AccommodationsCatalogContent({
                   onClick={() => setSelectedVibe(v.key)}
                   className={`rounded-full px-3.5 py-1 text-[11px] font-medium transition-all cursor-pointer ${
                     isSelected
-                      ? "bg-amber-400 text-slate-950 font-bold shadow-md ring-2 ring-amber-300/40"
-                      : "bg-white/5 text-slate-300 hover:bg-white/15 hover:text-white border border-white/10"
+                      ? "bg-amber-600 text-white font-bold shadow-xs border border-amber-600"
+                      : "bg-white text-slate-700 hover:bg-amber-50 hover:text-amber-900 border border-slate-200/80 hover:border-amber-300"
                   }`}
                 >
                   {v.label}
@@ -386,7 +433,7 @@ function AccommodationsCatalogContent({
       </div>
 
       {/* ─── 2. SEARCH & SORT TOOLBAR ─── */}
-      <div className="mb-6 rounded-[2px] bg-white p-4 sm:p-5 shadow-sm border border-slate-100 flex flex-col gap-3">
+      <div className="mb-6 rounded-[2px] bg-white p-4 sm:p-5 shadow-xs border border-[#e5dccb] flex flex-col gap-3">
         <div className="flex flex-wrap items-center justify-between gap-4">
           {/* Search input with live suggestion dropdown */}
           <div className="relative flex-1 min-w-[240px] max-w-md">
@@ -398,7 +445,7 @@ function AccommodationsCatalogContent({
               onBlur={() => setTimeout(() => setIsSearchFocused(false), 200)}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Tìm theo tên khách sạn, tiện ích (hồ bơi, spa...)..."
-              className="w-full rounded-[2px] border border-slate-200 bg-slate-50 pl-10 pr-8 py-2 text-xs sm:text-sm focus:border-[#da251d] focus:bg-white focus:outline-none focus:ring-1 focus:ring-[#da251d]"
+              className="w-full rounded-[2px] border border-slate-200 bg-slate-50/80 pl-10 pr-8 py-2 text-xs sm:text-sm text-slate-900 placeholder:text-slate-400 focus:border-amber-500 focus:bg-white focus:outline-none focus:ring-1 focus:ring-amber-500"
             />
             {searchQuery && (
               <button
@@ -412,7 +459,7 @@ function AccommodationsCatalogContent({
 
             {/* Smart Autocomplete Dropdown */}
             {isSearchFocused && searchQuery.trim().length >= 1 && (
-              <div className="absolute left-0 right-0 top-full mt-1 bg-white border border-slate-200 rounded-[2px] shadow-xl z-30 p-2 max-h-64 overflow-y-auto">
+              <div className="absolute left-0 right-0 top-full mt-1 bg-white border border-[#e5dccb] rounded-[2px] shadow-xl z-30 p-2 max-h-64 overflow-y-auto">
                 <div className="text-[10px] uppercase font-bold tracking-wider text-slate-400 px-2 py-1">
                   Gợi ý kết quả ({filteredItems.length}):
                 </div>
@@ -425,10 +472,10 @@ function AccommodationsCatalogContent({
                         setSearchQuery(item.name);
                         setIsSearchFocused(false);
                       }}
-                      className="w-full text-left px-2.5 py-2 hover:bg-slate-50 rounded-[2px] text-xs flex justify-between items-center transition cursor-pointer"
+                      className="w-full text-left px-2.5 py-2 hover:bg-amber-50/60 rounded-[2px] text-xs flex justify-between items-center transition cursor-pointer"
                     >
                       <span className="font-semibold text-slate-900 truncate">{item.name}</span>
-                      <span className="text-[10px] text-amber-700 bg-amber-50 px-1.5 py-0.5 rounded shrink-0 ml-2">
+                      <span className="text-[10px] text-amber-800 bg-amber-50 px-1.5 py-0.5 rounded border border-amber-200/60 shrink-0 ml-2">
                         {item.destination_name || item.address}
                       </span>
                     </button>
@@ -452,7 +499,7 @@ function AccommodationsCatalogContent({
               onChange={(e) =>
                 setSortBy(e.target.value as "rating" | "price-asc" | "price-desc" | "distance")
               }
-              className="rounded-[2px] border border-slate-200 bg-slate-50 px-3 py-2 text-xs sm:text-sm font-medium focus:border-[#da251d] focus:bg-white focus:outline-none"
+              className="rounded-[2px] border border-slate-200 bg-slate-50/80 px-3 py-2 text-xs sm:text-sm font-medium text-slate-800 focus:border-amber-500 focus:bg-white focus:outline-none"
             >
               {userCoords && <option value="distance">Khoảng cách gần nhất</option>}
               <option value="rating">Đánh giá cao nhất</option>
@@ -478,7 +525,7 @@ function AccommodationsCatalogContent({
                   setSearchQuery(tag);
                 }
               }}
-              className="rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-0.5 text-[11px] font-medium transition-colors cursor-pointer"
+              className="rounded-full bg-slate-100 hover:bg-amber-100/70 text-slate-700 hover:text-amber-900 px-2.5 py-0.5 text-[11px] font-medium transition-colors cursor-pointer border border-slate-200/50"
             >
               {tag}
             </button>
@@ -525,7 +572,7 @@ function AccommodationsCatalogContent({
           )}
         </div>
 
-        <span className="text-[11px] text-amber-700 italic">
+        <span className="text-[11px] text-amber-800 font-medium italic">
           Đối tác phân phối chính hãng: Booking.com, Agoda, Traveloka
         </span>
       </div>
@@ -558,7 +605,7 @@ function AccommodationsCatalogContent({
           })}
         </div>
       ) : (
-        <div className="rounded-[2px] bg-white p-12 text-center border border-slate-100 shadow-sm">
+        <div className="rounded-[2px] bg-white p-12 text-center border border-[#e5dccb] shadow-xs">
           <Building2 className="mx-auto size-12 text-slate-300 mb-3" />
           <h3 className="text-base font-bold text-slate-800">
             Không tìm thấy khách sạn phù hợp với tiêu chí đã chọn

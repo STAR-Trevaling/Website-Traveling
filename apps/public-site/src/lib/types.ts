@@ -45,6 +45,7 @@ export interface Destination {
   hero_image_url: string;
   starting_price: string | null;
   center: GeoPoint | null;
+  aliases?: string[];
 }
 
 export interface DestinationListParams {

@@ -81,14 +81,47 @@ export default async function TourDetailPage({ params }: TourDetailPageProps) {
     tour = {
       ...fallback,
       ...backendTour,
+      rating: Number(backendTour.rating ?? fallback?.rating ?? 5.0),
+      price: Number(backendTour.price ?? fallback?.price ?? 0),
+      originalPrice: backendTour.originalPrice || (backendTour as any).original_price || fallback?.originalPrice,
+      reviewCount: Number(backendTour.reviewCount ?? (backendTour as any).review_count ?? fallback?.reviewCount ?? 0),
       image: backendTour.image || backendTour.imageUrl || (backendTour as any).image_url || fallback?.image,
-      itinerary: (backendTour.itinerary && backendTour.itinerary.length > 0) ? backendTour.itinerary : fallback?.itinerary || [],
-      highlights: (backendTour.highlights && backendTour.highlights.length > 0) ? backendTour.highlights : fallback?.highlights || [],
-      inclusions: (backendTour.included && backendTour.included.length > 0) ? backendTour.included : ((backendTour as any).inclusions || fallback?.inclusions || []),
-      exclusions: (backendTour.excluded && backendTour.excluded.length > 0) ? backendTour.excluded : ((backendTour as any).exclusions || fallback?.exclusions || []),
+      gallery: (Array.isArray(backendTour.gallery) && backendTour.gallery.length > 0)
+        ? backendTour.gallery
+        : (Array.isArray((backendTour as any).gallery_urls) && (backendTour as any).gallery_urls.length > 0)
+        ? (backendTour as any).gallery_urls
+        : fallback?.gallery || [],
+      itinerary: (Array.isArray(backendTour.itinerary) && backendTour.itinerary.length > 0)
+        ? backendTour.itinerary
+        : fallback?.itinerary || [],
+      highlights: (Array.isArray(backendTour.highlights) && backendTour.highlights.length > 0)
+        ? backendTour.highlights
+        : fallback?.highlights || [],
+      inclusions: (Array.isArray(backendTour.included) && backendTour.included.length > 0)
+        ? backendTour.included
+        : (Array.isArray((backendTour as any).inclusions) && (backendTour as any).inclusions.length > 0)
+        ? (backendTour as any).inclusions
+        : fallback?.inclusions || [],
+      exclusions: (Array.isArray(backendTour.excluded) && backendTour.excluded.length > 0)
+        ? backendTour.excluded
+        : (Array.isArray((backendTour as any).exclusions) && (backendTour as any).exclusions.length > 0)
+        ? (backendTour as any).exclusions
+        : fallback?.exclusions || [],
+      transport: (backendTour as any).transport || fallback?.transport || (isEn ? "VIP Limousine / Fast Transit" : "Xe du lịch đời mới cao cấp"),
+      hotel: (backendTour as any).hotel || fallback?.hotel || (isEn ? "4-5 Star Boutique Stay" : "Khách sạn / Resort 4-5 sao"),
     };
   } catch {
-    tour = getTourBySlug(slug);
+    const fallback = getTourBySlug(slug);
+    if (fallback) {
+      tour = {
+        ...fallback,
+        rating: Number(fallback.rating ?? 5.0),
+        price: Number(fallback.price ?? 0),
+        reviewCount: Number(fallback.reviewCount ?? 0),
+        transport: fallback.transport || (isEn ? "VIP Limousine / Fast Transit" : "Xe du lịch đời mới cao cấp"),
+        hotel: fallback.hotel || (isEn ? "4-5 Star Boutique Stay" : "Khách sạn / Resort 4-5 sao"),
+      };
+    }
   }
 
   if (!tour) {
@@ -101,7 +134,7 @@ export default async function TourDetailPage({ params }: TourDetailPageProps) {
   const displayDeparture = isEn && tour.departure_en ? tour.departure_en : tour.departure;
   const displayDestination = isEn && tour.destination_en ? tour.destination_en : tour.destination;
 
-  const relatedTours = VIETNAM_TOURS.filter((t) => t.id !== tour.id).slice(0, 3);
+  const relatedTours = VIETNAM_TOURS.filter((t) => t.id !== tour.id && t.slug !== tour.slug).slice(0, 3);
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -121,11 +154,11 @@ export default async function TourDetailPage({ params }: TourDetailPageProps) {
         url: "https://startravels.vn",
       },
     },
-    itinerary: tour.itinerary?.map((item: any, idx: number) => ({
+    itinerary: Array.isArray(tour.itinerary) ? tour.itinerary.map((item: any, idx: number) => ({
       "@type": "Day",
       name: `Day ${item.day || idx + 1}: ${item.title || ""}`,
-      description: item.description || "",
-    })),
+      description: item.description || item.morning || "",
+    })) : [],
   };
 
   return (
@@ -161,7 +194,7 @@ export default async function TourDetailPage({ params }: TourDetailPageProps) {
               </span>
               <span className="flex items-center gap-1.5 rounded-[2px] bg-amber-500/90 px-2.5 py-1 sm:px-3 sm:py-1.5 text-[11px] sm:text-xs md:text-sm font-bold text-white backdrop-blur-md shadow-sm">
                 <Star className="size-3.5 sm:size-4 fill-white text-white" />
-                {tour.rating.toFixed(1)} ({tour.reviewCount} {td.reviewsText})
+                {Number(tour.rating || 5).toFixed(1)} ({tour.reviewCount || 0} {td.reviewsText})
               </span>
             </div>
 

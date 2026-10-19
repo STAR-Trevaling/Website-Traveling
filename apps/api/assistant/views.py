@@ -518,6 +518,16 @@ class AssistantConversationViewSet(viewsets.ModelViewSet):
 
         # 7. Collect verified provenance sources
         sources = list(itinerary_sources) + list(jev_sources)
+        ADVENTURE_EXPERIENCE_SLUGS = {
+            "canal-cruise",
+            "sailing",
+            "hiking",
+            "camping",
+            "scuba-diving",
+            "kayaking",
+            "rock-climbing",
+            "paragliding",
+        }
         for c in chunks:
             c_meta = c.metadata or {}
             canonical_url = c_meta.get("guide_route")
@@ -527,7 +537,13 @@ class AssistantConversationViewSet(viewsets.ModelViewSet):
                 elif c.entity_type == AssistantKnowledgeChunk.EntityType.DESTINATION:
                     canonical_url = f"/destinations/{c.entity_slug}"
                 elif c.entity_type == AssistantKnowledgeChunk.EntityType.PLACE:
-                    canonical_url = f"/experiences/{c.entity_slug}"
+                    if c.entity_slug in ADVENTURE_EXPERIENCE_SLUGS:
+                        canonical_url = f"/experiences/{c.entity_slug}"
+                    else:
+                        dest_slug = c_meta.get("destination_slug")
+                        canonical_url = (
+                            f"/destinations/{dest_slug}" if dest_slug else "/destinations"
+                        )
                 else:
                     canonical_url = "/guide"
 

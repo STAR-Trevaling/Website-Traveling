@@ -167,10 +167,10 @@ export function ToursCatalog({ initialTours }: ToursCatalogProps) {
                   <div className="flex items-center gap-2 text-xs">
                     <div className="flex items-center gap-1 text-amber-500 font-bold">
                       <Star className="size-3.5 fill-amber-400" />
-                      <span>{tour.rating.toFixed(1)}</span>
+                      <span>{Number(tour.rating || 5).toFixed(1)}</span>
                     </div>
                     <span className="text-slate-400 font-light">
-                      ({tour.reviewCount} {t.common.reviews})
+                      ({tour.reviewCount || (tour as any).review_count || 0} {t.common.reviews})
                     </span>
                   </div>
 
@@ -182,17 +182,17 @@ export function ToursCatalog({ initialTours }: ToursCatalogProps) {
                   <div className="mt-3 flex flex-wrap gap-2 text-[11px] text-slate-500 font-light">
                     <span className="flex items-center gap-1 rounded-[2px] bg-slate-100 px-2 py-0.5">
                       <Bus className="size-3 text-slate-700" />
-                      {tour.transport}
+                      {tour.transport || (isEnglish ? "Fast Transit" : "Xe du lịch đời mới")}
                     </span>
                     <span className="flex items-center gap-1 rounded-[2px] bg-slate-100 px-2 py-0.5">
                       <Hotel className="size-3 text-slate-700" />
-                      {tour.hotel}
+                      {tour.hotel || (isEnglish ? "4-5 Star Stay" : "Khách sạn 4-5 sao")}
                     </span>
                   </div>
 
                   {/* Highlights List */}
                   <ul className="mt-4 space-y-1.5 border-t border-slate-100 pt-3 text-xs text-slate-600 font-light">
-                    {tour.highlights.slice(0, 3).map((h, i) => (
+                    {Array.isArray(tour.highlights) && tour.highlights.slice(0, 3).map((h, i) => (
                       <li key={i} className="flex items-start gap-2">
                         <CheckCircle2 className="size-3.5 shrink-0 text-slate-800 mt-0.5" />
                         <span className="line-clamp-1">{h}</span>

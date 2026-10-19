@@ -30,13 +30,28 @@ class BookingViewSet(viewsets.ModelViewSet):
                 "tour", "customer", "accommodation", "restaurant"
             ).all()
         if user and user.is_authenticated:
-            return Booking.objects.filter(customer=user).select_related(
-                "tour", "accommodation", "restaurant"
+            from django.db.models import Q
+
+            q_filter = Q(customer=user)
+            user_email = getattr(user, "email", None)
+            if user_email:
+                q_filter |= Q(contact_email__iexact=user_email)
+            return (
+                Booking.objects.filter(q_filter)
+                .select_related("tour", "accommodation", "restaurant")
+                .distinct()
             )
         return Booking.objects.none()
 
     def perform_create(self, serializer):
         user = self.request.user if self.request.user.is_authenticated else None
+        if not user and serializer.validated_data.get("contact_email"):
+            from accounts.models import User
+
+            email = serializer.validated_data.get("contact_email")
+            matched_user = User.objects.filter(email__iexact=email).first()
+            if matched_user:
+                user = matched_user
         booking = serializer.save(customer=user)
 
         # Transactional Outbox event for Odoo ERP sync

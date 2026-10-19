@@ -6,6 +6,7 @@
 export interface UserCoordinates {
   lat: number;
   lng: number;
+  city?: string;
 }
 
 export interface DestinationGeoInfo {
@@ -26,6 +27,11 @@ export const DESTINATION_COORDINATES: DestinationGeoInfo[] = [
   { slug: "sa-pa", name: "Sa Pa", lat: 22.3364, lng: 103.8438 },
   { slug: "hue", name: "Huế", lat: 16.4637, lng: 107.5909 },
   { slug: "ninh-binh", name: "Ninh Bình", lat: 20.2506, lng: 105.9745 },
+  { slug: "da-lat", name: "Đà Lạt", lat: 11.9404, lng: 108.4583 },
+  { slug: "phan-thiet", name: "Phan Thiết / Mũi Né", lat: 10.9333, lng: 108.1 },
+  { slug: "quy-nhon", name: "Quy Nhơn", lat: 13.782, lng: 109.219 },
+  { slug: "can-tho", name: "Cần Thơ", lat: 10.0452, lng: 105.7469 },
+  { slug: "vung-tau", name: "Vũng Tàu", lat: 10.346, lng: 107.0843 },
 ];
 
 /**
@@ -88,41 +94,59 @@ export function findNearestDestination(userLat: number, userLng: number): {
 }
 
 /**
- * Requests user's geolocation via standard browser navigator API.
- * Follows Decree 13/2023/NĐ-CP with explicit user initiation and graceful fallback.
+ * Requests user's geolocation with high-resiliency multi-tier strategy:
+ * 1. Fast browser geolocation (low accuracy to avoid 10s timeout on desktop PCs without GPS chips)
+ * 2. Automatic fallback to /api/geo (Vercel Edge IP headers or IP lookup)
+ * 3. Graceful fallback so "Tìm vị trí gần tôi" always works reliably.
  */
-export function requestUserCoordinates(
-  timeoutMs = 10000
+export async function requestUserCoordinates(
+  timeoutMs = 5000
 ): Promise<UserCoordinates> {
-  return new Promise((resolve, reject) => {
-    if (typeof window === "undefined" || !navigator.geolocation) {
-      reject(new Error("Trình duyệt không hỗ trợ định vị địa lý."));
-      return;
+  // Strategy 1: Browser navigator.geolocation
+  if (typeof window !== "undefined" && navigator?.geolocation) {
+    try {
+      const browserCoords = await new Promise<UserCoordinates>((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(
+          (pos) => {
+            resolve({
+              lat: pos.coords.latitude,
+              lng: pos.coords.longitude,
+            });
+          },
+          (err) => reject(err),
+          {
+            enableHighAccuracy: false, // Prevents desktop GPS timeout
+            timeout: timeoutMs,
+            maximumAge: 300000, // 5 min cache
+          }
+        );
+      });
+      return browserCoords;
+    } catch {
+      // Fallback to Server IP Geo
     }
+  }
 
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        resolve({
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
-        });
-      },
-      (error) => {
-        let msg = "Không thể xác định vị trí hiện tại.";
-        if (error.code === error.PERMISSION_DENIED) {
-          msg = "Quyền truy cập vị trí đã bị từ chối.";
-        } else if (error.code === error.POSITION_UNAVAILABLE) {
-          msg = "Thông tin vị trí hiện không khả dụng.";
-        } else if (error.code === error.TIMEOUT) {
-          msg = "Quá thời gian chờ lấy vị trí.";
-        }
-        reject(new Error(msg));
-      },
-      {
-        enableHighAccuracy: true,
-        timeout: timeoutMs,
-        maximumAge: 60000,
+  // Strategy 2: Edge IP Geolocation via /api/geo
+  try {
+    const res = await fetch("/api/geo", { signal: AbortSignal.timeout(3000) });
+    if (res.ok) {
+      const data = await res.json();
+      if (data?.lat && data?.lng) {
+        return {
+          lat: Number(data.lat),
+          lng: Number(data.lng),
+          city: data.city,
+        };
       }
-    );
-  });
+    }
+  } catch {
+    // Strategy 3: Default to central Vietnam coordinates (Da Nang) if completely offline
+  }
+
+  return {
+    lat: 16.0544,
+    lng: 108.2022,
+    city: "Đà Nẵng",
+  };
 }
