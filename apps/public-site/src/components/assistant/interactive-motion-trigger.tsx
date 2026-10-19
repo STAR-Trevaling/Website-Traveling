@@ -232,7 +232,7 @@ export function InteractiveMotionTrigger({
           <div
             onClick={() => handlePromptClick(isEn ? currentCap.promptEn : currentCap.promptVi)}
             className="group relative flex items-center rounded-full bg-white/95 backdrop-blur-md border border-amber-300/80 shadow-[0_4px_16px_rgba(234,179,8,0.22)] px-3.5 py-1.5 cursor-pointer transition-all duration-200 hover:scale-105 hover:shadow-[0_6px_22px_rgba(234,179,8,0.32)] hover:border-amber-400 whitespace-nowrap"
-            title={isEn ? "Click to ask Baby STAR" : "Nhấn để hỏi Bé Sao STAR ngay"}
+            title={isEn ? "Click to ask Baby STAR" : "Nhấn để hỏi Bé Star ngay"}
           >
             {/* Speech bubble pointer pointing down towards Bé Sao */}
             <div className="absolute -bottom-1.5 right-8 sm:right-10 size-2.5 bg-white rotate-45 border-r border-b border-amber-300/80" />
@@ -270,7 +270,7 @@ export function InteractiveMotionTrigger({
         onClick={onToggle}
         onMouseDown={() => setIsPressed(true)}
         onMouseUp={() => setIsPressed(false)}
-        aria-label={isEn ? "Chat with Baby STAR" : "Trò chuyện cùng Bé Sao STAR"}
+        aria-label={isEn ? "Chat with Baby STAR" : "Trò chuyện cùng Bé Star"}
         className="group relative cursor-pointer focus:outline-none flex flex-col items-center justify-center p-0 bg-transparent border-0 shadow-none transition-transform duration-200"
         style={{
           transform: `rotateX(${tilt.x}deg) rotateY(${tilt.y}deg) scale(${isPressed ? 0.9 : isHovered ? 1.15 : 1})`,

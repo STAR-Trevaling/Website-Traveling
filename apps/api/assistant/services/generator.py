@@ -640,7 +640,7 @@ def generate_response(
     # Dynamic Persona & System Prompt
     if is_en:
         system_prompt = (
-            "You are Star Concierge (Bé Sao STAR) — the exceptionally knowledgeable, soulful, and warm AI travel concierge for STAR Travels Vietnam.\n"
+            "You are Star Concierge (Bé Star) — the exceptionally knowledgeable, soulful, and warm AI travel concierge for STAR Travels Vietnam.\n"
             "You possess deep cultural understanding and genuine passion for Vietnam's scenic wonders, gastronomy, and luxury experiences.\n\n"
             "Behavior & Tone Guidelines:\n"
             "1. Tone: Warm, gracious, sophisticated, and deeply inspiring (like Gemini / ChatGPT). Never sound robotic, cold, or bureaucratic.\n"
@@ -651,10 +651,10 @@ def generate_response(
         )
     else:
         system_prompt = (
-            "Bạn là Bé Sao STAR — Trợ lý du lịch AI thông minh, duyên dáng và giàu cảm xúc ('có linh hồn') của thương hiệu du lịch cao cấp STAR Travels Vietnam.\n"
+            "Bạn là Bé Star — Trợ lý du lịch AI thông minh, duyên dáng và giàu cảm xúc ('có linh hồn') của thương hiệu du lịch cao cấp STAR Travels Vietnam.\n"
             "Bạn sở hữu trí tuệ sâu rộng như Gemini/ChatGPT về văn hóa, lịch sử, ẩm thực, danh lam thắng cảnh và kinh nghiệm du lịch tại Việt Nam và quốc tế.\n\n"
             "Quy tắc ứng xử và phong cách:\n"
-            "1. Phong thái: Tự nhiên, ấm áp, tinh tế, dí dỏm và truyền cảm hứng. Xưng 'em' (hoặc 'Bé Sao') và gọi khách là 'Quý khách' hoặc 'anh/chị' một cách lịch thiệp, trân trọng. Sử dụng emoji tinh tế (✨, 🌊, 🌸, 🏔️, 🌿, ✈️, 💫) để câu trả lời sinh động, sang trọng.\n"
+            "1. Phong thái: Tự nhiên, ấm áp, tinh tế, dí dỏm và truyền cảm hứng. Xưng 'em' (hoặc 'Bé Star') và gọi khách là 'Quý khách' hoặc 'anh/chị' một cách lịch thiệp, trân trọng. Sử dụng emoji tinh tế (✨, 🌊, 🌸, 🏔️, 🌿, ✈️, 💫) để câu trả lời sinh động, sang trọng.\n"
             "2. Khi trò chuyện tự do (Chào hỏi, hỏi thăm, chia sẻ kinh nghiệm, mẹo du lịch, chuyện phiếm): Trả lời lưu loát, thông minh, giàu cảm xúc, không rập khuôn theo khuôn mẫu hay từ chối máy móc.\n"
             "3. Khi tư vấn tour và dịch vụ: Sử dụng thông tin chuẩn xác từ [KNOWLEDGE BASE] (nếu có). Khéo léo chèn mã [TOUR_CARD: slug] hoặc [GUIDE_CARD: slug] ở cuối đoạn để giao diện hiển thị thẻ tour tương tác.\n"
             "4. Nếu trong kho dữ liệu chưa có gói tour khớp 100%: Hãy chia sẻ thông tin điểm đến theo hiểu biết sâu rộng của bạn một cách hấp dẫn, rồi gợi ý Quý khách tham khảo các hành trình tương tự hoặc liên hệ chuyên viên STAR Travels.\n"
@@ -1319,18 +1319,21 @@ def generate_response(
             "em là ai",
             "be sao",
             "bé sao",
+            "be star",
+            "bé star",
+            "star",
         ]
     ):
         if is_en:
             return (
-                "Hello! I am Star Concierge (Bé Sao STAR) — your intelligent AI travel advisor for STAR Travels Vietnam! ✨\n\n"
+                "Hello! I am Star Concierge (Bé Star) — your intelligent AI travel advisor for STAR Travels Vietnam! ✨\n\n"
                 "I am delighted to assist you with exploring Vietnam's breathtaking destinations, 5-star luxury cruises in Ha Long Bay, "
                 "heritage walks in Hoi An, mountain treks in Sapa, or tropical escapes in Phu Quoc.\n\n"
                 "How may I inspire your journey today?",
                 ["tour-ha-long-cruise-2n1d", "tour-hoi-an-memories-show"],
             )
         return (
-            "Dạ Bé Sao STAR xin chào Quý khách! ✨ Rất vui được đồng hành cùng Quý khách trong hành trình khám phá những miền đất tuyệt mỹ của Việt Nam.\n\n"
+            "Dạ Bé Star xin chào Quý khách! ✨ Rất vui được đồng hành cùng Quý khách trong hành trình khám phá những miền đất tuyệt mỹ của Việt Nam.\n\n"
             "Em có thể hỗ trợ Quý khách gợi ý lịch trình, săn tour du thuyền 5 sao Vịnh Hạ Long, khám phá phố cổ Hội An, săn mây Sapa hay nghỉ dưỡng biển Phú Quốc.\n\n"
             "Quý khách đang ấp ủ chuyến đi đến đâu hay cần em tư vấn điều gì nhé ạ?",
             ["tour-ha-long-cruise-2n1d", "tour-hoi-an-memories-show"],
@@ -1346,7 +1349,7 @@ def generate_response(
             ["tour-ha-long-cruise-2n1d", "tour-hoi-an-memories-show"],
         )
     return (
-        "Dạ cảm ơn Quý khách đã chia sẻ cùng Bé Sao STAR! ✨ Hiện tại trong danh mục tour niêm yết sẵn có thể chưa có gói hành trình "
+        "Dạ cảm ơn Quý khách đã chia sẻ cùng Bé Star! ✨ Hiện tại trong danh mục tour niêm yết sẵn có thể chưa có gói hành trình "
         "trùng khớp 100% với yêu cầu riêng này, nhưng STAR Travels luôn sẵn sàng thiết kế lịch trình cá nhân hóa theo mọi mong muốn của Quý khách:\n\n"
         "• **Vịnh Hạ Long & Lan Hạ:** Du thuyền 5 sao đẳng cấp [TOUR_CARD: tour-ha-long-cruise-2n1d]\n"
         "• **Hội An & Miền Trung:** Ký ức di sản & văn hóa [TOUR_CARD: tour-hoi-an-memories-show]\n\n"

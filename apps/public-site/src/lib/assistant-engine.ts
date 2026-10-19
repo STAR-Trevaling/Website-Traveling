@@ -335,7 +335,7 @@ export function queryAssistantKnowledge(
     q === "alo"
   ) {
     const greetingVi =
-      "Dạ chào Quý khách! Em là **Bé Sao STAR** — Trợ lý tư vấn du lịch thông minh của STAR Travels Vietnam.\n\n" +
+      "Dạ chào Quý khách! Em là **Bé Star** — Trợ lý tư vấn du lịch thông minh của STAR Travels Vietnam.\n\n" +
       "Em có thể tư vấn các điểm đến nổi tiếng tại Việt Nam, lịch trình tour trọn gói, cẩm nang du lịch và gửi đường link cụ thể để Quý khách xem trực tiếp.\n\n" +
       "Quý khách đang quan tâm đến vùng miền hay điểm đến nào (Sa Pa, Hạ Long, Đà Nẵng, Hội An, Phú Quốc, Ninh Bình...) ạ?";
 
