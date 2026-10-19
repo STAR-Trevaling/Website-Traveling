@@ -22,6 +22,7 @@ ALLOWED_ROUTES = (
     "clarify",
     "security_refusal",
     "emergency",
+    "conversational",
 )
 
 
@@ -87,11 +88,106 @@ def classify_route_deterministic(
     if any(ind in q_lower for ind in emergency_indicators):
         return "emergency"
 
+    # 2.5 Conversational & Persona Inquiries (Greetings, self-intro, chit-chat, thanks)
+    conversational_indicators = [
+        "xin chào",
+        "xin chao",
+        "chào em",
+        "chao em",
+        "chào bạn",
+        "chao ban",
+        "chào bé sao",
+        "chao be sao",
+        "chào bé star",
+        "chao be star",
+        "chào star",
+        "chao star",
+        "bé star",
+        "be star",
+        "bé sao",
+        "be sao",
+        "hello",
+        "hi em",
+        "hi bạn",
+        "hey",
+        "alo",
+        "bạn là ai",
+        "em là ai",
+        "ban la ai",
+        "em là ai thế",
+        "em ten gi",
+        "bạn tên gì",
+        "bạn có khỏe không",
+        "em khỏe không",
+        "hôm nay thế nào",
+        "kể chuyện",
+        "kể cho tôi nghe",
+        "tại sao nên đi du lịch",
+        "cảm ơn",
+        "cam on",
+        "thank you",
+        "thanks",
+        "tạm biệt",
+        "tam biet",
+        "bye",
+        "good morning",
+        "good evening",
+        "ngủ ngon",
+    ]
+    q_stripped = q_lower.strip().strip("!?,.")
+    if q_stripped in {
+        "chao",
+        "chào",
+        "hi",
+        "hello",
+        "hey",
+        "alo",
+        "xin chao",
+        "xin chào",
+        "hi em",
+        "chào em",
+        "chao em",
+        "chào bạn",
+        "chao ban",
+        "chào bé star",
+        "chao be star",
+        "bé star",
+        "be star",
+        "chào star",
+        "chao star",
+        "bạn là ai",
+        "em là ai",
+        "ban la ai",
+    }:
+        return "conversational"
+
+    has_tour_indicators = any(
+        k in q_lower
+        for k in [
+            "giá tour",
+            "đặt tour",
+            "bao nhiêu tiền",
+            "báo giá",
+            "lịch trình",
+            "resort",
+            "khách sạn",
+            "hotel",
+            "2 ngày",
+            "3 ngày",
+            "4 ngày",
+            "e-visa",
+            "thị thực",
+            "thời tiết",
+        ]
+    )
+    if any(ind in q_lower for ind in conversational_indicators) and not has_tour_indicators:
+        return "conversational"
+
     # 3. Lead Inquiry with confirmed consent
     if has_contact and has_confirmed_consent:
         return "lead_inquiry"
 
-    # 3. Itinerary Planning Intent
+    # 4. Itinerary Planning Intent
     itinerary_indicators = [
         "lịch trình",
         "2 ngày 1 đêm",

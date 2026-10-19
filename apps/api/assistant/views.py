@@ -236,13 +236,47 @@ class AssistantConversationViewSet(viewsets.ModelViewSet):
                 jev_sources = []
                 jev_status = None
         else:
-            # 3. RAG Knowledge Retrieval
-            chunks = search_knowledge(query=message, locale=locale, limit=4)
+            # Build conversation history for multi-turn LLM memory
+            history_msgs = []
+            if conversation:
+                recent_msgs = conversation.messages.order_by("-created_at")[:6]
+                for m in reversed(list(recent_msgs)):
+                    if m.content != message:
+                        history_msgs.append(
+                            {
+                                "role": "user"
+                                if m.role == AssistantMessage.Role.USER
+                                else "assistant",
+                                "content": m.content,
+                            }
+                        )
 
-            # 4. Grounded Synthesis
-            reply_text, recommended_tour_slugs = generate_response(
-                query=message, chunks=chunks, locale=locale, lead_consent=has_confirmed_consent
-            )
+            # JEV Request Analysis Layer: Determine whether RAG retrieval is required
+            if route_det == "conversational":
+                # Conversational inquiries (greetings, banter, travel stories) bypass RAG retrieval
+                # to allow LLM full creative expression without being restricted by empty chunks.
+                chunks = []
+                reply_text, recommended_tour_slugs = generate_response(
+                    query=message,
+                    chunks=[],
+                    locale=locale,
+                    lead_consent=has_confirmed_consent,
+                    route="conversational",
+                    history=history_msgs,
+                )
+            else:
+                # 3. RAG Knowledge Retrieval for domain/catalog/destination inquiries
+                chunks = search_knowledge(query=message, locale=locale, limit=4)
+
+                # 4. Grounded Synthesis
+                reply_text, recommended_tour_slugs = generate_response(
+                    query=message,
+                    chunks=chunks,
+                    locale=locale,
+                    lead_consent=has_confirmed_consent,
+                    route=route_det or "knowledge",
+                    history=history_msgs,
+                )
 
         # 4. Fetch Rich Tour Cards
         found_slugs = re.findall(r"\[TOUR_CARD:\s*([\w-]+)\]", reply_text)

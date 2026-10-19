@@ -1,6 +1,15 @@
 # Progress Tracker
 
 ## Completed in this artifact
+- Soulful AI Concierge ("Bé Sao STAR") & Intelligent JEV Request Routing Layer:
+  - **Gemini Model Refresh**: Pinned active, authenticated models (`gemini-flash-latest`, `gemini-3.8-flash`, `gemini-3.5-flash`), eradicating deprecated endpoints (`gemini-1.5-flash-002`, `gemini-2.0-flash`) that caused silent 404s and forced fallback to canned scripts.
+  - **JEV Request Analysis Layer (`apps/api/assistant/services/jev_router.py`)**: Analyzes incoming queries to decide when to use RAG vs when NOT to use RAG:
+    - `conversational` route (greetings, chit-chat, travel inspiration, packing tips) bypasses RAG retrieval so Gemini speaks freely with warmth, empathy, and conversational intelligence.
+    - `knowledge`, `discovery`, `itinerary` routes activate RAG retrieval against database chunks and embed interactive rich cards (`[TOUR_CARD: slug]`, `[GUIDE_CARD: slug]`).
+  - **Multi-Turn Context & Dynamic Temperature**: Added conversation history memory (`history[-6:]`) and dual-mode temperature (`0.7` for natural conversational banter, `0.2` for verified domain synthesis).
+  - **Soulful Persona ("Bé Sao STAR")**: Replaced cold, legalistic prompt constraints and emoji bans with a charming, knowledgeable luxury travel companion with refined emojis (✨, 🌊, 🌸, 🏔️, 🌿, ✈️, 💫).
+  - **Graceful Offline Fallback**: Replaced the cold refusal ("kho dữ liệu chưa có thông tin có sẵn") with charming greetings and inspiring destination recommendations when running without an LLM key or offline.
+  - **Verification**: 100% test pass rate across 10 unit tests in `test_assistant_rag.py`, zero ruff lint errors, and verified live Gemini generation.
 - RAG & Jev Architecture, Vietnamese FTS, Model Pinning, Legal (Decree 13) & Operational Hardening:
   - Addressed and resolved all 15 critical points across Architecture, Content, Legal, and Operations:
     1. **Vietnamese Full-Text Search**: Configured `simple + unaccent` with `IMMUTABLE PARALLEL SAFE` function `f_unaccent(text)` and GIN expression index in migration `0003_assistant_rag_vector_chunk.py`. Enhanced `retriever.py` with `strip_vietnamese_diacritics` to query both accented and unaccented terms ("Da Lat" matches "Đà Lạt").

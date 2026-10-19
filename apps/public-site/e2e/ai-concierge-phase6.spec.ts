@@ -6,7 +6,7 @@ test.describe("AI Travel Concierge — Phase 6.1 Quality & Production Hardening"
     await page.goto("/");
     // Wait for the floating mascot or AI trigger button
     const assistantBtn = page.locator(
-      "[data-testid='assistant-mascot-trigger'], button[aria-label*='Baby STAR'], button[aria-label*='Bé Sao STAR']"
+      "[data-testid='assistant-mascot-trigger'], button[aria-label*='Baby STAR'], button[aria-label*='Bé Star'], button[aria-label*='Bé Sao STAR']"
     ).first();
     await expect(assistantBtn).toBeVisible({ timeout: 10000 });
     await assistantBtn.click();
@@ -19,8 +19,8 @@ test.describe("AI Travel Concierge — Phase 6.1 Quality & Production Hardening"
   test("1. Interactive Widget, Living Star Mascot & Quick Prompt Dispatch", async ({ page }) => {
     const drawer = page.locator("[data-testid='assistant-chat-drawer']");
 
-    // Verify greeting from Bé Sao STAR
-    const welcomeBubble = drawer.getByText("Bé Sao STAR").or(drawer.getByText("Baby STAR")).first();
+    // Verify greeting from Bé Star
+    const welcomeBubble = drawer.getByText("Bé Star").or(drawer.getByText("Baby STAR")).or(drawer.getByText("Bé Sao STAR")).first();
     await expect(welcomeBubble).toBeVisible();
 
     // Verify quick prompt pills are displayed

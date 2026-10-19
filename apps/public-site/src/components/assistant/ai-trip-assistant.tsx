@@ -246,7 +246,7 @@ export function AITripAssistant() {
     }
 
     const greetingVi =
-      "Dạ chào Quý khách! Em là **Bé Sao STAR** — Trợ lý tư vấn du lịch thông minh của STAR Travels Vietnam.\n\n" +
+      "Dạ chào Quý khách! Em là **Bé Star** — Trợ lý tư vấn du lịch thông minh của STAR Travels Vietnam.\n\n" +
       "Em có thể gợi ý các tour hot nhất, cẩm nang du lịch và điểm đến tuyệt đẹp kèm đường dẫn xem trực tiếp. Quý khách đang lên kế hoạch khám phá nơi nào ạ?";
 
     const greetingEn =
@@ -480,7 +480,7 @@ export function AITripAssistant() {
                 onMouseEnter={() => setIsHeaderHovered(true)}
                 onMouseLeave={() => setIsHeaderHovered(false)}
                 className="relative shrink-0 flex items-center justify-center cursor-pointer transition-transform hover:scale-105 select-none"
-                title={isEnglish ? "Baby STAR - Living AI Travel Companion" : "Bé Sao STAR - Linh vật trợ lý thông minh"}
+                title={isEnglish ? "Baby STAR - Living AI Travel Companion" : "Bé Star - Linh vật trợ lý thông minh"}
               >
                 <StarCreatureMascot
                   size="sm"
@@ -495,7 +495,7 @@ export function AITripAssistant() {
               <div>
                 <div className="flex items-center gap-2">
                   <h3 className="text-sm font-bold tracking-tight text-white flex items-center gap-1.5">
-                    <span>{isEnglish ? "Baby STAR" : "Bé Sao STAR"}</span>
+                    <span>{isEnglish ? "Baby STAR" : "Bé Star"}</span>
                     <span className="text-[11px] font-normal text-amber-300">★</span>
                   </h3>
                   <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/20 px-2 py-0.5 text-[10px] font-semibold text-emerald-300 border border-emerald-500/30">
@@ -506,7 +506,7 @@ export function AITripAssistant() {
                 <p className="text-[11px] text-white/80 font-light line-clamp-1">
                   {isEnglish
                     ? "Baby STAR • AI Travel Companion & Tour Concierge"
-                    : "Bé Sao STAR • Trợ lý du lịch thông minh STAR Travels"}
+                    : "Bé Star • Trợ lý du lịch thông minh STAR Travels"}
                 </p>
               </div>
             </div>
@@ -1048,7 +1048,7 @@ export function AITripAssistant() {
                 <span>
                   {isEnglish
                     ? "Baby STAR is searching packages & guides..."
-                    : "Bé Sao STAR đang tra cứu tour & cẩm nang..."}
+                    : "Bé Star đang tra cứu tour & cẩm nang..."}
                 </span>
               </div>
             )}
