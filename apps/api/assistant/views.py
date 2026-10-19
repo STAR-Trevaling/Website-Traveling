@@ -313,7 +313,9 @@ class AssistantConversationViewSet(viewsets.ModelViewSet):
         # Server-side scrubbing: Remove non-existent accommodation cards
         for s in found_acc_slugs:
             if s not in valid_acc_slugs:
-                reply_text = re.sub(rf"\[ACCOMMODATION_CARD:\s*{re.escape(s)}\]", "", reply_text).strip()
+                reply_text = re.sub(
+                    rf"\[ACCOMMODATION_CARD:\s*{re.escape(s)}\]", "", reply_text
+                ).strip()
 
         # 4.2 Fetch Restaurant Referral Cards
         found_res_slugs = re.findall(r"\[RESTAURANT_CARD:\s*([\w-]+)\]", reply_text)
@@ -349,7 +351,9 @@ class AssistantConversationViewSet(viewsets.ModelViewSet):
         # Server-side scrubbing: Remove non-existent restaurant cards
         for s in found_res_slugs:
             if s not in valid_res_slugs:
-                reply_text = re.sub(rf"\[RESTAURANT_CARD:\s*{re.escape(s)}\]", "", reply_text).strip()
+                reply_text = re.sub(
+                    rf"\[RESTAURANT_CARD:\s*{re.escape(s)}\]", "", reply_text
+                ).strip()
 
         # 4.3 Fetch Guide Cards
         found_guide_slugs = re.findall(r"\[GUIDE_CARD:\s*([\w-]+)\]", reply_text)
@@ -529,7 +533,12 @@ class AssistantConversationViewSet(viewsets.ModelViewSet):
                 "itinerary",
             ):
                 route = "discovery"
-            elif not chunks and route not in ("security_refusal", "emergency", "lead_inquiry", "itinerary"):
+            elif not chunks and route not in (
+                "security_refusal",
+                "emergency",
+                "lead_inquiry",
+                "itinerary",
+            ):
                 route = "clarify"
 
         return Response(

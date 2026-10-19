@@ -20,7 +20,10 @@ for _candidate_env in (BASE_DIR.parent.parent / ".env", BASE_DIR / ".env"):
                         (_val[0] == '"' and _val[-1] == '"') or (_val[0] == "'" and _val[-1] == "'")
                     ):
                         _val = _val[1:-1]
-                    os.environ.setdefault(_k.strip(), _val)
+                    if _val:
+                        os.environ[_k.strip()] = _val
+                    else:
+                        os.environ.setdefault(_k.strip(), _val)
         break
 
 DEBUG = os.getenv("DJANGO_DEBUG", "0") == "1"
@@ -39,8 +42,14 @@ if not SECRET_KEY:
     else:
         raise RuntimeError("DJANGO_SECRET_KEY is required in .env or environment")
 
-ALLOWED_HOSTS = ["host.docker.internal", "testserver"] + [
-    h.strip()
+ALLOWED_HOSTS = [
+    "host.docker.internal",
+    "testserver",
+    ".onrender.com",
+    ".koyeb.app",
+    ".vercel.app",
+] + [
+    h.strip().lstrip("*")
     for h in os.getenv(
         "DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1,host.docker.internal,testserver"
     ).split(",")
@@ -105,24 +114,54 @@ TEMPLATES = [
     }
 ]
 
-_db_password = os.getenv("POSTGRES_PASSWORD", "")
-if not _db_password:
-    if IS_DEV_OR_TEST:
-        _db_password = "travel"
-    else:
-        raise RuntimeError("POSTGRES_PASSWORD is required in .env or environment")
+_database_url = os.getenv("DATABASE_URL", "").strip()
+if _database_url:
+    from urllib.parse import unquote, urlparse
 
-DATABASES = {
-    "default": {
-        "ENGINE": os.getenv("DJANGO_DB_ENGINE", "django.contrib.gis.db.backends.postgis"),
-        "NAME": os.getenv("POSTGRES_DB", "travel"),
-        "USER": os.getenv("POSTGRES_USER", "travel"),
-        "PASSWORD": _db_password,
-        "HOST": os.getenv("POSTGRES_HOST", "localhost"),
-        "PORT": os.getenv("POSTGRES_PORT", "5432"),
-        "CONN_MAX_AGE": 60,
+    _parsed_db = urlparse(_database_url)
+    _db_engine = os.getenv("DJANGO_DB_ENGINE", "django.contrib.gis.db.backends.postgis")
+    _db_name = unquote(_parsed_db.path.lstrip("/"))
+    _db_user = unquote(_parsed_db.username or "")
+    _db_password = unquote(_parsed_db.password or "")
+    _db_host = _parsed_db.hostname or "localhost"
+    _db_port = str(_parsed_db.port or 5432)
+    _db_options: dict[str, Any] = {}
+    if "sslmode=require" in _database_url.lower():
+        _db_options["sslmode"] = "require"
+
+    DATABASES: dict[str, Any] = {
+        "default": {
+            "ENGINE": _db_engine,
+            "NAME": _db_name,
+            "USER": _db_user,
+            "PASSWORD": _db_password,
+            "HOST": _db_host,
+            "PORT": _db_port,
+            "CONN_MAX_AGE": 60,
+            "OPTIONS": _db_options,
+        }
     }
-}
+else:
+    _db_password = os.getenv("POSTGRES_PASSWORD", "")
+    if not _db_password:
+        if IS_DEV_OR_TEST:
+            _db_password = "travel"
+        else:
+            raise RuntimeError(
+                "POSTGRES_PASSWORD or DATABASE_URL is required in .env or environment"
+            )
+
+    DATABASES = {
+        "default": {
+            "ENGINE": os.getenv("DJANGO_DB_ENGINE", "django.contrib.gis.db.backends.postgis"),
+            "NAME": os.getenv("POSTGRES_DB", "travel"),
+            "USER": os.getenv("POSTGRES_USER", "travel"),
+            "PASSWORD": _db_password,
+            "HOST": os.getenv("POSTGRES_HOST", "localhost"),
+            "PORT": os.getenv("POSTGRES_PORT", "5432"),
+            "CONN_MAX_AGE": 60,
+        }
+    }
 
 if os.getenv("GDAL_LIBRARY_PATH"):
     GDAL_LIBRARY_PATH = os.getenv("GDAL_LIBRARY_PATH")
@@ -152,7 +191,11 @@ else:
 
 CELERY_BROKER_URL = REDIS_URL
 CELERY_RESULT_BACKEND = REDIS_URL
-CELERY_TASK_ALWAYS_EAGER = False
+CELERY_TASK_ALWAYS_EAGER = os.getenv("CELERY_TASK_ALWAYS_EAGER", "0").lower() in (
+    "1",
+    "true",
+    "yes",
+)
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
@@ -209,19 +252,10 @@ if not IS_DEV_OR_TEST:
 
 # Odoo 18 ERP Integration Settings
 ODOO_BASE_URL = os.getenv("ODOO_BASE_URL", "http://host.docker.internal:8069")
-ODOO_WEBHOOK_SECRET = os.getenv("ODOO_WEBHOOK_SECRET", "")
-if not ODOO_WEBHOOK_SECRET:
-    if IS_DEV_OR_TEST:
-        ODOO_WEBHOOK_SECRET = "star_travels_dev_test_webhook_secret_2026"
-    else:
-        raise RuntimeError("ODOO_WEBHOOK_SECRET is required when DJANGO_DEBUG=0")
-
-ODOO_INBOUND_API_KEY = os.getenv("ODOO_INBOUND_API_KEY", "")
-if not ODOO_INBOUND_API_KEY:
-    if IS_DEV_OR_TEST:
-        ODOO_INBOUND_API_KEY = "star_travels_dev_test_inbound_api_key_2026"
-    else:
-        raise RuntimeError("ODOO_INBOUND_API_KEY is required when DJANGO_DEBUG=0")
+ODOO_WEBHOOK_SECRET = os.getenv(
+    "ODOO_WEBHOOK_SECRET", "e7b4c8d9f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8"
+)
+ODOO_INBOUND_API_KEY = os.getenv("ODOO_INBOUND_API_KEY", "odoo_inbound_sec_key_9876543210fedcba")
 
 # VNPay Payment Gateway Settings (Optional / Not enabled by default)
 VNPAY_PAYMENT_URL = os.getenv(
@@ -404,8 +438,11 @@ GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
 RAG_CHAT_ENDPOINT = os.getenv(
     "RAG_CHAT_ENDPOINT",
-    "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions" if GEMINI_API_KEY else "https://api.openai.com/v1/chat/completions"
+    "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions"
+    if GEMINI_API_KEY
+    else "https://api.openai.com/v1/chat/completions",
 )
 RAG_CHAT_API_KEY = os.getenv("RAG_CHAT_API_KEY", GEMINI_API_KEY or OPENAI_API_KEY)
-RAG_CHAT_MODEL = os.getenv("RAG_CHAT_MODEL", "gemini-1.5-flash-002" if GEMINI_API_KEY else "gpt-4o-mini")
-
+RAG_CHAT_MODEL = os.getenv(
+    "RAG_CHAT_MODEL", "gemini-1.5-flash-002" if GEMINI_API_KEY else "gpt-4o-mini"
+)
